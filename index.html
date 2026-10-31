@@ -189,10 +189,12 @@ html,body{background:#070707;color:var(--text)}#backdrop{background:#070707;filt
 </div>
 <div class="modal-back" id="humanSupportModal"><div class="modal support-modal">
  <div class="modal-top"><h3>转人工客服</h3><button class="iconbtn" type="button" data-close="humanSupportModal">关闭</button></div>
+ <div class="support-modal-body" id="supportModalBody">
  <p>写下你需要帮助的内容，管理员会在后台看到并回复。请勿发送密码、验证码或其他敏感信息。</p>
  <div class="support-status-line"><span id="supportTicketState">尚未提交人工请求</span><button class="iconbtn" id="refreshMySupport" type="button">刷新回复</button></div>
  <div class="support-thread" id="supportThread" aria-live="polite">提交消息后，这里会显示客服对话。</div>
  <div class="field support-compose"><label for="supportMessageInput">发给管理员</label><textarea id="supportMessageInput" maxlength="2000" rows="3" placeholder="请简要描述你遇到的问题（最多 2000 字）"></textarea><small class="hint" id="supportMessageCount">0 / 2000</small></div>
+ </div>
  <div class="modal-actions"><button class="ghost" type="button" data-close="humanSupportModal">取消</button><button class="primary" id="sendSupportMessage" type="button">发送并转人工</button></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
@@ -207,7 +209,7 @@ html,body{background:#070707;color:var(--text)}#backdrop{background:#070707;filt
  </div>
  <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.5.3 Pro</strong><span>Build 2026.11 · Compact Admin · Fixed Close</span><p>本次更新：管理后台进一步缩小；用户、工单和公告列表独立滑动，关闭键固定可见。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.5.3 Pro</strong><span>Build 2026.11 · Split Admin · Support Scroll</span><p>本次更新：转人工工单独立成窗；管理后台更小，客服弹窗可滑动且关闭键固定。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 开启互怼强度匹配</label>
@@ -462,6 +464,25 @@ body.reduce-motion *{animation:none!important;transition-duration:.01ms!importan
  #adminModal .extra-head h3{font-size:15px}
  #adminModal .admin-modal-body{padding:10px 12px 16px!important}
 }
+
+/* 2.5.3 分离管理后台与转人工；三个弹窗均在独立内容区滚动。 */
+#adminModal .extra-box{width:min(470px,calc(100vw - 28px))!important;height:min(60dvh,460px)!important;max-height:min(60dvh,460px)!important}
+@media(max-width:760px){#adminModal .extra-box{width:min(420px,calc(100vw - 20px))!important;height:min(52dvh,390px)!important;max-height:min(52dvh,390px)!important}#adminModal .extra-head{gap:5px!important;padding:9px 10px!important}#adminModal .extra-head h3{font-size:14px}#adminModal .extra-head #adminSupportButton{min-width:0;padding:7px 8px;font-size:11px}}
+#adminSupportModal{align-items:center!important;justify-content:center!important;overflow:hidden!important;padding:calc(10px + env(safe-area-inset-top)) 14px calc(10px + env(safe-area-inset-bottom))!important}
+#adminSupportModal .extra-box{box-sizing:border-box;display:flex!important;flex-direction:column!important;width:min(540px,calc(100vw - 28px))!important;height:min(76dvh,640px)!important;max-height:min(76dvh,640px)!important;min-height:0!important;overflow:hidden!important;padding:0!important;margin:auto!important;border-radius:18px!important}
+#adminSupportModal .extra-head{display:flex!important;flex:0 0 auto!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;position:relative!important;top:auto!important;margin:0!important;padding:12px 15px!important;background:#151619!important;border-bottom:1px solid #ffffff18!important;z-index:5!important}
+#adminSupportModal .extra-head h3{min-width:0;margin:0;font-size:16px}
+#adminSupportModal .extra-head [data-extra-close]{min-width:52px;min-height:38px;flex:0 0 auto}
+#adminSupportModal .admin-support-modal-body{box-sizing:border-box;flex:1 1 auto!important;min-width:0!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important;scrollbar-gutter:stable;padding:12px 15px 18px!important}
+#adminSupportModal #adminSupportList{min-width:0;overflow-wrap:anywhere}
+@media(max-width:760px){#adminSupportModal{padding:calc(8px + env(safe-area-inset-top)) 10px calc(8px + env(safe-area-inset-bottom))!important}#adminSupportModal .extra-box{width:min(480px,calc(100vw - 20px))!important;height:min(72dvh,560px)!important;max-height:min(72dvh,560px)!important}#adminSupportModal .extra-head{padding:10px 12px!important}#adminSupportModal .extra-head h3{font-size:15px}#adminSupportModal .admin-support-modal-body{padding:10px 12px 16px!important}}
+#humanSupportModal{align-items:center!important;justify-content:center!important;overflow:hidden!important;padding:calc(10px + env(safe-area-inset-top)) 14px calc(10px + env(safe-area-inset-bottom))!important}
+#humanSupportModal .support-modal{box-sizing:border-box;display:flex!important;flex-direction:column!important;gap:0!important;width:min(500px,calc(100vw - 28px))!important;height:min(76dvh,620px)!important;max-height:min(76dvh,620px)!important;min-height:0!important;overflow:hidden!important;padding:0!important;border-radius:18px!important}
+#humanSupportModal .support-modal>.modal-top{display:flex!important;flex:0 0 auto!important;align-items:center!important;justify-content:space-between!important;position:relative!important;top:auto!important;margin:0!important;padding:12px 15px!important;background:#151619!important;border-bottom:1px solid #ffffff18!important;z-index:5!important}
+#humanSupportModal .support-modal-body{box-sizing:border-box;flex:1 1 auto!important;min-width:0!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important;padding:12px 15px!important}
+#humanSupportModal .support-thread{flex:0 1 auto;min-height:110px;max-height:min(38dvh,300px);overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important}
+#humanSupportModal .support-modal>.modal-actions{display:flex;flex:0 0 auto!important;position:relative!important;bottom:auto!important;margin:0!important;padding:10px 15px calc(10px + env(safe-area-inset-bottom))!important;background:#111214!important;border-top:1px solid #ffffff14!important}
+@media(max-width:760px){#humanSupportModal{padding:calc(8px + env(safe-area-inset-top)) 10px calc(8px + env(safe-area-inset-bottom))!important}#humanSupportModal .support-modal{width:min(480px,calc(100vw - 20px))!important;height:min(72dvh,560px)!important;max-height:min(72dvh,560px)!important}#humanSupportModal .support-modal>.modal-top{padding:10px 12px!important}#humanSupportModal .support-modal-body{padding:10px 12px!important}#humanSupportModal .support-thread{max-height:min(36dvh,260px)}#humanSupportModal .support-modal>.modal-actions{padding:8px 12px calc(8px + env(safe-area-inset-bottom))!important}}
 </style>
 <div id="entryGate">
  <div class="gate-card">
@@ -481,7 +502,7 @@ body.reduce-motion *{animation:none!important;transition-duration:.01ms!importan
  <div id="noticeList">正在加载公告…</div>
 </div></div>
 <div class="extra-modal" id="adminModal"><div class="extra-box">
- <div class="extra-head"><h3>念绪 AI · 管理后台</h3><div style="display:flex;gap:8px;align-items:center"><button class="iconbtn hidden" id="adminConfigButton" type="button">AI 接口设置</button><button class="iconbtn" data-extra-close="adminModal">关闭</button></div></div>
+ <div class="extra-head"><h3>念绪 AI · 管理后台</h3><div style="display:flex;gap:6px;align-items:center"><button class="iconbtn" id="adminSupportButton" type="button">客服工单</button><button class="iconbtn hidden" id="adminConfigButton" type="button">AI 接口设置</button><button class="iconbtn" data-extra-close="adminModal">关闭</button></div></div>
  <div class="admin-modal-body" id="adminModalBody">
  <h4>发布全站公告</h4>
  <input id="noticeTitle" placeholder="公告标题">
@@ -489,11 +510,14 @@ body.reduce-motion *{animation:none!important;transition-duration:.01ms!importan
  <button class="primary" id="publishNotice">发布公告</button>
  <section class="admin-section"><div class="admin-section-head"><div><span class="section-kicker">LIVE STATUS</span><h4>在线用户</h4></div><button class="iconbtn" id="refreshUsers" type="button">刷新列表</button></div>
  <p class="hint">仅列出最近 90 秒内有活动的会话。</p><div id="adminUsersList">正在加载在线用户…</div></section>
- <section class="admin-section" id="adminSupportSection"><div class="admin-section-head"><div><span class="section-kicker">HUMAN SUPPORT</span><h4>转人工消息 <span id="supportCount" class="support-count"></span></h4></div><button class="iconbtn" id="refreshSupportTickets" type="button">刷新消息</button></div><p class="hint">用户提交的信息会显示在这里；回复后，用户可在转人工窗口刷新查看。</p><div id="adminSupportList">正在加载转人工消息…</div></section>
  <h4 style="margin-top:22px">已发布公告</h4>
  <div id="adminNoticeList"></div>
  <p style="font-size:11px;color:var(--muted)">公告保存在服务器上，所有访问者都能看到。</p>
  </div>
+</div></div>
+<div class="extra-modal" id="adminSupportModal"><div class="extra-box">
+ <div class="extra-head"><h3>转人工 · 工单管理 <span id="supportCount" class="support-count"></span></h3><div style="display:flex;gap:7px;align-items:center"><button class="iconbtn" id="refreshSupportTickets" type="button">刷新消息</button><button class="iconbtn" data-extra-close="adminSupportModal">关闭</button></div></div>
+ <div class="admin-support-modal-body" id="adminSupportModalBody"><p class="hint">这里只显示用户转交给管理员的客服消息。回复或结束会话后，用户可在转人工窗口刷新查看。</p><div id="adminSupportList">正在加载转人工消息…</div></div>
 </div></div>
 <script>
 const $=id=>document.getElementById(id);
@@ -713,7 +737,7 @@ document.querySelectorAll("[data-password-toggle]").forEach(button=>button.oncli
 $("registerPassword").addEventListener("keydown",e=>{if(e.key==="Enter")$("registerConfirm").focus()});$("registerConfirm").addEventListener("keydown",e=>{if(e.key==="Enter")$("registerBtn").click()});
 $("registerBtn").onclick=async()=>{const id=$("entryId").value.trim(),password=$("registerPassword").value,error=registrationError();if(error){$("entryError").textContent=error;if(!$("entryId").value.trim()||!/^[A-Za-z0-9_\-\u4e00-\u9fff]{2,32}$/.test($("entryId").value.trim()))$("entryId").focus();else if(password.length<6)$("registerPassword").focus();else $("registerConfirm").focus();return}$("registerBtn").disabled=true;$("entryError").textContent="正在创建账号…";try{await apiRequest("/api/register",{method:"POST",body:JSON.stringify({id,password})});storeLoginId(id);$("registerPanel").classList.add("hidden");$("showRegisterBtn").classList.remove("hidden");$("entryPassword").value=password;$("registerPassword").value="";$("registerConfirm").value="";$("entryError").textContent="账号创建成功，已填入账号和密码，请点击登录"}catch(e){$("entryError").textContent=e.message}finally{$("registerBtn").disabled=false}};
 $("noticeButton").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
-function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}refreshNotices("adminNoticeList",true);refreshUsers();refreshSupportTickets();$("adminModal").classList.add("show")}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminPanel();setTimeout(()=>$("adminSupportSection").scrollIntoView({behavior:"smooth",block:"start"}),80);return}openModal("humanSupportModal");refreshMySupport()};$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return;$("adminModal").classList.remove("show");renderApis();switchSettingsPane("api");openModal("settingsModal")};
+function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");$("adminSupportModal").classList.add("show");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return;$("adminModal").classList.remove("show");renderApis();switchSettingsPane("api");openModal("settingsModal")};
 document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dataset.extraClose).classList.remove("show"));
 $("refreshUsers").onclick=refreshUsers;
 $("publishNotice").onclick=async()=>{const title=$("noticeTitle").value.trim(),content=$("noticeContent").value.trim();if(!title||!content){alert("请填写公告标题和内容");return}
