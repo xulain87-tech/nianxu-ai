@@ -5,16 +5,14 @@ const path = require('path');
 const crypto = require('crypto');
 const ROOT = __dirname;
 const PORT = Number(process.env.PORT || 3000);
-const ADMIN_ID = process.env.ADMIN_ID || 'admin';
+const ADMIN_ID = process.env.ADMIN_ID || '念绪968';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'nianxu968';
-const DEFAULT_ADMIN_PASSWORD = !process.env.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD === 'nianxu968' || process.env.ADMIN_PASSWORD.length < 12;
-if(process.env.NODE_ENV==='production'&&DEFAULT_ADMIN_PASSWORD)console.error('SECURITY: configure a unique ADMIN_PASSWORD of at least 12 characters; admin login is disabled until then.');
 const DATA_DIR = process.env.DATA_DIR || path.join(ROOT, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'notices.json');
 const AI_CONFIG_FILE = path.join(DATA_DIR, 'ai-config.json');
 const ACCOUNTS_FILE = path.join(DATA_DIR, 'accounts.json');
 const PRESENCE_TTL = 90 * 1000;
-const APP_VERSION = '2.4.0 Pro · Secure Image Studio';
+const APP_VERSION = '2.4.1 Pro · Admin Access Fix';
 fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
 if (!fs.existsSync(ACCOUNTS_FILE)) fs.writeFileSync(ACCOUNTS_FILE, '{}');
@@ -87,7 +85,7 @@ const server=http.createServer(async(req,res)=>{
   }
   if(req.method==='POST'&&url.pathname==='/api/login'){
    const data=await body(req),given=cleanId(data.id),password=String(data.password||'');if(!loginAttemptAllowed(req,res,given))return;
-   const pa=Buffer.from(password),pb=Buffer.from(ADMIN_PASSWORD),ok=given===ADMIN_ID&&!(process.env.NODE_ENV==='production'&&DEFAULT_ADMIN_PASSWORD)&&pa.length===pb.length&&crypto.timingSafeEqual(pa,pb);
+   const pa=Buffer.from(password),pb=Buffer.from(ADMIN_PASSWORD),ok=given===ADMIN_ID&&pa.length===pb.length&&crypto.timingSafeEqual(pa,pb);
    const accounts=readAccounts(),account=accounts[given],accountOk=!ok&&Boolean(account)&&verifyPassword(password,account.password);
    if(!ok&&!accountOk){recordLoginFailure(req,given);send(res,401,{error:'账号或密码错误'});return;}clearLoginFailures(req,given);
    const role=ok?'admin':'guest';const token=crypto.randomBytes(32).toString('hex');sessions.set(token,{role,userId:given,createdAt:Date.now(),lastSeen:Date.now(),expires:Date.now()+SESSION_TTL});
@@ -126,7 +124,7 @@ const server=http.createServer(async(req,res)=>{
   }
   if(req.method==='DELETE'&&url.pathname.startsWith('/api/admin/notices/')){if(!requireAdmin(req,res))return;const id=decodeURIComponent(url.pathname.split('/').pop());const list=readNotices();writeNotices(list.filter(n=>n.id!==id));send(res,200,{ok:true});return;}
   if(url.pathname.startsWith('/api/')){send(res,404,{error:'接口不存在'});return;}
-  let pathname=decodeURIComponent(url.pathname);if(pathname==='/')pathname='/index.html';const file=path.resolve(ROOT,'.'+pathname);if(!file.startsWith(ROOT+path.sep)||file.startsWith(path.resolve(DATA_DIR)+path.sep)){send(res,403,{error:'禁止访问'});return;}
+  if(req.method!=='GET'){send(res,405,{error:'静态资源仅允许 GET'});return;}const publicPaths=new Set(['/','/index.html','/manifest.webmanifest','/icon.svg','/sw.js']);if(!publicPaths.has(url.pathname)){send(res,404,{error:'资源不存在'});return;}let pathname=decodeURIComponent(url.pathname);if(pathname==='/')pathname='/index.html';const file=path.resolve(ROOT,'.'+pathname);if(!file.startsWith(ROOT+path.sep)||file.startsWith(path.resolve(DATA_DIR)+path.sep)){send(res,403,{error:'禁止访问'});return;}
   fs.readFile(file,(err,data)=>{if(err){res.writeHead(404,secureHeaders({'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store'}));res.end('Not found');return;}const ext=path.extname(file);const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.jpg':'image/jpeg','.svg':'image/svg+xml'};res.writeHead(200,secureHeaders({'Content-Type':types[ext]||'application/octet-stream','Cache-Control':ext==='.html'?'no-cache':'public, max-age=3600'}));res.end(data);});
  }catch(e){send(res,e.status||400,{error:e.message||'请求失败'});}
 });

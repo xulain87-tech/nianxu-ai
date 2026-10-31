@@ -187,7 +187,7 @@ html,body{background:#070707;color:var(--text)}#backdrop{background:#070707;filt
  </main>
 </div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><div><h3>设置中心</h3><span class="settings-kicker">Nianxu Control Room · 2.4.0 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="modal-top"><div><h3>设置中心</h3><span class="settings-kicker">Nianxu Control Room · 2.4.1 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
  <div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api">接口与模型</button><button data-pane="appearance">外观体验</button><button data-pane="version">版本信息</button><button data-pane="features">功能开关</button><button data-pane="access">权限与服务</button></div>
  <p class="settings-page-note">管理员可配置服务器接口；普通用户只通过服务器代理使用 AI，接口地址和 API Key 不会发送到浏览器。</p>
  <div id="apiList"></div>
@@ -198,7 +198,7 @@ html,body{background:#070707;color:var(--text)}#backdrop{background:#070707;filt
  </div>
  <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.4.0 Pro</strong><span>Build 2026.11 · Security · Image Studio · PWA</span><p>本次更新：强化账号与请求防护，管理员后台可从手机菜单访问，AI 生图支持比例与画面润色。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.4.1 Pro</strong><span>Build 2026.11 · Security · Image Studio · Admin Fix</span><p>本次更新：强化安全防护，恢复管理员登录与手机后台入口，并增强 AI 生图。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 开启互怼强度匹配</label>
@@ -233,7 +233,7 @@ html,body{background:#070707;color:var(--text)}#backdrop{background:#070707;filt
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.4.0 Pro" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.4.1 Pro" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -510,7 +510,7 @@ $("resetAvatar").onclick=()=>{save("nx_avatar","");$("avatarPreview").src=defaul
 $("saveAppearance").onclick=()=>{const img=$("bgImageUrl").value.trim(),vid=$("bgVideoUrl").value.trim();if(vid)setBgVideo(vid);else if(img)setBgImage(img);$("bgOverlay").style.background=$("bgDim").checked?"linear-gradient(120deg,#080d1966,#10182a55)":"transparent";if(bgObjectUrl){save("nx_bg_local","");}else save("nx_bg",{img,vid,dim:$("bgDim").checked});$("appearanceModal").classList.remove("show")};
 const savedBg=load("nx_bg",null);if(savedBg){$("bgImageUrl").value=savedBg.img||"";$("bgVideoUrl").value=savedBg.vid||"";$("bgDim").checked=savedBg.dim!==false;if(savedBg.vid)setBgVideo(savedBg.vid);else if(savedBg.img)setBgImage(savedBg.img);$("bgOverlay").style.background=savedBg.dim===false?"transparent":"linear-gradient(120deg,#080d1966,#10182a55)"}
 $("chat").addEventListener("dragover",e=>e.preventDefault());$("chat").addEventListener("drop",e=>{e.preventDefault();[...e.dataTransfer.files].slice(0,5-files.length).forEach(async f=>{try{files.push(await processFile(f));renderFiles()}catch(err){addMessage("ai",err.message,true)}})});
-// 通过同源安全后端认证；管理员凭据只保存在服务器环境变量中。
+// 通过同源安全后端认证；管理员凭据由服务器配置读取。
 let currentRole = "guest";
 const rememberedId=localStorage.getItem("nx_login_id")||"";
 if(rememberedId){$("entryId").value=rememberedId;$("rememberLoginId").checked=true;}
