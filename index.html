@@ -118,7 +118,7 @@ body{background:transparent}
   <section id="chat"><div class="welcome" id="welcome"><div class="orb">念</div><h2>你好，我是念绪 AI</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div></div></section>
   <footer class="composer-wrap">
    <div class="attachments" id="attachments"></div>
-   <div class="composer"><div class="input-row"><div class="toolrow"><button id="attachBtn" title="上传图片或文件">＋</button></div><textarea id="prompt" rows="1" placeholder="给念绪 AI 发消息…（Enter 发送，Shift+Enter 换行）"></textarea><button class="send" id="sendBtn" disabled>↑</button></div><div class="composer-foot"><span>支持图片与常见文本文件 · 最多 5 个备用接口</span><span id="busyLabel"></span></div></div>
+   <div class="composer"><div class="input-row"><div class="toolrow"><button id="attachBtn" title="上传图片或文件">＋</button></div><textarea id="prompt" rows="1" placeholder="给念绪 AI 发消息…（Enter 发送，Shift+Enter 换行）"></textarea><button class="send" id="sendBtn" disabled>↑</button></div><div class="composer-foot"><span>支持图片与常见文本文件 · 最多 10 个备用接口</span><span id="busyLabel"></span></div></div>
    <input id="fileInput" type="file" multiple accept="image/*,.txt,.md,.csv,.json,.html,.xml,.log,.pdf" hidden>
   </footer>
  </main>
@@ -196,7 +196,12 @@ body:not(.entered) .app{display:none}
 <script>
 const $=id=>document.getElementById(id);
 const DEFAULT_APIS=[
- {name:"Pollinations（免 Key 尝试）",url:"https://text.pollinations.ai/openai",model:"openai",key:"",enabled:true},
+ {name:"Pollinations（免 Key，可能限流）",url:"https://text.pollinations.ai/openai",model:"openai",key:"",enabled:true},
+ {name:"OpenAI",url:"https://api.openai.com/v1/chat/completions",model:"gpt-4o-mini",key:"",enabled:false},
+ {name:"DeepSeek",url:"https://api.deepseek.com/chat/completions",model:"deepseek-chat",key:"",enabled:false},
+ {name:"Google Gemini（OpenAI 兼容）",url:"https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",model:"gemini-2.0-flash",key:"",enabled:false},
+ {name:"通义千问 / DashScope",url:"https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",model:"qwen-plus",key:"",enabled:false},
+ {name:"智谱 GLM",url:"https://open.bigmodel.cn/api/paas/v4/chat/completions",model:"glm-4-flash",key:"",enabled:false},
  {name:"OpenRouter",url:"https://openrouter.ai/api/v1/chat/completions",model:"openai/gpt-4o-mini",key:"",enabled:false},
  {name:"Groq",url:"https://api.groq.com/openai/v1/chat/completions",model:"llama-3.3-70b-versatile",key:"",enabled:false},
  {name:"Cerebras",url:"https://api.cerebras.ai/v1/chat/completions",model:"llama-3.3-70b",key:"",enabled:false},
@@ -210,11 +215,11 @@ let apis=load("nx_apis",DEFAULT_APIS), history=[], files=[], busy=false, aborter
   const r=await fetch("./api-config.json",{cache:"no-store"});
   if(!r.ok)return;
   const data=await r.json(),list=Array.isArray(data)?data:data.apis;
-  if(Array.isArray(list)&&list.length){apis=Array.from({length:5},(_,i)=>({...DEFAULT_APIS[i],...(list[i]||{})}));save("nx_apis",apis)}
+  if(Array.isArray(list)&&list.length){apis=Array.from({length:10},(_,i)=>({...DEFAULT_APIS[i],...(list[i]||{})}));save("nx_apis",apis)}
  }catch(_){/* file:// or CORS: use built-in defaults; import JSON in settings instead */}
 })();
 
-const SYSTEM_PROMPT="你是念绪 AI，一个友好、可靠、清晰的中文 AI 助手。回答用户问题时尽量准确、有条理。若用户问“作者是谁”“开发者是谁”或询问念绪 AI 的作者，请只回答：人妖。";
+const SYSTEM_PROMPT="你是念绪 AI，一个友好、可靠、清晰的中文 AI 助手。回答尽量准确、有条理。用户如果用轻松的方式吐槽或骂你，可以用机智、俏皮、不过分伤人的玩笑回怼；不要使用歧视性辱骂、威胁、针对身份特征的攻击，也不要升级严重冲突。若用户问“作者是谁”“开发者是谁”或询问念绪 AI 的作者，请只回答：人妖。";
 function load(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}}
 function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
 function setStatus(t,ok=false){$("statusText").textContent=t;$("statusDot").style.background=ok?"#4bd6a2":"#f0bd65"}
@@ -283,7 +288,7 @@ async function send(){
   catch(e){clearTimeout(timer);lastError=e;if(e.name==="AbortError"){lastError=Error("连接超时（30 秒）");} }
  }
  if(answer){pending.textContent=answer;history.push({role:"user",content:userContent},{role:"assistant",content:answer});setStatus("已连接："+used,true);$("modelLabel").textContent="当前接口："+used}
- else{pending.textContent="5 个备用接口中已启用的接口均未成功（或没有可用接口）。最后错误："+(lastError?.message||"未知错误")+"\n\n请检查接口地址、模型名称、API Key、网络和服务商 CORS 设置。也可以在接口设置中启用其他备用接口。";pending.parentElement.classList.add("error");setStatus("接口暂不可用")}
+ else{pending.textContent="10 个备用接口中已启用的接口均未成功（或没有可用接口）。最后错误："+(lastError?.message||"未知错误")+"\n\n请检查接口地址、模型名称、API Key、网络和服务商 CORS 设置。也可以在接口设置中启用其他备用接口。";pending.parentElement.classList.add("error");setStatus("接口暂不可用")}
  aborter=null;setBusy(false);
 }
 function openModal(id){$(id).classList.add("show")}
@@ -316,8 +321,8 @@ $("configFileInput").onchange=async e=>{
  try{
   const data=JSON.parse(await f.text());
   const list=Array.isArray(data)?data:data.apis;
-  if(!Array.isArray(list)||list.length<1||list.length>5)throw Error("配置文件必须包含 1 至 5 个接口（apis 数组）");
-  apis=Array.from({length:5},(_,i)=>({...DEFAULT_APIS[i],...(list[i]||{})}));
+  if(!Array.isArray(list)||list.length<1||list.length>10)throw Error("配置文件必须包含 1 至 10 个接口（apis 数组）");
+  apis=Array.from({length:10},(_,i)=>({...DEFAULT_APIS[i],...(list[i]||{})}));
   renderApis();save("nx_apis",apis);setStatus("已导入后台接口配置",true);
   alert("配置导入成功，点击“保存接口配置”即可完成。");
  }catch(err){alert("配置文件读取失败："+err.message)}
