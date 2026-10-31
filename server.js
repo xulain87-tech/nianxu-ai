@@ -16,17 +16,19 @@ const AI_CONFIG_FILE = path.join(DATA_DIR, 'ai-config.json');
 const ACCOUNTS_FILE = path.join(DATA_DIR, 'accounts.json');
 const SUPPORT_FILE = path.join(DATA_DIR, 'support.json');
 const PRESENCE_TTL = 90 * 1000;
-const APP_VERSION = '2.6.0 Pro · Groq 免费接口 + 防火墙增强 + 语音回归';
+const APP_VERSION = '2.6.1 Pro · 智谱优先 + Pollinations 三路免 key 兜底';
 fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
 if (!fs.existsSync(ACCOUNTS_FILE)) fs.writeFileSync(ACCOUNTS_FILE, '{}');
 if (!fs.existsSync(SUPPORT_FILE)) fs.writeFileSync(SUPPORT_FILE, '[]');
-// 优先级：[0] Groq 免费高速 [1] Pollinations 无 key 兜底 [2] OpenRouter 可选免费 [3] 智谱 GLM 默认禁用（key 仍供生图复用）
+// 优先级：[0] 智谱 GLM-5.3（用户已配 key，主聊天+生图复用）[1-3] Pollinations 三路免 key 兜底 [4-5] Groq/OpenRouter 可选（默认禁用，管理员后台启用）
 const DEFAULT_AI_APIS = [
- {name:'Groq 免费高速',url:'https://api.groq.com/openai/v1/chat/completions',model:'llama-3.3-70b-versatile',enabled:true,key:process.env.GROQ_API_KEY||''},
- {name:'Pollinations 公共入口',url:'https://text.pollinations.ai/openai',model:'openai',enabled:true,key:process.env.POLLINATIONS_API_KEY||''},
- {name:'OpenRouter 免费模型',url:'https://openrouter.ai/api/v1/chat/completions',model:'meta-llama/llama-3.3-70b-instruct:free',enabled:false,key:process.env.OPENROUTER_API_KEY||''},
- {name:'智谱 GLM（收费，默认仅生图）',url:'https://open.bigmodel.cn/api/paas/v4/chat/completions',model:'GLM-5.3',enabled:false,key:process.env.ZHIPU_API_KEY||''}
+ {name:'智谱 GLM-5.3',url:'https://open.bigmodel.cn/api/paas/v4/chat/completions',model:'GLM-5.3',enabled:true,key:process.env.ZHIPU_API_KEY||''},
+ {name:'Pollinations · GPT',url:'https://text.pollinations.ai/openai',model:'openai',enabled:true,key:process.env.POLLINATIONS_API_KEY||''},
+ {name:'Pollinations · Gemini',url:'https://text.pollinations.ai/openai',model:'gemini',enabled:true,key:process.env.POLLINATIONS_API_KEY||''},
+ {name:'Pollinations · Mistral',url:'https://text.pollinations.ai/openai',model:'mistral',enabled:true,key:process.env.POLLINATIONS_API_KEY||''},
+ {name:'Groq 免费高速',url:'https://api.groq.com/openai/v1/chat/completions',model:'llama-3.3-70b-versatile',enabled:false,key:process.env.GROQ_API_KEY||''},
+ {name:'OpenRouter 免费模型',url:'https://openrouter.ai/api/v1/chat/completions',model:'meta-llama/llama-3.3-70b-instruct:free',enabled:false,key:process.env.OPENROUTER_API_KEY||''}
 ];
 if (!fs.existsSync(AI_CONFIG_FILE)) fs.writeFileSync(AI_CONFIG_FILE, JSON.stringify(DEFAULT_AI_APIS,null,2));
 function cleanId(v){return String(v||'').trim().slice(0,100)}
@@ -69,15 +71,16 @@ function originAllowed(req){const origin=req.headers.origin;if(!origin)return tr
 function authFailure(req,res,message='请先登录',status=401){send(res,status,{error:message});}
 function requireAdmin(req,res){const s=session(req);if(!s||s.role!=='admin'){authFailure(req,res,'需要管理员登录',401);return false;}return true;}
 // 按 url/name 对齐合并，兼容旧版 ai-config.json 索引错位；自动剔除旧版硬编码 key
-function readAiApis(){try{const v=JSON.parse(fs.readFileSync(AI_CONFIG_FILE,'utf8'));if(!Array.isArray(v))return DEFAULT_AI_APIS.map(a=>({...a}));return DEFAULT_AI_APIS.map(base=>{const saved=v.find(s=>s&&(s.url===base.url||String(s.name||'')===String(base.name)));if(!saved)return {...base};const savedKey=String(saved.key||'');const key=savedKey||base.key||'';return {...base,name:String(saved.name||base.name).slice(0,120),url:String(saved.url||base.url).slice(0,500),model:String(saved.model||base.model).slice(0,160),enabled:typeof saved.enabled==='boolean'?saved.enabled:base.enabled,key}})}catch{return DEFAULT_AI_APIS.map(a=>({...a}))}}
+function readAiApis(){try{const v=JSON.parse(fs.readFileSync(AI_CONFIG_FILE,'utf8'));if(!Array.isArray(v))return DEFAULT_AI_APIS.map(a=>({...a}));return DEFAULT_AI_APIS.map(base=>{let saved=v.find(s=>s&&String(s.name||'')===String(base.name));if(!saved){const sameUrl=v.filter(s=>s&&s.url===base.url);if(sameUrl.length===1)saved=sameUrl[0]}if(!saved)return {...base};const savedKey=String(saved.key||'');const key=savedKey||base.key||'';return {...base,name:String(saved.name||base.name).slice(0,120),url:String(saved.url||base.url).slice(0,500),model:String(saved.model||base.model).slice(0,160),enabled:typeof saved.enabled==='boolean'?saved.enabled:base.enabled,key}})}catch{return DEFAULT_AI_APIS.map(a=>({...a}))}}
 function writeAiApis(v){fs.writeFileSync(AI_CONFIG_FILE,JSON.stringify(v,null,2))}
 function publicAiApis(includeKeys=false){return readAiApis().map(a=>includeKeys?{...a,keySet:Boolean(a.key)}:{name:a.name,url:a.url,model:a.model,enabled:a.enabled,keySet:Boolean(a.key)})}
 function aiAnswer(data){const answer=data?.choices?.[0]?.message?.content??data?.choices?.[0]?.text??data?.text??data?.result;if(typeof answer==='string'&&answer.trim())return answer.trim();if(Array.isArray(answer)){const s=answer.map(x=>x.text||'').join('');if(s.trim())return s.trim()}throw new Error(data?.error?.message||'无法识别接口返回内容')}
 function isZhipuApi(api){return /bigmodel\.cn|zhipu/i.test(String(api?.url||'')+' '+String(api?.name||''))}
 function apiWorksWithoutKey(api){return /pollinations\.ai/i.test(String(api?.url||''))}
-const apiHealth=new Map(); // url -> {failCount, cooldownUntil}
-function markApiHealth(api,ok){const key=api.url;let h=apiHealth.get(key)||{failCount:0,cooldownUntil:0};if(ok){h.failCount=0;h.cooldownUntil=0}else{h.failCount++;if(h.failCount>=2)h.cooldownUntil=Date.now()+60000}apiHealth.set(key,h)}
-function apiUsable(api){if(!api||!api.enabled||!api.url||!api.model)return false;if(!api.key&&!apiWorksWithoutKey(api))return false;const h=apiHealth.get(api.url);if(h&&h.cooldownUntil>Date.now())return false;return true}
+const apiHealth=new Map(); // "url|model" -> {failCount, cooldownUntil}
+function apiHealthKey(api){return api.url+'|'+api.model}
+function markApiHealth(api,ok){const key=apiHealthKey(api);let h=apiHealth.get(key)||{failCount:0,cooldownUntil:0};if(ok){h.failCount=0;h.cooldownUntil=0}else{h.failCount++;if(h.failCount>=2)h.cooldownUntil=Date.now()+60000}apiHealth.set(key,h)}
+function apiUsable(api){if(!api||!api.enabled||!api.url||!api.model)return false;if(!api.key&&!apiWorksWithoutKey(api))return false;const h=apiHealth.get(apiHealthKey(api));if(h&&h.cooldownUntil>Date.now())return false;return true}
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 // 单接口 45s 超时 + 最多 2 次重试（500ms→1500ms 指数退避）+ 自动降级下一接口 + 连续失败 2 次冷却 60s
 async function proxyAiChat(messages,temperature=.7,autoFallback=true){
@@ -145,7 +148,7 @@ async function generateZhipuImage(prompt,size,userId){
 }
 function decodeHtml(value){return String(value||'').replace(/<[^>]*>/g,' ').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;|&apos;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ').replace(/&#(\d+);/g,(_,n)=>{const c=Number(n);return c<=0x10ffff?String.fromCodePoint(c):''}).replace(/&#x([0-9a-f]+);/gi,(_,n)=>{const c=parseInt(n,16);return c<=0x10ffff?String.fromCodePoint(c):''}).replace(/\s+/g,' ').trim();}
 function unwrapSearchUrl(raw){try{const u=new URL(raw,'https://duckduckgo.com');const redirected=u.searchParams.get('uddg');const value=redirected?decodeURIComponent(redirected):u.href;const final=new URL(value);return ['http:','https:'].includes(final.protocol)?final.href:''}catch{return ''}}
-async function searchWeb(query){const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),7000);try{const url='https://html.duckduckgo.com/html/?q='+encodeURIComponent(query);const r=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0 (compatible; NianxuAI/2.6.0; +https://duckduckgo.com/)','Accept':'text/html'},signal:controller.signal});if(!r.ok)throw new Error('搜索服务返回 HTTP '+r.status);const html=await r.text(),anchors=[...html.matchAll(/<a\b[^>]*class=["'][^"']*\bresult__a\b[^"']*["'][^>]*>[\s\S]*?<\/a>/gi)],results=[],seen=new Set();for(let i=0;i<anchors.length&&results.length<6;i++){const tag=anchors[i][0],href=tag.match(/href=["']([^"']+)["']/i)?.[1],url=href&&unwrapSearchUrl(href);if(!url||seen.has(url))continue;seen.add(url);const title=decodeHtml(tag.replace(/^<[\s\S]*?>/,'').replace(/<\/a>$/i,''));const end=i+1<anchors.length?anchors[i+1].index:Math.min(html.length,anchors[i].index+5000),chunk=html.slice(anchors[i].index,end);const snippetMatch=chunk.match(/<(?:a|div)[^>]*class=["'][^"']*(?:result__snippet|result-snippet)[^"']*["'][^>]*>([\s\S]*?)<\/(?:a|div)>/i);const snippet=decodeHtml(snippetMatch?.[1]||'');if(title)results.push({title:title.slice(0,240),url,snippet:snippet.slice(0,500)});}return results;}finally{clearTimeout(timer)}}
+async function searchWeb(query){const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),7000);try{const url='https://html.duckduckgo.com/html/?q='+encodeURIComponent(query);const r=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0 (compatible; NianxuAI/2.6.1; +https://duckduckgo.com/)','Accept':'text/html'},signal:controller.signal});if(!r.ok)throw new Error('搜索服务返回 HTTP '+r.status);const html=await r.text(),anchors=[...html.matchAll(/<a\b[^>]*class=["'][^"']*\bresult__a\b[^"']*["'][^>]*>[\s\S]*?<\/a>/gi)],results=[],seen=new Set();for(let i=0;i<anchors.length&&results.length<6;i++){const tag=anchors[i][0],href=tag.match(/href=["']([^"']+)["']/i)?.[1],url=href&&unwrapSearchUrl(href);if(!url||seen.has(url))continue;seen.add(url);const title=decodeHtml(tag.replace(/^<[\s\S]*?>/,'').replace(/<\/a>$/i,''));const end=i+1<anchors.length?anchors[i+1].index:Math.min(html.length,anchors[i].index+5000),chunk=html.slice(anchors[i].index,end);const snippetMatch=chunk.match(/<(?:a|div)[^>]*class=["'][^"']*(?:result__snippet|result-snippet)[^"']*["'][^>]*>([\s\S]*?)<\/(?:a|div)>/i);const snippet=decodeHtml(snippetMatch?.[1]||'');if(title)results.push({title:title.slice(0,240),url,snippet:snippet.slice(0,500)});}return results;}finally{clearTimeout(timer)}}
 const ATTACK_RE=/(\.\.\/|\.\.\\|%00|%2e%2e|union\s+select|information_schema|sleep\s*\(|benchmark\s*\(|waitfor\s+delay|<!ENTITY|<!DOCTYPE|SYSTEM\s+["']|PUBLIC\s+["']|<\?xml|or\s+1\s*=\s*1)/i;
 const server=http.createServer(async(req,res)=>{
   try{
