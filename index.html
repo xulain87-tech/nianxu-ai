@@ -127,6 +127,14 @@ body{background:transparent}
 #settingsModal[data-pane="version"] #apiList,#settingsModal[data-pane="version"] #apiBackupPanel,#settingsModal[data-pane="version"] #featurePanel,#settingsModal[data-pane="version"] #adminHint,#settingsModal[data-pane="version"] .settings-page-note,#settingsModal[data-pane="features"] #apiList,#settingsModal[data-pane="features"] #apiBackupPanel,#settingsModal[data-pane="features"] #versionPanel,#settingsModal[data-pane="features"] #adminHint,#settingsModal[data-pane="features"] .settings-page-note,#settingsModal[data-pane="access"] #apiList,#settingsModal[data-pane="access"] #apiBackupPanel,#settingsModal[data-pane="access"] #versionPanel,#settingsModal[data-pane="access"] #featurePanel,#settingsModal[data-pane="access"] .settings-page-note{display:none}#settingsModal[data-pane="api"] #versionPanel,#settingsModal[data-pane="api"] #featurePanel,#settingsModal[data-pane="api"] #adminHint{display:none}
 @media(max-width:760px){.settings-hero{align-items:flex-start;flex-direction:column}.settings-info-grid{grid-template-columns:1fr}.settings-nav{top:39px}.modal-back{backdrop-filter:none;background:#030611f5}.modal{backdrop-filter:none}.modal-back#settingsModal{align-items:stretch;padding:10px}.modal-back#settingsModal .modal{height:calc(100dvh - 20px);max-height:none;overflow:hidden;display:flex;flex-direction:column;padding:16px}.modal-back#settingsModal .modal-top{margin:-16px -16px 10px;padding:14px 16px;position:relative;top:auto}.modal-back#settingsModal .settings-hero{padding:10px;margin-bottom:8px}.modal-back#settingsModal .settings-nav{position:relative;top:auto;flex:0 0 auto;padding-bottom:6px}.modal-back#settingsModal .settings-page-note{font-size:10px;margin:5px 0 8px}.modal-back#settingsModal #apiList{flex:1;overflow:hidden}.modal-back#settingsModal #apiList .api-card:nth-child(n+6){display:none}.modal-back#settingsModal #apiList .api-card:not(.expanded) .grid,.modal-back#settingsModal #apiList .api-card:not(.expanded)>.field{display:none}.modal-back#settingsModal #apiList .api-card{margin:4px 0;padding:9px}.modal-back#settingsModal #apiBackupPanel{padding:8px;margin:6px 0}.modal-back#settingsModal #apiBackupPanel .hint{display:none}.modal-back#settingsModal .modal-actions{margin-top:auto;margin-bottom:-16px}.modal-back#settingsModal[data-pane="version"] .settings-info-grid,.modal-back#settingsModal[data-pane="features"] .settings-info-grid{display:block;overflow:auto;flex:1}.modal-back#settingsModal[data-pane="access"] .admin-hint{overflow:auto;flex:1}}
 </style>
+<style id="liteUi">
+/* 轻量 UI：保留深色渐变和紫青强调色，移除高耗能模糊与大阴影 */
+.sidebar,.main{backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:0 8px 28px #0004;border-radius:18px}
+#backdrop{background:linear-gradient(135deg,#0a0f1d,#121a2b)}
+.primary,.send{box-shadow:none}.primary:hover,.send:hover{transform:none;filter:brightness(1.06)}
+.modal-back,.extra-modal{backdrop-filter:none;-webkit-backdrop-filter:none;background:#050914f2}.modal-top{backdrop-filter:none;-webkit-backdrop-filter:none}
+.msg,.api-card,.notice-card{box-shadow:none}.settings-hero{background:#ffffff05}
+</style>
 </head>
 <body>
 <div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
@@ -157,8 +165,8 @@ body{background:transparent}
 </div>
 <div class="modal-back" id="settingsModal"><div class="modal">
  <div class="modal-top"><div><h3>设置中心</h3><span class="settings-kicker">Nianxu Control Room · 2.0 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
- <div class="settings-nav"><button class="active" data-pane="api">接口与模型</button><button data-pane="appearance">外观体验</button><button data-pane="version">版本信息</button><button data-pane="features">功能开关</button><button data-pane="access">权限与服务</button></div>
- <p class="settings-page-note">按优先顺序尝试已启用接口；单个接口 18 秒未响应会自动切换。移动端默认展示 5 个公益/免费额度预设，点击接口名称可展开编辑。</p>
+ <div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api">接口与模型</button><button data-pane="appearance">外观体验</button><button data-pane="version">版本信息</button><button data-pane="features">功能开关</button><button data-pane="access">权限与服务</button></div>
+ <p class="settings-page-note">管理员可配置服务器接口；普通用户只通过服务器代理使用 AI，接口地址和 API Key 不会发送到浏览器。</p>
  <div id="apiList"></div>
  <div class="api-card" id="apiBackupPanel">
   <div class="api-head"><span>后台接口配置文件</span><span style="color:#9ba8c4;font-size:11px">api-config.json</span></div>
@@ -231,29 +239,8 @@ body:not(.entered) .app{display:none}
 
 <script>
 const $=id=>document.getElementById(id);
-const DEFAULT_APIS=[
- {name:"Pollinations · 公共入口（可能限流）",url:"https://text.pollinations.ai/openai",model:"openai",key:"",enabled:true},
- {name:"OpenRouter · 免费模型路由",url:"https://openrouter.ai/api/v1/chat/completions",model:"openrouter/free",key:"",enabled:false},
- {name:"Groq · 免费低延迟层",url:"https://api.groq.com/openai/v1/chat/completions",model:"openai/gpt-oss-20b",key:"",enabled:false},
- {name:"Hugging Face · 免费额度",url:"https://router.huggingface.co/v1/chat/completions",model:"openai/gpt-oss-120b:fastest",key:"",enabled:false},
- {name:"Cerebras · Free Trial",url:"https://api.cerebras.ai/v1/chat/completions",model:"gpt-oss-120b",key:"",enabled:false},
- {name:"Google Gemini（OpenAI 兼容）",url:"https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",model:"gemini-2.0-flash",key:"",enabled:false},
- {name:"通义千问 / DashScope",url:"https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",model:"qwen-plus",key:"",enabled:false},
- {name:"智谱 GLM",url:"https://open.bigmodel.cn/api/paas/v4/chat/completions",model:"glm-4-flash",key:"",enabled:false},
- {name:"Mistral · 备用",url:"https://api.mistral.ai/v1/chat/completions",model:"mistral-small-latest",key:"",enabled:false},
- {name:"Together AI",url:"https://api.together.xyz/v1/chat/completions",model:"meta-llama/Llama-3.3-70B-Instruct-Turbo",key:"",enabled:false}
-];
-let apis=load("nx_apis",DEFAULT_APIS), history=[], files=[], busy=false, aborter=null, bgObjectUrl=null;
-
-(async function loadHostedApiConfig(){
- try{
-  if(localStorage.getItem("nx_apis"))return;
-  const r=await fetch("./api-config.json",{cache:"no-store"});
-  if(!r.ok)return;
-  const data=await r.json(),list=Array.isArray(data)?data:data.apis;
-  if(Array.isArray(list)&&list.length){apis=Array.from({length:10},(_,i)=>({...DEFAULT_APIS[i],...(list[i]||{})}));save("nx_apis",apis)}
- }catch(_){/* file:// or CORS: use built-in defaults; import JSON in settings instead */}
-})();
+const DEFAULT_APIS=[];
+let apis=[], history=[], files=[], busy=false, aborter=null, bgObjectUrl=null;
 
 const SYSTEM_PROMPT="你是念绪 AI，一个友好、可靠、清晰的中文 AI 助手。回答尽量准确、有条理。用户如果用轻松的方式吐槽或骂你，可以用机智、俏皮、不过分伤人的玩笑回怼；不要使用歧视性辱骂、威胁、针对身份特征的攻击，也不要升级严重冲突。若用户问“作者是谁”“开发者是谁”或询问念绪 AI 的作者，请只回答：人妖。";
 function load(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}}
@@ -272,7 +259,7 @@ function addMessage(role,text,err=false,images=[]){
  const body=document.createElement("div");body.textContent=text;box.append(body);
  images.forEach(src=>{const im=document.createElement("img");im.src=src;box.append(im)});
  if(role==="ai"&&!err){const tools=document.createElement("div");tools.className="msg-tools";const copy=document.createElement("button");copy.textContent="复制回复";copy.onclick=()=>navigator.clipboard?.writeText(text);tools.append(copy);box.append(tools)}
- $("chat").append(box);requestAnimationFrame(()=>{if(matchMedia("(max-width:760px)").matches){window.scrollTo({top:document.documentElement.scrollHeight,behavior:"smooth"})}else{$("chat").scrollTop=$("chat").scrollHeight}});return body;
+ $("chat").append(box);while($("chat").children.length>60)$('chat').firstElementChild.remove();requestAnimationFrame(()=>{if(matchMedia("(max-width:760px)").matches){window.scrollTo({top:document.documentElement.scrollHeight,behavior:"smooth"})}else{$("chat").scrollTop=$("chat").scrollHeight}});return body;
 }
 function renderFiles(){$("attachments").innerHTML="";files.forEach((f,i)=>{const c=document.createElement("span");c.className="file-chip";c.textContent=(f.name.length>22?f.name.slice(0,19)+"…":f.name);const b=document.createElement("button");b.textContent="×";b.onclick=()=>{files.splice(i,1);renderFiles()};c.append(b);$("attachments").append(c)})}
 function setBusy(v){busy=v;$("sendBtn").disabled=v||(!$("prompt").value.trim()&&!files.length);$("busyLabel").textContent=v?"正在连接…":""}
@@ -295,16 +282,9 @@ function buildContent(text,attached){
  attached.forEach(f=>{if(f.kind==="image")parts.push({type:"image_url",image_url:{url:f.data}});else parts.push({type:"text",text:"\n[附件："+f.name+"]\n"+f.text})});
  return parts;
 }
-async function callApi(api,msgs,signal){
- const headers={"Content-Type":"application/json"};if(api.key)headers.Authorization="Bearer "+api.key;
- const payload={model:api.model||"openai",messages:msgs,temperature:.7};
- const response=await fetch(api.url,{method:"POST",headers,body:JSON.stringify(payload),signal});
- const raw=await response.text();if(!response.ok)throw Error("HTTP "+response.status+" "+raw.slice(0,160));
- let data;try{data=JSON.parse(raw)}catch{if(raw.trim())return raw.trim();throw Error("返回内容为空")}
- const answer=data?.choices?.[0]?.message?.content??data?.choices?.[0]?.text??data?.text??data?.result;
- if(typeof answer==="string"&&answer.trim())return answer.trim();
- if(Array.isArray(answer)){const s=answer.map(x=>x.text||"").join("");if(s.trim())return s.trim()}
- throw Error(data?.error?.message||"无法识别接口返回内容");
+async function callServerChat(msgs,signal){
+ const response=await fetch("/api/ai/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgs}),signal});
+ const data=await response.json().catch(()=>({}));if(!response.ok)throw Error(data.error||("HTTP "+response.status));if(!data.answer)throw Error("服务器没有返回有效内容");return data;
 }
 async function send(){
  const text=$("prompt").value.trim();if((!text&&!files.length)||busy)return;
@@ -314,18 +294,10 @@ async function send(){
  const pending=addMessage("ai","正在依次尝试可用接口…");
  const userContent=buildContent(text,attached);
  const apiHistory=[{role:"system",content:SYSTEM_PROMPT},...history.slice(-12),{role:"user",content:userContent}];
- const candidates=apis.filter(a=>a.enabled&&a.url.trim());if(window.featurePrefs?.autoFallback===false)candidates.splice(1);let answer=null,lastError=null,used="";
- if(!candidates.length){pending.textContent="还没有启用可用接口。请打开“接口设置”，配置至少一个接口。";pending.parentElement.classList.add("error");setBusy(false);return}
- for(let i=0;i<candidates.length;i++){
-  const api=candidates[i];setStatus("正在连接 · "+api.name);
-  const controller=new AbortController(); aborter=controller;
-  const timer=setTimeout(()=>controller.abort(),18000);
-  try{answer=await callApi(api,apiHistory,controller.signal);used=api.name;clearTimeout(timer);break}
-  catch(e){clearTimeout(timer);lastError=e;if(e.name==="AbortError"){lastError=Error("连接超时（18 秒），已自动切换备用接口");} }
- }
- aborter=null;
- if(answer){pending.textContent=answer;history.push({role:"user",content:userContent},{role:"assistant",content:answer});if(history.length>20)history=history.slice(-20);setStatus("已连接："+used,true);$("modelLabel").textContent="当前接口："+used}
- else{pending.textContent="10 个备用接口中已启用的接口均未成功（或没有可用接口）。最后错误："+(lastError?.message||"未知错误")+"\n\n请检查接口地址、模型名称、API Key、网络和服务商 CORS 设置。也可以在接口设置中启用其他备用接口。";pending.parentElement.classList.add("error");setStatus("接口暂不可用")}
+ let answer=null,lastError=null,used="服务器接口";const controller=new AbortController();aborter=controller;const timer=setTimeout(()=>controller.abort(),20000);
+ try{const result=await callServerChat(apiHistory,controller.signal);answer=result.answer;used=result.used||used}catch(e){lastError=e}finally{clearTimeout(timer);aborter=null}
+ if(answer){pending.textContent=answer;history.push({role:"user",content:userContent},{role:"assistant",content:answer});if(history.length>20)history=history.slice(-20);setStatus("已连接："+used,true);$("modelLabel").textContent="服务器接口 · "+used}
+ else{pending.textContent="服务器接口暂不可用："+(lastError?.message||"未知错误")+"。请联系管理员检查接口配置。";pending.parentElement.classList.add("error");setStatus("服务器接口暂不可用")}
  aborter=null;setBusy(false);
 }
 function openModal(id){$(id).classList.add("show")}
@@ -338,12 +310,13 @@ document.addEventListener("keydown",e=>{
  if(e.key==="Escape")document.querySelectorAll(".modal-back.show").forEach(layer=>layer.classList.remove("show"));
 });
 
-$("openSettings").onclick=$("mobileSettings").onclick=()=>{renderApis();switchSettingsPane("api");openModal("settingsModal")};
+$("openSettings").onclick=$("mobileSettings").onclick=()=>{syncAdminUi();if(currentRole==="admin")renderApis();switchSettingsPane(currentRole==="admin"?"api":"version");openModal("settingsModal")};
 $("openAppearance").onclick=$("mobileAppearance").onclick=()=>openModal("appearanceModal");
-function renderApis(){
+async function renderApis(){
+ try{const remote=await apiRequest("/api/admin/apis");apis=remote.apis||[]}catch(e){setStatus("接口配置仅管理员可读取");return}
  $("apiList").innerHTML="";
- apis.forEach((a,i)=>{const card=document.createElement("div");card.className="api-card";card.innerHTML=`<div class="api-head"><span><b>接口 ${i+1}</b><small>${esc(a.name)}</small></span><label class="toggle"><input type="checkbox" data-k="enabled" ${a.enabled?"checked":""}> 启用</label></div><div class="grid"><div class="field"><label>接口名称</label><input data-k="name" value="${esc(a.name)}"></div><div class="field"><label>模型名称</label><input data-k="model" value="${esc(a.model)}"></div></div><div class="field"><label>API Endpoint（完整请求地址）</label><input data-k="url" value="${esc(a.url)}" placeholder="https://.../v1/chat/completions"></div><div class="field"><label>API Key（服务商要求时填写）</label><input data-k="key" type="password" value="${esc(a.key)}" placeholder="免费 Key 填在这里"></div>`;
- card.querySelector(".api-head").onclick=e=>{if(e.target.closest("input,label"))return;card.classList.toggle("expanded")};card.querySelectorAll("[data-k]").forEach(el=>el.onchange=el.oninput=()=>{const k=el.dataset.k;a[k]=k==="enabled"?el.checked:el.value;card.querySelector(".api-head small").textContent=a.name});$("apiList").append(card)});
+ apis.forEach((a,i)=>{const card=document.createElement("div");card.className="api-card";card.innerHTML=`<div class="api-head"><span><b>接口 ${i+1}</b><small>${esc(a.name)}${a.keySet?" · Key 已设置":""}</small></span><label class="toggle"><input type="checkbox" data-k="enabled" ${a.enabled?"checked":""}> 启用</label></div><div class="grid"><div class="field"><label>接口名称</label><input data-k="name" value="${esc(a.name)}"></div><div class="field"><label>模型名称</label><input data-k="model" value="${esc(a.model)}"></div></div><div class="field"><label>API Endpoint（管理员可编辑）</label><input data-k="url" value="${esc(a.url)}" placeholder="https://.../v1/chat/completions"></div><div class="field"><label>API Key（管理员可查看和复制）</label><input data-k="key" type="text" value="${esc(a.key||"")}" placeholder="${a.keySet?"已设置":"粘贴服务商 Key"}"><button type="button" class="iconbtn copy-key">复制 Key</button></div>`;
+ card.querySelector(".copy-key").onclick=()=>navigator.clipboard?.writeText(a.key||"").then(()=>setStatus("Key 已复制到剪贴板",true));card.querySelector(".api-head").onclick=e=>{if(e.target.closest("input,label"))return;card.classList.toggle("expanded")};card.querySelectorAll("[data-k]").forEach(el=>el.onchange=el.oninput=()=>{const k=el.dataset.k;a[k]=k==="enabled"?el.checked:el.value;card.querySelector(".api-head small").textContent=a.name+(a.key?" · Key 已设置":"")});$("apiList").append(card)});
 }
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 
@@ -373,13 +346,13 @@ applyFeaturePrefs();
 if($("featureMotion")){$("featureMotion").checked=featurePrefs.motion!==false;$('featureMotion').onchange=()=>{featurePrefs.motion=$('featureMotion').checked;save('nx_features',featurePrefs);applyFeaturePrefs()};$('featureAutoFallback').checked=featurePrefs.autoFallback!==false;$('featureAutoFallback').onchange=()=>{featurePrefs.autoFallback=$('featureAutoFallback').checked;save('nx_features',featurePrefs)}}
 async function checkServiceHealth(){try{const r=await fetch("/api/health",{cache:"no-store"});const d=await r.json();$("serviceHealth").textContent=d.status==="ok"?"服务器在线 · "+d.latency+"ms":"服务检查异常";$("roleSummary").textContent="当前会话："+(currentRole==="admin"?"管理员 · 可管理系统":"普通用户 · 配置按设备隔离")}catch(e){$("serviceHealth").textContent="服务检查失败"}}
 checkServiceHealth();
-$("saveSettings").onclick=()=>{save("nx_apis",apis);$("settingsModal").classList.remove("show");$("modelLabel").textContent="智能对话 · 多接口自动切换";setStatus("接口配置已保存",true)};
+ $("saveSettings").onclick=async()=>{if(currentRole!=="admin")return alert("只有管理员可以修改接口");try{const result=await apiRequest("/api/admin/apis",{method:"PUT",body:JSON.stringify({apis})});apis=result.apis||apis;$("settingsModal").classList.remove("show");$("modelLabel").textContent="服务器接口 · 管理员已配置";setStatus("服务器接口配置已保存",true)}catch(e){alert(e.message)}};
 
 async function generateImage(){
  const prompt=window.prompt("描述你想生成的图片", "一幅有紫青霓虹光的未来城市夜景");
  if(!prompt||!prompt.trim())return;
  const clean=prompt.trim().slice(0,500); addMessage("user","生成图片："+clean); setStatus("正在生成图片…");
- const url="https://image.pollinations.ai/prompt/"+encodeURIComponent(clean)+"?width=1024&height=1024&nologo=true&seed="+Date.now();
+ const url="https://image.pollinations.ai/prompt/"+encodeURIComponent(clean)+"?width=768&height=768&nologo=true&seed="+Date.now();
  const box=addMessage("ai","图片生成中…"); const im=new Image(); im.onload=()=>{box.textContent="已完成图片生成："+clean;im.alt=clean;im.className="generated-image";box.parentElement.appendChild(im);setStatus("图片已生成",true)}; im.onerror=()=>{box.textContent="图片生成失败，请检查网络或稍后重试。";box.parentElement.classList.add("error");setStatus("生图服务暂不可用")}; im.src=url;
 }
 $("generateImageBtn").onclick=generateImage;
@@ -401,6 +374,7 @@ $("chat").addEventListener("dragover",e=>e.preventDefault());$("chat").addEventL
 
 // 通过同源安全后端认证；管理员凭据只保存在服务器环境变量中。
 let currentRole = "guest";
+function syncAdminUi(){const admin=currentRole==="admin";$("adminButton").classList.toggle("hidden",!admin);$("apiSettingsTab").classList.toggle("hidden",!admin);$("apiList").classList.toggle("hidden",!admin);$("apiBackupPanel").classList.toggle("hidden",!admin);$("saveSettings").classList.toggle("hidden",!admin)}
 async function apiRequest(path, options={}){
  const response=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json",...(options.headers||{})},...options});
  const data=await response.json().catch(()=>({error:"服务器返回了无效响应"}));
@@ -428,7 +402,7 @@ async function enterApp(){
  const id=$("entryId").value.trim();if(!id){$("entryError").textContent="请先输入访问 ID";return}
  $("entryError").textContent="正在验证…";$("enterBtn").disabled=true;
  try{const data=await apiRequest("/api/login",{method:"POST",body:JSON.stringify({id})});currentRole=data.role;
-  document.body.classList.add("entered");$("entryGate").style.display="none";$("adminButton").classList.toggle("hidden",currentRole!=="admin");setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
+  document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
  }catch(e){$("entryError").textContent=e.message}finally{$("enterBtn").disabled=false}
 }
 $("enterBtn").addEventListener("click",enterApp);
@@ -439,7 +413,7 @@ document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dat
 $("refreshUsers").onclick=refreshUsers;
 $("publishNotice").onclick=async()=>{const title=$("noticeTitle").value.trim(),content=$("noticeContent").value.trim();if(!title||!content){alert("请填写公告标题和内容");return}
  try{await apiRequest("/api/admin/notices",{method:"POST",body:JSON.stringify({title,content})});$("noticeTitle").value="";$("noticeContent").value="";await refreshNotices("adminNoticeList",true);alert("公告已发布，所有用户均可查看。")}catch(e){alert(e.message)}};
-(async()=>{try{const data=await apiRequest("/api/session");if(data.authenticated){currentRole=data.role;document.body.classList.add("entered");$("entryGate").style.display="none";$("adminButton").classList.toggle("hidden",currentRole!=="admin");await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});}}catch(_ ){/* 未登录时显示入口 */}})();
+ (async()=>{try{const data=await apiRequest("/api/session");if(data.authenticated){currentRole=data.role;document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});}}catch(_ ){syncAdminUi();/* 未登录时显示入口 */}})();
 
 setInterval(()=>{if(document.body.classList.contains("entered")&&currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});},30000);
 
