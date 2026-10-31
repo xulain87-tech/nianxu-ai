@@ -95,6 +95,7 @@ body{background:transparent}
 }
 
 </style>
+<link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#10182a"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
 <div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
@@ -141,6 +142,11 @@ body{background:transparent}
  </div>
  <div class="field"><label>上传本地背景图片或视频</label><input type="file" id="bgFile" accept="image/*,video/mp4,video/webm"></div>
  <div class="field"><label>我的头像</label><div class="avatar-settings"><img id="avatarPreview" alt="头像预览"><input type="file" id="avatarFile" accept="image/*"><button class="iconbtn" type="button" id="resetAvatar">恢复默认</button></div><small class="hint">头像会显示在你发送的消息旁边，仅保存在当前设备。</small></div>
+ <div class="grid" style="margin-top:14px">
+  <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
+  <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
+ </div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 1.0" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -378,5 +384,24 @@ $("publishNotice").onclick=async()=>{const title=$("noticeTitle").value.trim(),c
 (async()=>{try{const data=await apiRequest("/api/session");if(data.authenticated){currentRole=data.role;document.body.classList.add("entered");$("entryGate").style.display="none";$("adminButton").classList.toggle("hidden",currentRole!=="admin");await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});}}catch(_ ){/* 未登录时显示入口 */}})();
 
 setInterval(()=>{if(document.body.classList.contains("entered")&&currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});},30000);
+
+// 个性化设置：字体、字号、主题在本设备保存
+const pref=load("nx_preferences",{fontFamily:"system",fontSize:16,theme:"dark"});
+function applyPreferences(v){
+ const family={system:'system-ui,-apple-system,"Segoe UI",sans-serif',sans:'Arial,"Noto Sans",sans-serif',serif:'Georgia,"Noto Serif",serif',mono:'ui-monospace,SFMono-Regular,Consolas,monospace'};
+ document.documentElement.style.setProperty('--chat-font',family[v.fontFamily]||family.system);
+ document.documentElement.style.setProperty('--chat-size',(Number(v.fontSize)||16)+'px');
+ document.body.classList.toggle('nx-light',v.theme==='light');
+ if(v.theme==='system')document.body.classList.toggle('nx-light',matchMedia('(prefers-color-scheme: light)').matches);
+}
+const prefStyle=document.createElement('style');prefStyle.textContent='.msg,.welcome,.composer textarea{font-family:var(--chat-font,system-ui)!important;font-size:var(--chat-size,16px)!important}.nx-light{--text:#182033;--muted:#5c6680;--panel:#f4f6fc;--line:#d5dced;background:#f4f6fc;color:#182033}.nx-light .app,.nx-light .main,.nx-light .sidebar{background:#f4f6fce8;color:#182033}.nx-light .topbar,.nx-light .composer{background:#ffffffd9}.nx-light .iconbtn,.nx-light .ghost{color:#182033;background:#e8ecf6}';document.head.appendChild(prefStyle);
+applyPreferences(pref);
+if($('fontFamily')){$('fontFamily').value=pref.fontFamily;$('fontSize').value=pref.fontSize;$('fontSizeLabel').textContent=pref.fontSize+'px';$('themeMode').value=pref.theme;
+ $('fontSize').oninput=()=>{$('fontSizeLabel').textContent=$('fontSize').value+'px';pref.fontSize=Number($('fontSize').value);save('nx_preferences',pref);applyPreferences(pref)};
+ $('fontFamily').onchange=()=>{pref.fontFamily=$('fontFamily').value;save('nx_preferences',pref);applyPreferences(pref)};
+ $('themeMode').onchange=()=>{pref.theme=$('themeMode').value;save('nx_preferences',pref);applyPreferences(pref)};
+}
+// PWA service worker registration
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('/sw.js').catch(()=>{});
 </script>
 </body></html>
