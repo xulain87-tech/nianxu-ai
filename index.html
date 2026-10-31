@@ -196,7 +196,7 @@ html,body{background:#070707;color:var(--text)}#backdrop{background:#070707;filt
  <div class="modal-actions"><button class="ghost" type="button" data-close="humanSupportModal">取消</button><button class="primary" id="sendSupportMessage" type="button">发送并转人工</button></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><div><h3>设置中心</h3><span class="settings-kicker">Nianxu Control Room · 2.5.0 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="modal-top"><div><h3>设置中心</h3><span class="settings-kicker">Nianxu Control Room · 2.5.1 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
  <div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api">接口与模型</button><button data-pane="appearance">外观体验</button><button data-pane="version">版本信息</button><button data-pane="features">功能开关</button><button data-pane="access">权限与服务</button></div>
  <p class="settings-page-note">管理员可配置服务器接口；普通用户只通过服务器代理使用 AI，接口地址和 API Key 不会发送到浏览器。</p>
  <div id="apiList"></div>
@@ -207,7 +207,7 @@ html,body{background:#070707;color:var(--text)}#backdrop{background:#070707;filt
  </div>
  <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.5.0 Pro</strong><span>Build 2026.11 · Human Support · GLM-Image</span><p>本次更新：新增顶栏转人工客服和管理员回复队列；移动端顶栏/滚动优化；AI 生图改由智谱 GLM-Image 生成。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.5.1 Pro</strong><span>Build 2026.11 · Compact Modals · Auto Notices</span><p>本次更新：设置、管理与公告窗口缩小，长内容独立滚动；登录后自动展示已发布公告。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 开启互怼强度匹配</label>
@@ -242,7 +242,7 @@ html,body{background:#070707;color:var(--text)}#backdrop{background:#070707;filt
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.5.0 Pro" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.5.1 Pro" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -288,6 +288,29 @@ body:not(.entered) .app{display:none}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 body.reduce-motion *{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 .msg-tools button{transition:color .12s ease,background-color .12s ease}.settings-feature-controls optgroup{background:#101827;color:#a9b5d1}
+
+/* 2.5.1：设置、管理与公告使用紧凑卡片，长内容在卡片内滚动，关闭操作始终可见。 */
+.modal-back#settingsModal{align-items:center!important;overflow:hidden!important;padding:calc(12px + env(safe-area-inset-top)) 16px calc(12px + env(safe-area-inset-bottom))!important}
+.modal-back#settingsModal .modal{width:min(620px,calc(100vw - 32px))!important;max-height:min(78dvh,700px)!important;height:auto!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain;display:block!important;padding:20px!important}
+.modal-back#settingsModal .settings-info-grid,.modal-back#settingsModal .admin-hint,.modal-back#settingsModal #apiList{min-height:0!important;max-height:none!important;overflow:visible!important}
+.modal-back#settingsModal .modal-top{position:sticky!important;top:-20px!important;margin:-20px -20px 10px!important;padding:13px 20px 10px!important;z-index:6}
+.modal-back#settingsModal .modal-actions{position:sticky!important;bottom:-20px!important;margin:12px -20px -20px!important;padding:10px 20px calc(10px + env(safe-area-inset-bottom))!important;z-index:5}
+#adminModal,#noticeModal{align-items:center!important;justify-content:center!important;overflow:hidden!important;padding:calc(12px + env(safe-area-inset-top)) 16px calc(12px + env(safe-area-inset-bottom))!important}
+#adminModal .extra-box,#noticeModal .extra-box{box-sizing:border-box;width:min(600px,calc(100vw - 32px))!important;max-height:min(78dvh,700px)!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important;margin:auto!important;padding:17px!important;border-radius:18px!important}
+#noticeModal .extra-box{width:min(520px,calc(100vw - 32px))!important;max-height:min(72dvh,620px)!important}
+#adminModal .extra-head,#noticeModal .extra-head{position:sticky!important;top:-17px!important;margin:-17px -17px 10px!important;padding:13px 17px 10px!important;z-index:8!important}
+.extra-head [data-extra-close],.modal-top [data-close="settingsModal"]{min-width:52px;min-height:38px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;font-weight:700}
+@media(max-width:760px){
+ .modal-back#settingsModal{padding:calc(10px + env(safe-area-inset-top)) 12px calc(10px + env(safe-area-inset-bottom))!important}
+ .modal-back#settingsModal .modal{width:min(520px,calc(100vw - 24px))!important;max-height:min(78dvh,620px)!important;padding:14px!important;border-radius:18px!important}
+ .modal-back#settingsModal .modal-top{top:-14px!important;margin:-14px -14px 8px!important;padding:12px 14px 8px!important}
+ .modal-back#settingsModal .modal-actions{bottom:-14px!important;margin:10px -14px -14px!important;padding:9px 14px calc(9px + env(safe-area-inset-bottom))!important}
+ #adminModal,#noticeModal{padding:calc(10px + env(safe-area-inset-top)) 12px calc(10px + env(safe-area-inset-bottom))!important}
+ #adminModal .extra-box{width:min(560px,calc(100vw - 24px))!important;max-height:min(78dvh,640px)!important;padding:14px!important}
+ #noticeModal .extra-box{width:min(480px,calc(100vw - 24px))!important;max-height:min(70dvh,560px)!important;padding:14px!important}
+ #adminModal .extra-head,#noticeModal .extra-head{top:-14px!important;margin:-14px -14px 9px!important;padding:12px 14px 9px!important}
+ #adminModal .extra-head h3,#noticeModal .extra-head h3{font-size:16px}
+}
 /* Registration/login sheet: scrolls naturally above the Android keyboard. */
 #entryGate{align-items:flex-start;justify-content:center;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:calc(14px + env(safe-area-inset-top)) 16px calc(14px + env(safe-area-inset-bottom))}
 #entryGate .gate-card{flex:0 0 auto;margin:auto;max-height:none;overflow:visible}
@@ -383,6 +406,29 @@ body.reduce-motion *{animation:none!important;transition-duration:.01ms!importan
 .image-prompt-modal .modal-top .settings-kicker{color:#aaa0d6}
 .image-style-chips button:active,.mobile-workbar button:active{transform:scale(.98)}
 @media(prefers-reduced-motion:reduce){.image-style-chips button,.mobile-workbar button,.nailong-ai-btn{transition:none!important;transform:none!important}}
+
+/* 2.5.1 final dialog sizing overrides */
+.modal-back#settingsModal{align-items:center!important;overflow:hidden!important;padding:calc(12px + env(safe-area-inset-top)) 16px calc(12px + env(safe-area-inset-bottom))!important}
+.modal-back#settingsModal .modal{width:min(620px,calc(100vw - 32px))!important;max-height:min(78dvh,700px)!important;height:auto!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain;display:block!important;padding:20px!important}
+.modal-back#settingsModal .settings-info-grid,.modal-back#settingsModal .admin-hint,.modal-back#settingsModal #apiList{min-height:0!important;max-height:none!important;overflow:visible!important}
+.modal-back#settingsModal .modal-top{position:sticky!important;top:-20px!important;margin:-20px -20px 10px!important;padding:13px 20px 10px!important;z-index:6}
+.modal-back#settingsModal .modal-actions{position:sticky!important;bottom:-20px!important;margin:12px -20px -20px!important;padding:10px 20px calc(10px + env(safe-area-inset-bottom))!important;z-index:5}
+#adminModal,#noticeModal{align-items:center!important;justify-content:center!important;overflow:hidden!important;padding:calc(12px + env(safe-area-inset-top)) 16px calc(12px + env(safe-area-inset-bottom))!important}
+#adminModal .extra-box,#noticeModal .extra-box{box-sizing:border-box;width:min(600px,calc(100vw - 32px))!important;max-height:min(78dvh,700px)!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important;margin:auto!important;padding:17px!important;border-radius:18px!important}
+#noticeModal .extra-box{width:min(520px,calc(100vw - 32px))!important;max-height:min(72dvh,620px)!important}
+#adminModal .extra-head,#noticeModal .extra-head{position:sticky!important;top:-17px!important;margin:-17px -17px 10px!important;padding:13px 17px 10px!important;z-index:8!important}
+.extra-head [data-extra-close],.modal-top [data-close="settingsModal"]{min-width:52px;min-height:38px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;font-weight:700}
+@media(max-width:760px){
+ .modal-back#settingsModal{padding:calc(10px + env(safe-area-inset-top)) 12px calc(10px + env(safe-area-inset-bottom))!important}
+ .modal-back#settingsModal .modal{width:min(520px,calc(100vw - 24px))!important;max-height:min(78dvh,620px)!important;padding:14px!important;border-radius:18px!important}
+ .modal-back#settingsModal .modal-top{top:-14px!important;margin:-14px -14px 8px!important;padding:12px 14px 8px!important}
+ .modal-back#settingsModal .modal-actions{bottom:-14px!important;margin:10px -14px -14px!important;padding:9px 14px calc(9px + env(safe-area-inset-bottom))!important}
+ #adminModal,#noticeModal{padding:calc(10px + env(safe-area-inset-top)) 12px calc(10px + env(safe-area-inset-bottom))!important}
+ #adminModal .extra-box{width:min(560px,calc(100vw - 24px))!important;max-height:min(78dvh,640px)!important;padding:14px!important}
+ #noticeModal .extra-box{width:min(480px,calc(100vw - 24px))!important;max-height:min(70dvh,560px)!important;padding:14px!important}
+ #adminModal .extra-head,#noticeModal .extra-head{top:-14px!important;margin:-14px -14px 9px!important;padding:12px 14px 9px!important}
+ #adminModal .extra-head h3,#noticeModal .extra-head h3{font-size:16px}
+}
 
 </style>
 <div id="entryGate">
@@ -608,17 +654,18 @@ function refreshNotices(targetId="noticeList", admin=false){
  const box=$(targetId);box.textContent="正在加载公告…";
  return apiRequest("/api/notices").then(({notices=[]})=>{
   box.innerHTML="";
-  if(!notices.length){box.textContent="暂无公告。";return}
+  if(!notices.length){box.textContent="暂无公告。";return false}
   notices.forEach(n=>{const card=document.createElement("div");card.className="notice-card";const h=document.createElement("h4");h.textContent=n.title;const p=document.createElement("p");p.textContent=n.content;const small=document.createElement("small");small.textContent=new Date(n.createdAt).toLocaleString();card.append(h,p,small);
    if(admin){const del=document.createElement("button");del.className="iconbtn";del.textContent="删除";del.style.marginLeft="8px";del.onclick=async()=>{try{await apiRequest(`/api/admin/notices/${encodeURIComponent(n.id)}`,{method:"DELETE"});refreshNotices(targetId,true)}catch(e){alert(e.message)}};card.append(del)}box.append(card)});
- }).catch(e=>{box.textContent="公告加载失败："+e.message});
+  return notices.length>0;
+ }).catch(e=>{box.textContent="公告加载失败："+e.message;return false});
 }
 function storeLoginId(id){if($("rememberLoginId").checked)localStorage.setItem("nx_login_id",id);else localStorage.removeItem("nx_login_id")}
 async function enterApp(){
  const id=$("entryId").value.trim(),password=$("entryPassword").value;if(!id||!password){$("entryError").textContent="请输入账号和密码";return}
  $("entryError").textContent="正在验证…";$("enterBtn").disabled=true;
  try{const data=await apiRequest("/api/login",{method:"POST",body:JSON.stringify({id,password})});storeLoginId(id);currentRole=data.role;currentUserId=data.userId||id;
-  document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);await loadProfile();await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
+  document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);await loadProfile();if(await refreshNotices())$("noticeModal").classList.add("show");if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
  }catch(e){$("entryError").textContent=e.message}finally{$("enterBtn").disabled=false}
 }
 $("enterBtn").addEventListener("click",enterApp);
