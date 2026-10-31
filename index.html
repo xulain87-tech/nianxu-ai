@@ -96,6 +96,32 @@ body{background:transparent}
 
 </style>
 <link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#10182a"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<style id="nianxu-premium-ui-v1">
+/* Premium UI refresh */
+:root{--accent:#9b8cff;--accent2:#56e0d0;--shadow:0 24px 80px #02040c88}
+#backdrop{background:radial-gradient(ellipse at 12% 8%,#5546a855 0,transparent 34%),radial-gradient(ellipse at 88% 75%,#1b9b9b35 0,transparent 34%),linear-gradient(135deg,#070a13,#10182b 58%,#0a1720)}
+#backdrop:before{content:"";position:absolute;inset:0;opacity:.12;pointer-events:none;background-image:linear-gradient(#b6c5ff12 1px,transparent 1px),linear-gradient(90deg,#b6c5ff12 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,black,transparent 90%)}
+.sidebar,.main{border-color:#a8b5ff24;box-shadow:0 24px 80px #0005,inset 0 1px #ffffff0a}
+.sidebar{background:linear-gradient(160deg,#151b30b8,#0c1424a8);}
+.main{background:linear-gradient(145deg,#121a2bb8,#0b1220a8)}
+.topbar{background:linear-gradient(90deg,#ffffff04,#a99cff09,#4bd6c708);border-bottom-color:#b9c7ff20}
+.top-title{letter-spacing:.3px}.top-title span{filter:drop-shadow(0 0 8px #9c91ff99)}
+.iconbtn,.ghost{border-color:#aab8ed22;background:linear-gradient(135deg,#ffffff0b,#ffffff03);backdrop-filter:blur(10px)}
+.primary,.send{background:linear-gradient(120deg,#a08cff,#6e8cff 52%,#55d8ce);box-shadow:0 8px 28px #827aff35,inset 0 1px #ffffff55}
+.primary:active,.send:active,.iconbtn:active{transform:scale(.97)}
+.composer{border-color:#a9baff35;background:linear-gradient(135deg,#1b2540eF,#101a2beF);box-shadow:0 12px 45px #0005,0 0 0 1px #ffffff05}
+.msg.ai{background:linear-gradient(145deg,#1b2740c9,#121b2ec9);border-color:#a6b7ff20;box-shadow:0 8px 28px #0002}
+.msg.user{box-shadow:0 8px 26px #665bdb22}
+.welcome .orb{position:relative;isolation:isolate}.welcome .orb:after{content:"";position:absolute;inset:-9px;border-radius:inherit;border:1px solid #9d91ff44;animation:orbRing 3.5s ease-out infinite;z-index:-1}
+@keyframes orbRing{0%{transform:scale(.88);opacity:.8}100%{transform:scale(1.35);opacity:0}}
+.modal{background:linear-gradient(145deg,#151e33f7,#0d1526f7);border-color:#a6b7ff30;box-shadow:0 30px 100px #0009}
+.modal-top{background:#121b2cf5}.api-card{background:linear-gradient(135deg,#ffffff08,#ffffff02);border-color:#a8b8ff25}
+.field input:focus,.field select:focus{border-color:#9b8cff;box-shadow:0 0 0 3px #9b8cff20}
+.side-note{line-height:1.8}.status .dot{background:#55e0b5;color:#55e0b5}
+@media(prefers-reduced-motion:reduce){.welcome .orb:after{animation:none}}
+</style>
+
 </head>
 <body>
 <div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
