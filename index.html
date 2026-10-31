@@ -122,6 +122,10 @@ body{background:transparent}
 @media(prefers-reduced-motion:reduce){.welcome .orb:after{animation:none}}
 </style>
 
+<style id="settings-center-premium">
+.settings-kicker{display:block;color:#8795b7;font-size:10px;letter-spacing:1.2px;margin-top:2px}.settings-hero{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:15px;border:1px solid #a9b9ff24;border-radius:16px;background:linear-gradient(135deg,#8e7dff16,#56e0d00b);margin:4px 0 12px}.settings-hero b{display:block;font-size:15px}.settings-hero span{display:block;color:var(--muted);font-size:11px;margin-top:3px}.health-pill{display:flex;align-items:center;gap:7px;white-space:nowrap;padding:8px 10px;border-radius:99px;background:#55e0b512;border:1px solid #55e0b526}.health-pill i{width:7px;height:7px;border-radius:50%;background:#55e0b5;box-shadow:0 0 12px #55e0b5}.settings-nav{display:flex;gap:7px;overflow:auto;padding:2px 0 10px;position:sticky;top:40px;z-index:2;background:#151e33f7}.settings-nav button{white-space:nowrap;border:1px solid #a9b9ff22;background:#ffffff07;color:var(--muted);border-radius:10px;padding:8px 11px;cursor:pointer}.settings-nav button.active,.settings-nav button:hover{color:var(--text);background:#9b8cff22;border-color:#9b8cff66}.settings-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.info-card{border:1px solid #a8b8ff22;border-radius:14px;padding:13px;background:linear-gradient(135deg,#ffffff08,#ffffff02);scroll-margin-top:70px}.info-card small{display:block;color:#8492b5;font-size:10px;letter-spacing:1.4px}.info-card strong{display:block;font-size:14px;margin:4px 0}.info-card span,.info-card p{display:block;color:var(--muted);font-size:11px;line-height:1.6;margin:4px 0}.info-card p{margin-top:9px}.admin-hint{margin-top:10px}.generated-image{display:block;max-width:min(480px,100%);border-radius:15px;margin-top:10px;border:1px solid #a9b9ff33;box-shadow:0 12px 35px #0005}.modal{width:min(900px,100%)}.reduce-motion *, .reduce-motion *:before, .reduce-motion *:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+@media(max-width:760px){.settings-hero{align-items:flex-start;flex-direction:column}.settings-info-grid{grid-template-columns:1fr}.settings-nav{top:39px}}
+</style>
 </head>
 <body>
 <div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
@@ -131,8 +135,9 @@ body{background:transparent}
   <button class="primary" id="newChat">＋　开启新对话</button>
   <div class="side-label">工作空间</div>
   <div class="side-actions">
-   <button class="ghost" id="openSettings">⚙　模型与接口设置</button>
+   <button class="ghost" id="openSettings">⚙　设置中心</button>
    <button class="ghost" id="openAppearance">✦　外观与动态背景</button>
+   <button class="ghost" id="generateImageBtn">▧　AI 生图</button>
    <button class="ghost" id="exportChat">⇩　导出聊天记录</button>
   </div>
   <div class="side-label">连接状态</div>
@@ -140,7 +145,7 @@ body{background:transparent}
   <div class="side-note">念绪 AI · 让每个想法都有回声。<br>免费公共服务可能限流，请勿输入敏感信息。</div>
  </aside>
  <main class="main">
-  <header class="topbar"><div><div class="top-title">念绪 AI <span style="color:#9c91ff">✦</span></div><div class="top-sub" id="modelLabel">智能对话 · 多接口自动切换</div></div><div class="top-actions"><button class="iconbtn" id="noticeButton">📢 公告</button><button class="iconbtn hidden" id="adminButton">管理后台</button><button class="iconbtn" id="mobileSettings">接口设置</button><button class="iconbtn" id="mobileAppearance">外观</button><button class="iconbtn" id="clearChat">清空</button></div></header>
+  <header class="topbar"><div><div class="top-title">念绪 AI <span style="color:#9c91ff">✦</span></div><div class="top-sub" id="modelLabel">智能对话 · 多接口自动切换</div></div><div class="top-actions"><button class="iconbtn" id="noticeButton">📢 公告</button><button class="iconbtn hidden" id="adminButton">管理后台</button><button class="iconbtn" id="mobileSettings">设置中心</button><button class="iconbtn" id="mobileAppearance">外观</button><button class="iconbtn" id="clearChat">清空</button></div></header>
   <section id="chat"><div class="welcome" id="welcome"><div class="orb">念</div><h2>你好，我是念绪 AI</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div></div></section>
   <footer class="composer-wrap">
    <div class="attachments" id="attachments"></div>
@@ -150,7 +155,9 @@ body{background:transparent}
  </main>
 </div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><h3>模型与接口设置</h3><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><p>按顺序尝试 5 个 OpenAI 兼容接口；当前接口失败、超时或限流时会自动切换下一个。请填入你自己的 API Key（如服务商要求）。</p>
+ <div class="modal-top"><div><h3>设置中心</h3><span class="settings-kicker">Nianxu Control Room · 2.0 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="settings-nav"><button class="active" data-jump="apiList">接口与模型</button><button data-jump="appearanceModal">外观体验</button><button data-jump="versionPanel">版本信息</button><button data-jump="featurePanel">功能开关</button><button data-jump="adminHint">权限与服务</button></div>
+ <p>按优先顺序尝试已启用接口；单个接口 18 秒未响应会自动切换，不会卡住整段对话。支持导入、导出和最多 10 个备用接口。</p>
  <div id="apiList"></div>
  <div class="api-card">
   <div class="api-head"><span>后台接口配置文件</span><span style="color:#9ba8c4;font-size:11px">api-config.json</span></div>
@@ -158,6 +165,8 @@ body{background:transparent}
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="iconbtn" id="importConfigBtn">导入配置文件</button><button class="iconbtn" id="exportConfigBtn">导出配置文件</button><input id="configFileInput" type="file" accept=".json,application/json" hidden></div>
  </div>
  <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
+ <div class="settings-info-grid"><section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.0 Pro</strong><span>Build 2026.10 · PWA · Node 18+</span><p>本次更新：统一设置中心、接口独立超时、低延迟优先、AI 生图入口、服务状态与管理员信息。</p></section><section class="info-card" id="featurePanel"><small>FEATURES</small><strong>已启用能力</strong><span>多人 ID 登录 · 管理员模式 · 公告 · 封禁 · 文件/图片附件 · PWA</span><p><label class="toggle"><input type="checkbox" id="featureMotion" checked> 保留界面动态效果</label><label class="toggle"><input type="checkbox" id="featureAutoFallback" checked> 接口失败自动切换</label></p></section></div>
+ <section class="info-card admin-hint" id="adminHint"><small>SERVICE & ACCESS</small><strong>权限与服务</strong><span id="roleSummary">当前会话：普通用户 · 配置按设备隔离</span><p>管理员登录后可在右上角进入管理后台，查看在线用户、发布公告和执行封禁。服务器端仅保存公告、封禁和会话状态。</p></section>
  <div class="modal-actions"><button class="iconbtn" data-close="settingsModal">取消</button><button class="primary" id="saveSettings">保存接口配置</button></div>
 </div></div>
 <div class="modal-back" id="appearanceModal"><div class="modal">
@@ -172,7 +181,7 @@ body{background:transparent}
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 1.0" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.0 Pro" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -222,14 +231,14 @@ body:not(.entered) .app{display:none}
 <script>
 const $=id=>document.getElementById(id);
 const DEFAULT_APIS=[
- {name:"Pollinations（免 Key，可能限流）",url:"https://text.pollinations.ai/openai",model:"openai",key:"",enabled:true},
- {name:"OpenAI",url:"https://api.openai.com/v1/chat/completions",model:"gpt-4o-mini",key:"",enabled:false},
+ {name:"Groq · 低延迟通道",url:"https://api.groq.com/openai/v1/chat/completions",model:"llama-3.3-70b-versatile",key:"",enabled:false},
+ {name:"Pollinations · 公共兜底",url:"https://text.pollinations.ai/openai",model:"openai",key:"",enabled:true},
  {name:"DeepSeek",url:"https://api.deepseek.com/chat/completions",model:"deepseek-chat",key:"",enabled:false},
  {name:"Google Gemini（OpenAI 兼容）",url:"https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",model:"gemini-2.0-flash",key:"",enabled:false},
  {name:"通义千问 / DashScope",url:"https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",model:"qwen-plus",key:"",enabled:false},
  {name:"智谱 GLM",url:"https://open.bigmodel.cn/api/paas/v4/chat/completions",model:"glm-4-flash",key:"",enabled:false},
  {name:"OpenRouter",url:"https://openrouter.ai/api/v1/chat/completions",model:"openai/gpt-4o-mini",key:"",enabled:false},
- {name:"Groq",url:"https://api.groq.com/openai/v1/chat/completions",model:"llama-3.3-70b-versatile",key:"",enabled:false},
+ {name:"Mistral · 备用",url:"https://api.mistral.ai/v1/chat/completions",model:"mistral-small-latest",key:"",enabled:false},
  {name:"Cerebras",url:"https://api.cerebras.ai/v1/chat/completions",model:"llama-3.3-70b",key:"",enabled:false},
  {name:"Together AI",url:"https://api.together.xyz/v1/chat/completions",model:"meta-llama/Llama-3.3-70B-Instruct-Turbo",key:"",enabled:false}
 ];
@@ -304,15 +313,16 @@ async function send(){
  const pending=addMessage("ai","正在依次尝试可用接口…");
  const userContent=buildContent(text,attached);
  const apiHistory=[{role:"system",content:SYSTEM_PROMPT},...history,{role:"user",content:userContent}];
- const candidates=apis.filter(a=>a.enabled&&a.url.trim());let answer=null,lastError=null,used="";
+ const candidates=apis.filter(a=>a.enabled&&a.url.trim());if(window.featurePrefs?.autoFallback===false)candidates.splice(1);let answer=null,lastError=null,used="";
  if(!candidates.length){pending.textContent="还没有启用可用接口。请打开“接口设置”，配置至少一个接口。";pending.parentElement.classList.add("error");setBusy(false);return}
- aborter=new AbortController();
  for(let i=0;i<candidates.length;i++){
-  const api=candidates[i];setStatus("正在尝试："+api.name);
-  const timer=setTimeout(()=>aborter.abort(),30000);
-  try{answer=await callApi(api,apiHistory,aborter.signal);used=api.name;clearTimeout(timer);break}
-  catch(e){clearTimeout(timer);lastError=e;if(e.name==="AbortError"){lastError=Error("连接超时（30 秒）");} }
+  const api=candidates[i];setStatus("正在连接 · "+api.name);
+  const controller=new AbortController(); aborter=controller;
+  const timer=setTimeout(()=>controller.abort(),18000);
+  try{answer=await callApi(api,apiHistory,controller.signal);used=api.name;clearTimeout(timer);break}
+  catch(e){clearTimeout(timer);lastError=e;if(e.name==="AbortError"){lastError=Error("连接超时（18 秒），已自动切换备用接口");} }
  }
+ aborter=null;
  if(answer){pending.textContent=answer;history.push({role:"user",content:userContent},{role:"assistant",content:answer});setStatus("已连接："+used,true);$("modelLabel").textContent="当前接口："+used}
  else{pending.textContent="10 个备用接口中已启用的接口均未成功（或没有可用接口）。最后错误："+(lastError?.message||"未知错误")+"\n\n请检查接口地址、模型名称、API Key、网络和服务商 CORS 设置。也可以在接口设置中启用其他备用接口。";pending.parentElement.classList.add("error");setStatus("接口暂不可用")}
  aborter=null;setBusy(false);
@@ -354,8 +364,23 @@ $("configFileInput").onchange=async e=>{
  }catch(err){alert("配置文件读取失败："+err.message)}
  e.target.value="";
 };
+document.querySelectorAll(".settings-nav button").forEach(btn=>btn.onclick=()=>{document.querySelectorAll(".settings-nav button").forEach(x=>x.classList.remove("active"));btn.classList.add("active");if(btn.dataset.jump==="appearanceModal"){openModal("appearanceModal");return}const target=$(btn.dataset.jump);if(target)target.scrollIntoView({behavior:"smooth",block:"start"})});
+const featurePrefs=load("nx_features",{motion:true,autoFallback:true});window.featurePrefs=featurePrefs;
+function applyFeaturePrefs(){document.body.classList.toggle("reduce-motion",featurePrefs.motion===false)}
+applyFeaturePrefs();
+if($("featureMotion")){$("featureMotion").checked=featurePrefs.motion!==false;$('featureMotion').onchange=()=>{featurePrefs.motion=$('featureMotion').checked;save('nx_features',featurePrefs);applyFeaturePrefs()};$('featureAutoFallback').checked=featurePrefs.autoFallback!==false;$('featureAutoFallback').onchange=()=>{featurePrefs.autoFallback=$('featureAutoFallback').checked;save('nx_features',featurePrefs)}}
+async function checkServiceHealth(){try{const r=await fetch("/api/health",{cache:"no-store"});const d=await r.json();$("serviceHealth").textContent=d.status==="ok"?"服务器在线 · "+d.latency+"ms":"服务检查异常";$("roleSummary").textContent="当前会话："+(currentRole==="admin"?"管理员 · 可管理系统":"普通用户 · 配置按设备隔离")}catch(e){$("serviceHealth").textContent="服务检查失败"}}
+checkServiceHealth();
 $("saveSettings").onclick=()=>{save("nx_apis",apis);$("settingsModal").classList.remove("show");$("modelLabel").textContent="智能对话 · 多接口自动切换";setStatus("接口配置已保存",true)};
 
+async function generateImage(){
+ const prompt=window.prompt("描述你想生成的图片", "一幅有紫青霓虹光的未来城市夜景");
+ if(!prompt||!prompt.trim())return;
+ const clean=prompt.trim().slice(0,500); addMessage("user","生成图片："+clean); setStatus("正在生成图片…");
+ const url="https://image.pollinations.ai/prompt/"+encodeURIComponent(clean)+"?width=1024&height=1024&nologo=true&seed="+Date.now();
+ const box=addMessage("ai","图片生成中…"); const im=new Image(); im.onload=()=>{box.textContent="已完成图片生成："+clean;im.alt=clean;im.className="generated-image";box.parentElement.appendChild(im);setStatus("图片已生成",true)}; im.onerror=()=>{box.textContent="图片生成失败，请检查网络或稍后重试。";box.parentElement.classList.add("error");setStatus("生图服务暂不可用")}; im.src=url;
+}
+$("generateImageBtn").onclick=generateImage;
 $("newChat").onclick=$("clearChat").onclick=()=>{if(busy){if(aborter)aborter.abort()}history=[];$("chat").innerHTML='<div class="welcome" id="welcome"><div class="orb">念</div><h2>新对话已开启</h2><p>继续把你的想法交给念绪 AI。</p></div>';setBusy(false);setStatus("等待发送消息")};
 $("exportChat").onclick=()=>{const text=[...$("chat").querySelectorAll(".msg")].map(m=>(m.querySelector(".role")?.textContent||"")+"\n"+(m.children[1]?.textContent||"")).join("\n\n");const blob=new Blob([text],{type:"text/plain;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="念绪AI聊天记录.txt";a.click();URL.revokeObjectURL(a.href)};
 document.querySelectorAll(".suggestions button").forEach(b=>b.onclick=()=>{$("prompt").value=b.textContent;$("sendBtn").disabled=false;send()});

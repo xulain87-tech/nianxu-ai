@@ -11,6 +11,7 @@ const DATA_DIR = process.env.DATA_DIR || path.join(ROOT, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'notices.json');
 const BANS_FILE = path.join(DATA_DIR, 'bans.json');
 const PRESENCE_TTL = 90 * 1000;
+const APP_VERSION = '2.0 Pro';
 fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
 if (!fs.existsSync(BANS_FILE)) fs.writeFileSync(BANS_FILE, '{}');
@@ -29,20 +30,23 @@ function body(req){return new Promise((resolve,reject)=>{let b='';req.on('data',
 function requireAdmin(req,res){const s=session(req);if(!s||s.role!=='admin'){send(res,401,{error:'需要管理员登录'});return false;}return true;}
 const server=http.createServer(async(req,res)=>{
  try{
+  const started=Date.now();
   const url=new URL(req.url,'http://localhost');
+  if(req.method==='GET'&&url.pathname==='/api/health'){send(res,200,{status:'ok',version:APP_VERSION,latency:Date.now()-started,node:process.version,uptime:Math.round(process.uptime())});return;}
   if(req.method==='POST'&&url.pathname==='/api/login'){
    const data=await body(req); const given=String(data.id||'');
    const a=Buffer.from(given),b=Buffer.from(ADMIN_ID);
    const ok=a.length===b.length&&crypto.timingSafeEqual(a,b);
    const userId=cleanId(given);const bans=readBans();if(!ok&&bans[userId]){send(res,403,{error:'此访问 ID 已被管理员封禁'});return;}const token=crypto.randomBytes(32).toString('hex');const role=ok?'admin':'guest';sessions.set(token,{role,userId,createdAt:Date.now(),lastSeen:Date.now(),expires:Date.now()+SESSION_TTL});
-   send(res,200,{authenticated:true,role},{'Set-Cookie':`${COOKIE}=${token}; HttpOnly; SameSite=Lax; Path=/; Max-Age=${SESSION_TTL}`});return;
+   const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
+   send(res,200,{authenticated:true,role},{'Set-Cookie':`${COOKIE}=${token}; HttpOnly; SameSite=None${secure}; Path=/; Max-Age=${SESSION_TTL}`});return;
   }
   if(req.method==='GET'&&url.pathname==='/api/session'){const s=session(req);send(res,200,{authenticated:!!s,role:s?.role||'guest',userId:s?.userId||''});return;}
   if(req.method==='POST'&&url.pathname==='/api/presence'){const s=session(req);if(!s){send(res,401,{error:'未登录'});return;}s.lastSeen=Date.now();send(res,200,{ok:true});return;}
   if(req.method==='GET'&&url.pathname==='/api/admin/users'){if(!requireAdmin(req,res))return;const now=Date.now();const users=[];for(const [token,u] of sessions){if(u.role==='guest'&&u.expires>now&&now-u.lastSeen<PRESENCE_TTL)users.push({id:u.userId,online:true,lastSeen:u.lastSeen,sessionCount:1});}const grouped={};for(const u of users){if(!grouped[u.id])grouped[u.id]=u;else grouped[u.id].sessionCount++;}send(res,200,{users:Object.values(grouped),bans:readBans()});return;}
   if(req.method==='POST'&&url.pathname==='/api/admin/ban'){if(!requireAdmin(req,res))return;const d=await body(req);const id=cleanId(d.id);if(!id){send(res,400,{error:'缺少用户 ID'});return;}const bans=readBans();bans[id]={reason:String(d.reason||'管理员封禁').slice(0,300),at:new Date().toISOString()};writeBans(bans);for(const [token,u] of sessions){if(u.role==='guest'&&u.userId===id)sessions.delete(token);}send(res,200,{ok:true});return;}
   if(req.method==='POST'&&url.pathname==='/api/admin/unban'){if(!requireAdmin(req,res))return;const d=await body(req);const id=cleanId(d.id);const bans=readBans();delete bans[id];writeBans(bans);send(res,200,{ok:true});return;}
-  if(req.method==='POST'&&url.pathname==='/api/logout'){const token=parseCookies(req)[COOKIE];if(token)sessions.delete(token);send(res,200,{ok:true},{'Set-Cookie':`${COOKIE}=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0`});return;}
+  if(req.method==='POST'&&url.pathname==='/api/logout'){const token=parseCookies(req)[COOKIE];if(token)sessions.delete(token);send(res,200,{ok:true},{'Set-Cookie':`${COOKIE}=; HttpOnly; SameSite=None; Path=/; Max-Age=0`});return;}
   if(req.method==='GET'&&url.pathname==='/api/notices'){send(res,200,{notices:readNotices()});return;}
   if(req.method==='POST'&&url.pathname==='/api/admin/notices'){
    if(!requireAdmin(req,res))return;const d=await body(req);const title=String(d.title||'').trim(),content=String(d.content||'').trim();if(!title||!content){send(res,400,{error:'标题和内容不能为空'});return;}if(title.length>160||content.length>10000){send(res,400,{error:'公告内容过长'});return;}
