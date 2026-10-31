@@ -12,7 +12,7 @@ const DATA_FILE = path.join(DATA_DIR, 'notices.json');
 const AI_CONFIG_FILE = path.join(DATA_DIR, 'ai-config.json');
 const ACCOUNTS_FILE = path.join(DATA_DIR, 'accounts.json');
 const PRESENCE_TTL = 90 * 1000;
-const APP_VERSION = '2.4.2 Pro · Admin Access Fix';
+const APP_VERSION = '2.4.3 Pro · Mobile Header Fix';
 fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
 if (!fs.existsSync(ACCOUNTS_FILE)) fs.writeFileSync(ACCOUNTS_FILE, '{}');
