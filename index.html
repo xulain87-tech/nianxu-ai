@@ -179,6 +179,9 @@ body:not(.entered) .app{display:none}
  <input id="noticeTitle" placeholder="公告标题">
  <textarea id="noticeContent" placeholder="公告内容"></textarea>
  <button class="primary" id="publishNotice">发布公告</button>
+ <h4 style="margin-top:22px">在线用户管理</h4>
+ <button class="iconbtn" id="refreshUsers">刷新在线列表</button>
+ <div id="adminUsersList">正在加载…</div>
  <h4 style="margin-top:22px">已发布公告</h4>
  <div id="adminNoticeList"></div>
  <p style="font-size:11px;color:var(--muted)">公告保存在服务器上，所有访问者都能看到。</p>
@@ -340,6 +343,14 @@ async function apiRequest(path, options={}){
  if(!response.ok)throw new Error(data.error||`请求失败 (${response.status})`);
  return data;
 }
+async function refreshUsers(){
+ const box=$("adminUsersList");box.textContent="正在加载在线用户…";
+ try{const data=await apiRequest("/api/admin/users");box.innerHTML="";const users=data.users||[],bans=data.bans||{};
+ if(!users.length){box.textContent="当前没有在线用户（在线状态以最近 90 秒心跳为准）。";}
+ users.forEach(u=>{const row=document.createElement("div");row.className="notice-card";const label=document.createElement("p");label.textContent=`${u.id} · 在线${u.sessionCount>1?` · ${u.sessionCount} 个会话`:""}`;const btn=document.createElement("button");btn.className="iconbtn";btn.textContent=bans[u.id]?"已封禁":"封禁用户";btn.disabled=!!bans[u.id];btn.onclick=async()=>{const reason=prompt("封禁原因（可留空）","违反使用规则") ;if(reason===null)return;try{await apiRequest("/api/admin/ban",{method:"POST",body:JSON.stringify({id:u.id,reason})});await refreshUsers();alert("已封禁该 ID")}catch(e){alert(e.message)}};row.append(label,btn);box.append(row)});
+ Object.entries(bans).forEach(([id,b])=>{const row=document.createElement("div");row.className="notice-card";const label=document.createElement("p");label.textContent=`封禁：${id} · ${b.reason||"管理员封禁"}`;const btn=document.createElement("button");btn.className="iconbtn";btn.textContent="解除封禁";btn.onclick=async()=>{try{await apiRequest("/api/admin/unban",{method:"POST",body:JSON.stringify({id})});await refreshUsers()}catch(e){alert(e.message)}};row.append(label,btn);box.append(row)});
+ }catch(e){box.textContent="加载失败："+e.message}
+}
 function refreshNotices(targetId="noticeList", admin=false){
  const box=$(targetId);box.textContent="正在加载公告…";
  return apiRequest("/api/notices").then(({notices=[]})=>{
@@ -353,17 +364,19 @@ async function enterApp(){
  const id=$("entryId").value.trim();if(!id){$("entryError").textContent="请先输入访问 ID";return}
  $("entryError").textContent="正在验证…";$("enterBtn").disabled=true;
  try{const data=await apiRequest("/api/login",{method:"POST",body:JSON.stringify({id})});currentRole=data.role;
-  document.body.classList.add("entered");$("entryGate").style.display="none";$("adminButton").classList.toggle("hidden",currentRole!=="admin");setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);await refreshNotices();
+  document.body.classList.add("entered");$("entryGate").style.display="none";$("adminButton").classList.toggle("hidden",currentRole!=="admin");setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
  }catch(e){$("entryError").textContent=e.message}finally{$("enterBtn").disabled=false}
 }
 $("enterBtn").addEventListener("click",enterApp);
 $("entryId").addEventListener("keydown",e=>{if(e.key==="Enter")enterApp()});
 $("noticeButton").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
-$("adminButton").onclick=()=>{if(currentRole!=="admin")return alert("需要管理员权限");refreshNotices("adminNoticeList",true);$("adminModal").classList.add("show")};
+$("adminButton").onclick=()=>{if(currentRole!=="admin")return alert("需要管理员权限");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")};
 document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dataset.extraClose).classList.remove("show"));
+$("refreshUsers").onclick=refreshUsers;
 $("publishNotice").onclick=async()=>{const title=$("noticeTitle").value.trim(),content=$("noticeContent").value.trim();if(!title||!content){alert("请填写公告标题和内容");return}
  try{await apiRequest("/api/admin/notices",{method:"POST",body:JSON.stringify({title,content})});$("noticeTitle").value="";$("noticeContent").value="";await refreshNotices("adminNoticeList",true);alert("公告已发布，所有用户均可查看。")}catch(e){alert(e.message)}};
-(async()=>{try{const data=await apiRequest("/api/session");if(data.authenticated){currentRole=data.role;document.body.classList.add("entered");$("entryGate").style.display="none";$("adminButton").classList.toggle("hidden",currentRole!=="admin");await refreshNotices();}}catch(_){/* 未登录时显示入口 */}})();
+(async()=>{try{const data=await apiRequest("/api/session");if(data.authenticated){currentRole=data.role;document.body.classList.add("entered");$("entryGate").style.display="none";$("adminButton").classList.toggle("hidden",currentRole!=="admin");await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});}}catch(_ ){/* 未登录时显示入口 */}})();
 
+setInterval(()=>{if(document.body.classList.contains("entered")&&currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});},30000);
 </script>
 </body></html>

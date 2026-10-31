@@ -9,8 +9,14 @@ const ADMIN_ID = process.env.ADMIN_ID;
 if (!ADMIN_ID) { console.error('请设置环境变量 ADMIN_ID（管理员登录凭据）'); process.exit(1); }
 const DATA_DIR = process.env.DATA_DIR || path.join(ROOT, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'notices.json');
+const BANS_FILE = path.join(DATA_DIR, 'bans.json');
+const PRESENCE_TTL = 90 * 1000;
 fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
+if (!fs.existsSync(BANS_FILE)) fs.writeFileSync(BANS_FILE, '{}');
+function readBans(){try{return JSON.parse(fs.readFileSync(BANS_FILE,'utf8'))}catch{return {}}}
+function writeBans(v){fs.writeFileSync(BANS_FILE,JSON.stringify(v,null,2))}
+function cleanId(v){return String(v||'').trim().slice(0,100)}
 const sessions = new Map();
 const COOKIE = 'nx_session';
 const SESSION_TTL = 7 * 24 * 60 * 60 * 1000;
@@ -28,10 +34,14 @@ const server=http.createServer(async(req,res)=>{
    const data=await body(req); const given=String(data.id||'');
    const a=Buffer.from(given),b=Buffer.from(ADMIN_ID);
    const ok=a.length===b.length&&crypto.timingSafeEqual(a,b);
-   const token=crypto.randomBytes(32).toString('hex');const role=ok?'admin':'guest';sessions.set(token,{role,expires:Date.now()+SESSION_TTL});
+   const userId=cleanId(given);const bans=readBans();if(!ok&&bans[userId]){send(res,403,{error:'此访问 ID 已被管理员封禁'});return;}const token=crypto.randomBytes(32).toString('hex');const role=ok?'admin':'guest';sessions.set(token,{role,userId,createdAt:Date.now(),lastSeen:Date.now(),expires:Date.now()+SESSION_TTL});
    send(res,200,{authenticated:true,role},{'Set-Cookie':`${COOKIE}=${token}; HttpOnly; SameSite=Lax; Path=/; Max-Age=${SESSION_TTL}`});return;
   }
-  if(req.method==='GET'&&url.pathname==='/api/session'){const s=session(req);send(res,200,{authenticated:!!s,role:s?.role||'guest'});return;}
+  if(req.method==='GET'&&url.pathname==='/api/session'){const s=session(req);send(res,200,{authenticated:!!s,role:s?.role||'guest',userId:s?.userId||''});return;}
+  if(req.method==='POST'&&url.pathname==='/api/presence'){const s=session(req);if(!s){send(res,401,{error:'未登录'});return;}s.lastSeen=Date.now();send(res,200,{ok:true});return;}
+  if(req.method==='GET'&&url.pathname==='/api/admin/users'){if(!requireAdmin(req,res))return;const now=Date.now();const users=[];for(const [token,u] of sessions){if(u.role==='guest'&&u.expires>now&&now-u.lastSeen<PRESENCE_TTL)users.push({id:u.userId,online:true,lastSeen:u.lastSeen,sessionCount:1});}const grouped={};for(const u of users){if(!grouped[u.id])grouped[u.id]=u;else grouped[u.id].sessionCount++;}send(res,200,{users:Object.values(grouped),bans:readBans()});return;}
+  if(req.method==='POST'&&url.pathname==='/api/admin/ban'){if(!requireAdmin(req,res))return;const d=await body(req);const id=cleanId(d.id);if(!id){send(res,400,{error:'缺少用户 ID'});return;}const bans=readBans();bans[id]={reason:String(d.reason||'管理员封禁').slice(0,300),at:new Date().toISOString()};writeBans(bans);for(const [token,u] of sessions){if(u.role==='guest'&&u.userId===id)sessions.delete(token);}send(res,200,{ok:true});return;}
+  if(req.method==='POST'&&url.pathname==='/api/admin/unban'){if(!requireAdmin(req,res))return;const d=await body(req);const id=cleanId(d.id);const bans=readBans();delete bans[id];writeBans(bans);send(res,200,{ok:true});return;}
   if(req.method==='POST'&&url.pathname==='/api/logout'){const token=parseCookies(req)[COOKIE];if(token)sessions.delete(token);send(res,200,{ok:true},{'Set-Cookie':`${COOKIE}=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0`});return;}
   if(req.method==='GET'&&url.pathname==='/api/notices'){send(res,200,{notices:readNotices()});return;}
   if(req.method==='POST'&&url.pathname==='/api/admin/notices'){
