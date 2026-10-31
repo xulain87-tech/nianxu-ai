@@ -133,7 +133,7 @@ body{background:transparent}
 #backdrop{background:linear-gradient(135deg,#0a0f1d,#121a2b)}
 .primary,.send{box-shadow:none}.primary:hover,.send:hover{transform:none;filter:brightness(1.06)}
 .modal-back,.extra-modal{backdrop-filter:none;-webkit-backdrop-filter:none;background:#050914f2}.modal-top{backdrop-filter:none;-webkit-backdrop-filter:none}
-.msg,.api-card,.notice-card{box-shadow:none}.settings-hero{background:#ffffff05}
+.msg,.api-card,.notice-card{box-shadow:none}.settings-hero{background:#ffffff05}.msg.typing{opacity:.82}.msg.typing div:last-child::after{content:"";display:inline-block;width:18px;height:4px;margin-left:6px;border-radius:9px;background:linear-gradient(90deg,#9b8cff,#56e0d0);animation:typingPulse 1s ease-in-out infinite alternate}@keyframes typingPulse{from{opacity:.35;transform:scaleX(.65)}to{opacity:1;transform:scaleX(1)}}
 @media(max-width:760px){
  .modal-back#settingsModal #apiList{min-height:0;overflow-y:auto!important;overflow-x:hidden;touch-action:pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
  .modal-back#settingsModal .settings-info-grid,.modal-back#settingsModal .admin-hint{min-height:0;touch-action:pan-y;-webkit-overflow-scrolling:touch}
@@ -166,7 +166,7 @@ body{background:transparent}
   <section id="chat"><div class="welcome" id="welcome"><div class="orb">念</div><h2>你好，我是念绪 AI</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div></div></section>
   <footer class="composer-wrap">
    <div class="attachments" id="attachments"></div>
-   <div class="composer"><div class="input-row"><div class="toolrow"><button id="attachBtn" title="上传图片或文件">＋</button></div><textarea id="prompt" rows="1" placeholder="给念绪 AI 发消息…（Enter 发送，Shift+Enter 换行）"></textarea><button class="send" id="sendBtn" disabled>↑</button></div><div class="composer-foot"><span>支持图片与常见文本文件 · 最多 10 个备用接口</span><span id="busyLabel"></span></div></div>
+   <div class="composer"><div class="input-row"><div class="toolrow"><button id="attachBtn" title="上传图片或文件">＋</button></div><textarea id="prompt" rows="1" placeholder="给念绪 AI 发消息…（Enter 发送，Shift+Enter 换行）"></textarea><button class="send" id="sendBtn" disabled>↑</button></div><div class="composer-foot"><span>支持图片与常见文本文件 · 2 个服务器接口</span><span id="busyLabel"></span></div></div>
    <input id="fileInput" type="file" multiple accept="image/*,.txt,.md,.csv,.json,.html,.xml,.log,.pdf" hidden>
   </footer>
  </main>
@@ -183,7 +183,7 @@ body{background:transparent}
  </div>
  <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
  <div class="settings-info-grid"><section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.0 Pro</strong><span>Build 2026.10 · PWA · Node 18+</span><p>本次更新：统一设置中心、接口独立超时、低延迟优先、AI 生图入口、服务状态与管理员信息。</p></section><section class="info-card" id="featurePanel"><small>FEATURES</small><strong>已启用能力</strong><span>多人 ID 登录 · 管理员模式 · 公告 · 封禁 · 文件/图片附件 · PWA</span><p><label class="toggle"><input type="checkbox" id="featureMotion" checked> 保留界面动态效果</label><label class="toggle"><input type="checkbox" id="featureAutoFallback" checked> 接口失败自动切换</label></p></section></div>
- <section class="info-card admin-hint" id="adminHint"><small>SERVICE & ACCESS</small><strong>权限与服务</strong><span id="roleSummary">当前会话：普通用户 · 配置按设备隔离</span><p>管理员登录后可在右上角进入管理后台，查看在线用户、发布公告和执行封禁。服务器端仅保存公告、封禁和会话状态。</p></section>
+ <section class="info-card admin-hint" id="adminHint"><small>SERVICE & ACCESS</small><strong>账号与记忆</strong><span id="roleSummary">当前会话：普通用户</span><div class="grid"><div class="field"><label>显示名字</label><input id="profileName" placeholder="你的名字"></div><div class="field"><label>账号 ID</label><input id="profileId" placeholder="账号 ID"></div></div><div class="grid"><div class="field"><label>当前密码（修改 ID/密码时填写）</label><input id="profileCurrentPassword" type="password" placeholder="当前密码"></div><div class="field"><label>新密码（可留空）</label><input id="profileNewPassword" type="password" placeholder="至少 6 位"></div></div><button class="primary" id="saveProfile" type="button">保存账号资料</button><p class="hint" id="profileStatus"></p><div class="field" style="margin-top:12px"><label>长期记忆（仅保存在当前设备）</label><div style="display:flex;gap:8px"><input id="memoryInput" placeholder="例如：我喜欢简洁、直接的回答"><button class="iconbtn" id="addMemory" type="button">记住</button></div></div><div id="memoryList"></div><p>聊天时会把这些记忆作为上下文提示发送给 AI。不要保存密码、Key 或其他敏感信息。</p></section>
  <div class="modal-actions"><button class="iconbtn" data-close="settingsModal">取消</button><button class="primary" id="saveSettings">保存接口配置</button></div>
 </div></div>
 <div class="modal-back" id="appearanceModal"><div class="modal">
@@ -257,6 +257,11 @@ const SYSTEM_PROMPT="你是念绪 AI，一个友好、可靠、清晰的中文 A
 function load(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}}
 function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
 function setStatus(t,ok=false){$("statusText").textContent=t;$("statusDot").style.background=ok?"#4bd6a2":"#f0bd65"}
+let currentUserId="";
+function memoryKey(){return "nx_memory_"+(currentUserId||"guest")}
+function readMemories(){return load(memoryKey(),[]).filter(x=>typeof x==="string").slice(0,20)}
+function renderMemories(){const box=$("memoryList");if(!box)return;box.innerHTML="";readMemories().forEach((text,i)=>{const row=document.createElement("div");row.className="notice-card";row.style.display="flex";row.style.justifyContent="space-between";row.style.gap="8px";const span=document.createElement("span");span.textContent=text;const del=document.createElement("button");del.className="iconbtn";del.textContent="删除";del.onclick=()=>{const list=readMemories();list.splice(i,1);save(memoryKey(),list);renderMemories()};row.append(span,del);box.append(row)})}
+function memoryContext(){const list=readMemories();return list.length?"\n\n用户长期记忆（仅作为偏好参考）：\n- "+list.join("\n- "):""}
 function addMessage(role,text,err=false,images=[]){
  const welcome=$("welcome");if(welcome)welcome.remove();
  const box=document.createElement("article");box.className="msg "+role+(err?" error":"");
@@ -302,13 +307,13 @@ async function send(){
  const attached=files.slice();files=[];renderFiles();$("prompt").value="";$("prompt").style.height="auto";setBusy(true);
  const preview=attached.filter(f=>f.kind==="image").map(f=>f.data);
  addMessage("user",text||"请查看附件。",false,preview);
- const pending=addMessage("ai","正在依次尝试可用接口…");
+ const pending=addMessage("ai","输入中……");pending.parentElement.classList.add("typing");
  const userContent=buildContent(text,attached);
- const apiHistory=[{role:"system",content:SYSTEM_PROMPT},...history.slice(-12),{role:"user",content:userContent}];
+ const apiHistory=[{role:"system",content:SYSTEM_PROMPT+memoryContext()},...history.slice(-12),{role:"user",content:userContent}];
  let answer=null,lastError=null,used="服务器接口";const controller=new AbortController();aborter=controller;const timer=setTimeout(()=>controller.abort(),20000);
  try{const result=await callServerChat(apiHistory,controller.signal);answer=result.answer;used=result.used||used}catch(e){lastError=e}finally{clearTimeout(timer);aborter=null}
- if(answer){pending.textContent=answer;history.push({role:"user",content:userContent},{role:"assistant",content:answer});if(history.length>20)history=history.slice(-20);setStatus("已连接："+used,true);$("modelLabel").textContent="服务器接口 · "+used}
- else{pending.textContent="服务器接口暂不可用："+(lastError?.message||"未知错误")+"。请联系管理员检查接口配置。";pending.parentElement.classList.add("error");setStatus("服务器接口暂不可用")}
+ if(answer){pending.parentElement.classList.remove("typing");pending.textContent=answer;history.push({role:"user",content:userContent},{role:"assistant",content:answer});if(history.length>20)history=history.slice(-20);setStatus("已连接："+used,true);$("modelLabel").textContent="服务器接口 · "+used}
+ else{pending.parentElement.classList.remove("typing");pending.textContent="服务器接口暂不可用："+(lastError?.message||"未知错误")+"。请联系管理员检查接口配置。";pending.parentElement.classList.add("error");setStatus("服务器接口暂不可用")}
  aborter=null;setBusy(false);
 }
 function openModal(id){$(id).classList.add("show")}
@@ -342,8 +347,8 @@ $("configFileInput").onchange=async e=>{
  try{
   const data=JSON.parse(await f.text());
   const list=Array.isArray(data)?data:data.apis;
-  if(!Array.isArray(list)||list.length<1||list.length>10)throw Error("配置文件必须包含 1 至 10 个接口（apis 数组）");
-  apis=Array.from({length:10},(_,i)=>({...DEFAULT_APIS[i],...(list[i]||{})}));
+  if(!Array.isArray(list)||list.length!==2)throw Error("配置文件必须正好包含第一个和第二个接口（apis 数组）");
+  apis=list.slice(0,2);
   renderApis();save("nx_apis",apis);setStatus("已导入后台接口配置",true);
   alert("配置导入成功，点击“保存接口配置”即可完成。");
  }catch(err){alert("配置文件读取失败："+err.message)}
@@ -357,6 +362,9 @@ applyFeaturePrefs();
 if($("featureMotion")){$("featureMotion").checked=featurePrefs.motion!==false;$('featureMotion').onchange=()=>{featurePrefs.motion=$('featureMotion').checked;save('nx_features',featurePrefs);applyFeaturePrefs()};$('featureAutoFallback').checked=featurePrefs.autoFallback!==false;$('featureAutoFallback').onchange=()=>{featurePrefs.autoFallback=$('featureAutoFallback').checked;save('nx_features',featurePrefs)}}
 async function checkServiceHealth(){try{const r=await fetch("/api/health",{cache:"no-store"});const d=await r.json();$("serviceHealth").textContent=d.status==="ok"?"服务器在线 · "+d.latency+"ms":"服务检查异常";$("roleSummary").textContent="当前会话："+(currentRole==="admin"?"管理员 · 可管理系统":"普通用户 · 配置按设备隔离")}catch(e){$("serviceHealth").textContent="服务检查失败"}}
 checkServiceHealth();
+async function loadProfile(){try{const p=await apiRequest("/api/account/profile");currentUserId=p.id;$("profileName").value=p.displayName||"";$("profileId").value=p.id||"";$("profileId").readOnly=p.role==="admin";renderMemories()}catch(e){$("profileStatus").textContent=e.message}}
+$("addMemory").onclick=()=>{const value=$("memoryInput").value.trim().slice(0,200);if(!value)return;const list=readMemories();if(!list.includes(value))list.unshift(value);save(memoryKey(),list.slice(0,20));$("memoryInput").value="";renderMemories()};
+$("saveProfile").onclick=async()=>{const body={displayName:$("profileName").value.trim(),newId:$("profileId").value.trim(),currentPassword:$("profileCurrentPassword").value,newPassword:$("profileNewPassword").value};try{const p=await apiRequest("/api/account/profile",{method:"PUT",body:JSON.stringify(body)});currentUserId=p.id;$("profileId").value=p.id;$("profileCurrentPassword").value="";$("profileNewPassword").value="";$("profileStatus").textContent="账号资料已保存";renderMemories()}catch(e){$("profileStatus").textContent=e.message}};
  $("saveSettings").onclick=async()=>{if(currentRole!=="admin")return alert("只有管理员可以修改接口");try{const result=await apiRequest("/api/admin/apis",{method:"PUT",body:JSON.stringify({apis})});apis=result.apis||apis;$("settingsModal").classList.remove("show");$("modelLabel").textContent="服务器接口 · 管理员已配置";setStatus("服务器接口配置已保存",true)}catch(e){alert(e.message)}};
 
 async function generateImage(){
@@ -411,8 +419,8 @@ function refreshNotices(targetId="noticeList", admin=false){
 async function enterApp(){
  const id=$("entryId").value.trim(),password=$("entryPassword").value;if(!id||!password){$("entryError").textContent="请输入账号和密码";return}
  $("entryError").textContent="正在验证…";$("enterBtn").disabled=true;
- try{const data=await apiRequest("/api/login",{method:"POST",body:JSON.stringify({id,password})});currentRole=data.role;
-  document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
+ try{const data=await apiRequest("/api/login",{method:"POST",body:JSON.stringify({id,password})});currentRole=data.role;currentUserId=data.userId||id;
+  document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);await loadProfile();await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
  }catch(e){$("entryError").textContent=e.message}finally{$("enterBtn").disabled=false}
 }
 $("enterBtn").addEventListener("click",enterApp);
@@ -426,7 +434,7 @@ document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dat
 $("refreshUsers").onclick=refreshUsers;
 $("publishNotice").onclick=async()=>{const title=$("noticeTitle").value.trim(),content=$("noticeContent").value.trim();if(!title||!content){alert("请填写公告标题和内容");return}
  try{await apiRequest("/api/admin/notices",{method:"POST",body:JSON.stringify({title,content})});$("noticeTitle").value="";$("noticeContent").value="";await refreshNotices("adminNoticeList",true);alert("公告已发布，所有用户均可查看。")}catch(e){alert(e.message)}};
- (async()=>{try{const data=await apiRequest("/api/session");if(data.authenticated){currentRole=data.role;document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});}}catch(_ ){syncAdminUi();/* 未登录时显示入口 */}})();
+ (async()=>{try{const data=await apiRequest("/api/session");if(data.authenticated){currentRole=data.role;currentUserId=data.userId||"";document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();await loadProfile();await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});}}catch(_ ){syncAdminUi();/* 未登录时显示入口 */}})();
 
 setInterval(()=>{if(document.body.classList.contains("entered")&&currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});},30000);
 

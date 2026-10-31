@@ -20,10 +20,7 @@ if (!fs.existsSync(BANS_FILE)) fs.writeFileSync(BANS_FILE, '{}');
 if (!fs.existsSync(ACCOUNTS_FILE)) fs.writeFileSync(ACCOUNTS_FILE, '{}');
 const DEFAULT_AI_APIS = [
  {name:'Pollinations 公共入口',url:'https://text.pollinations.ai/openai',model:'openai',enabled:true,key:process.env.POLLINATIONS_API_KEY||''},
- {name:'念绪AI',url:'https://open.bigmodel.cn/api/paas/v4/chat/completions',model:'glm-5.3',enabled:false,key:process.env.ZHIPU_API_KEY||''},
- {name:'Groq 免费低延迟层',url:'https://api.groq.com/openai/v1/chat/completions',model:'openai/gpt-oss-20b',enabled:false,key:process.env.GROQ_API_KEY||''},
- {name:'Hugging Face 免费额度',url:'https://router.huggingface.co/v1/chat/completions',model:'openai/gpt-oss-120b:fastest',enabled:false,key:process.env.HF_TOKEN||''},
- {name:'Cerebras Free Trial',url:'https://api.cerebras.ai/v1/chat/completions',model:'gpt-oss-120b',enabled:false,key:process.env.CEREBRAS_API_KEY||''}
+ {name:'念绪AI',url:'https://open.bigmodel.cn/api/paas/v4/chat/completions',model:'GLM-5.3',enabled:true,key:process.env.ZHIPU_API_KEY||'3c69bcb2cf5a432b9ec468ddedc1a1de.z4rcygT1rWHKAAYh'}
 ];
 if (!fs.existsSync(AI_CONFIG_FILE)) fs.writeFileSync(AI_CONFIG_FILE, JSON.stringify(DEFAULT_AI_APIS,null,2));
 function readBans(){try{return JSON.parse(fs.readFileSync(BANS_FILE,'utf8'))}catch{return {}}}
@@ -53,7 +50,7 @@ function session(req){ const token=parseCookies(req)[COOKIE]; const s=token&&ses
 function send(res,status,obj,headers={}){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'strict-origin-when-cross-origin','Permissions-Policy':'camera=(),microphone=(),geolocation=()',...headers});res.end(JSON.stringify(obj));}
 function body(req){return new Promise((resolve,reject)=>{let b='';req.on('data',c=>{b+=c;if(b.length>100000)reject(new Error('请求体过大'))});req.on('end',()=>{try{resolve(JSON.parse(b||'{}'))}catch{reject(new Error('JSON 格式错误'))}});req.on('error',reject)});}
 function requireAdmin(req,res){const s=session(req);if(!s||s.role!=='admin'){send(res,401,{error:'需要管理员登录'});return false;}return true;}
-function readAiApis(){try{const v=JSON.parse(fs.readFileSync(AI_CONFIG_FILE,'utf8'));if(!Array.isArray(v))return DEFAULT_AI_APIS;return v.map((a,i)=>({...a,key:a.key||DEFAULT_AI_APIS[i]?.key||''}))}catch{return DEFAULT_AI_APIS}}
+function readAiApis(){try{const v=JSON.parse(fs.readFileSync(AI_CONFIG_FILE,'utf8'));if(!Array.isArray(v))return DEFAULT_AI_APIS;return DEFAULT_AI_APIS.map((base,i)=>({...base,...(v[i]||{}),key:(v[i]?.key||base.key||'')}))}catch{return DEFAULT_AI_APIS}}
 function writeAiApis(v){fs.writeFileSync(AI_CONFIG_FILE,JSON.stringify(v,null,2))}
 function publicAiApis(includeKeys=false){return readAiApis().map(a=>includeKeys?{...a,keySet:Boolean(a.key)}:{name:a.name,url:a.url,model:a.model,enabled:a.enabled,keySet:Boolean(a.key)})}
 function aiAnswer(data){const answer=data?.choices?.[0]?.message?.content??data?.choices?.[0]?.text??data?.text??data?.result;if(typeof answer==='string'&&answer.trim())return answer.trim();if(Array.isArray(answer)){const s=answer.map(x=>x.text||'').join('');if(s.trim())return s.trim()}throw new Error(data?.error?.message||'无法识别接口返回内容')}
@@ -77,7 +74,7 @@ const server=http.createServer(async(req,res)=>{
    const routeLimit=url.pathname==='/api/login'?['login',12,5*60*1000]:url.pathname==='/api/ai/chat'?['ai',30,5*60*1000]:url.pathname==='/api/ai/image'?['image',10,5*60*1000]:url.pathname.startsWith('/api/admin')?['admin',60,5*60*1000]:['api',180,5*60*1000];if(!allowed(req,res,...routeLimit))return;
   if(req.method==='GET'&&url.pathname==='/api/health'){send(res,200,{status:'ok',version:APP_VERSION,latency:Date.now()-started,node:process.version,uptime:Math.round(process.uptime())});return;}
   if(req.method==='POST'&&url.pathname==='/api/register'){
-   const data=await body(req);const userId=cleanId(data.id),password=String(data.password||'');if(!validId(userId)||password.length<6||password.length>128){send(res,400,{error:'账号需为 2-32 位字母、数字、中文、下划线或短横线；密码至少 6 位'});return;}if(userId===ADMIN_ID){send(res,409,{error:'该账号不可注册'});return;}const accounts=readAccounts();if(accounts[userId]){send(res,409,{error:'账号已存在，请换一个账号'});return;}accounts[userId]={password:hashPassword(password),createdAt:new Date().toISOString()};writeAccounts(accounts);send(res,201,{ok:true,message:'账号创建成功，请登录'});return;
+   const data=await body(req);const userId=cleanId(data.id),password=String(data.password||'');if(!validId(userId)||password.length<6||password.length>128){send(res,400,{error:'账号需为 2-32 位字母、数字、中文、下划线或短横线；密码至少 6 位'});return;}if(userId===ADMIN_ID){send(res,409,{error:'该账号不可注册'});return;}const accounts=readAccounts();if(accounts[userId]){send(res,409,{error:'账号已存在，请换一个账号'});return;}accounts[userId]={password:hashPassword(password),displayName:String(data.displayName||userId).trim().slice(0,40)||userId,createdAt:new Date().toISOString()};writeAccounts(accounts);send(res,201,{ok:true,message:'账号创建成功，请登录'});return;
   }
   if(req.method==='POST'&&url.pathname==='/api/login'){
    const data=await body(req); const given=cleanId(data.id),password=String(data.password||'');
@@ -85,13 +82,18 @@ const server=http.createServer(async(req,res)=>{
    const accounts=readAccounts();const accountOk=!ok&&Boolean(accounts[given])&&verifyPassword(password,accounts[given].password);
    const userId=given;const bans=readBans();if(!ok&&!accountOk&&bans[userId]){send(res,403,{error:'此账号已被封禁'});return;}if(!ok&&!accountOk){send(res,401,{error:'账号或密码错误'});return;}const token=crypto.randomBytes(32).toString('hex');const role=ok?'admin':'guest';sessions.set(token,{role,userId,createdAt:Date.now(),lastSeen:Date.now(),expires:Date.now()+SESSION_TTL});
    const cookieMode = process.env.NODE_ENV === 'production' ? 'SameSite=None; Secure' : 'SameSite=Lax';
-   send(res,200,{authenticated:true,role},{'Set-Cookie':`${COOKIE}=${token}; HttpOnly; ${cookieMode}; Path=/; Max-Age=${SESSION_TTL}`});return;
+   const account=readAccounts()[userId];send(res,200,{authenticated:true,role,userId,displayName:role==='admin'?'管理员':(account?.displayName||userId)},{'Set-Cookie':`${COOKIE}=${token}; HttpOnly; ${cookieMode}; Path=/; Max-Age=${SESSION_TTL}`});return;
   }
-  if(req.method==='GET'&&url.pathname==='/api/session'){const s=session(req);send(res,200,{authenticated:!!s,role:s?.role||'guest',userId:s?.userId||''});return;}
+  if(req.method==='GET'&&url.pathname==='/api/session'){const s=session(req),accounts=readAccounts(),account=s&&accounts[s.userId];send(res,200,{authenticated:!!s,role:s?.role||'guest',userId:s?.userId||'',displayName:s?.role==='admin'?'管理员':(account?.displayName||s?.userId||'')});return;}
+  if(req.method==='GET'&&url.pathname==='/api/account/profile'){const s=session(req);if(!s){send(res,401,{error:'请先登录'});return;}const account=readAccounts()[s.userId];send(res,200,{id:s.userId,displayName:s.role==='admin'?'管理员':(account?.displayName||s.userId),role:s.role,canChangePassword:s.role!=='admin'});return;}
+  if(req.method==='PUT'&&url.pathname==='/api/account/profile'){
+   const s=session(req);if(!s){send(res,401,{error:'请先登录'});return;}const d=await body(req),displayName=String(d.displayName||'').trim().slice(0,40);if(s.role==='admin'){if((d.newId&&d.newId!==s.userId)||d.newPassword){send(res,403,{error:'管理员账号请通过服务器环境变量修改'});return;}send(res,200,{ok:true,id:s.userId,displayName:displayName||'管理员'});return;}
+   const accounts=readAccounts(),oldId=s.userId,account=accounts[oldId];if(!account){send(res,404,{error:'账号不存在'});return;}const newId=cleanId(d.newId||oldId),currentPassword=String(d.currentPassword||''),newPassword=String(d.newPassword||'');if(!validId(newId)||newId===ADMIN_ID){send(res,400,{error:'新的账号 ID 格式不正确'});return;}if((newId!==oldId||newPassword)&&!verifyPassword(currentPassword,account.password)){send(res,403,{error:'当前密码不正确'});return;}if(newId!==oldId&&accounts[newId]){send(res,409,{error:'新的账号 ID 已存在'});return;}if(newId!==oldId){delete accounts[oldId];}account.displayName=displayName||account.displayName||newId;if(newPassword){if(newPassword.length<6||newPassword.length>128){send(res,400,{error:'新密码长度需为 6-128 位'});return;}account.password=hashPassword(newPassword);}accounts[newId]=account;writeAccounts(accounts);s.userId=newId;send(res,200,{ok:true,id:newId,displayName:account.displayName});return;
+  }
   if(req.method==='POST'&&url.pathname==='/api/presence'){const s=session(req);if(!s){send(res,401,{error:'未登录'});return;}s.lastSeen=Date.now();send(res,200,{ok:true});return;}
   if(req.method==='GET'&&url.pathname==='/api/admin/apis'){if(!requireAdmin(req,res))return;send(res,200,{apis:publicAiApis(true)});return;}
   if(req.method==='PUT'&&url.pathname==='/api/admin/apis'){
-   if(!requireAdmin(req,res))return;const d=await body(req);if(!Array.isArray(d.apis)||d.apis.length<1||d.apis.length>10){send(res,400,{error:'接口配置必须是 1 至 10 项'});return;}
+   if(!requireAdmin(req,res))return;const d=await body(req);if(!Array.isArray(d.apis)||d.apis.length!==2){send(res,400,{error:'接口配置必须正好包含第一个和第二个接口'});return;}
    const old=readAiApis();const next=d.apis.map((a,i)=>{const prev=old[i]||{};return {name:String(a.name||'').slice(0,120),url:String(a.url||'').slice(0,500),model:String(a.model||'').slice(0,160),enabled:Boolean(a.enabled),key:String(a.key||'')||prev.key||''}});writeAiApis(next);send(res,200,{ok:true,apis:publicAiApis()});return;
   }
   if(req.method==='POST'&&url.pathname==='/api/ai/chat'){
