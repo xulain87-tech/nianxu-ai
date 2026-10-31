@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090d18">
+<title>念绪 AI · 网页版</title>
+<style>
+:root{--bg:#090d18;--panel:rgba(18,25,42,.78);--panel2:rgba(27,36,57,.82);--line:rgba(180,198,255,.14);--text:#eef2ff;--muted:#9ba8c4;--accent:#8b7cff;--accent2:#4bd6c7;--shadow:0 18px 60px #0007}
+*{box-sizing:border-box}html,body{height:100%;margin:0}body{font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);overflow:hidden}
+#backdrop{position:fixed;inset:0;z-index:-3;background:radial-gradient(ellipse at 15% 10%,#34306b 0,transparent 40%),radial-gradient(ellipse at 90% 80%,#124e5c 0,transparent 38%),linear-gradient(135deg,#090d18,#111a2c)}
+#bgVideo{display:none;position:absolute;width:100%;height:100%;object-fit:cover;opacity:.34}#bgOverlay{position:absolute;inset:0;background:linear-gradient(120deg,#080d1966,#10182a55)}
+.app{height:100dvh;min-height:0;display:grid;grid-template-columns:270px minmax(0,1fr);max-width:1600px;margin:auto;padding:14px;gap:14px}
+.sidebar,.main{background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:24px;box-shadow:var(--shadow);min-height:0}
+.sidebar{display:flex;flex-direction:column;padding:20px;gap:18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:43px;height:43px;border-radius:15px;background:linear-gradient(135deg,#9b8cff,#49d9ce);display:grid;place-items:center;color:#101629;font-size:23px;font-weight:900;box-shadow:0 8px 24px #8378ff55}.brand h1{font-size:19px;letter-spacing:.5px;margin:0}.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:1.5px}
+.primary,.ghost,.iconbtn,.send{border:0;cursor:pointer;color:var(--text);transition:.2s}.primary{padding:12px 14px;border-radius:14px;background:linear-gradient(110deg,#8576ff,#4dbecb);font-weight:700;box-shadow:0 8px 24px #6c68ff38}.primary:hover,.send:hover{filter:brightness(1.12);transform:translateY(-1px)}.ghost{padding:11px 13px;border:1px solid var(--line);border-radius:13px;background:#ffffff08;text-align:left}.ghost:hover,.iconbtn:hover{background:#ffffff15}.side-label{font-size:11px;color:var(--muted);letter-spacing:1.4px;text-transform:uppercase}.side-note{margin-top:auto;color:var(--muted);font-size:12px}.status{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:#f0bd65;box-shadow:0 0 12px currentColor}.side-actions{display:grid;gap:9px}
+.main{display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}.topbar{height:68px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid var(--line)}.top-title{font-weight:700;font-size:15px}.top-sub{font-size:12px;color:var(--muted)}.top-actions{display:flex;gap:8px}.iconbtn{background:#ffffff09;border:1px solid var(--line);padding:9px 12px;border-radius:12px;font-size:13px}
+#chat{flex:1 1 0%;min-height:0;height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;scrollbar-gutter:stable;padding:26px clamp(16px,5vw,76px);display:flex;flex-direction:column;gap:20px;scroll-behavior:smooth}.welcome{margin:auto;text-align:center;max-width:600px;padding:24px}.welcome .orb{width:76px;height:76px;border-radius:26px;margin:0 auto 20px;background:linear-gradient(135deg,#9c8cff,#43d7c6);display:grid;place-items:center;color:#11182a;font-size:36px;box-shadow:0 14px 45px #827aff55}.welcome h2{font-size:clamp(25px,4vw,36px);margin:0 0 8px}.welcome p{color:var(--muted);margin:0 0 24px}.suggestions{display:flex;flex-wrap:wrap;justify-content:center;gap:9px}.suggestions button{background:#ffffff09;border:1px solid var(--line);color:#dce4ff;padding:9px 13px;border-radius:30px;cursor:pointer}
+.msg{max-width:min(820px,90%);white-space:pre-wrap;overflow-wrap:anywhere;padding:15px 18px;border:1px solid var(--line);border-radius:18px;line-height:1.72}.msg.user{align-self:flex-end;background:linear-gradient(135deg,#655bd4cc,#387e9bcc);border-color:#a49aff44;border-bottom-right-radius:5px}.msg.ai{align-self:flex-start;background:var(--panel2);border-bottom-left-radius:5px}.msg.error{border-color:#e07878;color:#ffc2c2}.msg .role{font-size:11px;color:#aeb9d6;margin-bottom:5px;letter-spacing:.7px}.msg img{max-width:min(260px,100%);max-height:220px;border-radius:12px;display:block;margin-top:8px}.msg-tools{display:flex;gap:7px;margin-top:8px}.msg-tools button{font-size:11px;color:var(--muted);background:none;border:0;cursor:pointer}
+.composer-wrap{padding:12px clamp(12px,4vw,64px) 18px;border-top:1px solid var(--line);background:#080d18a8}.attachments{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px}.file-chip{font-size:11px;color:#d9e1fa;background:#ffffff12;border:1px solid var(--line);padding:5px 9px;border-radius:20px}.file-chip button{margin-left:6px;color:#ffb5b5;background:none;border:0;cursor:pointer}
+.composer{max-width:980px;margin:auto;background:#151e31e8;border:1px solid #aab8ed30;border-radius:20px;padding:10px;box-shadow:0 10px 35px #0004}.input-row{display:flex;align-items:flex-end;gap:8px}#prompt{flex:1;min-height:44px;max-height:170px;resize:none;border:0;outline:0;background:transparent;color:var(--text);font:inherit;padding:10px 8px}#prompt::placeholder{color:#8390ae}.send{width:43px;height:43px;border-radius:14px;background:linear-gradient(135deg,#887aff,#49cfc5);font-size:20px;color:#11182a;font-weight:900}.send:disabled{opacity:.4;cursor:not-allowed}.composer-foot{display:flex;align-items:center;justify-content:space-between;padding:4px 5px 0;color:var(--muted);font-size:11px}.toolrow{display:flex;gap:5px}.toolrow button{background:none;border:0;color:#b7c2df;cursor:pointer;padding:6px 8px;border-radius:9px}.toolrow button:hover{background:#ffffff12}.hidden{display:none!important}
+.modal-back{position:fixed;inset:0;background:#030611dd;backdrop-filter:blur(8px);display:none;align-items:flex-start;justify-content:center;padding: max(12px,env(safe-area-inset-top)) 12px max(18px,env(safe-area-inset-bottom));z-index:10;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y}.modal-back.show{display:flex}.modal{width:min(760px,100%);max-height:calc(100dvh - 30px);flex:0 0 auto;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;background:#111a2c;border:1px solid var(--line);border-radius:22px;padding:22px;margin:auto 0;box-shadow:var(--shadow)}.modal h3{margin:0 0 5px;font-size:20px}.modal-top{display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:-22px;margin:-22px -22px 12px;padding:16px 22px 10px;background:#111a2cf2;backdrop-filter:blur(12px);z-index:3;border-bottom:1px solid var(--line)}.modal-top h3{margin:0}.modal p{margin:0 0 17px;color:var(--muted);font-size:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:grid;gap:6px;margin-bottom:12px}.field label{font-size:12px;color:#b8c4e1}.field input,.field select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:#080f1e;color:var(--text);outline:none}.api-card{border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0;background:#ffffff05}.api-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px;font-weight:700}.api-card .field{margin:7px 0}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin:16px -22px -22px;padding:12px 22px calc(12px + env(safe-area-inset-bottom));position:sticky;bottom:-22px;background:linear-gradient(180deg,#111a2ce8,#111a2c 35%);border-top:1px solid var(--line);z-index:2}.hint{color:#8e9bb9;font-size:11px;line-height:1.5}.toggle{display:flex;align-items:center;gap:8px;font-size:12px;color:#c5d0e9}
+
+@media(min-width:761px){
+  html,body{overflow:hidden}
+  .app,.main{min-height:0}
+  #chat{min-height:0;flex:1 1 0%;height:0;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#65729a #111a2c}
+  #chat::-webkit-scrollbar{width:10px}
+  #chat::-webkit-scrollbar-track{background:#111a2c;border-radius:10px}
+  #chat::-webkit-scrollbar-thumb{background:#65729a;border:2px solid #111a2c;border-radius:10px}
+}
+
+@media(max-width:760px){
+  /* 手机端改为整页自然滚动，避免 Android 浏览器嵌套滚动容器无法接收手势 */
+  html,body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto!important}
+  body{touch-action:pan-y;overscroll-behavior-y:auto;-webkit-overflow-scrolling:touch}
+  .app{display:flex;flex-direction:column;height:auto;min-height:100svh;min-height:100dvh;padding:7px;gap:0}
+  .sidebar{display:none}
+  .main{display:flex;flex-direction:column;flex:1 0 auto;min-height:calc(100svh - 14px);min-height:calc(100dvh - 14px);height:auto;overflow:visible;border-radius:18px}
+  .topbar{height:58px;min-height:58px;padding:0 14px;position:relative}
+  #chat{display:flex;flex:0 0 auto;width:100%;height:auto;min-height:48svh;min-height:48dvh;overflow:visible!important;overflow-y:visible!important;overflow-x:hidden;overscroll-behavior:auto;-webkit-overflow-scrolling:auto;touch-action:pan-y;scrollbar-gutter:auto;padding:18px 12px}
+  .msg{max-width:95%}
+  .composer-wrap{flex:0 0 auto;padding:9px 9px calc(10px + env(safe-area-inset-bottom))}
+  .grid{grid-template-columns:1fr}
+  .top-sub{display:none}
+}
+
+/* 念绪 AI 视觉升级：更紧凑、背景更通透、轻量动态效果 */
+:root{--panel:rgba(14,20,34,.58);--panel2:rgba(17,25,42,.62)}
+body{background:transparent}
+#backdrop{z-index:-1;overflow:hidden;background:radial-gradient(ellipse at 15% 10%,#34306b 0,transparent 40%),radial-gradient(ellipse at 90% 80%,#124e5c 0,transparent 38%),linear-gradient(135deg,#090d18,#111a2c)}
+#backdrop:after{content:"";position:absolute;inset:-25%;pointer-events:none;background:radial-gradient(circle at 25% 35%,#8b7cff25 0,transparent 22%),radial-gradient(circle at 75% 65%,#4bd6c725 0,transparent 24%);filter:blur(22px);animation:ambientDrift 18s ease-in-out infinite alternate}
+#bgOverlay{background:linear-gradient(120deg,#080d1966,#10182a55)!important;transition:background .35s}
+.sidebar,.main{background:rgba(13,19,33,.48);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px)}
+.msg{padding:12px 15px;line-height:1.62;font-size:14px;animation:messageIn .38s cubic-bezier(.2,.8,.2,1) both}
+.msg .role{display:flex;align-items:center;gap:7px}
+.user-avatar{width:23px;height:23px;border-radius:50%;object-fit:cover;border:1px solid #ffffff55;vertical-align:middle}
+.welcome .orb{animation:orbFloat 4s ease-in-out infinite,orbGlow 3s ease-in-out infinite alternate}
+.logo{animation:logoPulse 4s ease-in-out infinite}
+.primary,.send{transition:transform .22s,filter .22s,box-shadow .22s}
+.primary:hover,.send:hover{box-shadow:0 0 24px #8b7cff66}
+@keyframes ambientDrift{from{transform:translate3d(-2%,1%,0) rotate(-4deg) scale(.96)}to{transform:translate3d(3%,-2%,0) rotate(5deg) scale(1.08)}}
+@keyframes messageIn{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes orbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes orbGlow{from{box-shadow:0 10px 28px #827aff44}to{box-shadow:0 14px 42px #49d9ce66}}
+@keyframes logoPulse{0%,100%{box-shadow:0 8px 24px #8378ff33}50%{box-shadow:0 8px 30px #49d9ce66}}
+.avatar-settings{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#avatarPreview{width:46px;height:46px;border-radius:50%;object-fit:cover;border:1px solid var(--line);background:#ffffff12}
+.avatar-settings input{max-width:min(100%,220px);font-size:12px}
+.modal p,.hint{font-size:12px}
+@media(max-width:760px){
+ .app{padding:5px}
+ .main{min-height:calc(100svh - 10px);min-height:calc(100dvh - 10px);border-radius:15px}
+ .topbar{height:53px;min-height:53px;padding:0 10px}
+ .top-title{font-size:14px}
+ .top-actions{gap:5px}
+ .iconbtn{padding:7px 9px;font-size:12px;border-radius:10px}
+ #chat{padding:14px 10px;gap:14px}
+ .msg{max-width:94%;padding:10px 12px;font-size:13px;line-height:1.58;border-radius:15px}
+ .msg .role{font-size:10px}
+ .user-avatar{width:20px;height:20px}
+ .composer-wrap{padding:7px 7px calc(8px + env(safe-area-inset-bottom))}
+ .composer{padding:7px;border-radius:15px}
+ #prompt{min-height:40px;font-size:13px;padding:8px 6px}
+ .send{width:38px;height:38px;border-radius:12px}
+ .welcome{padding:16px 10px}
+ .welcome .orb{width:62px;height:62px;border-radius:21px;font-size:29px;margin-bottom:14px}
+ .welcome h2{font-size:23px}
+ .welcome p{font-size:13px}
+ .suggestions{gap:6px}
+ .suggestions button{font-size:11px;padding:7px 10px}
+}
+@media(prefers-reduced-motion:reduce){
+ #backdrop:after,.welcome .orb,.logo,.msg{animation:none!important}
+}
+
+</style>
+</head>
+<body>
+<div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
+<div class="app">
+ <aside class="sidebar">
+  <div class="brand"><div class="logo">念</div><div><h1>念绪 AI</h1><small>THOUGHTS, IN MOTION</small></div></div>
+  <button class="primary" id="newChat">＋　开启新对话</button>
+  <div class="side-label">工作空间</div>
+  <div class="side-actions">
+   <button class="ghost" id="openSettings">⚙　模型与接口设置</button>
+   <button class="ghost" id="openAppearance">✦　外观与动态背景</button>
+   <button class="ghost" id="exportChat">⇩　导出聊天记录</button>
+  </div>
+  <div class="side-label">连接状态</div>
+  <div class="status"><span class="dot" id="statusDot"></span><span id="statusText">等待发送消息</span></div>
+  <div class="side-note">念绪 AI · 让每个想法都有回声。<br>免费公共服务可能限流，请勿输入敏感信息。</div>
+ </aside>
+ <main class="main">
+  <header class="topbar"><div><div class="top-title">念绪 AI <span style="color:#9c91ff">✦</span></div><div class="top-sub" id="modelLabel">智能对话 · 多接口自动切换</div></div><div class="top-actions"><button class="iconbtn" id="noticeButton">📢 公告</button><button class="iconbtn hidden" id="adminButton">管理后台</button><button class="iconbtn" id="mobileSettings">接口设置</button><button class="iconbtn" id="mobileAppearance">外观</button><button class="iconbtn" id="clearChat">清空</button></div></header>
+  <section id="chat"><div class="welcome" id="welcome"><div class="orb">念</div><h2>你好，我是念绪 AI</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div></div></section>
+  <footer class="composer-wrap">
+   <div class="attachments" id="attachments"></div>
+   <div class="composer"><div class="input-row"><div class="toolrow"><button id="attachBtn" title="上传图片或文件">＋</button></div><textarea id="prompt" rows="1" placeholder="给念绪 AI 发消息…（Enter 发送，Shift+Enter 换行）"></textarea><button class="send" id="sendBtn" disabled>↑</button></div><div class="composer-foot"><span>支持图片与常见文本文件 · 最多 5 个备用接口</span><span id="busyLabel"></span></div></div>
+   <input id="fileInput" type="file" multiple accept="image/*,.txt,.md,.csv,.json,.html,.xml,.log,.pdf" hidden>
+  </footer>
+ </main>
+</div>
+<div class="modal-back" id="settingsModal"><div class="modal">
+ <div class="modal-top"><h3>模型与接口设置</h3><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><p>按顺序尝试 5 个 OpenAI 兼容接口；当前接口失败、超时或限流时会自动切换下一个。请填入你自己的 API Key（如服务商要求）。</p>
+ <div id="apiList"></div>
+ <div class="api-card">
+  <div class="api-head"><span>后台接口配置文件</span><span style="color:#9ba8c4;font-size:11px">api-config.json</span></div>
+  <div class="hint" style="margin-bottom:10px">你可以在服务器后台直接替换 api-config.json，或在这里导入新配置文件。导入后立即应用；导出可备份当前配置。请勿把含有真实 API Key 的配置文件公开分享。</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="iconbtn" id="importConfigBtn">导入配置文件</button><button class="iconbtn" id="exportConfigBtn">导出配置文件</button><input id="configFileInput" type="file" accept=".json,application/json" hidden></div>
+ </div>
+ <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
+ <div class="modal-actions"><button class="iconbtn" data-close="settingsModal">取消</button><button class="primary" id="saveSettings">保存接口配置</button></div>
+</div></div>
+<div class="modal-back" id="appearanceModal"><div class="modal">
+ <div class="modal-top"><h3>外观与动态背景</h3><button class="iconbtn" type="button" data-close="appearanceModal" aria-label="关闭外观设置">✕</button></div><p>可上传本地图片/视频作为背景，也可以粘贴在线图片或 MP4/WebM 地址。背景只在本设备显示。</p>
+ <div class="grid">
+  <div class="field"><label>背景图片 URL</label><input id="bgImageUrl" placeholder="https://example.com/wallpaper.jpg"></div>
+  <div class="field"><label>背景视频 URL</label><input id="bgVideoUrl" placeholder="https://example.com/loop.mp4"></div>
+ </div>
+ <div class="field"><label>上传本地背景图片或视频</label><input type="file" id="bgFile" accept="image/*,video/mp4,video/webm"></div>
+ <div class="field"><label>我的头像</label><div class="avatar-settings"><img id="avatarPreview" alt="头像预览"><input type="file" id="avatarFile" accept="image/*"><button class="iconbtn" type="button" id="resetAvatar">恢复默认</button></div><small class="hint">头像会显示在你发送的消息旁边，仅保存在当前设备。</small></div>
+ <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
+ <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
+</div></div>
+
+<style>
+#entryGate{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(ellipse at 20% 10%,#34306b 0,transparent 45%),linear-gradient(135deg,#090d18,#111a2c)}
+#entryGate .gate-card{width:min(420px,100%);padding:28px;border:1px solid #aab8ed30;border-radius:22px;background:#111a2cee;box-shadow:0 18px 60px #0009;text-align:center}
+#entryGate h2{margin:0 0 8px}#entryGate p{color:#9ba8c4;font-size:13px}
+#entryGate input{width:100%;padding:13px;border-radius:12px;border:1px solid #465372;background:#080f1e;color:white;margin:10px 0}
+#entryGate .gate-error{color:#ffaaaa;min-height:20px}
+body:not(.entered) .app{display:none}
+.extra-modal{position:fixed;inset:0;z-index:10001;display:none;align-items:center;justify-content:center;padding:16px;background:#030611dd;backdrop-filter:blur(8px)}
+.extra-modal.show{display:flex}.extra-box{width:min(650px,100%);max-height:85dvh;overflow:auto;background:#111a2c;border:1px solid var(--line);border-radius:20px;padding:20px}
+.extra-box input,.extra-box textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;background:#080f1e;color:var(--text);margin:6px 0 12px}
+.extra-box textarea{min-height:100px}.notice-card{padding:12px;margin:10px 0;background:#ffffff0b;border:1px solid var(--line);border-radius:12px}
+.notice-card h4{margin:0 0 6px}.notice-card p{white-space:pre-wrap;margin:0 0 8px}.notice-card small{color:var(--muted)}
+.extra-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+</style>
+<div id="entryGate">
+ <div class="gate-card">
+  <div class="logo" style="margin:0 auto 16px">念</div>
+  <h2>欢迎使用念绪 AI</h2>
+  <p>请输入访问 ID。管理员使用专属 ID 进入管理模式。</p>
+  <input id="entryId" autocomplete="off" placeholder="请输入访问 ID">
+  <button class="primary" id="enterBtn" style="width:100%">进入念绪 AI</button>
+  <div class="gate-error" id="entryError"></div>
+ </div>
+</div>
+<div class="extra-modal" id="noticeModal"><div class="extra-box">
+ <div class="extra-head"><h3>📢 网站公告</h3><button class="iconbtn" data-extra-close="noticeModal">关闭</button></div>
+ <div id="noticeList">正在加载公告…</div>
+</div></div>
+<div class="extra-modal" id="adminModal"><div class="extra-box">
+ <div class="extra-head"><h3>念绪 AI · 管理后台</h3><button class="iconbtn" data-extra-close="adminModal">关闭</button></div>
+ <h4>发布全站公告</h4>
+ <input id="noticeTitle" placeholder="公告标题">
+ <textarea id="noticeContent" placeholder="公告内容"></textarea>
+ <button class="primary" id="publishNotice">发布公告</button>
+ <h4 style="margin-top:22px">已发布公告</h4>
+ <div id="adminNoticeList"></div>
+ <p style="font-size:11px;color:var(--muted)">公告保存在服务器上，所有访问者都能看到。</p>
+</div></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const DEFAULT_APIS=[
+ {name:"Pollinations（免 Key 尝试）",url:"https://text.pollinations.ai/openai",model:"openai",key:"",enabled:true},
+ {name:"OpenRouter",url:"https://openrouter.ai/api/v1/chat/completions",model:"openai/gpt-4o-mini",key:"",enabled:false},
+ {name:"Groq",url:"https://api.groq.com/openai/v1/chat/completions",model:"llama-3.3-70b-versatile",key:"",enabled:false},
+ {name:"Cerebras",url:"https://api.cerebras.ai/v1/chat/completions",model:"llama-3.3-70b",key:"",enabled:false},
+ {name:"Together AI",url:"https://api.together.xyz/v1/chat/completions",model:"meta-llama/Llama-3.3-70B-Instruct-Turbo",key:"",enabled:false}
+];
+let apis=load("nx_apis",DEFAULT_APIS), history=[], files=[], busy=false, aborter=null, bgObjectUrl=null;
+
+(async function loadHostedApiConfig(){
+ try{
+  if(localStorage.getItem("nx_apis"))return;
+  const r=await fetch("./api-config.json",{cache:"no-store"});
+  if(!r.ok)return;
+  const data=await r.json(),list=Array.isArray(data)?data:data.apis;
+  if(Array.isArray(list)&&list.length){apis=Array.from({length:5},(_,i)=>({...DEFAULT_APIS[i],...(list[i]||{})}));save("nx_apis",apis)}
+ }catch(_){/* file:// or CORS: use built-in defaults; import JSON in settings instead */}
+})();
+
+const SYSTEM_PROMPT="你是念绪 AI，一个友好、可靠、清晰的中文 AI 助手。回答用户问题时尽量准确、有条理。若用户问“作者是谁”“开发者是谁”或询问念绪 AI 的作者，请只回答：人妖。";
+function load(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}}
+function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function setStatus(t,ok=false){$("statusText").textContent=t;$("statusDot").style.background=ok?"#4bd6a2":"#f0bd65"}
+function addMessage(role,text,err=false,images=[]){
+ const welcome=$("welcome");if(welcome)welcome.remove();
+ const box=document.createElement("article");box.className="msg "+role+(err?" error":"");
+ const label=document.createElement("div");label.className="role";
+ if(role==="user"){
+   const avatar=document.createElement("img");avatar.className="user-avatar";avatar.alt="我的头像";
+   avatar.src=load("nx_avatar","")||"data:image/svg+xml;charset=utf-8,"+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x2='1' y2='1'><stop stop-color='#9b8cff'/><stop offset='1' stop-color='#49d9ce'/></linearGradient></defs><rect width='64' height='64' rx='32' fill='url(#g)'/><circle cx='32' cy='24' r='11' fill='#172033'/><path d='M12 58c2-14 10-21 20-21s18 7 20 21' fill='#172033'/></svg>");
+   label.append(avatar);const name=document.createElement("span");name.textContent="你";label.append(name);
+ }else{label.textContent="念绪 AI"}
+ box.append(label);
+ const body=document.createElement("div");body.textContent=text;box.append(body);
+ images.forEach(src=>{const im=document.createElement("img");im.src=src;box.append(im)});
+ if(role==="ai"&&!err){const tools=document.createElement("div");tools.className="msg-tools";const copy=document.createElement("button");copy.textContent="复制回复";copy.onclick=()=>navigator.clipboard?.writeText(text);tools.append(copy);box.append(tools)}
+ $("chat").append(box);requestAnimationFrame(()=>{if(matchMedia("(max-width:760px)").matches){window.scrollTo({top:document.documentElement.scrollHeight,behavior:"smooth"})}else{$("chat").scrollTop=$("chat").scrollHeight}});return body;
+}
+function renderFiles(){$("attachments").innerHTML="";files.forEach((f,i)=>{const c=document.createElement("span");c.className="file-chip";c.textContent=(f.name.length>22?f.name.slice(0,19)+"…":f.name);const b=document.createElement("button");b.textContent="×";b.onclick=()=>{files.splice(i,1);renderFiles()};c.append(b);$("attachments").append(c)})}
+function setBusy(v){busy=v;$("sendBtn").disabled=v||(!$("prompt").value.trim()&&!files.length);$("busyLabel").textContent=v?"正在连接…":""}
+$("prompt").addEventListener("input",()=>{const p=$("prompt");p.style.height="auto";p.style.height=Math.min(p.scrollHeight,170)+"px";$("sendBtn").disabled=busy||(!p.value.trim()&&!files.length)});
+$("prompt").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}});
+$("sendBtn").onclick=send;
+$("attachBtn").onclick=()=>$("fileInput").click();
+$("fileInput").onchange=async e=>{for(const f of e.target.files){if(files.length>=5)break;try{files.push(await processFile(f))}catch(err){addMessage("ai","文件读取失败："+f.name+"（"+err.message+"）",true)}}renderFiles();$("sendBtn").disabled=busy||(!$("prompt").value.trim()&&!files.length);e.target.value=""};
+async function processFile(file){
+ const item={name:file.name,type:file.type,size:file.size};
+ if(file.type.startsWith("image/")){item.data=await dataUrl(file);item.kind="image"}
+ else if(file.type==="application/pdf"||file.name.toLowerCase().endsWith(".pdf")){item.kind="text";item.text="已附加 PDF 文件："+file.name+"。当前版本未内置 PDF 解析，请将需要分析的页面复制为文字，或先转换为 TXT。"}
+ else if(file.size>2*1024*1024)throw Error("文本文件请小于 2MB");
+ else{item.kind="text";item.text=await file.text()}
+ return item;
+}
+function dataUrl(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)})}
+function buildContent(text,attached){
+ const parts=[{type:"text",text:text||"请查看我上传的文件。"}];
+ attached.forEach(f=>{if(f.kind==="image")parts.push({type:"image_url",image_url:{url:f.data}});else parts.push({type:"text",text:"\n[附件："+f.name+"]\n"+f.text})});
+ return parts;
+}
+async function callApi(api,msgs,signal){
+ const headers={"Content-Type":"application/json"};if(api.key)headers.Authorization="Bearer "+api.key;
+ const payload={model:api.model||"openai",messages:msgs,temperature:.7};
+ const response=await fetch(api.url,{method:"POST",headers,body:JSON.stringify(payload),signal});
+ const raw=await response.text();if(!response.ok)throw Error("HTTP "+response.status+" "+raw.slice(0,160));
+ let data;try{data=JSON.parse(raw)}catch{if(raw.trim())return raw.trim();throw Error("返回内容为空")}
+ const answer=data?.choices?.[0]?.message?.content??data?.choices?.[0]?.text??data?.text??data?.result;
+ if(typeof answer==="string"&&answer.trim())return answer.trim();
+ if(Array.isArray(answer)){const s=answer.map(x=>x.text||"").join("");if(s.trim())return s.trim()}
+ throw Error(data?.error?.message||"无法识别接口返回内容");
+}
+async function send(){
+ const text=$("prompt").value.trim();if((!text&&!files.length)||busy)return;
+ const attached=files.slice();files=[];renderFiles();$("prompt").value="";$("prompt").style.height="auto";setBusy(true);
+ const preview=attached.filter(f=>f.kind==="image").map(f=>f.data);
+ addMessage("user",text||"请查看附件。",false,preview);
+ const pending=addMessage("ai","正在依次尝试可用接口…");
+ const userContent=buildContent(text,attached);
+ const apiHistory=[{role:"system",content:SYSTEM_PROMPT},...history,{role:"user",content:userContent}];
+ const candidates=apis.filter(a=>a.enabled&&a.url.trim());let answer=null,lastError=null,used="";
+ if(!candidates.length){pending.textContent="还没有启用可用接口。请打开“接口设置”，配置至少一个接口。";pending.parentElement.classList.add("error");setBusy(false);return}
+ aborter=new AbortController();
+ for(let i=0;i<candidates.length;i++){
+  const api=candidates[i];setStatus("正在尝试："+api.name);
+  const timer=setTimeout(()=>aborter.abort(),30000);
+  try{answer=await callApi(api,apiHistory,aborter.signal);used=api.name;clearTimeout(timer);break}
+  catch(e){clearTimeout(timer);lastError=e;if(e.name==="AbortError"){lastError=Error("连接超时（30 秒）");} }
+ }
+ if(answer){pending.textContent=answer;history.push({role:"user",content:userContent},{role:"assistant",content:answer});setStatus("已连接："+used,true);$("modelLabel").textContent="当前接口："+used}
+ else{pending.textContent="5 个备用接口中已启用的接口均未成功（或没有可用接口）。最后错误："+(lastError?.message||"未知错误")+"\n\n请检查接口地址、模型名称、API Key、网络和服务商 CORS 设置。也可以在接口设置中启用其他备用接口。";pending.parentElement.classList.add("error");setStatus("接口暂不可用")}
+ aborter=null;setBusy(false);
+}
+function openModal(id){$(id).classList.add("show")}
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>$(b.dataset.close).classList.remove("show"));
+
+document.querySelectorAll(".modal-back").forEach(layer=>{
+ layer.addEventListener("click",e=>{if(e.target===layer)layer.classList.remove("show")});
+});
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape")document.querySelectorAll(".modal-back.show").forEach(layer=>layer.classList.remove("show"));
+});
+
+$("openSettings").onclick=$("mobileSettings").onclick=()=>{renderApis();openModal("settingsModal")};
+$("openAppearance").onclick=$("mobileAppearance").onclick=()=>openModal("appearanceModal");
+function renderApis(){
+ $("apiList").innerHTML="";
+ apis.forEach((a,i)=>{const card=document.createElement("div");card.className="api-card";card.innerHTML=`<div class="api-head"><span>备用接口 ${i+1}</span><label class="toggle"><input type="checkbox" data-k="enabled" ${a.enabled?"checked":""}> 启用</label></div><div class="grid"><div class="field"><label>接口名称</label><input data-k="name" value="${esc(a.name)}"></div><div class="field"><label>模型名称</label><input data-k="model" value="${esc(a.model)}"></div></div><div class="field"><label>API Endpoint（完整请求地址）</label><input data-k="url" value="${esc(a.url)}" placeholder="https://.../v1/chat/completions"></div><div class="field"><label>API Key（服务商要求时填写）</label><input data-k="key" type="password" value="${esc(a.key)}" placeholder="sk-..."></div>`;
+ card.querySelectorAll("[data-k]").forEach(el=>el.onchange=el.oninput=()=>{const k=el.dataset.k;a[k]=k==="enabled"?el.checked:el.value});$("apiList").append(card)});
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+function downloadJson(filename,obj){
+ const blob=new Blob([JSON.stringify(obj,null,2)],{type:"application/json;charset=utf-8"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+$("exportConfigBtn").onclick=()=>downloadJson("api-config.json",{version:1,apis});
+$("importConfigBtn").onclick=()=>$("configFileInput").click();
+$("configFileInput").onchange=async e=>{
+ const f=e.target.files[0];if(!f)return;
+ try{
+  const data=JSON.parse(await f.text());
+  const list=Array.isArray(data)?data:data.apis;
+  if(!Array.isArray(list)||list.length<1||list.length>5)throw Error("配置文件必须包含 1 至 5 个接口（apis 数组）");
+  apis=Array.from({length:5},(_,i)=>({...DEFAULT_APIS[i],...(list[i]||{})}));
+  renderApis();save("nx_apis",apis);setStatus("已导入后台接口配置",true);
+  alert("配置导入成功，点击“保存接口配置”即可完成。");
+ }catch(err){alert("配置文件读取失败："+err.message)}
+ e.target.value="";
+};
+$("saveSettings").onclick=()=>{save("nx_apis",apis);$("settingsModal").classList.remove("show");$("modelLabel").textContent="智能对话 · 多接口自动切换";setStatus("接口配置已保存",true)};
+
+$("newChat").onclick=$("clearChat").onclick=()=>{if(busy){if(aborter)aborter.abort()}history=[];$("chat").innerHTML='<div class="welcome" id="welcome"><div class="orb">念</div><h2>新对话已开启</h2><p>继续把你的想法交给念绪 AI。</p></div>';setBusy(false);setStatus("等待发送消息")};
+$("exportChat").onclick=()=>{const text=[...$("chat").querySelectorAll(".msg")].map(m=>(m.querySelector(".role")?.textContent||"")+"\n"+(m.children[1]?.textContent||"")).join("\n\n");const blob=new Blob([text],{type:"text/plain;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="念绪AI聊天记录.txt";a.click();URL.revokeObjectURL(a.href)};
+document.querySelectorAll(".suggestions button").forEach(b=>b.onclick=()=>{$("prompt").value=b.textContent;$("sendBtn").disabled=false;send()});
+$("bgFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;if(bgObjectUrl)URL.revokeObjectURL(bgObjectUrl);bgObjectUrl=URL.createObjectURL(f);if(f.type.startsWith("video/")){setBgVideo(bgObjectUrl)}else{setBgImage(bgObjectUrl)}};
+function setBgImage(url){$("bgVideo").pause();$("bgVideo").style.display="none";$("backdrop").style.background=`center/cover no-repeat fixed url("${url}")`;}
+function setBgVideo(url){$("backdrop").style.background="#090d18";$("bgVideo").src=url;$("bgVideo").style.display="block";$("bgVideo").play().catch(()=>{});}
+
+const defaultAvatar="data:image/svg+xml;charset=utf-8,"+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x2='1' y2='1'><stop stop-color='#9b8cff'/><stop offset='1' stop-color='#49d9ce'/></linearGradient></defs><rect width='64' height='64' rx='32' fill='url(#g)'/><circle cx='32' cy='24' r='11' fill='#172033'/><path d='M12 58c2-14 10-21 20-21s18 7 20 21' fill='#172033'/></svg>");
+$("avatarPreview").src=load("nx_avatar",defaultAvatar);
+$("avatarFile").onchange=e=>{const f=e.target.files[0];if(!f)return;if(!f.type.startsWith("image/")){alert("请选择图片文件");return}if(f.size>3*1024*1024){alert("头像图片请控制在 3MB 以内");return}const reader=new FileReader();reader.onload=()=>{$("avatarPreview").src=reader.result;save("nx_avatar",reader.result)};reader.readAsDataURL(f)};
+$("resetAvatar").onclick=()=>{save("nx_avatar","");$("avatarPreview").src=defaultAvatar;$("avatarFile").value=""};
+
+$("saveAppearance").onclick=()=>{const img=$("bgImageUrl").value.trim(),vid=$("bgVideoUrl").value.trim();if(vid)setBgVideo(vid);else if(img)setBgImage(img);$("bgOverlay").style.background=$("bgDim").checked?"linear-gradient(120deg,#080d1966,#10182a55)":"transparent";if(bgObjectUrl){save("nx_bg_local","");}else save("nx_bg",{img,vid,dim:$("bgDim").checked});$("appearanceModal").classList.remove("show")};
+const savedBg=load("nx_bg",null);if(savedBg){$("bgImageUrl").value=savedBg.img||"";$("bgVideoUrl").value=savedBg.vid||"";$("bgDim").checked=savedBg.dim!==false;if(savedBg.vid)setBgVideo(savedBg.vid);else if(savedBg.img)setBgImage(savedBg.img);$("bgOverlay").style.background=savedBg.dim===false?"transparent":"linear-gradient(120deg,#080d1966,#10182a55)"}
+$("chat").addEventListener("dragover",e=>e.preventDefault());$("chat").addEventListener("drop",e=>{e.preventDefault();[...e.dataTransfer.files].slice(0,5-files.length).forEach(async f=>{try{files.push(await processFile(f));renderFiles()}catch(err){addMessage("ai",err.message,true)}})});
+
+// 通过同源安全后端认证；管理员凭据只保存在服务器环境变量中。
+let currentRole = "guest";
+async function apiRequest(path, options={}){
+ const response=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json",...(options.headers||{})},...options});
+ const data=await response.json().catch(()=>({error:"服务器返回了无效响应"}));
+ if(!response.ok)throw new Error(data.error||`请求失败 (${response.status})`);
+ return data;
+}
+function refreshNotices(targetId="noticeList", admin=false){
+ const box=$(targetId);box.textContent="正在加载公告…";
+ return apiRequest("/api/notices").then(({notices=[]})=>{
+  box.innerHTML="";
+  if(!notices.length){box.textContent="暂无公告。";return}
+  notices.forEach(n=>{const card=document.createElement("div");card.className="notice-card";const h=document.createElement("h4");h.textContent=n.title;const p=document.createElement("p");p.textContent=n.content;const small=document.createElement("small");small.textContent=new Date(n.createdAt).toLocaleString();card.append(h,p,small);
+   if(admin){const del=document.createElement("button");del.className="iconbtn";del.textContent="删除";del.style.marginLeft="8px";del.onclick=async()=>{try{await apiRequest(`/api/admin/notices/${encodeURIComponent(n.id)}`,{method:"DELETE"});refreshNotices(targetId,true)}catch(e){alert(e.message)}};card.append(del)}box.append(card)});
+ }).catch(e=>{box.textContent="公告加载失败："+e.message});
+}
+async function enterApp(){
+ const id=$("entryId").value.trim();if(!id){$("entryError").textContent="请先输入访问 ID";return}
+ $("entryError").textContent="正在验证…";$("enterBtn").disabled=true;
+ try{const data=await apiRequest("/api/login",{method:"POST",body:JSON.stringify({id})});currentRole=data.role;
+  document.body.classList.add("entered");$("entryGate").style.display="none";$("adminButton").classList.toggle("hidden",currentRole!=="admin");setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);await refreshNotices();
+ }catch(e){$("entryError").textContent=e.message}finally{$("enterBtn").disabled=false}
+}
+$("enterBtn").addEventListener("click",enterApp);
+$("entryId").addEventListener("keydown",e=>{if(e.key==="Enter")enterApp()});
+$("noticeButton").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
+$("adminButton").onclick=()=>{if(currentRole!=="admin")return alert("需要管理员权限");refreshNotices("adminNoticeList",true);$("adminModal").classList.add("show")};
+document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dataset.extraClose).classList.remove("show"));
+$("publishNotice").onclick=async()=>{const title=$("noticeTitle").value.trim(),content=$("noticeContent").value.trim();if(!title||!content){alert("请填写公告标题和内容");return}
+ try{await apiRequest("/api/admin/notices",{method:"POST",body:JSON.stringify({title,content})});$("noticeTitle").value="";$("noticeContent").value="";await refreshNotices("adminNoticeList",true);alert("公告已发布，所有用户均可查看。")}catch(e){alert(e.message)}};
+(async()=>{try{const data=await apiRequest("/api/session");if(data.authenticated){currentRole=data.role;document.body.classList.add("entered");$("entryGate").style.display="none";$("adminButton").classList.toggle("hidden",currentRole!=="admin");await refreshNotices();}}catch(_){/* 未登录时显示入口 */}})();
+
+</script>
+</body></html>

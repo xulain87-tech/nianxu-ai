@@ -1,0 +1,8 @@
+{
+  "name": "nianxu-ai-admin-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nianxu AI admin backend",
+  "scripts": {"start": "node server.js"},
+  "engines": {"node": ">=18"}
+}
