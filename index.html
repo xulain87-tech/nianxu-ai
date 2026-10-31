@@ -134,6 +134,14 @@ body{background:transparent}
 .primary,.send{box-shadow:none}.primary:hover,.send:hover{transform:none;filter:brightness(1.06)}
 .modal-back,.extra-modal{backdrop-filter:none;-webkit-backdrop-filter:none;background:#050914f2}.modal-top{backdrop-filter:none;-webkit-backdrop-filter:none}
 .msg,.api-card,.notice-card{box-shadow:none}.settings-hero{background:#ffffff05}
+@media(max-width:760px){
+ .modal-back#settingsModal #apiList{min-height:0;overflow-y:auto!important;overflow-x:hidden;touch-action:pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+ .modal-back#settingsModal .settings-info-grid,.modal-back#settingsModal .admin-hint{min-height:0;touch-action:pan-y;-webkit-overflow-scrolling:touch}
+ .settings-nav{touch-action:pan-x;-webkit-overflow-scrolling:touch}
+ .extra-modal{overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch}
+ .extra-box{min-height:0;touch-action:pan-y;-webkit-overflow-scrolling:touch}
+ #appearanceModal .modal{max-height:calc(100dvh - 20px);overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch}
+}
 </style>
 </head>
 <body>
@@ -200,6 +208,7 @@ body{background:transparent}
 #entryGate .gate-card{width:min(420px,100%);padding:28px;border:1px solid #aab8ed30;border-radius:22px;background:#111a2cee;box-shadow:0 18px 60px #0009;text-align:center}
 #entryGate h2{margin:0 0 8px}#entryGate p{color:#9ba8c4;font-size:13px}
 #entryGate input{width:100%;padding:13px;border-radius:12px;border:1px solid #465372;background:#080f1e;color:white;margin:10px 0}
+#entryGate .gate-actions{display:flex;gap:8px;margin-top:4px}#entryGate .gate-actions button{flex:1}#entryGate .register-panel{margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
 #entryGate .gate-error{color:#ffaaaa;min-height:20px}
 body:not(.entered) .app{display:none}
 .extra-modal{position:fixed;inset:0;z-index:10001;display:none;align-items:center;justify-content:center;padding:16px;background:#030611dd;backdrop-filter:blur(8px)}
@@ -213,9 +222,11 @@ body:not(.entered) .app{display:none}
  <div class="gate-card">
   <div class="logo" style="margin:0 auto 16px">念</div>
   <h2>欢迎使用念绪 AI</h2>
-  <p>请输入访问 ID。管理员使用专属 ID 进入管理模式。</p>
-  <input id="entryId" autocomplete="off" placeholder="请输入访问 ID">
-  <button class="primary" id="enterBtn" style="width:100%">进入念绪 AI</button>
+  <p>请输入账号和密码，登录后开始使用。</p>
+  <input id="entryId" autocomplete="username" placeholder="请输入账号">
+  <input id="entryPassword" type="password" autocomplete="current-password" placeholder="请输入密码">
+  <div class="gate-actions"><button class="primary" id="enterBtn">登录</button><button class="ghost" id="showRegisterBtn" type="button">注册账号</button></div>
+  <div class="register-panel hidden" id="registerPanel"><input id="registerPassword" type="password" autocomplete="new-password" placeholder="设置密码（至少 6 位）"><input id="registerConfirm" type="password" autocomplete="new-password" placeholder="再次输入密码"><div class="gate-actions"><button class="primary" id="registerBtn" type="button">创建账号</button><button class="ghost" id="backLoginBtn" type="button">返回登录</button></div></div>
   <div class="gate-error" id="entryError"></div>
  </div>
 </div>
@@ -351,9 +362,8 @@ checkServiceHealth();
 async function generateImage(){
  const prompt=window.prompt("描述你想生成的图片", "一幅有紫青霓虹光的未来城市夜景");
  if(!prompt||!prompt.trim())return;
- const clean=prompt.trim().slice(0,500); addMessage("user","生成图片："+clean); setStatus("正在生成图片…");
- const url="https://image.pollinations.ai/prompt/"+encodeURIComponent(clean)+"?width=768&height=768&nologo=true&seed="+Date.now();
- const box=addMessage("ai","图片生成中…"); const im=new Image(); im.onload=()=>{box.textContent="已完成图片生成："+clean;im.alt=clean;im.className="generated-image";box.parentElement.appendChild(im);setStatus("图片已生成",true)}; im.onerror=()=>{box.textContent="图片生成失败，请检查网络或稍后重试。";box.parentElement.classList.add("error");setStatus("生图服务暂不可用")}; im.src=url;
+ const clean=prompt.trim().slice(0,500);addMessage("user","AI 2.0 生图："+clean);setStatus("AI 2.0 正在生成…");const box=addMessage("ai","AI 2.0 图片生成中…");
+ try{const r=await fetch("/api/ai/image?prompt="+encodeURIComponent(clean),{credentials:"same-origin"});if(!r.ok){const e=await r.json().catch(()=>({}));throw Error(e.error||"生图服务暂不可用")}let url;if((r.headers.get("content-type")||"").includes("application/json")){const data=await r.json();url=data.url}else{url=URL.createObjectURL(await r.blob())}const im=new Image();if(url.startsWith("blob:"))im.onload=()=>URL.revokeObjectURL(url);im.alt=clean;im.className="generated-image";im.loading="lazy";im.src=url;box.textContent="已完成 AI 2.0 生图："+clean;box.parentElement.appendChild(im);setStatus("AI 2.0 图片已生成",true)}catch(e){box.textContent="AI 2.0 生图失败："+e.message;box.parentElement.classList.add("error");setStatus("生图服务暂不可用")}
 }
 $("generateImageBtn").onclick=generateImage;
 $("newChat").onclick=$("clearChat").onclick=()=>{if(busy){if(aborter)aborter.abort()}history=[];$("chat").innerHTML='<div class="welcome" id="welcome"><div class="orb">念</div><h2>新对话已开启</h2><p>继续把你的想法交给念绪 AI。</p></div>';setBusy(false);setStatus("等待发送消息")};
@@ -399,14 +409,17 @@ function refreshNotices(targetId="noticeList", admin=false){
  }).catch(e=>{box.textContent="公告加载失败："+e.message});
 }
 async function enterApp(){
- const id=$("entryId").value.trim();if(!id){$("entryError").textContent="请先输入访问 ID";return}
+ const id=$("entryId").value.trim(),password=$("entryPassword").value;if(!id||!password){$("entryError").textContent="请输入账号和密码";return}
  $("entryError").textContent="正在验证…";$("enterBtn").disabled=true;
- try{const data=await apiRequest("/api/login",{method:"POST",body:JSON.stringify({id})});currentRole=data.role;
+ try{const data=await apiRequest("/api/login",{method:"POST",body:JSON.stringify({id,password})});currentRole=data.role;
   document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
  }catch(e){$("entryError").textContent=e.message}finally{$("enterBtn").disabled=false}
 }
 $("enterBtn").addEventListener("click",enterApp);
-$("entryId").addEventListener("keydown",e=>{if(e.key==="Enter")enterApp()});
+$("entryId").addEventListener("keydown",e=>{if(e.key==="Enter")$("entryPassword").focus()});$("entryPassword").addEventListener("keydown",e=>{if(e.key==="Enter")enterApp()});
+$("showRegisterBtn").onclick=()=>{$("registerPanel").classList.remove("hidden");$("showRegisterBtn").classList.add("hidden");$("entryError").textContent=""};
+$("backLoginBtn").onclick=()=>{$("registerPanel").classList.add("hidden");$("showRegisterBtn").classList.remove("hidden");$("entryError").textContent=""};
+$("registerBtn").onclick=async()=>{const id=$("entryId").value.trim(),password=$("registerPassword").value,confirm=$("registerConfirm").value;if(!id||!password){$("entryError").textContent="请输入账号和密码";return}if(password!==confirm){$("entryError").textContent="两次密码不一致";return}$("registerBtn").disabled=true;try{await apiRequest("/api/register",{method:"POST",body:JSON.stringify({id,password})});$("registerPanel").classList.add("hidden");$("showRegisterBtn").classList.remove("hidden");$("entryPassword").value=password;$("registerPassword").value="";$("registerConfirm").value="";$("entryError").textContent="账号创建成功，请点击登录"}catch(e){$("entryError").textContent=e.message}finally{$("registerBtn").disabled=false}};
 $("noticeButton").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
 $("adminButton").onclick=()=>{if(currentRole!=="admin")return alert("需要管理员权限");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")};
 document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dataset.extraClose).classList.remove("show"));

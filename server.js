@@ -5,17 +5,19 @@ const path = require('path');
 const crypto = require('crypto');
 const ROOT = __dirname;
 const PORT = Number(process.env.PORT || 3000);
-const ADMIN_ID = process.env.ADMIN_ID;
-if (!ADMIN_ID) { console.error('请设置环境变量 ADMIN_ID（管理员登录凭据）'); process.exit(1); }
+const ADMIN_ID = process.env.ADMIN_ID || 'admin';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'nianxu968';
 const DATA_DIR = process.env.DATA_DIR || path.join(ROOT, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'notices.json');
 const BANS_FILE = path.join(DATA_DIR, 'bans.json');
 const AI_CONFIG_FILE = path.join(DATA_DIR, 'ai-config.json');
+const ACCOUNTS_FILE = path.join(DATA_DIR, 'accounts.json');
 const PRESENCE_TTL = 90 * 1000;
 const APP_VERSION = '2.0 Pro';
 fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
 if (!fs.existsSync(BANS_FILE)) fs.writeFileSync(BANS_FILE, '{}');
+if (!fs.existsSync(ACCOUNTS_FILE)) fs.writeFileSync(ACCOUNTS_FILE, '{}');
 const DEFAULT_AI_APIS = [
  {name:'Pollinations 公共入口',url:'https://text.pollinations.ai/openai',model:'openai',enabled:true,key:process.env.POLLINATIONS_API_KEY||''},
  {name:'念绪AI',url:'https://open.bigmodel.cn/api/paas/v4/chat/completions',model:'glm-5.3',enabled:false,key:process.env.ZHIPU_API_KEY||''},
@@ -27,6 +29,11 @@ if (!fs.existsSync(AI_CONFIG_FILE)) fs.writeFileSync(AI_CONFIG_FILE, JSON.string
 function readBans(){try{return JSON.parse(fs.readFileSync(BANS_FILE,'utf8'))}catch{return {}}}
 function writeBans(v){fs.writeFileSync(BANS_FILE,JSON.stringify(v,null,2))}
 function cleanId(v){return String(v||'').trim().slice(0,100)}
+function validId(v){return /^[A-Za-z0-9_\-\u4e00-\u9fff]{2,32}$/.test(v)}
+function readAccounts(){try{return JSON.parse(fs.readFileSync(ACCOUNTS_FILE,'utf8'))}catch{return {}}}
+function writeAccounts(v){fs.writeFileSync(ACCOUNTS_FILE,JSON.stringify(v,null,2))}
+function hashPassword(password,salt=crypto.randomBytes(16).toString('hex')){return `${salt}:${crypto.scryptSync(String(password),salt,64).toString('hex')}`}
+function verifyPassword(password,stored){try{const [salt,digest]=String(stored).split(':');const actual=crypto.scryptSync(String(password),salt,64);const expected=Buffer.from(digest,'hex');return expected.length===actual.length&&crypto.timingSafeEqual(actual,expected)}catch{return false}}
 const sessions = new Map();
 const COOKIE = 'nx_session';
 const SESSION_TTL = 7 * 24 * 60 * 60 * 1000;
@@ -67,13 +74,16 @@ const server=http.createServer(async(req,res)=>{
    const started=Date.now();
    const url=new URL(req.url,'http://localhost');
    const contentLength=Number(req.headers['content-length']||0);if(contentLength>100000){send(res,413,{error:'请求体过大'});return}
-   const routeLimit=url.pathname==='/api/login'?['login',12,5*60*1000]:url.pathname==='/api/ai/chat'?['ai',30,5*60*1000]:url.pathname.startsWith('/api/admin')?['admin',60,5*60*1000]:['api',180,5*60*1000];if(!allowed(req,res,...routeLimit))return;
+   const routeLimit=url.pathname==='/api/login'?['login',12,5*60*1000]:url.pathname==='/api/ai/chat'?['ai',30,5*60*1000]:url.pathname==='/api/ai/image'?['image',10,5*60*1000]:url.pathname.startsWith('/api/admin')?['admin',60,5*60*1000]:['api',180,5*60*1000];if(!allowed(req,res,...routeLimit))return;
   if(req.method==='GET'&&url.pathname==='/api/health'){send(res,200,{status:'ok',version:APP_VERSION,latency:Date.now()-started,node:process.version,uptime:Math.round(process.uptime())});return;}
+  if(req.method==='POST'&&url.pathname==='/api/register'){
+   const data=await body(req);const userId=cleanId(data.id),password=String(data.password||'');if(!validId(userId)||password.length<6||password.length>128){send(res,400,{error:'账号需为 2-32 位字母、数字、中文、下划线或短横线；密码至少 6 位'});return;}if(userId===ADMIN_ID){send(res,409,{error:'该账号不可注册'});return;}const accounts=readAccounts();if(accounts[userId]){send(res,409,{error:'账号已存在，请换一个账号'});return;}accounts[userId]={password:hashPassword(password),createdAt:new Date().toISOString()};writeAccounts(accounts);send(res,201,{ok:true,message:'账号创建成功，请登录'});return;
+  }
   if(req.method==='POST'&&url.pathname==='/api/login'){
-   const data=await body(req); const given=String(data.id||'');
-   const a=Buffer.from(given),b=Buffer.from(ADMIN_ID);
-   const ok=a.length===b.length&&crypto.timingSafeEqual(a,b);
-   const userId=cleanId(given);const bans=readBans();if(!ok&&bans[userId]){send(res,403,{error:'此访问 ID 已被管理员封禁'});return;}const token=crypto.randomBytes(32).toString('hex');const role=ok?'admin':'guest';sessions.set(token,{role,userId,createdAt:Date.now(),lastSeen:Date.now(),expires:Date.now()+SESSION_TTL});
+   const data=await body(req); const given=cleanId(data.id),password=String(data.password||'');
+   const pa=Buffer.from(password),pb=Buffer.from(ADMIN_PASSWORD);const ok=given===ADMIN_ID&&pa.length===pb.length&&crypto.timingSafeEqual(pa,pb);
+   const accounts=readAccounts();const accountOk=!ok&&Boolean(accounts[given])&&verifyPassword(password,accounts[given].password);
+   const userId=given;const bans=readBans();if(!ok&&!accountOk&&bans[userId]){send(res,403,{error:'此账号已被封禁'});return;}if(!ok&&!accountOk){send(res,401,{error:'账号或密码错误'});return;}const token=crypto.randomBytes(32).toString('hex');const role=ok?'admin':'guest';sessions.set(token,{role,userId,createdAt:Date.now(),lastSeen:Date.now(),expires:Date.now()+SESSION_TTL});
    const cookieMode = process.env.NODE_ENV === 'production' ? 'SameSite=None; Secure' : 'SameSite=Lax';
    send(res,200,{authenticated:true,role},{'Set-Cookie':`${COOKIE}=${token}; HttpOnly; ${cookieMode}; Path=/; Max-Age=${SESSION_TTL}`});return;
   }
@@ -87,6 +97,10 @@ const server=http.createServer(async(req,res)=>{
   if(req.method==='POST'&&url.pathname==='/api/ai/chat'){
    if(!session(req)){send(res,401,{error:'请先登录'});return;}const d=await body(req);if(!Array.isArray(d.messages)||d.messages.length>24){send(res,400,{error:'消息上下文无效'});return;}const result=await proxyAiChat(d.messages);send(res,200,result);return;
   }
+   if(req.method==='GET'&&url.pathname==='/api/ai/image'){
+   if(!session(req)){send(res,401,{error:'请先登录'});return;}const prompt=String(url.searchParams.get('prompt')||'').trim().slice(0,500);if(!prompt){send(res,400,{error:'图片描述不能为空'});return;}const imageUrl='https://image.pollinations.ai/prompt/'+encodeURIComponent(prompt)+'?width=768&height=768&nologo=true&seed='+Date.now();let upstream;for(let attempt=0;attempt<2;attempt++){try{upstream=await fetch(imageUrl,{headers:{'User-Agent':'NianxuAI/2.0'}});if(upstream.ok)break}catch(_){ }if(attempt===0)await new Promise(r=>setTimeout(r,500))}if(!upstream?.ok){send(res,200,{url:imageUrl,fallback:true});return;}const type=upstream.headers.get('content-type')||'image/jpeg';res.writeHead(200,{'Content-Type':type,'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'});res.end(Buffer.from(await upstream.arrayBuffer()));return;
+  }
+  if(req.method==='GET'&&url.pathname==='/api/admin/accounts'){if(!requireAdmin(req,res))return;const accounts=readAccounts();send(res,200,{accounts:Object.keys(accounts).map(id=>({id,createdAt:accounts[id].createdAt}))});return;}
   if(req.method==='GET'&&url.pathname==='/api/admin/users'){if(!requireAdmin(req,res))return;const now=Date.now();const users=[];for(const [token,u] of sessions){if(u.role==='guest'&&u.expires>now&&now-u.lastSeen<PRESENCE_TTL)users.push({id:u.userId,online:true,lastSeen:u.lastSeen,sessionCount:1});}const grouped={};for(const u of users){if(!grouped[u.id])grouped[u.id]=u;else grouped[u.id].sessionCount++;}send(res,200,{users:Object.values(grouped),bans:readBans()});return;}
   if(req.method==='POST'&&url.pathname==='/api/admin/ban'){if(!requireAdmin(req,res))return;const d=await body(req);const id=cleanId(d.id);if(!id){send(res,400,{error:'缺少用户 ID'});return;}const bans=readBans();bans[id]={reason:String(d.reason||'管理员封禁').slice(0,300),at:new Date().toISOString()};writeBans(bans);for(const [token,u] of sessions){if(u.role==='guest'&&u.userId===id)sessions.delete(token);}send(res,200,{ok:true});return;}
   if(req.method==='POST'&&url.pathname==='/api/admin/unban'){if(!requireAdmin(req,res))return;const d=await body(req);const id=cleanId(d.id);const bans=readBans();delete bans[id];writeBans(bans);send(res,200,{ok:true});return;}
