@@ -1175,15 +1175,15 @@ body.entered #entryGate{display:none!important}
         <input id="rememberLoginId" type="checkbox" checked>
         <span>记住此账号（下次免密）</span>
       </label>
-      <button type="button" class="nx-btn nx-btn-primary" id="enterBtn">登 录</button>
-      <button type="button" class="nx-btn nx-btn-ghost" id="showRegisterBtn">注册新账号</button>
+      <button type="button" class="nx-btn nx-btn-primary" id="enterBtn" onclick="window.__nxLogin && window.__nxLogin()">登 录</button>
+      <button type="button" class="nx-btn nx-btn-ghost" id="showRegisterBtn" onclick="window.__nxShowReg && window.__nxShowReg()">注册新账号</button>
     </div>
 
     <div class="nx-login-form hidden" id="registerPanel">
       <input id="registerPassword" type="password" autocomplete="new-password" placeholder="设置密码（至少6位）" minlength="6" maxlength="128">
       <input id="registerConfirm" type="password" autocomplete="new-password" placeholder="再次输入密码" minlength="6" maxlength="128">
-      <button type="button" class="nx-btn nx-btn-primary" id="registerBtn">创建账号并登录</button>
-      <button type="button" class="nx-btn nx-btn-ghost" id="backLoginBtn">返回登录</button>
+      <button type="button" class="nx-btn nx-btn-primary" id="registerBtn" onclick="window.__nxRegister && window.__nxRegister()">创建账号并登录</button>
+      <button type="button" class="nx-btn nx-btn-ghost" id="backLoginBtn" onclick="window.__nxShowLogin && window.__nxShowLogin()">返回登录</button>
     </div>
 
     <div class="nx-login-error" id="entryError"></div>
@@ -1693,4 +1693,147 @@ document.addEventListener('touchmove',e=>{
 },{passive:true});
 })();
 </script>
+
+<script>
+/* ===== 独立登录脚本（不依赖主脚本，保证一定能登录） ===== */
+(function(){
+  function $(id){ return document.getElementById(id); }
+  function showErr(msg){ var e=$("entryError"); if(e) e.textContent = msg || ""; }
+  function setBusy(b){ var btn=$("enterBtn"); if(btn) btn.disabled = !!b; var rbtn=$("registerBtn"); if(rbtn) rbtn.disabled = !!b; }
+
+  window.__nxShowReg = function(){
+    var lf=$("loginForm"), rp=$("registerPanel");
+    if(lf) lf.classList.add("hidden");
+    if(rp) rp.classList.remove("hidden");
+    showErr("");
+    var p=$("registerPassword"); if(p) p.focus();
+  };
+  window.__nxShowLogin = function(){
+    var lf=$("loginForm"), rp=$("registerPanel");
+    if(rp) rp.classList.add("hidden");
+    if(lf) lf.classList.remove("hidden");
+    showErr("");
+    var p=$("entryPassword"); if(p) p.focus();
+  };
+
+  window.__nxLogin = async function(){
+    var idEl=$("entryId"), pwEl=$("entryPassword");
+    if(!idEl || !pwEl){ showErr("界面异常，请刷新页面"); return; }
+    var id = (idEl.value || "").trim();
+    var password = pwEl.value || "";
+    if(!id){ showErr("请输入账号"); return; }
+
+    setBusy(true);
+    showErr("正在验证…");
+
+    try {
+      // 免密尝试
+      if(!password){
+        var sess = await fetch("/api/session", {credentials:"same-origin"}).then(r=>r.json()).catch(()=>null);
+        if(sess && sess.authenticated){
+          document.body.classList.add("entered");
+          var gate=$("entryGate"); if(gate) gate.style.display="none";
+          showErr("");
+          // 尝试调用主脚本的进入逻辑
+          if(typeof enterApp === "function"){ /* already in */ }
+          location.reload(); // 最稳妥：刷新后自动恢复会话
+          return;
+        }
+        showErr("请输入密码（首次或会话过期时需要）");
+        setBusy(false);
+        return;
+      }
+
+      var res = await fetch("/api/login", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({id: id, password: password})
+      });
+      var data = await res.json().catch(()=>({}));
+      if(!res.ok){
+        showErr(data.error || ("登录失败 " + res.status));
+        setBusy(false);
+        return;
+      }
+      // 记住账号
+      try {
+        var rem = $("rememberLoginId");
+        if(!rem || rem.checked) localStorage.setItem("nx_login_id", id);
+        else localStorage.removeItem("nx_login_id");
+      } catch(_){}
+
+      document.body.classList.add("entered");
+      var gate=$("entryGate"); if(gate) gate.style.display="none";
+      showErr("");
+      // 刷新页面让主脚本正确初始化会话（最稳）
+      location.reload();
+    } catch(err) {
+      showErr("网络错误：" + (err.message || "请检查网络后重试"));
+      setBusy(false);
+    }
+  };
+
+  window.__nxRegister = async function(){
+    var id = ($("entryId") && $("entryId").value || "").trim();
+    var password = ($("registerPassword") && $("registerPassword").value) || "";
+    var confirm = ($("registerConfirm") && $("registerConfirm").value) || "";
+    if(!id){ showErr("请输入账号 ID"); return; }
+    if(id.length < 2 || id.length > 32){ showErr("账号长度需 2-32 位"); return; }
+    if(password.length < 6){ showErr("密码至少 6 位"); return; }
+    if(password !== confirm){ showErr("两次密码不一致"); return; }
+
+    setBusy(true);
+    showErr("正在创建账号…");
+    try {
+      var res = await fetch("/api/register", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({id: id, password: password})
+      });
+      var data = await res.json().catch(()=>({}));
+      if(!res.ok){
+        showErr(data.error || ("注册失败 " + res.status));
+        setBusy(false);
+        return;
+      }
+      // 注册成功后自动用同一密码登录
+      if($("entryPassword")) $("entryPassword").value = password;
+      if($("registerPanel")) $("registerPanel").classList.add("hidden");
+      if($("loginForm")) $("loginForm").classList.remove("hidden");
+      showErr("账号创建成功，正在登录…");
+      await window.__nxLogin();
+    } catch(err) {
+      showErr("网络错误：" + (err.message || "请重试"));
+      setBusy(false);
+    }
+  };
+
+  // 回车提交
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Enter"){
+      var gate = $("entryGate");
+      if(gate && gate.style.display !== "none" && !document.body.classList.contains("entered")){
+        var rp = $("registerPanel");
+        if(rp && !rp.classList.contains("hidden")) window.__nxRegister();
+        else window.__nxLogin();
+      }
+    }
+  });
+
+  // 预填记住的账号
+  try {
+    var remembered = localStorage.getItem("nx_login_id") || "";
+    if(remembered && $("entryId")) {
+      $("entryId").value = remembered;
+      var gd = $("gateDesc");
+      if(gd) gd.textContent = "欢迎回来，" + remembered + "。可直接点登录（有会话时免密）";
+    }
+  } catch(_){}
+
+  console.log("[念绪] 独立登录脚本已就绪");
+})();
+</script>
+
 </body></html>
