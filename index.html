@@ -633,7 +633,7 @@ body.nx-light .cr-item{background:#f3efe0}
  <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="说点什么…"></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">Nianxu Control Room · 2.9.0 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">Nianxu Control Room · 2.8.5 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
  <div class="nx-profile"><div class="av">念</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>服务器接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
  <p class="settings-page-note">管理员可配置服务器接口；普通用户只通过服务器代理使用 AI，接口地址和 API Key 不会发送到浏览器。</p>
  <div id="apiList"></div>
@@ -644,7 +644,7 @@ body.nx-light .cr-item{background:#f3efe0}
  </div>
  <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
  <div class="settings-info-grid" id="settingsInfoGrid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.9.0 Pro</strong><span>Build 2026.11 · 2.9.0</span><p>本次更新：全面高级化 UI（深邃玻璃质感、精致渐变、Grok 级流畅动效）；设置关闭逻辑强化；触控与动画全面打磨，观感更高级、交互更丝滑。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.8.5 Pro</strong><span>Build 2026.11 · 2.8.5</span><p>本次更新：弹窗全面缩小更精致；动效更丝滑（更快弹簧曲线）；继续强化关闭逻辑与触控稳定性；整体更紧凑高级。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 开启互怼强度匹配</label>
@@ -680,7 +680,7 @@ body.nx-light .cr-item{background:#f3efe0}
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.9.0 Pro" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.8.5 Pro" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -1005,7 +1005,7 @@ button[data-close]{
   touch-action:manipulation !important;
 }
 /* ensure modal-top doesn't block */
-/* === UI polish 2.8.4 === */
+/* === UI polish 2.8.5 === */
 :root{
   --accent:#8b7cff;
   --accent2:#4bd6c7;
@@ -1172,7 +1172,7 @@ body.nx-light .cr-item.official{background:linear-gradient(135deg,color-mix(in s
 .cr-save{box-shadow:0 8px 20px #7a6bff44;transition:transform .2s var(--soft)}
 .cr-save:active{transform:scale(.97)}
 
-/* —— 2.8.4 修复：版本信息页 / 子页面退出栏 / 创新AI入口缩小 —— */
+/* —— 2.8.5 修复：版本信息页 / 子页面退出栏 / 创新AI入口缩小 —— */
 #settingsModal.nx-in-pane[data-pane=version] #settingsInfoGrid,#settingsModal.nx-in-pane[data-pane=features] #settingsInfoGrid{display:block!important}
 #settingsModal.nx-in-pane[data-pane=version] #featurePanel,#settingsModal.nx-in-pane[data-pane=features] #versionPanel{display:none!important}
 #settingsModal.nx-in-pane[data-pane=version] #versionPanel,#settingsModal.nx-in-pane[data-pane=features] #featurePanel{display:block!important}
@@ -1668,7 +1668,7 @@ document.getElementById('nxPaneBack').onclick=()=>{const b=document.querySelecto
 </script>
 
 <style id="nianxu-premium-ui-284">
-/* ========== 念绪 AI 2.8.4 · Premium Fluid UI ========== */
+/* ========== 念绪 AI 2.8.5 · Premium Fluid UI ========== */
 :root{
   --bg:#070a12;
   --bg2:#0b101c;
@@ -2030,136 +2030,135 @@ body.nx-light .msg.user{
 }
 </style>
 
-<style id="nianxu-290-ui-refresh">
-/* Nianxu AI 2.9.0 — visual refresh only. Core feature/API/admin/support logic is intentionally untouched. */
-:root{--nx-bg:#090d18;--nx-panel:#111a2b;--nx-panel2:#172238;--nx-line:rgba(159,181,255,.13);--nx-accent:#9b8cff;--nx-cyan:#67d9dc}
-html,body{min-height:100%;background:var(--nx-bg)}
-body{color:var(--text);-webkit-tap-highlight-color:transparent}
-#backdrop{background:radial-gradient(ellipse at 15% 0%,#22204a 0%,transparent 42%),radial-gradient(ellipse at 90% 100%,#10313d 0%,transparent 38%),#090d18!important}
-#backdrop:before,#backdrop:after{opacity:.16}
-.app{gap:14px!important;padding:14px!important;min-height:100dvh}
-.sidebar,.main{background:rgba(15,23,40,.94)!important;border:1px solid var(--nx-line)!important;box-shadow:0 18px 60px #0005!important;backdrop-filter:blur(16px)!important}
-.sidebar{border-radius:24px!important;padding:18px!important}
-.main{border-radius:24px!important;overflow:hidden}
-.brand .logo,.orb{box-shadow:0 0 0 7px #9b8cff12,0 10px 32px #8c7cff30!important}
-.topbar{min-height:66px!important;padding:10px 18px!important;background:rgba(12,19,34,.88)!important;border-bottom:1px solid var(--nx-line)!important;backdrop-filter:blur(16px)!important}
-.top-title{font-weight:750!important;letter-spacing:.2px}
-.iconbtn,.ghost,.side-actions button{border:1px solid var(--nx-line)!important;background:#ffffff08!important;border-radius:13px!important;transition:background .16s,border-color .16s,transform .16s!important}
-.iconbtn:active,.ghost:active,.primary:active,.send:active{transform:scale(.97)}
-.primary,.send{background:linear-gradient(135deg,#a18cff,#6e9cff)!important;color:#fff!important;border:0!important;border-radius:14px!important;box-shadow:0 7px 24px #8578ff28!important}
-#chat{padding:24px clamp(14px,4vw,52px) 180px!important;scroll-behavior:smooth;overscroll-behavior:contain}
-.msg{animation:messageIn .14s ease-out both!important;border-radius:19px!important;box-shadow:0 6px 20px #0002!important}
-.msg.ai{background:#172238!important;border:1px solid #a5baff12!important}
-.msg.user{background:linear-gradient(135deg,#655bd2,#397eaa)!important;color:#fff!important}
-.composer-wrap{position:fixed!important;left:max(14px,calc((100vw - 1440px)/2 + 330px));right:max(14px,calc((100vw - 1440px)/2 + 24px));bottom:14px!important;z-index:30!important;padding:0!important;background:transparent!important;pointer-events:none}
-.composer-wrap>*{pointer-events:auto}
-.composer{background:rgba(20,29,48,.97)!important;border:1px solid #9baeff28!important;border-radius:22px!important;box-shadow:0 14px 42px #0007!important;padding:10px 12px!important;backdrop-filter:blur(18px)!important}
-.composer textarea{max-height:160px!important;line-height:1.55!important}
-.composer-foot{opacity:.62}
-#settingsModal .modal,#appearanceModal .modal,#humanSupportModal .modal,#noticeModal .modal,#adminModal .modal,#adminSupportModal .modal{background:linear-gradient(160deg,#18243b,#101827 58%,#111827)!important;border:1px solid #a7baff24!important;border-radius:24px!important;box-shadow:0 24px 80px #0009!important}
-#settingsModal .modal{width:min(560px,100%)!important;max-height:min(82dvh,780px)!important;overflow:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important}
-#settingsModal .modal-top{position:sticky!important;top:0!important;z-index:5!important;background:rgba(20,30,49,.96)!important;border-bottom:1px solid var(--nx-line)!important;backdrop-filter:blur(14px)!important}
-#settingsModal .settings-hero{border:1px solid #a18cff2b!important;background:linear-gradient(120deg,#8b7cff1b,#60d7d51a)!important;border-radius:18px!important}
-#settingsModal .nx-profile{border:1px solid #a18cff30!important;background:linear-gradient(120deg,#8b7cff22,#60d7d51a)!important;border-radius:18px!important}
-#settingsModal .settings-nav{display:grid!important;grid-template-columns:1fr 1fr!important;gap:9px!important;position:static!important;background:transparent!important;padding:8px 0 12px!important;overflow:visible!important}
-#settingsModal .settings-nav button{min-height:66px!important;padding:11px 12px!important;border:1px solid var(--nx-line)!important;border-radius:15px!important;background:#ffffff07!important;text-align:left!important;display:flex!important;align-items:center!important;gap:10px!important}
-#settingsModal .settings-nav button.active{border-color:#9b8cff88!important;background:#9b8cff1b!important;color:#d8d0ff!important}
-#settingsModal .settings-nav button:after{content:none!important}
-#settingsModal .settings-nav button i{width:32px!important;height:32px!important;line-height:32px!important;border-radius:10px!important;background:#9b8cff1c!important;text-align:center!important}
-#settingsModal .settings-nav button b{font-size:13px!important}
-#settingsModal .settings-nav button small{font-size:10px!important;opacity:.7}
-#settingsModal .info-card,#settingsModal .api-card{background:#ffffff08!important;border:1px solid var(--nx-line)!important;border-radius:16px!important;padding:14px!important}
-#settingsModal .nx-done,#settingsModal .nx-pane-bar .primary{min-height:46px!important;border-radius:14px!important;background:linear-gradient(135deg,#9b8cff,#658dff)!important;color:#fff!important}
-#settingsModal input:not([type=checkbox]),#settingsModal select,#settingsModal textarea{border:1px solid var(--nx-line)!important;border-radius:12px!important;background:#0c1424!important;color:var(--text)!important}
-.modal-back{padding:14px!important;backdrop-filter:blur(7px)!important}
-.modal-back.show .modal{animation:dlgIn .16s ease-out both!important}
-.mobile-workbar{backdrop-filter:blur(18px)!important;background:rgba(17,25,42,.96)!important;border:1px solid var(--nx-line)!important}
-/* Keep the chat composer anchored at the bottom on phones, above the work bar. */
-@media(max-width:760px){
- .app{padding:0!important;gap:0!important}.sidebar{border-radius:0 0 20px 20px!important}
- .main{min-height:100dvh!important;border-radius:0!important;padding-bottom:calc(130px + env(safe-area-inset-bottom))!important}
- .topbar{min-height:58px!important;padding:7px 10px!important;gap:6px!important}
- #chat{padding:16px 12px 190px!important;min-height:55dvh!important}
- .composer-wrap{left:9px!important;right:9px!important;bottom:calc(61px + env(safe-area-inset-bottom))!important}
- .composer{padding:8px!important;border-radius:20px!important}
- .mobile-workbar{left:9px!important;right:9px!important;bottom:env(safe-area-inset-bottom)!important}
- #settingsModal.modal-back{padding:calc(8px + env(safe-area-inset-top)) 8px calc(8px + env(safe-area-inset-bottom))!important}
- #settingsModal .modal{width:100%!important;max-height:100%!important;height:100%!important;border-radius:20px!important;padding:14px!important}
- #settingsModal .settings-nav{grid-template-columns:1fr!important;gap:7px!important}
- #settingsModal .settings-nav button{min-height:58px!important}
- #settingsModal .modal-actions{position:sticky!important;bottom:0!important;background:#111c2e!important;padding:10px 0!important}
+
+<style id="nianxu-compact-fluid-285">
+/* ===== 2.8.5 Compact + Ultra Fluid ===== */
+.modal-back{
+  padding: max(8px, env(safe-area-inset-top)) 10px max(12px, env(safe-area-inset-bottom)) !important;
 }
-@media(max-width:380px){.top-actions{gap:2px!important}.top-actions .iconbtn{padding:6px!important}.composer textarea{font-size:16px!important}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}}
-/* Avoid expensive permanent compositing on every message/control. */
-.msg,.primary,.send,.iconbtn,.ghost,.modal-back.show .modal{will-change:auto!important}
+.modal, .extra-box, .nl-card{
+  width: min(520px, 100%) !important;
+  max-height: calc(100dvh - 24px) !important;
+  border-radius: 22px !important;
+  padding: 16px !important;
+}
+#settingsModal .modal{
+  width: min(420px, 100%) !important;
+  max-height: calc(100dvh - 20px) !important;
+}
+#appearanceModal .modal,
+#imagePromptModal .modal,
+#noticeModal .modal,
+#humanSupportModal .modal{
+  width: min(400px, 100%) !important;
+}
+#creatorModal .nl-card,
+#creatorModal .cr-card{
+  width: min(380px, 100%) !important;
+  max-height: calc(100dvh - 20px) !important;
+}
+#adminModal .modal,
+#adminSupportModal .modal{
+  width: min(560px, 100%) !important;
+}
 
-</style>
+/* Tighter modal-top */
+.modal-top, .extra-head, .nl-head{
+  padding: 11px 14px 9px !important;
+  margin: -16px -16px 10px !important;
+  border-radius: 22px 22px 0 0 !important;
+}
+#settingsModal .modal-top{
+  padding: 12px 14px 8px !important;
+}
 
-<style id="nx-settings-final-fix">
-/* Compact, independently scrollable settings dialog; overrides all previous mobile rules. */
-#settingsModal.modal-back{position:fixed!important;inset:0!important;z-index:12000!important;display:none;align-items:center!important;justify-content:center!important;padding:12px!important;background:rgba(0,0,0,.76)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;touch-action:auto!important}
-#settingsModal.modal-back.show{display:flex!important}
-#settingsModal>.modal{box-sizing:border-box!important;position:relative!important;width:min(360px,calc(100vw - 24px))!important;height:auto!important;min-height:0!important;max-height:min(68dvh,540px)!important;margin:auto!important;padding:0 0 10px!important;display:flex!important;flex-direction:column!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;border-radius:18px!important;background:#111a2b!important;border:1px solid #ffffff20!important;box-shadow:0 18px 55px #000b!important;touch-action:pan-y!important}
-#settingsModal .modal-top{position:sticky!important;top:0!important;z-index:20!important;flex:none!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;margin:0!important;padding:10px 12px!important;background:#172238!important;border-bottom:1px solid #ffffff16!important}
-#settingsModal .modal-top>div{text-align:left!important;flex:1!important}
-#settingsModal .modal-top h3{font-size:15px!important;margin:0!important}
-#settingsModal .modal-top .iconbtn[data-close]{display:flex!important;position:relative!important;inset:auto!important;z-index:30!important;flex:0 0 38px!important;width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;align-items:center!important;justify-content:center!important;padding:0!important;border-radius:50%!important;font-size:21px!important;color:#fff!important;background:#ffffff18!important;border:1px solid #ffffff20!important;pointer-events:auto!important;touch-action:manipulation!important}
-#settingsModal .nx-back{display:none!important}
-#settingsModal .nx-profile{flex:none!important;margin:10px 12px 8px!important;padding:10px 12px!important}
-#settingsModal .settings-hero,#settingsModal .settings-page-note,#settingsModal>.hint{display:none!important}
-#settingsModal .settings-nav{display:flex!important;flex:none!important;flex-direction:column!important;gap:6px!important;overflow:visible!important;position:static!important;margin:4px 12px 8px!important;padding:0!important;background:transparent!important}
-#settingsModal .settings-nav button{display:flex!important;align-items:center!important;gap:10px!important;width:100%!important;min-height:46px!important;padding:8px 10px!important;margin:0!important;border:1px solid #ffffff14!important;border-radius:12px!important;background:#ffffff08!important;color:#e9edfa!important;text-align:left!important;touch-action:manipulation!important}
-#settingsModal .settings-nav button i{flex:0 0 30px!important;width:30px!important;height:30px!important;line-height:30px!important;text-align:center!important;border-radius:9px!important}
-#settingsModal .settings-nav button b{font-size:13px!important}#settingsModal .settings-nav button small{font-size:10px!important}
-#settingsModal .settings-nav button:after{content:'›'!important;margin-left:auto!important;font-size:19px!important;color:#9caaca!important}
-#settingsModal.nx-in-pane .settings-nav{display:none!important}
-#settingsModal:not(.nx-in-pane) #apiList,#settingsModal:not(.nx-in-pane) #apiBackupPanel,#settingsModal:not(.nx-in-pane) #settingsInfoGrid,#settingsModal:not(.nx-in-pane) #adminHint,#settingsModal:not(.nx-in-pane) .modal-actions,#settingsModal:not(.nx-in-pane) .nx-pane-bar{display:none!important}
-#settingsModal.nx-in-pane #settingsInfoGrid,#settingsModal.nx-in-pane #apiList,#settingsModal.nx-in-pane #apiBackupPanel,#settingsModal.nx-in-pane #adminHint{display:block!important;flex:none!important;margin:8px 12px!important}
-#settingsModal.nx-in-pane .nx-pane-bar{display:flex!important;position:sticky!important;bottom:0!important;z-index:15!important;flex:none!important;justify-content:space-between!important;gap:8px!important;margin:8px 12px 0!important;padding:8px 0 2px!important;background:#111a2b!important}
-#settingsModal.nx-in-pane .nx-pane-bar button{min-height:38px!important;padding:8px 14px!important;border-radius:11px!important}
-#settingsModal.nx-in-pane[data-pane="version"] #featurePanel,#settingsModal.nx-in-pane[data-pane="features"] #versionPanel{display:none!important}
-#settingsModal.nx-in-pane[data-pane="version"] #versionPanel,#settingsModal.nx-in-pane[data-pane="features"] #featurePanel{display:block!important}
-#settingsModal.nx-in-pane[data-pane="access"] #adminHint{display:block!important}
-#settingsModal.nx-in-pane[data-pane="api"] #apiList,#settingsModal.nx-in-pane[data-pane="api"] #apiBackupPanel{display:block!important}
-#settingsModal .settings-info-grid{display:block!important;margin:0!important}
-#settingsModal .info-card,#settingsModal .api-card{padding:11px!important;margin:6px 0!important;border-radius:12px!important;background:#ffffff08!important;border:1px solid #ffffff14!important}
-#settingsModal .info-card p{font-size:11px!important;line-height:1.5!important}
-#settingsModal .modal-actions{display:none!important}
-#settingsModal .nx-done{display:block!important;flex:none!important;width:calc(100% - 24px)!important;min-height:40px!important;margin:6px 12px 0!important;border-radius:11px!important}
-#settingsModal .nx-switch{display:flex!important;flex:none!important;width:calc(100% - 24px)!important;min-height:40px!important;margin:6px 12px 0!important;border-radius:11px!important;justify-content:center!important}
-#settingsModal input:not([type=checkbox]),#settingsModal select,#settingsModal textarea{font-size:16px!important;max-width:100%!important}
-@media(max-width:760px){#settingsModal.modal-back{padding:10px!important}#settingsModal>.modal{width:min(360px,calc(100vw - 20px))!important;max-height:68dvh!important;height:auto!important;border-radius:18px!important;padding-bottom:10px!important}#settingsModal .modal-top{padding:9px 11px!important}}
+/* Smaller settings hero & profile */
+#settingsModal .settings-hero{
+  margin: 0 0 10px !important;
+  padding: 0 !important;
+}
+#settingsModal .nx-profile{
+  margin: 4px 0 10px !important;
+  padding: 10px 12px !important;
+  border-radius: 14px !important;
+}
+#settingsModal .settings-nav{
+  margin: 0 0 10px !important;
+  gap: 3px !important;
+}
+#settingsModal .settings-nav button{
+  min-height: 48px !important;
+  padding: 9px 12px !important;
+  border-radius: 12px !important;
+}
+#settingsModal .nx-done{
+  min-height: 44px !important;
+  margin: 6px 0 8px !important;
+  border-radius: 14px !important;
+}
+
+/* Close buttons stay solid but not oversized */
+.modal-top .iconbtn[data-close],
+button[data-close]{
+  min-width: 38px !important;
+  min-height: 38px !important;
+  font-size: 15px !important;
+}
+
+/* ===== Ultra fluid motion ===== */
+:root{
+  --spring: cubic-bezier(.18, 1.25, .32, 1) !important;
+  --soft: cubic-bezier(.22, .9, .3, 1) !important;
+  --ease: cubic-bezier(.33, 1, .68, 1) !important;
+}
+
+@media (prefers-reduced-motion: no-preference){
+  body:not(.reduce-motion) .modal-back.show{
+    animation: nxFadeFast .22s var(--ease) both !important;
+  }
+  body:not(.reduce-motion) .modal-back.show .modal,
+  body:not(.reduce-motion) .extra-modal.show .extra-box,
+  body:not(.reduce-motion) .modal-back.show .nl-card{
+    animation: nxPopFast .38s var(--spring) both !important;
+  }
+  body:not(.reduce-motion) #chat .msg.user:nth-last-child(-n+2),
+  body:not(.reduce-motion) #chat .msg.ai:nth-last-child(-n+2){
+    animation: nxMsgFast .36s var(--spring) both !important;
+  }
+  body:not(.reduce-motion) .primary,
+  body:not(.reduce-motion) .send,
+  body:not(.reduce-motion) .iconbtn,
+  body:not(.reduce-motion) .ghost{
+    transition: transform .2s var(--spring), filter .18s, background .18s, box-shadow .22s !important;
+  }
+}
+
+@keyframes nxFadeFast{
+  from{ opacity: 0; }
+  to{ opacity: 1; }
+}
+@keyframes nxPopFast{
+  from{ opacity: 0; transform: translateY(18px) scale(.96); }
+  to{ opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes nxMsgFast{
+  from{ opacity: 0; transform: translateY(10px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+/* Reduce layout shift / jank */
+.modal, .extra-box, .nl-card, .msg, .primary, .send, .iconbtn{
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Ensure close still works even on small modals */
+#settingsModal .modal-top .iconbtn[data-close],
+#settingsModal button[data-close]{
+  z-index: 80 !important;
+  pointer-events: auto !important;
+  position: relative !important;
+}
 </style>
-<script id="nx-settings-final-controller">
-(()=>{
- const m=document.getElementById('settingsModal'); if(!m)return;
- const close=()=>{m.classList.remove('show','nx-in-pane');m.dataset.pane='';};
- const pane=(name)=>{
-   if(name==='appearance'){close();const a=document.getElementById('appearanceModal');if(a)a.classList.add('show');return;}
-   m.dataset.pane=name;m.classList.add('nx-in-pane');
-   m.querySelectorAll('.settings-nav button').forEach(b=>b.classList.toggle('active',b.dataset.pane===name));
-   if(name==='access'){
-     try{if(typeof loadProfile==='function')loadProfile();if(typeof renderMemories==='function')renderMemories();}catch(_){ }
-     const role=document.getElementById('roleSummary');if(role)role.textContent='当前会话：'+(window.currentRole==='admin'?'管理员':'普通用户');
-   }
- };
- // Capture before legacy handlers so old click/touch listeners cannot swallow settings actions.
- m.addEventListener('click',e=>{
-   const closeBtn=e.target.closest('[data-close="settingsModal"],.nx-done,.nx-pane-bar [data-close="settingsModal"]');
-   if(closeBtn){e.preventDefault();e.stopImmediatePropagation();close();return;}
-   const back=e.target.closest('.nx-back,#nxPaneBack');
-   if(back){e.preventDefault();e.stopImmediatePropagation();m.classList.remove('nx-in-pane');return;}
-   const nav=e.target.closest('.settings-nav button[data-pane]');
-   if(nav){e.preventDefault();e.stopImmediatePropagation();pane(nav.dataset.pane);return;}
-   if(e.target===m){e.preventDefault();close();}
- },true);
- // Reliable close on pointer devices, including Android touch screens.
- m.addEventListener('pointerup',e=>{const b=e.target.closest('.modal-top [data-close="settingsModal"]');if(b){e.preventDefault();e.stopImmediatePropagation();close();}},true);
- document.addEventListener('keydown',e=>{if(e.key==='Escape'&&m.classList.contains('show')){e.preventDefault();close();}},true);
- const openIds=['openSettings','mobileSettings'];
- openIds.forEach(id=>{const b=document.getElementById(id);if(b)b.addEventListener('click',()=>{m.classList.remove('nx-in-pane');m.dataset.pane='';setTimeout(()=>{const n=document.getElementById('nxPName'),r=document.getElementById('nxPRole'),badge=document.getElementById('nxPBadge');if(n&&window.currentRole)n.textContent=window.currentRole==='admin'?'管理员':(window.currentUserId||'用户');if(r&&window.currentRole)r.textContent=window.currentRole==='admin'?'管理员账号':'普通用户';if(badge&&window.currentRole)badge.textContent=window.currentRole==='admin'?'Admin':'Free';},0);},true);});
-})();
-</script>
 
 </body></html>
