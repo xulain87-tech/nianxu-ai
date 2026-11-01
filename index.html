@@ -569,6 +569,212 @@ body.nx-light .cr-item{background:#f3efe0}
 .cr-save{flex:1;background:linear-gradient(135deg,#b9a8ff,#7a6bff);color:#fff}.cr-del{background:#ff6b5530;color:#ff9d8a}
 .cr-err{min-height:16px;margin:0;font-size:12px;color:#ffb4a2}
 </style>
+
+<style id="hide-settings-gear">
+#mobileSettings, #openSettings, button[title="设置中心"], .top-actions #mobileSettings {
+  display: none !important;
+}
+#settingsModal { display: none !important; pointer-events: none !important; }
+</style>
+
+
+<style id="sidebar-click-fix">
+/* 侧栏必须永远在遮罩之上且可点 */
+.sidebar{
+  z-index: 10050 !important;
+  pointer-events: auto !important;
+  transform: translateX(-105%);
+}
+body.mobile-drawer-open .sidebar{
+  transform: translateX(0) !important;
+  pointer-events: auto !important;
+}
+.mobile-drawer-backdrop,
+#mobileDrawerBackdrop{
+  z-index: 10040 !important;
+  pointer-events: auto !important;
+}
+/* 菜单按钮强制可点 */
+.sidebar .menu-item,
+.sidebar button,
+.side-actions,
+.side-actions .ghost{
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 2 !important;
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: rgba(255,255,255,.12);
+}
+.sidebar .menu-item:active{
+  background: #1f1f22 !important;
+}
+</style>
+
+
+<style id="sidebar-click-fix2">
+body.entered #entryGate,
+body.entered #entryGate *{
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  z-index: -1 !important;
+}
+body.mobile-drawer-open .sidebar{
+  z-index: 200000 !important;
+  pointer-events: auto !important;
+}
+body.mobile-drawer-open .sidebar button,
+body.mobile-drawer-open .sidebar .menu-item{
+  pointer-events: auto !important;
+  z-index: 200001 !important;
+}
+#mobileDrawerBackdrop.show{
+  z-index: 199999 !important;
+}
+</style>
+
+
+<style id="nx-login-premium">
+/* ===== 念绪 2.9.0 高级登录界面 ===== */
+#entryGate{
+  position:fixed!important;inset:0!important;z-index:99999!important;
+  display:flex!important;align-items:center;justify-content:center;
+  padding:max(16px,env(safe-area-inset-top)) 18px max(16px,env(safe-area-inset-bottom));
+  background:#050508!important;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,"PingFang SC","Noto Sans SC",sans-serif;
+  overflow:hidden;
+}
+body.entered #entryGate,
+body.entered #entryGate *{
+  display:none!important;visibility:hidden!important;pointer-events:none!important;opacity:0!important;
+}
+
+/* Ambient background */
+.nx-ambient{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.nx-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.55;will-change:transform}
+.nx-orb-a{width:55vmax;height:55vmax;left:-18vmax;top:-20vmax;background:radial-gradient(circle,#5b4dff88,transparent 68%);animation:nxOrbA 16s ease-in-out infinite alternate}
+.nx-orb-b{width:48vmax;height:48vmax;right:-16vmax;bottom:-18vmax;background:radial-gradient(circle,#e06a4f77,transparent 68%);animation:nxOrbB 20s ease-in-out infinite alternate}
+.nx-orb-c{width:30vmax;height:30vmax;left:40%;top:50%;background:radial-gradient(circle,#3ec7ff44,transparent 70%);animation:nxOrbC 14s ease-in-out infinite alternate}
+.nx-grid{position:absolute;inset:0;opacity:.04;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at center,black 20%,transparent 75%)}
+@keyframes nxOrbA{from{transform:translate(0,0) scale(1)}to{transform:translate(6%,4%) scale(1.08)}}
+@keyframes nxOrbB{from{transform:translate(0,0) scale(1)}to{transform:translate(-5%,-3%) scale(1.06)}}
+@keyframes nxOrbC{from{transform:translate(-50%,-50%) scale(1)}to{transform:translate(-40%,-60%) scale(1.12)}}
+
+/* Card */
+.nx-login-card{
+  position:relative;z-index:1;width:min(392px,100%);
+  padding:36px 30px 26px;
+  border-radius:28px;
+  background:linear-gradient(165deg,rgba(22,22,28,.92),rgba(12,12,16,.94));
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.03) inset,
+    0 24px 80px rgba(0,0,0,.65),
+    0 0 120px rgba(91,79,255,.08);
+  text-align:center;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  animation:nxCardIn .55s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes nxCardIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+
+.nx-login-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 10px;margin-bottom:18px;
+  border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:.08em;
+  color:#a8b0d0;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+}
+
+.nx-login-logo{
+  width:64px;height:64px;margin:0 auto 14px;border-radius:20px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,#6d5efc 0%,#c45d3e 100%);
+  box-shadow:0 12px 32px rgba(109,94,252,.35),0 0 0 1px rgba(255,255,255,.12) inset;
+  animation:nxLogoPulse 4s ease-in-out infinite;
+}
+.nx-login-logo span{font-size:28px;font-weight:800;color:#fff;line-height:1}
+@keyframes nxLogoPulse{0%,100%{box-shadow:0 12px 32px rgba(109,94,252,.35),0 0 0 1px rgba(255,255,255,.12) inset}50%{box-shadow:0 14px 40px rgba(196,93,62,.4),0 0 0 1px rgba(255,255,255,.16) inset}}
+
+.nx-login-title{
+  margin:0 0 6px;font-size:26px;font-weight:700;letter-spacing:-.02em;
+  background:linear-gradient(90deg,#fff 0%,#d4d8f0 50%,#fff 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.nx-login-desc{margin:0 0 22px;font-size:13.5px;color:#8b90a5;line-height:1.45}
+
+.nx-login-form{display:flex;flex-direction:column;gap:12px;text-align:left}
+.nx-login-form.hidden{display:none!important}
+
+.nx-field{display:flex;flex-direction:column;gap:6px}
+.nx-field label{font-size:12px;font-weight:600;color:#9aa0b5;padding-left:2px;letter-spacing:.02em}
+.nx-field input,
+.nx-login-form input[type="text"],
+.nx-login-form input[type="password"]{
+  width:100%;padding:13px 14px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(0,0,0,.35);color:#f2f3f7;font-size:15px;
+  outline:none;transition:border-color .2s,box-shadow .2s,background .2s;
+  box-sizing:border-box;
+}
+.nx-field input::placeholder{color:#5c6170}
+.nx-field input:focus,
+.nx-login-form input:focus{
+  border-color:rgba(109,94,252,.55);
+  background:rgba(0,0,0,.5);
+  box-shadow:0 0 0 3px rgba(109,94,252,.15);
+}
+
+.nx-remember{
+  display:flex;align-items:center;gap:8px;margin:2px 0 2px;
+  font-size:12.5px;color:#8b90a5;cursor:pointer;user-select:none;
+}
+.nx-remember input{width:15px;height:15px;accent-color:#6d5efc;margin:0}
+
+.nx-btn{
+  width:100%;padding:13px 16px;border-radius:14px;border:0;
+  font-size:15px;font-weight:650;cursor:pointer;
+  transition:transform .15s,filter .15s,background .2s,opacity .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.nx-btn:active{transform:scale(.98)}
+.nx-btn-primary{
+  margin-top:4px;
+  color:#fff;
+  background:linear-gradient(135deg,#6d5efc 0%,#8b5cf6 45%,#c45d3e 100%);
+  background-size:160% 100%;
+  box-shadow:0 10px 28px rgba(109,94,252,.3);
+}
+.nx-btn-primary:hover{filter:brightness(1.06);background-position:100% 0}
+.nx-btn-ghost{
+  color:#a8b0c8;background:transparent;
+  border:1px solid rgba(255,255,255,.08)!important;
+}
+.nx-btn-ghost:hover{background:rgba(255,255,255,.04);color:#d0d4e4}
+
+.nx-login-error{
+  min-height:18px;margin-top:12px;font-size:12.5px;color:#ff7b7b;
+  text-align:center;line-height:1.4;
+}
+.nx-login-foot{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  margin-top:18px;font-size:11px;color:#555a6a;letter-spacing:.02em;
+}
+.nx-login-foot .nx-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:#3dd68c;box-shadow:0 0 8px #3dd68c99;
+  animation:nxDot 2.4s ease-in-out infinite;
+}
+@keyframes nxDot{0%,100%{opacity:1}50%{opacity:.45}}
+
+@media (max-width:400px){
+  .nx-login-card{padding:28px 20px 22px;border-radius:24px}
+  .nx-login-title{font-size:23px}
+}
+@media (prefers-reduced-motion:reduce){
+  .nx-orb,.nx-login-logo,.nx-login-card{animation:none!important}
+}
+</style>
+
 </head>
 <body>
 <div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
@@ -1163,32 +1369,61 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
 </style>
 <!-- ===== 2.9.0 全新干净登录界面 ===== -->
 <div id="entryGate" style="display:flex">
+  <div class="nx-ambient" aria-hidden="true">
+    <span class="nx-orb nx-orb-a"></span>
+    <span class="nx-orb nx-orb-b"></span>
+    <span class="nx-orb nx-orb-c"></span>
+    <span class="nx-grid"></span>
+  </div>
   <div class="nx-login-card">
-    <div class="nx-login-logo">念</div>
+    <div class="nx-login-badge">NIANXU · 2.9.0</div>
+    <div class="nx-login-logo"><span>念</span></div>
     <h1 class="nx-login-title">念绪 AI</h1>
     <p class="nx-login-desc" id="gateDesc">登录一次后自动记住，下次可免密进入</p>
-    
+
     <div class="nx-login-form" id="loginForm">
-      <input id="entryId" type="text" autocomplete="username" placeholder="账号 ID" maxlength="32">
-      <input id="entryPassword" type="password" autocomplete="current-password" placeholder="密码">
+      <div class="nx-field">
+        <label for="entryId">账号</label>
+        <input id="entryId" type="text" autocomplete="username" placeholder="输入账号 ID" maxlength="32">
+      </div>
+      <div class="nx-field">
+        <label for="entryPassword">密码</label>
+        <input id="entryPassword" type="password" autocomplete="current-password" placeholder="输入密码">
+      </div>
       <label class="nx-remember">
         <input id="rememberLoginId" type="checkbox" checked>
-        <span>记住此账号（下次免密）</span>
+        <span>记住此账号（下次免密登录）</span>
       </label>
-      <button type="button" class="nx-btn nx-btn-primary" id="enterBtn" onclick="window.__nxLogin && window.__nxLogin()">登 录</button>
-      <button type="button" class="nx-btn nx-btn-ghost" id="showRegisterBtn" onclick="window.__nxShowReg && window.__nxShowReg()">注册新账号</button>
+      <button type="button" class="nx-btn nx-btn-primary" id="enterBtn" onclick="window.__nxLogin && window.__nxLogin()">
+        <span>登 录</span>
+      </button>
+      <button type="button" class="nx-btn nx-btn-ghost" id="showRegisterBtn" onclick="window.__nxShowReg && window.__nxShowReg()">创建新账号</button>
     </div>
 
     <div class="nx-login-form hidden" id="registerPanel">
-      <input id="registerId" type="text" autocomplete="username" placeholder="账号 ID（2-32位）" maxlength="32">
-      <input id="registerPassword" type="password" autocomplete="new-password" placeholder="设置密码（至少6位）" minlength="6" maxlength="128">
-      <input id="registerConfirm" type="password" autocomplete="new-password" placeholder="再次输入密码" minlength="6" maxlength="128">
-      <button type="button" class="nx-btn nx-btn-primary" id="registerBtn" onclick="window.__nxRegister && window.__nxRegister()">创建账号并登录</button>
+      <div class="nx-field">
+        <label for="registerId">账号 ID</label>
+        <input id="registerId" type="text" autocomplete="username" placeholder="2–32 位账号" maxlength="32">
+      </div>
+      <div class="nx-field">
+        <label for="registerPassword">设置密码</label>
+        <input id="registerPassword" type="password" autocomplete="new-password" placeholder="至少 6 位" minlength="6" maxlength="128">
+      </div>
+      <div class="nx-field">
+        <label for="registerConfirm">确认密码</label>
+        <input id="registerConfirm" type="password" autocomplete="new-password" placeholder="再次输入密码" minlength="6" maxlength="128">
+      </div>
+      <button type="button" class="nx-btn nx-btn-primary" id="registerBtn" onclick="window.__nxRegister && window.__nxRegister()">
+        <span>创建并登录</span>
+      </button>
       <button type="button" class="nx-btn nx-btn-ghost" id="backLoginBtn" onclick="window.__nxShowLogin && window.__nxShowLogin()">返回登录</button>
     </div>
 
     <div class="nx-login-error" id="entryError"></div>
-    <div class="nx-login-foot">v2.9.0 · 流畅深色体验</div>
+    <div class="nx-login-foot">
+      <span class="nx-dot"></span>
+      极致流畅 · 免密登录 · 本地加密会话
+    </div>
   </div>
 </div>
 <div class="extra-modal" id="noticeModal"><div class="extra-box ann-box">
@@ -1296,7 +1531,7 @@ async function send(){
 function openModal(id){$(id).classList.add("show")}
 function closeMobileDrawer(){$("mobileDrawerBackdrop")?.classList.remove("show");document.body.classList.remove("mobile-drawer-open")}function openMobileDrawer(){document.body.classList.add("mobile-drawer-open");$("mobileDrawerBackdrop")?.classList.add("show")}$("mobileMenuBtn").onclick=()=>document.body.classList.contains("mobile-drawer-open")?closeMobileDrawer():openMobileDrawer();$("mobileDrawerBackdrop").onclick=closeMobileDrawer;if($("sideCloseBtn"))$("sideCloseBtn").onclick=closeMobileDrawer;document.querySelectorAll(".sidebar button").forEach(b=>b.addEventListener("click",closeMobileDrawer));
 async function switchLoginAccount(adminMode=false){const message=adminMode?"当前是普通账号。是否退出并切换到管理员登录？管理员 ID：念绪968":"退出当前账号并切换到其他账号？";if(!confirm(message))return;try{await apiRequest("/api/logout",{method:"POST",body:JSON.stringify({})})}catch(_){}currentRole="guest";currentUserId="";document.body.classList.remove("entered");$("entryGate").style.display="flex";$("entryId").value=adminMode?"念绪968":"";$("entryPassword").value="";$("entryError").textContent=adminMode?"请输入管理员密码后登录。":"请输入要切换的账号。";syncAdminUi();closeMobileDrawer();setTimeout(()=>$("entryId").focus(),80)}
-$("switchAccountBtn").onclick=()=>switchLoginAccount(false);$("mobileWorkTab").onclick=()=>{$("prompt").focus();window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})};$("mobileCreateTab").onclick=()=>openImageGenerator();$("mobileWriteTab").onclick=()=>{$("prompt").value="请帮我写作：";$("prompt").dispatchEvent(new Event("input",{bubbles:true}));$("prompt").focus()};$("mobileAnswerTab").onclick=()=>{expertMode=true;save("nx_expert_mode",true);syncModeButtons();$("prompt").value="请帮我解答这个话题：";$("prompt").dispatchEvent(new Event("input",{bubbles:true}));$("prompt").focus()};
+$("switchAccountBtn").onclick=()=>switchLoginAccount(false);$("mobileWorkTab").onclick=()=>{$("prompt").focus();window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})};$("mobileCreateTab").onclick=()=>openImageGenerator();$("mobileWriteTab").onclick=()=>{const p=$("prompt");if(!p)return;p.value="请帮我写一篇文章，主题是：";p.focus();const len=p.value.length;p.setSelectionRange(len,len);p.dispatchEvent(new Event("input",{bubbles:true}));};$("mobileAnswerTab").onclick=()=>{expertMode=true;save("nx_expert_mode",true);syncModeButtons();const p=$("prompt");if(p){p.value="请帮我解答这个问题：";p.focus();const len=p.value.length;p.setSelectionRange(len,len);p.dispatchEvent(new Event("input",{bubbles:true}));}};
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>$(b.dataset.close).classList.remove("show"));
 document.querySelectorAll(".modal-back").forEach(layer=>{
  layer.addEventListener("click",e=>{if(e.target===layer)layer.classList.remove("show")});
@@ -1667,6 +1902,17 @@ document.addEventListener('touchmove',e=>{
 </script>
 
 <script>
+
+try{
+  window.openAdminPanel = openAdminPanel;
+  window.openImageGenerator = openImageGenerator;
+  window.openHumanSupport = typeof openHumanSupport==='function' ? openHumanSupport : function(){};
+  window.refreshNotices = refreshNotices;
+  window.switchLoginAccount = switchLoginAccount;
+  window.closeMobileDrawer = typeof closeMobileDrawer==='function' ? closeMobileDrawer : function(){document.body.classList.remove('mobile-drawer-open');var b=document.getElementById('mobileDrawerBackdrop');if(b)b.classList.remove('show');};
+  window.openMobileDrawer = typeof openMobileDrawer==='function' ? openMobileDrawer : function(){document.body.classList.add('mobile-drawer-open');var b=document.getElementById('mobileDrawerBackdrop');if(b)b.classList.add('show');};
+}catch(e){console.warn('export',e)}
+
 /* ===== 独立登录脚本（不依赖主脚本，保证一定能登录） ===== */
 (function(){
   function $(id){ return document.getElementById(id); }
@@ -1818,6 +2064,149 @@ document.addEventListener('touchmove',e=>{
   } catch(_){}
 
   console.log("[念绪] 独立登录脚本已就绪");
+})();
+</script>
+
+
+<script id="sidebar-delegate">
+(function(){
+  function $(id){ return document.getElementById(id); }
+  function closeDrawer(){
+    document.body.classList.remove("mobile-drawer-open");
+    var bd = $("mobileDrawerBackdrop");
+    if(bd) bd.classList.remove("show");
+  }
+  function openDrawer(){
+    document.body.classList.add("mobile-drawer-open");
+    var bd = $("mobileDrawerBackdrop");
+    if(bd) bd.classList.add("show");
+  }
+  function safeClick(fn){
+    return function(e){
+      try{ if(e){ e.preventDefault(); e.stopPropagation(); } }catch(_){}
+      try{ fn && fn(e); }catch(err){ console.error("sidebar action", err); }
+      // 延迟关闭，让动作先执行
+      setTimeout(closeDrawer, 80);
+    };
+  }
+  function bind(){
+    var side = document.querySelector(".sidebar");
+    if(!side || side.dataset.nxBound === "1") return;
+    side.dataset.nxBound = "1";
+    side.addEventListener("click", function(e){
+      var btn = e.target.closest("button, .menu-item, .pb-btn");
+      if(!btn || !side.contains(btn)) return;
+      var id = btn.id || "";
+      // 关闭按钮
+      if(id === "sideCloseBtn"){ closeDrawer(); return; }
+      // 各功能
+      if(id === "newChat"){
+        if(typeof window.clearChatNow === "function") window.clearChatNow();
+        else if($("clearChat") && $("clearChat").onclick) $("clearChat").onclick();
+        else {
+          var chat = $("chat");
+          if(chat){ chat.innerHTML = ""; }
+        }
+        setTimeout(closeDrawer, 80);
+        return;
+      }
+      if(id === "creatorBtnSide"){
+        var m = $("creatorModal");
+        if(m) m.classList.add("show");
+        setTimeout(closeDrawer, 80);
+        return;
+      }
+      if(id === "noticeButtonSide"){
+        if(typeof window.refreshNotices === "function") try{ window.refreshNotices(); }catch(_){}
+        var nm = $("noticeModal");
+        if(nm) nm.classList.add("show");
+        setTimeout(closeDrawer, 80);
+        return;
+      }
+      if(id === "adminDrawerButton"){
+        if(typeof window.openAdminPanel === "function") window.openAdminPanel();
+        else { var am = $("adminModal"); if(am) am.classList.add("show"); }
+        setTimeout(closeDrawer, 80);
+        return;
+      }
+      if(id === "humanSupportBtnSide"){
+        if(typeof window.openHumanSupport === "function") window.openHumanSupport();
+        else {
+          var p = $("prompt");
+          if(p){ p.value = "转人工客服"; p.focus(); }
+        }
+        setTimeout(closeDrawer, 80);
+        return;
+      }
+      if(id === "generateImageBtn"){
+        if(typeof window.openImageGenerator === "function") window.openImageGenerator();
+        setTimeout(closeDrawer, 80);
+        return;
+      }
+      if(id === "openAppearance"){
+        var ap = $("appearanceModal");
+        if(ap) ap.classList.add("show");
+        setTimeout(closeDrawer, 80);
+        return;
+      }
+      if(id === "exportChat"){
+        try{
+          var nodes = document.querySelectorAll("#chat .msg");
+          var text = Array.from(nodes).map(function(m){ return m.innerText; }).join("\\n\\n");
+          if(navigator.clipboard && text) navigator.clipboard.writeText(text);
+          alert(text ? "对话已复制到剪贴板" : "暂无对话可导出");
+        }catch(err){ alert("导出失败"); }
+        setTimeout(closeDrawer, 80);
+        return;
+      }
+      if(id === "clearChatSide"){
+        if(confirm("确定清空当前对话？")){
+          var chat = $("chat");
+          if(chat) chat.innerHTML = "";
+        }
+        setTimeout(closeDrawer, 80);
+        return;
+      }
+      if(id === "versionInfoBtn"){
+        alert("念绪 AI 2.9.0 Pro\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
+        setTimeout(closeDrawer, 80);
+        return;
+      }
+      if(id === "switchAccountBtn"){
+        if(typeof window.switchLoginAccount === "function") window.switchLoginAccount(false);
+        else {
+          document.body.classList.remove("entered");
+          var gate = $("entryGate");
+          if(gate) gate.style.display = "";
+        }
+        setTimeout(closeDrawer, 80);
+        return;
+      }
+    }, true); // capture 阶段，优先响应
+    // 菜单按钮也绑一次
+    var menuBtn = $("mobileMenuBtn");
+    if(menuBtn && !menuBtn.dataset.nxBound){
+      menuBtn.dataset.nxBound = "1";
+      menuBtn.addEventListener("click", function(e){
+        e.preventDefault(); e.stopPropagation();
+        if(document.body.classList.contains("mobile-drawer-open")) closeDrawer();
+        else openDrawer();
+      }, true);
+    }
+    var bd = $("mobileDrawerBackdrop");
+    if(bd && !bd.dataset.nxBound){
+      bd.dataset.nxBound = "1";
+      bd.addEventListener("click", function(e){
+        e.preventDefault();
+        closeDrawer();
+      }, true);
+    }
+  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", bind);
+  else bind();
+  // 再延迟绑一次，防止主脚本覆盖
+  setTimeout(bind, 500);
+  setTimeout(bind, 1500);
 })();
 </script>
 
