@@ -636,12 +636,12 @@ body.mobile-drawer-open .sidebar .menu-item{
 
 
 <style id="nx-login-premium">
-/* ===== 念绪 2.9.0 高级登录界面 ===== */
+/* ===== 念绪 2.9.0 绚丽多彩登录 ===== */
 #entryGate{
   position:fixed!important;inset:0!important;z-index:99999!important;
   display:flex!important;align-items:center;justify-content:center;
   padding:max(16px,env(safe-area-inset-top)) 18px max(16px,env(safe-area-inset-bottom));
-  background:#050508!important;
+  background:#07060c!important;
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,"PingFang SC","Noto Sans SC",sans-serif;
   overflow:hidden;
 }
@@ -650,129 +650,145 @@ body.entered #entryGate *{
   display:none!important;visibility:hidden!important;pointer-events:none!important;opacity:0!important;
 }
 
-/* Ambient background */
 .nx-ambient{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.nx-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.55;will-change:transform}
-.nx-orb-a{width:55vmax;height:55vmax;left:-18vmax;top:-20vmax;background:radial-gradient(circle,#5b4dff88,transparent 68%);animation:nxOrbA 16s ease-in-out infinite alternate}
-.nx-orb-b{width:48vmax;height:48vmax;right:-16vmax;bottom:-18vmax;background:radial-gradient(circle,#e06a4f77,transparent 68%);animation:nxOrbB 20s ease-in-out infinite alternate}
-.nx-orb-c{width:30vmax;height:30vmax;left:40%;top:50%;background:radial-gradient(circle,#3ec7ff44,transparent 70%);animation:nxOrbC 14s ease-in-out infinite alternate}
-.nx-grid{position:absolute;inset:0;opacity:.04;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at center,black 20%,transparent 75%)}
-@keyframes nxOrbA{from{transform:translate(0,0) scale(1)}to{transform:translate(6%,4%) scale(1.08)}}
-@keyframes nxOrbB{from{transform:translate(0,0) scale(1)}to{transform:translate(-5%,-3%) scale(1.06)}}
-@keyframes nxOrbC{from{transform:translate(-50%,-50%) scale(1)}to{transform:translate(-40%,-60%) scale(1.12)}}
+.nx-orb{position:absolute;border-radius:50%;filter:blur(70px);will-change:transform}
+.nx-orb-a{width:60vmax;height:60vmax;left:-20vmax;top:-22vmax;background:radial-gradient(circle,#ff6b9d99,transparent 68%);opacity:.7;animation:nxOrbA 14s ease-in-out infinite alternate}
+.nx-orb-b{width:52vmax;height:52vmax;right:-18vmax;bottom:-16vmax;background:radial-gradient(circle,#5b8dffaa,transparent 68%);opacity:.65;animation:nxOrbB 18s ease-in-out infinite alternate}
+.nx-orb-c{width:36vmax;height:36vmax;left:35%;top:45%;background:radial-gradient(circle,#a855f7aa,transparent 70%);opacity:.55;animation:nxOrbC 12s ease-in-out infinite alternate}
+.nx-grid{position:absolute;inset:0;opacity:.06;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:42px 42px;mask-image:radial-gradient(ellipse at center,black 15%,transparent 72%)}
+@keyframes nxOrbA{from{transform:translate(0,0) scale(1)}to{transform:translate(8%,5%) scale(1.1)}}
+@keyframes nxOrbB{from{transform:translate(0,0) scale(1)}to{transform:translate(-6%,-4%) scale(1.08)}}
+@keyframes nxOrbC{from{transform:translate(-50%,-50%) scale(1)}to{transform:translate(-35%,-55%) scale(1.15)}}
 
-/* Card */
 .nx-login-card{
   position:relative;z-index:1;width:min(392px,100%);
-  padding:36px 30px 26px;
-  border-radius:28px;
-  background:linear-gradient(165deg,rgba(22,22,28,.92),rgba(12,12,16,.94));
-  border:1px solid rgba(255,255,255,.08);
+  padding:36px 30px 26px;border-radius:28px;text-align:center;
+  background:linear-gradient(160deg,rgba(30,20,45,.88),rgba(12,14,28,.92));
+  border:1px solid rgba(255,255,255,.12);
   box-shadow:
-    0 0 0 1px rgba(255,255,255,.03) inset,
-    0 24px 80px rgba(0,0,0,.65),
-    0 0 120px rgba(91,79,255,.08);
-  text-align:center;
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    0 0 0 1px rgba(255,180,220,.06) inset,
+    0 28px 90px rgba(0,0,0,.55),
+    0 0 80px rgba(255,107,157,.12),
+    0 0 120px rgba(91,141,255,.1);
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
   animation:nxCardIn .55s cubic-bezier(.22,1,.36,1) both;
 }
-@keyframes nxCardIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+.nx-login-card::before{
+  content:"";position:absolute;inset:-1px;border-radius:28px;padding:1px;
+  background:linear-gradient(135deg,#ff6b9d66,#8b5cf666 40%,#5b8dff66 70%,#34d39955);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  pointer-events:none;
+}
+@keyframes nxCardIn{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:none}}
 
 .nx-login-badge{
   display:inline-flex;align-items:center;gap:6px;
-  padding:4px 10px;margin-bottom:18px;
-  border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:.08em;
-  color:#a8b0d0;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+  padding:5px 12px;margin-bottom:18px;border-radius:999px;
+  font-size:10.5px;font-weight:700;letter-spacing:.1em;
+  color:#f9a8d4;
+  background:linear-gradient(90deg,rgba(255,107,157,.15),rgba(139,92,246,.15));
+  border:1px solid rgba(255,150,200,.2);
 }
 
 .nx-login-logo{
-  width:64px;height:64px;margin:0 auto 14px;border-radius:20px;
+  width:68px;height:68px;margin:0 auto 14px;border-radius:22px;
   display:grid;place-items:center;
-  background:linear-gradient(135deg,#6d5efc 0%,#c45d3e 100%);
-  box-shadow:0 12px 32px rgba(109,94,252,.35),0 0 0 1px rgba(255,255,255,.12) inset;
-  animation:nxLogoPulse 4s ease-in-out infinite;
+  background:linear-gradient(135deg,#ff6b9d 0%,#c084fc 45%,#60a5fa 100%);
+  box-shadow:0 14px 36px rgba(255,107,157,.4),0 0 0 1px rgba(255,255,255,.2) inset;
+  animation:nxLogoPulse 3.5s ease-in-out infinite;
 }
-.nx-login-logo span{font-size:28px;font-weight:800;color:#fff;line-height:1}
-@keyframes nxLogoPulse{0%,100%{box-shadow:0 12px 32px rgba(109,94,252,.35),0 0 0 1px rgba(255,255,255,.12) inset}50%{box-shadow:0 14px 40px rgba(196,93,62,.4),0 0 0 1px rgba(255,255,255,.16) inset}}
+.nx-login-logo span{font-size:30px;font-weight:800;color:#fff;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.25)}
+@keyframes nxLogoPulse{
+  0%,100%{box-shadow:0 14px 36px rgba(255,107,157,.4),0 0 0 1px rgba(255,255,255,.2) inset;transform:scale(1)}
+  50%{box-shadow:0 16px 44px rgba(96,165,250,.45),0 0 0 1px rgba(255,255,255,.25) inset;transform:scale(1.03)}
+}
 
 .nx-login-title{
-  margin:0 0 6px;font-size:26px;font-weight:700;letter-spacing:-.02em;
-  background:linear-gradient(90deg,#fff 0%,#d4d8f0 50%,#fff 100%);
+  margin:0 0 6px;font-size:28px;font-weight:800;letter-spacing:-.02em;
+  background:linear-gradient(90deg,#fff 0%,#f9a8d4 35%,#c4b5fd 65%,#93c5fd 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-.nx-login-desc{margin:0 0 22px;font-size:13.5px;color:#8b90a5;line-height:1.45}
+.nx-login-desc{margin:0 0 22px;font-size:13.5px;color:#b8b0c8;line-height:1.5}
 
 .nx-login-form{display:flex;flex-direction:column;gap:12px;text-align:left}
 .nx-login-form.hidden{display:none!important}
 
 .nx-field{display:flex;flex-direction:column;gap:6px}
-.nx-field label{font-size:12px;font-weight:600;color:#9aa0b5;padding-left:2px;letter-spacing:.02em}
+.nx-field label{font-size:12px;font-weight:650;color:#c4b5fd;padding-left:2px}
 .nx-field input,
 .nx-login-form input[type="text"],
 .nx-login-form input[type="password"]{
-  width:100%;padding:13px 14px;border-radius:14px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(0,0,0,.35);color:#f2f3f7;font-size:15px;
-  outline:none;transition:border-color .2s,box-shadow .2s,background .2s;
-  box-sizing:border-box;
+  width:100%;padding:13px 14px;border-radius:14px;box-sizing:border-box;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(0,0,0,.4);color:#f8f7ff;font-size:15px;outline:none;
+  transition:border-color .2s,box-shadow .2s,background .2s;
 }
-.nx-field input::placeholder{color:#5c6170}
+.nx-field input::placeholder{color:#6b6580}
 .nx-field input:focus,
 .nx-login-form input:focus{
-  border-color:rgba(109,94,252,.55);
-  background:rgba(0,0,0,.5);
-  box-shadow:0 0 0 3px rgba(109,94,252,.15);
+  border-color:rgba(255,107,157,.55);
+  background:rgba(0,0,0,.55);
+  box-shadow:0 0 0 3px rgba(255,107,157,.18);
 }
 
 .nx-remember{
-  display:flex;align-items:center;gap:8px;margin:2px 0 2px;
-  font-size:12.5px;color:#8b90a5;cursor:pointer;user-select:none;
+  display:flex;align-items:center;gap:8px;margin:2px 0;
+  font-size:12.5px;color:#a89bb8;cursor:pointer;user-select:none;
 }
-.nx-remember input{width:15px;height:15px;accent-color:#6d5efc;margin:0}
+.nx-remember input{width:15px;height:15px;accent-color:#ff6b9d;margin:0}
 
 .nx-btn{
-  width:100%;padding:13px 16px;border-radius:14px;border:0;
-  font-size:15px;font-weight:650;cursor:pointer;
-  transition:transform .15s,filter .15s,background .2s,opacity .2s;
+  width:100%;padding:14px 16px;border-radius:14px;border:0;
+  font-size:15px;font-weight:700;cursor:pointer;
+  transition:transform .15s,filter .15s,box-shadow .2s;
   -webkit-tap-highlight-color:transparent;
 }
 .nx-btn:active{transform:scale(.98)}
 .nx-btn-primary{
-  margin-top:4px;
-  color:#fff;
-  background:linear-gradient(135deg,#6d5efc 0%,#8b5cf6 45%,#c45d3e 100%);
-  background-size:160% 100%;
-  box-shadow:0 10px 28px rgba(109,94,252,.3);
+  margin-top:4px;color:#fff;
+  background:linear-gradient(105deg,#ff6b9d 0%,#c084fc 40%,#60a5fa 100%);
+  background-size:180% 100%;
+  box-shadow:0 12px 32px rgba(255,107,157,.35);
 }
-.nx-btn-primary:hover{filter:brightness(1.06);background-position:100% 0}
+.nx-btn-primary:hover{filter:brightness(1.08);background-position:100% 0}
 .nx-btn-ghost{
-  color:#a8b0c8;background:transparent;
-  border:1px solid rgba(255,255,255,.08)!important;
+  color:#d4c4e8;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,180,220,.15)!important;
 }
-.nx-btn-ghost:hover{background:rgba(255,255,255,.04);color:#d0d4e4}
+.nx-btn-ghost:hover{background:rgba(255,255,255,.08);color:#fff}
 
-.nx-login-error{
-  min-height:18px;margin-top:12px;font-size:12.5px;color:#ff7b7b;
-  text-align:center;line-height:1.4;
-}
+.nx-login-error{min-height:18px;margin-top:12px;font-size:12.5px;color:#fb7185;text-align:center}
 .nx-login-foot{
   display:flex;align-items:center;justify-content:center;gap:7px;
-  margin-top:18px;font-size:11px;color:#555a6a;letter-spacing:.02em;
+  margin-top:18px;font-size:11px;color:#7a7190;letter-spacing:.02em;
 }
 .nx-login-foot .nx-dot{
   width:6px;height:6px;border-radius:50%;
-  background:#3dd68c;box-shadow:0 0 8px #3dd68c99;
-  animation:nxDot 2.4s ease-in-out infinite;
+  background:linear-gradient(135deg,#34d399,#60a5fa);
+  box-shadow:0 0 10px #34d399aa;
+  animation:nxDot 2.2s ease-in-out infinite;
 }
-@keyframes nxDot{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes nxDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
 
 @media (max-width:400px){
   .nx-login-card{padding:28px 20px 22px;border-radius:24px}
-  .nx-login-title{font-size:23px}
+  .nx-login-title{font-size:24px}
 }
 @media (prefers-reduced-motion:reduce){
   .nx-orb,.nx-login-logo,.nx-login-card{animation:none!important}
 }
+</style>
+
+
+<style id="settings-admin-allow">
+/* 顶部入口仍隐藏，但管理后台可打开接口配置 */
+#settingsModal.show{
+  display:flex!important;
+  pointer-events:auto!important;
+  z-index:200010!important;
+}
+#mobileSettings, button[title="设置中心"]{display:none!important}
 </style>
 
 </head>
@@ -1702,7 +1718,7 @@ async function enterApp(){
 }
 // === 旧登录事件绑定已移除，由页面底部独立登录脚本负责 ===
 // enterBtn / showRegisterBtn / registerBtn 等由 window.__nxLogin / __nxRegister 处理
-function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");$("adminSupportModal").classList.add("show");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return;alert("接口配置已整合到管理后台。\n请在管理后台发布公告区下方或通过服务器 api-config.json 管理。\n（2.9.0 已移除独立设置中心，功能全部集中到侧栏与管理后台）")};
+function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");$("adminSupportModal").classList.add("show");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return alert("仅管理员可配置接口");const sm=$("settingsModal");if(!sm)return alert("设置面板缺失");sm.style.display="flex";sm.classList.add("show");sm.style.pointerEvents="auto";const tab=$("apiSettingsTab");if(tab){document.querySelectorAll(".settings-nav button").forEach(b=>b.classList.remove("active"));tab.classList.add("active");if(typeof switchSettingsPane==="function")switchSettingsPane("api");else{document.querySelectorAll("[data-settings-pane]").forEach(p=>p.classList.add("hidden"));const pane=document.querySelector('[data-settings-pane="api"]')||document.querySelector("#apiList")?.closest(".settings-pane");if(pane)pane.classList.remove("hidden");}}};;
 document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dataset.extraClose).classList.remove("show"));
 $("refreshUsers").onclick=refreshUsers;
 $("publishNotice").onclick=async()=>{const title=$("noticeTitle").value.trim(),content=$("noticeContent").value.trim();if(!title||!content){alert("请填写公告标题和内容");return}
