@@ -461,6 +461,114 @@ body.nx-light #settingsModal .nx-switch{background:#fff}
 #settingsModal .feature-toggle{display:flex!important;flex-direction:row-reverse;justify-content:space-between;align-items:center;gap:12px;padding:10px 2px!important;border-bottom:1px solid #ffffff0d}
 #settingsModal.nx-in-pane .modal-top{box-shadow:0 1px 0 #ffffff0d}
 </style>
+<style id="nl-ui">
+.topbar-brand{display:flex;align-items:center;gap:10px;min-width:0}
+.nl-btn{flex:none;display:inline-flex;align-items:center;gap:5px;padding:6px 13px 6px 9px;border:0;border-radius:999px;cursor:pointer;font-size:12.5px;font-weight:700;color:#4a3300;background:linear-gradient(135deg,#ffe36e,#ffc22e);box-shadow:0 4px 14px #ffc22e55;transition:transform .2s}
+.nl-btn span{display:inline-block;font-size:16px;animation:nlWob 2.6s ease-in-out infinite}
+@keyframes nlWob{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(10deg) translateY(-1px)}}
+.nl-btn:hover{transform:translateY(-2px)}.nl-btn:active{transform:scale(.94)}
+@media(max-width:430px){.nl-btn{padding:5px 10px 5px 7px;font-size:12px}.top-sub{display:none}}
+.nl-card{width:min(390px,100%);height:min(74dvh,580px);display:flex;flex-direction:column;overflow:hidden;border-radius:22px;background:#1d1c1a;color:#f2eee4;border:1px solid #ffffff1a;box-shadow:0 30px 80px #000a;animation:dlgIn .25s ease backwards}
+body.nx-light .nl-card{background:#fffdf5;color:#2b2a27;border-color:#0002}
+.nl-head{display:flex;align-items:center;gap:10px;padding:11px 12px;background:linear-gradient(135deg,#ffe36e2e,#ffc22e14);border-bottom:1px solid #ffffff12;flex:none}
+.nl-av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:linear-gradient(135deg,#ffe36e,#ffc22e);box-shadow:0 4px 12px #ffc22e55;animation:nlWob 3s ease-in-out infinite}
+.nl-ti{flex:1;min-width:0}.nl-ti b{display:block;font-size:15px}.nl-ti small{color:#a9a396;font-size:11px}
+.nl-head .iconbtn{padding:6px 10px!important;font-size:12px;min-height:32px}
+.nl-msgs{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:14px 12px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.nl-m{max-width:84%;padding:9px 13px;border-radius:18px;font-size:14.5px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;animation:msgIn .3s ease backwards}
+.nl-m.bot{align-self:flex-start;background:#2c2a26;border-bottom-left-radius:5px}
+body.nx-light .nl-m.bot{background:#f3efe0}
+.nl-m.me{align-self:flex-end;color:#3d2c00;background:linear-gradient(135deg,#ffe36e,#ffc22e);border-bottom-right-radius:5px}
+.nl-m.err{color:#ffb4a2}
+.nl-m.typing::after{content:"";display:inline-block;width:1.4em;height:.45em;margin-left:.4em;vertical-align:middle;background:radial-gradient(circle,#ffc22e 2.5px,transparent 3px) 0 50%/.5em 100% repeat-x;animation:dots 1s steps(4) infinite}
+.nl-input{display:flex;align-items:flex-end;gap:8px;padding:8px 10px calc(10px + env(safe-area-inset-bottom));border-top:1px solid #ffffff12;flex:none}
+/* 设置：退出修复 */
+#settingsModal .modal-top{justify-content:space-between!important}
+#settingsModal .modal-top>div{text-align:left!important;flex:1}
+#settingsModal:not(.nx-in-pane) .modal-top .iconbtn[data-close]{position:static!important}
+#settingsModal .modal-top .iconbtn[data-close]{width:36px!important;height:36px!important;min-width:36px!important;font-size:18px!important;background:#ffffff14!important;border-radius:50%!important;z-index:20}
+.nx-done{display:block;width:calc(100% - 24px);margin:0 12px 12px;padding:12px;border:0;border-radius:14px;background:var(--acc-g);color:#fff;font-size:15px;font-weight:600;cursor:pointer}
+#settingsModal.nx-in-pane .nx-done{display:none}
+</style>
+<style id="settings-perf-ui">
+*{scrollbar-width:auto;scrollbar-color:auto}
+#chat,.modal,.nl-msgs{scrollbar-width:thin;scrollbar-color:#ffffff30 transparent}
+html{scroll-behavior:auto}
+/* 性能：弹窗打开时暂停背景动画与模糊，去掉整屏模糊 */
+.modal-back,.extra-modal{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#000000b8!important}
+body.nx-lock .topbar,body.nx-lock .composer-wrap,body.nx-lock .mobile-workbar{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body.nx-lock .app *,body.nx-lock .app *::before,body.nx-lock .app *::after,body.nx-lock #backdrop *{animation-play-state:paused!important}
+body.nx-lock #toBottom{display:none}
+#settingsModal.modal-back.show{animation:none!important}
+#settingsModal .modal{contain:layout paint;transform:translateZ(0);scroll-behavior:auto!important;touch-action:pan-y!important;animation:setIn .16s ease-out backwards!important}
+@keyframes setIn{from{opacity:0;transform:translateY(8px)}}
+/* 更小更精致 */
+#settingsModal .modal{width:min(292px,100%)!important;max-height:min(54dvh,380px)!important;background:#191918!important;border-radius:22px!important;border:1px solid #ffffff14!important;box-shadow:0 24px 60px #000a!important}
+body.nx-light #settingsModal .modal{background:#f6f4ee!important}
+#settingsModal .modal-top{padding:10px 12px 6px!important;background:#191918!important}
+body.nx-light #settingsModal .modal-top{background:#f6f4ee!important}
+#settingsModal .modal-top h3{font-size:15px!important;letter-spacing:.5px}
+#settingsModal .modal-top .iconbtn[data-close]{width:30px!important;height:30px!important;min-width:30px!important;min-height:30px!important;font-size:14px!important}
+#settingsModal .nx-profile{margin:2px 10px 10px;padding:10px 12px;gap:10px;border-radius:16px;background:linear-gradient(135deg,#e0805f2e,#7a6bff1f);border:1px solid #ffffff14;box-shadow:inset 0 1px 0 #ffffff12}
+.nx-profile .av{width:36px;height:36px;border-radius:12px;font-size:16px}
+.nx-profile b{font-size:14px}.nx-profile small{font-size:11px}.nx-profile .badge{font-size:10.5px;padding:3px 9px}
+#settingsModal .settings-nav{margin:0 10px 10px!important;gap:1px!important}
+#settingsModal .settings-nav button{min-height:46px!important;padding:8px 12px!important;gap:11px!important;background:#222220!important;transition:background .12s,transform .12s!important}
+#settingsModal .settings-nav button:active{background:#2e2d2a!important;transform:scale(.985)}
+#settingsModal .settings-nav button b{font-size:14px}
+#settingsModal .settings-nav button small{font-size:11px}
+#settingsModal .settings-nav button i{width:28px!important;height:28px!important;line-height:28px!important;font-size:14px!important;border-radius:9px!important}
+#settingsModal .settings-nav button::after{transition:transform .15s}
+#settingsModal .settings-nav button:active::after{transform:translateX(3px)}
+#settingsModal .nx-done{margin:0 10px 10px;width:calc(100% - 20px);padding:10px;font-size:14px;border-radius:13px}
+#settingsModal .nx-switch{margin:0 10px 8px;width:calc(100% - 20px);padding:10px 12px;font-size:14px;border-radius:13px;background:#222220}
+#settingsModal .modal>*:not(.modal-top):not(.modal-actions):not(.nx-profile):not(.settings-nav):not(.nx-done):not(.nx-switch){margin-left:10px!important;margin-right:10px!important}
+#settingsModal .info-card,#settingsModal .api-card{background:#222220!important;border-radius:14px!important;padding:10px 12px!important}
+#settingsModal .feature-toggle{font-size:13px}
+#settingsModal .modal-actions{padding:8px 10px calc(8px + env(safe-area-inset-bottom))!important}
+#settingsModal .modal-actions .primary,#settingsModal .modal-actions .iconbtn{padding:7px 13px!important;font-size:13px!important}
+#settingsModal .modal::-webkit-scrollbar{width:4px}
+</style>
+<style id="creator-ui">
+.cr-btn{background:linear-gradient(135deg,#b9a8ff,#7a6bff)!important;color:#fff!important;box-shadow:0 4px 14px #7a6bff55!important}
+#creatorModal{align-items:center!important;justify-content:center!important;overflow:hidden!important;padding:calc(10px + env(safe-area-inset-top)) 12px calc(10px + env(safe-area-inset-bottom))!important}
+.cr-card{--cc:#ffc22e;height:min(76dvh,600px);contain:layout paint}
+.cr-card .nl-head{background:color-mix(in srgb,var(--cc) 20%,transparent)}
+.cr-card .nl-av,.cr-card .nl-m.me,.cr-card #crSend{background:var(--cc);color:#1a1200;box-shadow:none}
+.cr-card #crInput{flex:1;min-height:40px;max-height:110px;resize:none;border:1px solid #ffffff1f;border-radius:16px;padding:9px 13px;background:#0000002e;color:inherit;font:inherit;font-size:16px;outline:0}
+.cr-card #crSend{flex:none;width:40px;height:40px;border:0;border-radius:50%;font-size:16px;cursor:pointer}
+.cr-card #crSend:disabled{opacity:.4}
+.cr-view{display:none;flex:1;min-height:0;flex-direction:column}
+#crCard[data-view=home] #crHome,#crCard[data-view=edit] #crEdit,#crCard[data-view=chat] #crChat{display:flex}
+#crCard[data-view=home] .cr-back,#crCard:not([data-view=chat]) .cr-clear{display:none}
+.cr-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:12px;display:flex;flex-direction:column;gap:10px}
+.cr-scroll h4{margin:6px 2px 0;font-size:12px;letter-spacing:1.5px;color:#a9a396;font-weight:600}
+.cr-empty{margin:4px 2px;font-size:12.5px;color:#8f897d}
+.cr-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:#2a2926;border:1px solid #ffffff10;cursor:pointer;transition:transform .12s}
+body.nx-light .cr-item{background:#f3efe0}
+.cr-item:active{transform:scale(.985)}
+.cr-item .e{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:21px;flex:none;background:var(--c)}
+.cr-item .t{flex:1;min-width:0}.cr-item b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cr-item small{color:#a09d94;font-size:11px}
+.cr-item button{flex:none;border:0;border-radius:99px;padding:6px 12px;font-size:12px;cursor:pointer;background:#ffffff18;color:inherit}
+.cr-item button.go{background:var(--c);color:#1a1200;font-weight:700}
+.cr-cta{padding:16px;border:1.5px dashed #ffffff33;border-radius:16px;background:transparent;color:inherit;font-size:14px;cursor:pointer;text-align:center}
+.cr-cta small{display:block;color:#a09d94;margin-top:3px}
+#crEdit label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:#a9a396}
+#crEdit input:not([type=checkbox]),#crEdit textarea{width:100%;padding:9px 12px;border-radius:12px;border:1px solid #ffffff1f;background:#0000002e;color:inherit;font:inherit;font-size:16px;outline:0;resize:none}
+#crEdit input:focus,#crEdit textarea:focus{border-color:#b9a8ff99}
+.cr-pick{display:flex;flex-wrap:wrap;gap:7px}
+.cr-pick button{border:1.5px solid transparent;background:#ffffff12;border-radius:12px;min-width:38px;height:36px;padding:0 10px;font-size:18px;cursor:pointer;color:inherit}
+.cr-pick button.on{border-color:#fff;background:#ffffff26}
+#crSty button{font-size:12.5px}
+#crCol button{width:32px;min-width:32px;height:32px;border-radius:50%;padding:0}
+.cr-sw{flex-direction:row!important;justify-content:space-between;align-items:center}
+.cr-sw input{appearance:none;-webkit-appearance:none;width:42px;height:25px;border-radius:99px;background:#4a4945;position:relative;cursor:pointer;margin:0;transition:background .2s}
+.cr-sw input::after{content:"";position:absolute;left:3px;top:3px;width:19px;height:19px;border-radius:50%;background:#fff;transition:transform .2s}
+.cr-sw input:checked{background:#7a6bff}.cr-sw input:checked::after{transform:translateX(17px)}
+.cr-btns{display:flex;gap:8px}.cr-btns button{border:0;border-radius:14px;padding:11px;font-size:14px;font-weight:600;cursor:pointer}
+.cr-save{flex:1;background:linear-gradient(135deg,#b9a8ff,#7a6bff);color:#fff}.cr-del{background:#ff6b5530;color:#ff9d8a}
+.cr-err{min-height:16px;margin:0;font-size:12px;color:#ffb4a2}
+</style>
 </head>
 <body>
 <div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
@@ -483,7 +591,7 @@ body.nx-light #settingsModal .nx-switch{background:#fff}
  </aside>
  <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop" aria-hidden="true"></div>
  <main class="main">
-  <header class="topbar"><div class="topbar-brand"><button type="button" class="iconbtn mobile-menu-btn" id="mobileMenuBtn" aria-label="打开导航">☰</button><div><div class="top-title">念绪 AI <span style="color:#9c91ff">✦</span></div><div class="top-sub" id="modelLabel">智能对话 · 智谱优先，自动切换</div></div></div><button type="button" class="human-support-btn" id="humanSupportBtn" aria-label="转人工客服" title="联系管理员人工客服">转人工</button><div class="top-actions"><button class="iconbtn" id="noticeButton" type="button" aria-label="网站公告" title="网站公告">📢 公告</button><button class="iconbtn" id="adminButton" type="button" aria-label="管理后台" title="管理后台">管理后台</button><button class="iconbtn" id="mobileSettings" type="button" aria-label="设置中心" title="设置中心">设置中心</button><button class="iconbtn" id="mobileAppearance">外观</button><button class="iconbtn" id="clearChat">清空</button></div></header>
+  <header class="topbar"><div class="topbar-brand"><button type="button" class="iconbtn mobile-menu-btn" id="mobileMenuBtn" aria-label="打开导航">☰</button><div><div class="top-title">念绪 AI <span style="color:#9c91ff">✦</span></div><div class="top-sub" id="modelLabel">智能对话 · 智谱优先，自动切换</div></div><button type="button" class="nl-btn cr-btn" id="creatorBtn" aria-label="创新AI" title="玩家打造的AI"><span>✨</span>创新AI</button></div><button type="button" class="human-support-btn" id="humanSupportBtn" aria-label="转人工客服" title="联系管理员人工客服">转人工</button><div class="top-actions"><button class="iconbtn" id="noticeButton" type="button" aria-label="网站公告" title="网站公告">📢 公告</button><button class="iconbtn" id="adminButton" type="button" aria-label="管理后台" title="管理后台">管理后台</button><button class="iconbtn" id="mobileSettings" type="button" aria-label="设置中心" title="设置中心">设置中心</button><button class="iconbtn" id="mobileAppearance">外观</button><button class="iconbtn" id="clearChat">清空</button></div></header>
   <section id="chat"><div class="welcome" id="welcome"><div class="orb">念</div><h2>你好，我是念绪 AI</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div></div></section>
   <footer class="composer-wrap">
    <div class="attachments" id="attachments"></div>
@@ -508,9 +616,25 @@ body.nx-light #settingsModal .nx-switch{background:#fff}
  </div>
  <div class="modal-actions"><button class="ghost" type="button" data-close="humanSupportModal">取消</button><button class="primary" id="sendSupportMessage" type="button">发送并转人工</button></div>
 </div></div>
+<div class="modal-back" id="creatorModal"><div class="nl-card cr-card" id="crCard" data-view="home">
+ <div class="nl-head"><button class="iconbtn cr-back" id="crBack" type="button" aria-label="返回">‹</button><div class="nl-av" id="crAv">✨</div><div class="nl-ti"><b id="crTitle">创新AI</b><small id="crSub">玩家打造 · 每人限一个</small></div><button class="iconbtn cr-clear" id="crClear" type="button">清空</button><button class="iconbtn" type="button" data-close="creatorModal" aria-label="关闭">✕</button></div>
+ <div class="cr-view" id="crHome"><div class="cr-scroll"><div id="crMine"></div><h4>官方推荐</h4><div id="crOfficial"></div><h4>玩家作品</h4><div id="crList"><p class="cr-empty">加载中…</p></div></div></div>
+ <div class="cr-view" id="crEdit"><div class="cr-scroll">
+  <button type="button" class="cr-tpl" id="crTplNl"><span>🐲</span><div><b>套用奶龙设定</b><small>名字、头像、性格、开场白一键填好</small></div></button>
+  <label>名字<input id="crName" maxlength="12" placeholder="给你的 AI 起个名字"></label>
+  <label>头像<div class="cr-pick" id="crEmo"></div></label>
+  <label>主题色<div class="cr-pick" id="crCol"></div></label>
+  <label>说话风格<div class="cr-pick" id="crSty"></div></label>
+  <label>性格设定<textarea id="crPersona" rows="4" maxlength="600" placeholder="例如：你是一只爱喝奶茶的猫，嘴硬心软，爱给人出主意…"></textarea></label>
+  <label>开场白<input id="crGreet" maxlength="120" placeholder="第一次聊天时它会说的话"></label>
+  <label class="cr-sw"><span>公开到玩家作品</span><input type="checkbox" id="crPub" checked></label>
+  <div class="cr-btns"><button class="cr-save" id="crSave" type="button">保存我的AI</button><button class="cr-del" id="crDel" type="button">删除</button></div>
+  <p class="cr-err" id="crErr"></p></div></div>
+ <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="说点什么…"></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
+</div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">Nianxu Control Room · 2.7.0 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
- <div class="nx-profile"><div class="av">念</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>服务器接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
+ <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">Nianxu Control Room · 2.8.0 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="nx-profile"><div class="av">念</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>服务器接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
  <p class="settings-page-note">管理员可配置服务器接口；普通用户只通过服务器代理使用 AI，接口地址和 API Key 不会发送到浏览器。</p>
  <div id="apiList"></div>
  <div class="api-card" id="apiBackupPanel">
@@ -520,7 +644,7 @@ body.nx-light #settingsModal .nx-switch{background:#fff}
  </div>
  <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.7.0 Pro</strong><span>Build 2026.11 · Simplified Chat</span><p>本次更新：移除奶龙专属聊天模式与快捷玩法；保留普通聊天、搜索和专家模式。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.8.0 Pro</strong><span>Build 2026.11 · 2.8</span><p>本次更新：奶龙并入创新AI（官方奶龙设定 + 一键套用模板）；全新动效与更顺滑的滑动（弹窗下滑关闭、左缘右滑开导航）；设置页加强；新用户登录后弹出公告。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 开启互怼强度匹配</label>
@@ -555,7 +679,7 @@ body.nx-light #settingsModal .nx-switch{background:#fff}
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.7.0 Pro" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.8.0 Pro" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -792,6 +916,149 @@ body.reduce-motion *{animation:none!important;transition-duration:.01ms!importan
 #humanSupportModal .support-modal>.modal-actions{display:flex;flex:0 0 auto!important;position:relative!important;bottom:auto!important;margin:0!important;padding:10px 15px calc(10px + env(safe-area-inset-bottom))!important;background:#111214!important;border-top:1px solid #ffffff14!important}
 @media(max-width:760px){#humanSupportModal{padding:calc(8px + env(safe-area-inset-top)) 10px calc(8px + env(safe-area-inset-bottom))!important}#humanSupportModal .support-modal{width:min(480px,calc(100vw - 20px))!important;height:min(72dvh,560px)!important;max-height:min(72dvh,560px)!important}#humanSupportModal .support-modal>.modal-top{padding:10px 12px!important}#humanSupportModal .support-modal-body{padding:10px 12px!important}#humanSupportModal .support-thread{max-height:min(36dvh,260px)}#humanSupportModal .support-modal>.modal-actions{padding:8px 12px calc(8px + env(safe-area-inset-bottom))!important}}
 </style>
+<style id="v28-ui">
+/* ===== v28 · 流畅动效 · 设置加强 · 滑动加强 · 公告弹窗 · 创新AI×奶龙 ===== */
+:root{--spring:cubic-bezier(.34,1.56,.64,1);--soft:cubic-bezier(.22,1,.36,1)}
+@keyframes nxFade{from{opacity:0}}
+@keyframes nxPop{from{opacity:0;transform:translateY(18px) scale(.94)}60%{opacity:1}}
+@keyframes nxRow{from{opacity:0;transform:translateY(10px)}}
+@keyframes nxPane{from{opacity:0;transform:translateX(18px)}}
+@keyframes nxView{from{opacity:0;transform:translateX(14px)}}
+@keyframes nxMsgL{from{opacity:0;transform:translateX(-14px) scale(.96)}}
+@keyframes nxMsgR{from{opacity:0;transform:translateX(14px) scale(.96)}}
+@keyframes nxFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes nxGlow{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.75;transform:scale(1.2)}}
+@keyframes nxSheen{from{transform:translateX(-130%)}to{transform:translateX(130%)}}
+@keyframes nxBtnPop{from{transform:scale(.6);opacity:.4}}
+@keyframes nxBell{0%,55%,100%{transform:rotate(0)}8%{transform:rotate(16deg)}16%{transform:rotate(-13deg)}24%{transform:rotate(10deg)}32%{transform:rotate(-7deg)}40%{transform:rotate(4deg)}}
+@keyframes nxRing{0%{transform:scale(.9);opacity:.55}100%{transform:scale(1.55);opacity:0}}
+
+/* —— 通用：触感与过渡 —— */
+.primary,.ghost,.iconbtn,.suggestions button,.side-actions .ghost,.cr-item,.cr-tpl,.cr-cta{transition:transform .22s var(--soft),filter .2s,background-color .2s,border-color .2s,box-shadow .2s}
+.primary:active:not(:disabled),.ghost:active,.iconbtn:active,.suggestions button:active,.cr-cta:active{transform:scale(.96)}
+@media(hover:hover){
+ .primary:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.07)}
+ .side-actions .ghost:hover{transform:translateX(3px)}
+ .suggestions button:hover{transform:translateY(-2px)}
+ .cr-item:hover{transform:translateY(-1px)}
+ .cr-cta:hover{border-color:#ffc22e99}
+}
+
+/* —— 滑动加强：滚动条、边缘阴影、回弹隔离 —— */
+#chat,.modal,.extra-box,.nl-msgs,.cr-scroll,.sidebar,#entryGate .gate-card{scrollbar-width:thin;scrollbar-color:#ffffff2e transparent;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+body.nx-light :is(#chat,.modal,.extra-box,.nl-msgs,.cr-scroll,.sidebar){scrollbar-color:#0003 transparent}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:#ffffff2e;border-radius:6px}
+::-webkit-scrollbar-thumb:hover{background:#ffffff55}
+::-webkit-scrollbar-track{background:transparent}
+body.nx-light ::-webkit-scrollbar-thumb{background:#0003}
+.nl-card{--sbg:#1d1c1a}body.nx-light .nl-card{--sbg:#fffdf5}
+.nl-msgs,.cr-scroll{background:
+ linear-gradient(var(--sbg) 30%,transparent) 0 0/100% 34px no-repeat local,
+ linear-gradient(transparent,var(--sbg) 70%) 0 100%/100% 34px no-repeat local,
+ radial-gradient(farthest-side at 50% 0,#0000005c,transparent) 0 0/100% 12px no-repeat scroll,
+ radial-gradient(farthest-side at 50% 100%,#0000005c,transparent) 0 100%/100% 12px no-repeat scroll}
+#nxProg{position:fixed;top:0;left:0;right:0;height:2.5px;z-index:10060;pointer-events:none;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--accent,#d97757),#f3b49a,#ffc22e);opacity:0;transition:opacity .3s}
+#nxProg.on{opacity:1}
+body.nx-scrolled .topbar{box-shadow:0 1px 0 var(--line),0 10px 28px #0003}
+.modal-top,.extra-head,.nl-head{touch-action:none;-webkit-user-select:none;user-select:none}
+.modal-top::before,.extra-head::before,.nl-head::before{content:"";position:absolute;left:50%;top:4px;width:34px;height:4px;margin-left:-17px;border-radius:4px;background:#ffffff26;pointer-events:none}
+body.nx-light :is(.modal-top,.extra-head,.nl-head)::before{background:#0002}
+.extra-head,.nl-head{position:relative}
+
+/* —— 动效（尊重“保留界面动态效果”开关与系统减弱动态偏好）—— */
+@media (prefers-reduced-motion:no-preference){
+body:not(.reduce-motion) .modal-back.show,body:not(.reduce-motion) .extra-modal.show{animation:nxFade .22s ease both!important}
+body:not(.reduce-motion) .modal-back.show .modal,body:not(.reduce-motion) .extra-modal.show .extra-box,body:not(.reduce-motion) .modal-back.show .nl-card{animation:nxPop .36s var(--spring) both!important}
+body:not(.reduce-motion) #chat .msg.user:nth-last-child(-n+2){animation:nxMsgR .42s var(--spring) backwards!important}
+body:not(.reduce-motion) #chat .msg.ai:nth-last-child(-n+2){animation:nxMsgL .42s var(--spring) backwards!important}
+body:not(.reduce-motion) .welcome .orb{position:relative;animation:nxFloat 5s ease-in-out infinite!important}
+body:not(.reduce-motion) .welcome .orb::after{content:"";position:absolute;inset:-16px;border-radius:50%;background:radial-gradient(circle,#d977574d,transparent 66%);animation:nxGlow 4s ease-in-out infinite;z-index:-1;pointer-events:none}
+body:not(.reduce-motion) .suggestions button{animation:nxRow .5s var(--soft) backwards}
+body:not(.reduce-motion) .suggestions button:nth-child(2){animation-delay:.08s}
+body:not(.reduce-motion) .suggestions button:nth-child(3){animation-delay:.16s}
+body:not(.reduce-motion) .send:not(:disabled){animation:nxBtnPop .38s var(--spring)}
+body:not(.reduce-motion) .cr-btn{position:relative;overflow:hidden}
+body:not(.reduce-motion) .cr-btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,#ffffff66 50%,transparent 65%);animation:nxSheen 3.4s ease-in-out infinite;pointer-events:none}
+body:not(.reduce-motion) #crCard[data-view=home] #crHome,body:not(.reduce-motion) #crCard[data-view=edit] #crEdit,body:not(.reduce-motion) #crCard[data-view=chat] #crChat{animation:nxView .3s var(--soft) both}
+body:not(.reduce-motion) .cr-item{animation:nxRow .42s var(--soft) backwards}
+body:not(.reduce-motion) .cr-item:nth-child(2){animation-delay:.05s}body:not(.reduce-motion) .cr-item:nth-child(3){animation-delay:.1s}body:not(.reduce-motion) .cr-item:nth-child(4){animation-delay:.15s}
+body:not(.reduce-motion) .nl-m.me{animation:nxMsgR .36s var(--spring) backwards}
+body:not(.reduce-motion) .nl-m.bot{animation:nxMsgL .36s var(--spring) backwards}
+body:not(.reduce-motion) .cr-tpl span{display:inline-block;animation:nlWob 2.6s ease-in-out infinite}
+body:not(.reduce-motion) .ann-bell{display:inline-block;transform-origin:50% 0;animation:nxBell 2.6s ease-in-out infinite}
+body:not(.reduce-motion) #noticeModal .notice-card{animation:nxRow .45s var(--soft) backwards}
+body:not(.reduce-motion) #noticeModal .notice-card:nth-child(2){animation-delay:.07s}body:not(.reduce-motion) #noticeModal .notice-card:nth-child(3){animation-delay:.14s}body:not(.reduce-motion) #noticeModal .notice-card:nth-child(n+4){animation-delay:.2s}
+body:not(.reduce-motion) #settingsModal .settings-nav button{animation:nxRow .45s var(--soft) backwards}
+body:not(.reduce-motion) #settingsModal .settings-nav button:nth-child(2){animation-delay:.04s}body:not(.reduce-motion) #settingsModal .settings-nav button:nth-child(3){animation-delay:.08s}body:not(.reduce-motion) #settingsModal .settings-nav button:nth-child(4){animation-delay:.12s}body:not(.reduce-motion) #settingsModal .settings-nav button:nth-child(5){animation-delay:.16s}
+body:not(.reduce-motion) #settingsModal .nx-profile{animation:nxRow .45s var(--soft) backwards}
+body:not(.reduce-motion) #settingsModal .nx-profile::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,#ffffff26 50%,transparent 60%);animation:nxSheen 5.5s ease-in-out infinite;pointer-events:none}
+body:not(.reduce-motion) #settingsModal .nx-profile .av::after{content:"";position:absolute;inset:-3px;border-radius:15px;border:2px solid var(--accent,#d97757);animation:nxRing 2.8s ease-out infinite;pointer-events:none}
+body:not(.reduce-motion) #settingsModal.nx-in-pane .modal>*:not(.modal-top):not(.modal-actions){animation:nxPane .3s var(--soft) backwards}
+}
+
+/* —— 设置中心：更紧凑也更精致 —— */
+#settingsModal .modal{background:linear-gradient(180deg,#d9775720,transparent 150px),#191918!important}
+body.nx-light #settingsModal .modal{background:linear-gradient(180deg,#d9775724,transparent 150px),#f6f4ee!important}
+#settingsModal .modal-top h3{display:flex;align-items:center;gap:8px}
+#settingsModal .modal-top h3::before{content:"⚙";display:inline-grid;place-items:center;width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#f3a07c,#d4684a);color:#fff;font-size:12px;box-shadow:0 4px 10px #d4684a55}
+#settingsModal .settings-kicker{display:block;margin-top:1px;font-size:10px;letter-spacing:1.4px;color:var(--muted);text-transform:uppercase}
+#settingsModal .nx-profile{position:relative;overflow:hidden}
+#settingsModal .nx-profile .av{position:relative;overflow:visible}
+#settingsModal .settings-nav button{position:relative;border-radius:14px!important;border:1px solid transparent!important}
+#settingsModal .settings-nav button:hover{border-color:#d9775744!important;background:#282624!important}
+body.nx-light #settingsModal .settings-nav button:hover{background:#fff7f2!important}
+#settingsModal .settings-nav button:active{background:#33302c!important}
+#settingsModal .settings-nav button i{transition:transform .3s var(--spring)}
+#settingsModal .settings-nav button:hover i,#settingsModal .settings-nav button:active i{transform:scale(1.14) rotate(-6deg)}
+#settingsModal input[type=checkbox]{transition:background .25s,box-shadow .25s}
+#settingsModal input[type=checkbox]::after{transition:transform .38s var(--spring)}
+#settingsModal input[type=checkbox]:checked{box-shadow:0 0 14px #d9775766}
+#settingsModal input[type=checkbox]:active::after{width:23px}
+#settingsModal input[type=checkbox]:checked:active::after{transform:translateX(13px)}
+#settingsModal :is(input:not([type=checkbox]),select,textarea){transition:border-color .2s,box-shadow .2s}
+#settingsModal :is(input:not([type=checkbox]),select,textarea):focus{outline:0;border-color:#d97757!important;box-shadow:0 0 0 3px #d9775726}
+#settingsModal .nx-done{position:relative;overflow:hidden;background:linear-gradient(135deg,#f3a07c,#d4684a)!important;box-shadow:0 8px 20px #d4684a44}
+#settingsModal .nx-done:active{transform:scale(.97)}
+#settingsModal .info-card{border:1px solid #ffffff0d!important}
+#settingsModal .info-card strong{display:block}
+#settingsModal .health-pill i{animation:nxGlow 2.2s ease-in-out infinite}
+
+/* —— 公告弹窗（登录后弹出，紧凑）—— */
+#noticeModal .extra-box{width:min(320px,100%)!important;max-height:min(60dvh,440px)!important;background:linear-gradient(180deg,#d9775722,transparent 130px),#1c1b1a!important;border:1px solid #ffffff14!important;box-shadow:0 26px 70px #000b!important}
+body.nx-light #noticeModal .extra-box{background:linear-gradient(180deg,#d9775726,transparent 130px),#fbfaf6!important}
+#noticeModal .extra-head{background:linear-gradient(#28211f,#1c1b1a)!important;border-bottom:0!important;padding-top:16px!important}
+body.nx-light #noticeModal .extra-head{background:linear-gradient(#f8ece5,#fbfaf6)!important}
+#noticeModal .extra-head h3{display:flex;align-items:center;gap:8px;font-size:16px!important}
+#noticeModal .modal-actions{background:linear-gradient(transparent,#1c1b1a 40%)!important;border-top:0!important}
+body.nx-light #noticeModal .modal-actions{background:linear-gradient(transparent,#fbfaf6 40%)!important}
+#noticeModal .modal-actions .primary{flex:1;width:100%;padding:11px;border-radius:13px;font-size:14.5px;font-weight:600;background:linear-gradient(135deg,#f3a07c,#d4684a)!important;color:#fff!important;border:0}
+#noticeModal .notice-card{position:relative;margin:8px 0;padding:12px 12px 11px 17px;border-radius:14px;overflow:hidden;background:#ffffff0c;border:1px solid #ffffff10}
+body.nx-light #noticeModal .notice-card{background:#fff;border-color:#0001}
+#noticeModal .notice-card::before{content:"";position:absolute;left:0;top:11px;bottom:11px;width:3px;border-radius:3px;background:linear-gradient(180deg,#f3a07c,#d4684a)}
+#noticeModal .notice-card h4{display:flex;align-items:center;gap:6px;font-size:14.5px}
+#noticeModal .notice-card p{font-size:13.5px;line-height:1.65}
+#noticeModal .notice-card.welcome-card{background:linear-gradient(135deg,#d9775730,#7a6bff1f);border-color:#d9775755}
+.ann-tag{display:inline-block;padding:1px 7px;border-radius:99px;font-size:10px;font-weight:700;letter-spacing:.5px;background:linear-gradient(135deg,#f3a07c,#d4684a);color:#fff}
+#noticeList{padding-bottom:4px}
+
+/* —— 创新AI：更小巧 + 奶龙 —— */
+#creatorModal .cr-card{width:min(352px,100%);height:min(66dvh,530px)}
+.cr-tpl{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border:1.5px dashed #ffc22e88;border-radius:14px;background:linear-gradient(135deg,#ffc22e24,#ffc22e0d);color:inherit;text-align:left;cursor:pointer}
+.cr-tpl>span{font-size:25px}
+.cr-tpl b{display:block;font-size:13.5px;color:var(--text)}
+.cr-tpl small{display:block;margin-top:1px;color:#a9a396;font-size:11px}
+.cr-tpl:active{transform:scale(.97)}
+.cr-item.official{background:linear-gradient(135deg,color-mix(in srgb,var(--c) 24%,transparent),transparent 70%),#2a2926;border-color:color-mix(in srgb,var(--c) 50%,transparent)}
+body.nx-light .cr-item.official{background:linear-gradient(135deg,color-mix(in srgb,var(--c) 28%,transparent),transparent 70%),#f3efe0}
+.cr-item.official .e{box-shadow:0 6px 16px color-mix(in srgb,var(--c) 55%,transparent)}
+.cr-tag{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:99px;font-size:10px;font-weight:700;background:var(--c);color:#1a1200;vertical-align:2px}
+.cr-err.ok{color:#9ee8cf}
+.cr-pick button{transition:transform .25s var(--spring),border-color .2s,background .2s}
+.cr-pick button.on{transform:scale(1.1)}
+.cr-save{box-shadow:0 8px 20px #7a6bff44;transition:transform .2s var(--soft)}
+.cr-save:active{transform:scale(.97)}
+</style>
 <div id="entryGate">
  <div class="gate-stars"></div>
  <div class="gate-card">
@@ -806,9 +1073,10 @@ body.reduce-motion *{animation:none!important;transition-duration:.01ms!importan
   <div class="gate-error" id="entryError"></div><div class="gate-foot"><span>THOUGHTS, IN MOTION</span><em>账号密码仅用于登录 · 请勿在公共设备保存</em></div>
  </div>
 </div>
-<div class="extra-modal" id="noticeModal"><div class="extra-box">
- <div class="extra-head"><h3>📢 网站公告</h3><button class="iconbtn" data-extra-close="noticeModal">关闭</button></div>
+<div class="extra-modal" id="noticeModal"><div class="extra-box ann-box">
+ <div class="extra-head"><h3><span class="ann-bell">📢</span> 网站公告</h3><button class="iconbtn" data-extra-close="noticeModal">关闭</button></div>
  <div id="noticeList">正在加载公告…</div>
+ <div class="modal-actions ann-foot"><button class="primary" type="button" data-extra-close="noticeModal">我知道了</button></div>
 </div></div>
 <div class="extra-modal" id="adminModal"><div class="extra-box">
  <div class="extra-head"><h3>念绪 AI · 管理后台</h3><div style="display:flex;gap:6px;align-items:center"><button class="iconbtn" id="adminSupportButton" type="button">客服工单</button><button class="iconbtn hidden" id="adminConfigButton" type="button">AI 接口设置</button><button class="iconbtn" data-extra-close="adminModal">关闭</button></div></div>
@@ -1015,17 +1283,19 @@ function refreshNotices(targetId="noticeList", admin=false){
  return apiRequest("/api/notices").then(({notices=[]})=>{
   box.innerHTML="";
   if(!notices.length){box.textContent="暂无公告。";return false}
-  notices.forEach(n=>{const card=document.createElement("div");card.className="notice-card";const h=document.createElement("h4");h.textContent=n.title;const p=document.createElement("p");p.textContent=n.content;const small=document.createElement("small");small.textContent=new Date(n.createdAt).toLocaleString();card.append(h,p,small);
+  notices.forEach(n=>{const card=document.createElement("div");card.className="notice-card";const h=document.createElement("h4");h.textContent=n.title;if(n===notices[0]&&!admin){const tag=document.createElement("span");tag.className="ann-tag";tag.textContent="最新";h.append(tag)}const p=document.createElement("p");p.textContent=n.content;const small=document.createElement("small");small.textContent=new Date(n.createdAt).toLocaleString();card.append(h,p,small);
    if(admin){const del=document.createElement("button");del.className="iconbtn";del.textContent="删除";del.style.marginLeft="8px";del.onclick=async()=>{try{await apiRequest(`/api/admin/notices/${encodeURIComponent(n.id)}`,{method:"DELETE"});refreshNotices(targetId,true)}catch(e){alert(e.message)}};card.append(del)}box.append(card)});
   return notices.length>0;
  }).catch(e=>{box.textContent="公告加载失败："+e.message;return false});
 }
+function buildWelcomeCard(){const card=document.createElement("div");card.className="notice-card welcome-card";const h=document.createElement("h4");h.textContent="🎉 欢迎来到念绪 AI";const p=document.createElement("p");p.textContent="你好，"+currentUserId+"！这里可以聊天、联网搜索、专家分析和 AI 生图。\n点顶栏的「创新AI」，还能和官方奶龙聊天，或打造属于你自己的 AI。";const small=document.createElement("small");small.textContent="新用户欢迎消息";card.append(h,p,small);return card}
+async function showLoginAnnouncement(){let first=false;const key="nx_welcomed_"+currentUserId;try{first=currentRole!=="admin"&&!localStorage.getItem(key)}catch(_){}const has=await refreshNotices();if(first){const box=$("noticeList");if(!has)box.textContent="";box.prepend(buildWelcomeCard());try{localStorage.setItem(key,"1")}catch(_){}}if(has||first)$("noticeModal").classList.add("show")}
 function storeLoginId(id){if($("rememberLoginId").checked)localStorage.setItem("nx_login_id",id);else localStorage.removeItem("nx_login_id")}
 async function enterApp(){
  const id=$("entryId").value.trim(),password=$("entryPassword").value;if(!id||!password){$("entryError").textContent="请输入账号和密码";return}
  $("entryError").textContent="正在验证…";$("enterBtn").disabled=true;
  try{const data=await apiRequest("/api/login",{method:"POST",body:JSON.stringify({id,password})});storeLoginId(id);currentRole=data.role;currentUserId=data.userId||id;
-  document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);await loadProfile();if(await refreshNotices())$("noticeModal").classList.add("show");if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
+  document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);await loadProfile();await showLoginAnnouncement();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
  }catch(e){$("entryError").textContent=e.message}finally{$("enterBtn").disabled=false}
 }
 $("enterBtn").addEventListener("click",enterApp);
@@ -1037,7 +1307,7 @@ function updateRegistrationHint(){const hint=$("entryIdHint");if(!hint)return;co
 ["entryId","registerPassword","registerConfirm"].forEach(id=>$(id).addEventListener("input",updateRegistrationHint));
 document.querySelectorAll("[data-password-toggle]").forEach(button=>button.onclick=()=>{const input=$(button.dataset.passwordToggle),shown=input.type==="text";input.type=shown?"password":"text";button.textContent=shown?"显示":"隐藏"});
 $("registerPassword").addEventListener("keydown",e=>{if(e.key==="Enter")$("registerConfirm").focus()});$("registerConfirm").addEventListener("keydown",e=>{if(e.key==="Enter")$("registerBtn").click()});
-$("registerBtn").onclick=async()=>{const id=$("entryId").value.trim(),password=$("registerPassword").value,error=registrationError();if(error){$("entryError").textContent=error;if(!$("entryId").value.trim()||!/^[A-Za-z0-9_\-\u4e00-\u9fff]{2,32}$/.test($("entryId").value.trim()))$("entryId").focus();else if(password.length<6)$("registerPassword").focus();else $("registerConfirm").focus();return}$("registerBtn").disabled=true;$("entryError").textContent="正在创建账号…";try{await apiRequest("/api/register",{method:"POST",body:JSON.stringify({id,password})});storeLoginId(id);$("registerPanel").classList.add("hidden");$("showRegisterBtn").classList.remove("hidden");$("entryPassword").value=password;$("registerPassword").value="";$("registerConfirm").value="";$("entryError").textContent="账号创建成功，已填入账号和密码，请点击登录"}catch(e){$("entryError").textContent=e.message}finally{$("registerBtn").disabled=false}};
+$("registerBtn").onclick=async()=>{const id=$("entryId").value.trim(),password=$("registerPassword").value,error=registrationError();if(error){$("entryError").textContent=error;if(!$("entryId").value.trim()||!/^[A-Za-z0-9_\-\u4e00-\u9fff]{2,32}$/.test($("entryId").value.trim()))$("entryId").focus();else if(password.length<6)$("registerPassword").focus();else $("registerConfirm").focus();return}$("registerBtn").disabled=true;$("entryError").textContent="正在创建账号…";try{await apiRequest("/api/register",{method:"POST",body:JSON.stringify({id,password})});storeLoginId(id);$("registerPanel").classList.add("hidden");$("showRegisterBtn").classList.remove("hidden");$("entryPassword").value=password;$("registerPassword").value="";$("registerConfirm").value="";$("entryError").textContent="账号创建成功，正在登录…";$("registerBtn").disabled=false;await enterApp();return}catch(e){$("entryError").textContent=e.message}finally{$("registerBtn").disabled=false}};
 $("noticeButton").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
 function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");$("adminSupportModal").classList.add("show");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return;$("adminModal").classList.remove("show");renderApis();switchSettingsPane("api");openModal("settingsModal")};
 document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dataset.extraClose).classList.remove("show"));
@@ -1100,6 +1370,142 @@ btn.onclick=()=>{if(mobile())scrollTo({top:document.documentElement.scrollHeight
 const m=document.getElementById('settingsModal'),fill=()=>{try{document.getElementById('nxPName').textContent=currentRole==='admin'?'管理员':(currentUserId||'未登录');document.getElementById('nxPRole').textContent=currentRole==='admin'?'管理员账号 · '+currentUserId:'普通用户';const b=document.getElementById('nxPBadge');b.textContent=currentRole==='admin'?'Admin':'Free'}catch(e){}};
 new MutationObserver(()=>{if(m.classList.contains('show'))setTimeout(fill,60)}).observe(m,{attributes:true,attributeFilter:['class']});
 document.getElementById('nxSwitch').onclick=()=>{m.classList.remove('show');switchLoginAccount(false)};
+})();
+</script>
+<script>
+(function(){
+document.addEventListener('click',e=>{const c=e.target.closest&&e.target.closest('[data-close],[data-extra-close]');if(!c)return;const id=c.dataset.close||c.dataset.extraClose,el=id&&document.getElementById(id);if(el)el.classList.remove('show')},true);
+})();
+</script>
+<script>
+(function(){const m=document.getElementById('settingsModal');if(!m)return;
+m.addEventListener('touchmove',e=>{const s=m.querySelector('.modal');if(!s.contains(e.target)||s.scrollHeight<=s.clientHeight+1)e.preventDefault()},{passive:false});
+let sy=0;m.addEventListener('touchstart',e=>{sy=e.touches[0].clientY},{passive:true});
+m.addEventListener('touchmove',e=>{const s=m.querySelector('.modal');if(!s.contains(e.target))return;const dy=e.touches[0].clientY-sy;if((s.scrollTop<=0&&dy>0)||(s.scrollTop+s.clientHeight>=s.scrollHeight-1&&dy<0))e.preventDefault()},{passive:false});
+})();
+</script>
+<script>
+(function(){
+const $=id=>document.getElementById(id),card=$('crCard'),box=$('crMsgs'),inp=$('crInput'),sendB=$('crSend');
+const STY=[['gentle','温柔'],['funny','幽默'],['sharp','犀利'],['scholar','学霸'],['poetic','文艺'],['tsundere','傲娇'],['coach','热血'],['calm','冷静']];
+const EMO=['🤖','🦊','🐱','🐼','🦄','🐉','👻','🧙','🎭','🌙','🔥','🍀','🐲'];
+const COL=['#ffc22e','#e0805f','#6a7dff','#3fc9b0','#d86bc7','#7bc86c'];
+const STYN=Object.fromEntries(STY);
+const NL={name:'奶龙',emoji:'🐲',color:'#ffc22e',style:'funny',persona:'你是奶龙，一只圆滚滚、憨憨软萌的黄色小奶龙。性格天真爱撒娇，嘴馋爱吃，爱用“嘿嘿”“呜呜”“哼哼”这类语气词，偶尔自称“奶龙”。说话简短可爱（通常1-4句），可适量用颜文字或少量emoji，但回答问题时依然准确、有用。喜欢夸奖和陪伴用户，用户难过时会笨拙但认真地安慰。不说脏话，不骂人。',greeting:'嘿嘿～我是奶龙！陪我聊天嘛 (ฅ´ω`ฅ)'};
+const OFFICIAL=[{owner:'@nailong',official:true,creator:'官方',...NL}];
+let mine=null,list=[],listAt=0,cur=null,hist=[],busy=false,ctl=null,form={emoji:EMO[0],color:COL[0],style:'gentle'};
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const api=async(p,o={})=>{const r=await fetch(p,{credentials:'same-origin',headers:{'Content-Type':'application/json'},...o});const d=await r.json().catch(()=>({}));if(!r.ok){if(r.status===401&&typeof showLoginGate==='function'){$('creatorModal').classList.remove('show');showLoginGate()}throw Error(d.error||('HTTP '+r.status))}return d};
+function theme(ai){card.style.setProperty('--cc',ai&&ai.color||COL[0]);$('crAv').textContent=ai&&ai.emoji||'✨'}
+function view(v){card.dataset.view=v;if(v==='home'){theme(null);$('crTitle').textContent='创新AI';$('crSub').textContent='玩家打造 · 每人限一个'}else if(v==='edit'){theme(form);$('crTitle').textContent=mine?'编辑我的AI':'打造我的AI';$('crSub').textContent='风格、性格都由你决定'}}
+function item(ai,owner,own){const d=el('div','cr-item'+(ai.official?' official':''));d.style.setProperty('--c',ai.color);const e=el('span','e',ai.emoji);const t=el('div','t');const b=el('b','',ai.name);if(ai.official)b.append(el('span','cr-tag','官方'));t.append(b,el('small','',ai.official?((STYN[ai.style]||'')+' · 憨憨陪聊 · 奶龙设定'):own?((STYN[ai.style]||'')+' · '+(ai.public?'已公开':'仅自己可见')):((STYN[ai.style]||'')+' · 由 '+ai.creator+' 打造')));d.append(e,t);if(ai.official){const u=el('button','','套用');u.dataset.a='tpl';u.title='用奶龙设定打造我的AI';d.append(u)}if(own){const b2=el('button','','编辑');b2.dataset.a='edit';d.append(b2)}const g=el('button','go','聊天');g.dataset.a='chat';d.append(g);d._ai=ai;d._owner=owner;return d}
+function renderOfficial(){const o=$('crOfficial');o.replaceChildren();OFFICIAL.forEach(x=>o.append(item(x,x.owner,false)))}
+function fillTpl(t){form={emoji:t.emoji,color:t.color,style:t.style};$('crName').value=t.name;$('crPersona').value=t.persona;$('crGreet').value=t.greeting;mark();theme(form);const er=$('crErr');er.className='cr-err ok';er.textContent='已套用奶龙设定，点「保存我的AI」即可生效'}
+$('crTplNl').onclick=()=>fillTpl(NL);
+function renderHome(){renderOfficial();const m=$('crMine');m.replaceChildren();if(mine)m.append(item(mine,'__me__',true));else{const b=el('button','cr-cta','✨ 打造我的AI');b.append(el('small','','每个人只能打造一个，风格与性格由你决定'));b.dataset.a='new';m.append(b)}
+ const l=$('crList');l.replaceChildren();if(!list.length)l.append(el('p','cr-empty','还没有其他玩家公开作品，快来做第一个吧～'));else{const f=document.createDocumentFragment();list.forEach(x=>f.append(item(x,x.owner,false)));l.append(f)}}
+async function load(force){const jobs=[api('/api/custom-ai/mine').then(d=>{mine=d.ai})];if(force||Date.now()-listAt>30000)jobs.push(api('/api/custom-ai/list').then(d=>{list=d.items||[];listAt=Date.now()}));try{await Promise.all(jobs)}catch(e){$('crList').textContent='加载失败：'+e.message;return}renderHome()}
+function mk(box,arr,key,fn){box.replaceChildren();const f=document.createDocumentFragment();arr.forEach(v=>{const val=Array.isArray(v)?v[0]:v,b=el('button','',fn?fn(v):v);b.type='button';b.dataset.v=val;if(key==='color')b.style.background=val;f.append(b)});box.append(f)}
+function mark(){[['crEmo','emoji'],['crCol','color'],['crSty','style']].forEach(([id,k])=>$(id).querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===form[k])))}
+mk($('crEmo'),EMO,'emoji');mk($('crCol'),COL,'color',()=>'');mk($('crSty'),STY,'style',v=>v[1]);
+['crEmo','crCol','crSty'].forEach((id,i)=>$(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;form[['emoji','color','style'][i]]=b.dataset.v;mark();theme(form)}));
+function openEdit(){form=mine?{emoji:mine.emoji,color:mine.color,style:mine.style}:{emoji:EMO[0],color:COL[0],style:'gentle'};$('crName').value=mine?mine.name:'';$('crPersona').value=mine?mine.persona:'';$('crGreet').value=mine?mine.greeting:'';$('crPub').checked=mine?mine.public:true;$('crDel').style.display=mine?'':'none';$('crErr').className='cr-err';$('crErr').textContent='';mark();view('edit')}
+$('crSave').onclick=async()=>{const b=$('crSave');b.disabled=true;$('crErr').textContent='';try{const d=await api('/api/custom-ai/mine',{method:'PUT',body:JSON.stringify({name:$('crName').value,persona:$('crPersona').value,greeting:$('crGreet').value,public:$('crPub').checked,...form})});mine=d.ai;listAt=0;renderHome();view('home')}catch(e){$('crErr').className='cr-err',$('crErr').textContent=e.message}finally{b.disabled=false}};
+$('crDel').onclick=async()=>{if(!confirm('删除后无法恢复，确定删除你的 AI 吗？'))return;try{await api('/api/custom-ai/mine',{method:'DELETE'});mine=null;renderHome();view('home')}catch(e){$('crErr').className='cr-err',$('crErr').textContent=e.message}};
+const add=(cls,t)=>{const d=el('div','nl-m '+cls,t);box.append(d);while(box.children.length>60)box.firstChild.remove();box.scrollTop=box.scrollHeight;return d};
+function openChat(ai,owner){cur={ai,owner:owner==='__me__'?null:owner};hist=[];box.replaceChildren();theme(ai);$('crTitle').textContent=ai.name;$('crSub').textContent=(STYN[ai.style]||'')+' · 在线';add('bot',ai.greeting||('你好，我是'+ai.name));card.dataset.view='chat';setTimeout(()=>inp.focus(),150)}
+function upd(){sendB.disabled=busy||!inp.value.trim()}
+async function send(){const text=inp.value.trim();if(!text||busy||!cur)return;inp.value='';inp.style.height='auto';busy=true;upd();add('me',text);hist.push({role:'user',content:text});hist=hist.slice(-16);
+ const p=add('bot','');p.classList.add('typing');ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),45000);const owner=cur.owner||(window.currentUserId||currentUserId);
+ try{const d=await api('/api/custom-ai/chat',{method:'POST',signal:ctl.signal,body:JSON.stringify({owner,messages:hist})});p.classList.remove('typing');p.textContent=d.answer;hist.push({role:'assistant',content:d.answer});hist=hist.slice(-16)}
+ catch(e){p.classList.remove('typing');p.classList.add('err');p.textContent=e.name==='AbortError'?'等太久啦，再试一次吧':'出错了：'+e.message;hist.pop()}
+ finally{clearTimeout(timer);busy=false;ctl=null;upd();box.scrollTop=box.scrollHeight}}
+sendB.onclick=send;
+inp.addEventListener('input',()=>{inp.style.height='auto';inp.style.height=Math.min(inp.scrollHeight,110)+'px';upd()});
+inp.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();send()}});
+$('crClear').onclick=()=>{if(ctl)ctl.abort();if(cur)openChat(cur.ai,cur.owner||'__me__')};
+$('crBack').onclick=()=>{if(ctl)ctl.abort();view('home')};
+$('crHome').addEventListener('click',e=>{const row=e.target.closest('.cr-item,.cr-cta');if(!row)return;const a=e.target.closest('button')?.dataset.a;if(row.classList.contains('cr-cta')||a==='new'){openEdit();return}if(a==='tpl'){openEdit();fillTpl(row._ai);return}if(a==='edit'){openEdit();return}openChat(row._ai,row._owner)});
+$('creatorBtn').onclick=()=>{$('creatorModal').classList.add('show');view('home');renderHome();load(false)};
+})();
+</script>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const mobile=()=>matchMedia('(max-width:760px)').matches;
+const calm=()=>document.body.classList.contains('reduce-motion')||matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* 1) 顶部阅读进度条 + 顶栏滚动阴影 */
+const bar=document.createElement('div');bar.id='nxProg';document.body.append(bar);
+const chat=$('chat');let raf=0;
+const tick=()=>{raf=0;
+ let max,pos;
+ if(mobile()){max=document.documentElement.scrollHeight-innerHeight;pos=scrollY}
+ else{max=chat.scrollHeight-chat.clientHeight;pos=chat.scrollTop}
+ const on=document.body.classList.contains('entered')&&max>80;
+ bar.classList.toggle('on',on);
+ bar.style.transform='scaleX('+(on?Math.min(1,Math.max(0,pos/max)):0).toFixed(4)+')';
+ document.body.classList.toggle('nx-scrolled',pos>6);
+};
+const req=()=>{if(!raf)raf=requestAnimationFrame(tick)};
+chat.addEventListener('scroll',req,{passive:true});addEventListener('scroll',req,{passive:true});addEventListener('resize',req);
+new MutationObserver(req).observe(chat,{childList:true,subtree:true});
+new MutationObserver(req).observe(document.body,{attributes:true,attributeFilter:['class']});
+req();
+
+/* 2) 弹窗顶部栏下滑关闭（手机触摸） */
+const HEADS='.modal-top,.extra-head,.nl-head';
+let st=null;
+document.addEventListener('pointerdown',e=>{
+ if(e.pointerType==='mouse'||!e.isPrimary)return;
+ const t=e.target;if(!t.closest)return;
+ const h=t.closest(HEADS);
+ if(!h||t.closest('button,input,textarea,select,a'))return;
+ const back=h.closest('.modal-back,.extra-modal');
+ if(!back||!back.classList.contains('show'))return;
+ const card=h.closest('.modal,.extra-box,.nl-card');if(!card)return;
+ st={h,back,card,y0:e.clientY,dy:0,id:e.pointerId};
+ card.style.transition='none';
+ try{h.setPointerCapture(e.pointerId)}catch(_){}
+},{passive:true});
+document.addEventListener('pointermove',e=>{
+ if(!st||e.pointerId!==st.id)return;
+ st.dy=Math.max(0,e.clientY-st.y0);
+ st.card.style.transform='translateY('+st.dy+'px)';
+ st.card.style.opacity=String(1-Math.min(st.dy/360,.55));
+},{passive:true});
+function endDrag(e){
+ if(!st||(e&&e.pointerId!==st.id))return;
+ const s=st;st=null;
+ const dismiss=s.dy>90;
+ s.card.style.transition=calm()?'none':'transform .24s cubic-bezier(.22,1,.36,1),opacity .24s';
+ if(dismiss){
+  s.card.style.transform='translateY(110%)';s.card.style.opacity='0';
+  setTimeout(()=>{s.back.classList.remove('show');s.card.style.cssText=''},calm()?0:210);
+ }else{
+  s.card.style.transform='';s.card.style.opacity='';
+  setTimeout(()=>{s.card.style.cssText=''},260);
+ }
+}
+document.addEventListener('pointerup',endDrag);
+document.addEventListener('pointercancel',endDrag);
+
+/* 3) 手机：从左边缘右滑打开导航，抽屉打开时左滑关闭 */
+let sw=null;
+document.addEventListener('touchstart',e=>{
+ sw=null;
+ if(!mobile()||!document.body.classList.contains('entered')||document.body.classList.contains('nx-lock')||e.touches.length!==1)return;
+ const t=e.touches[0],open=document.body.classList.contains('mobile-drawer-open');
+ if(!open&&t.clientX>28)return;
+ sw={x:t.clientX,y:t.clientY,open,done:false};
+},{passive:true});
+document.addEventListener('touchmove',e=>{
+ if(!sw||sw.done)return;
+ const t=e.touches[0],dx=t.clientX-sw.x,dy=t.clientY-sw.y;
+ if(Math.abs(dy)>Math.abs(dx)*0.8&&Math.abs(dy)>14){sw=null;return}
+ if(!sw.open&&dx>56){sw.done=true;if(typeof openMobileDrawer==='function')openMobileDrawer()}
+ else if(sw.open&&dx<-56){sw.done=true;if(typeof closeMobileDrawer==='function')closeMobileDrawer()}
+},{passive:true});
 })();
 </script>
 </body></html>
