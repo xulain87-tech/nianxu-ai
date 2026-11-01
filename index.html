@@ -1318,15 +1318,12 @@ function bindCloseButtons(){
   document.querySelectorAll("[data-close], [data-extra-close]").forEach(b=>{
     if(b._nxCloseBound) return;
     b._nxCloseBound = true;
-    const handler = (e)=>{
+    b.addEventListener("click", e=>{
       e.preventDefault();
       e.stopPropagation();
-      const id = b.dataset.close || b.dataset.extraClose;
+      const id=b.dataset.close || b.dataset.extraClose;
       if(id) closeAnyModal(id);
-    };
-    b.addEventListener("click", handler, true);
-    b.addEventListener("pointerup", handler, true);
-    b.addEventListener("touchend", handler, {capture:true, passive:false});
+    }, true);
   });
 }
 bindCloseButtons();
@@ -1366,7 +1363,18 @@ $("configFileInput").onchange=async e=>{
  }catch(err){alert("配置文件读取失败："+err.message)}
  e.target.value="";
 };
-function switchSettingsPane(pane){const modal=$("settingsModal");modal.dataset.pane=pane;document.querySelectorAll(".settings-nav button").forEach(x=>x.classList.toggle("active",x.dataset.pane===pane));if(pane==="appearance")openModal("appearanceModal")}
+function switchSettingsPane(pane){
+ const modal=$("settingsModal");
+ if(!modal)return;
+ modal.dataset.pane=pane;
+ document.querySelectorAll("#settingsModal .settings-nav button").forEach(x=>x.classList.toggle("active",x.dataset.pane===pane));
+ if(pane==="appearance"){
+   modal.classList.remove("nx-in-pane");
+   openModal("appearanceModal");
+ }else{
+   modal.classList.add("nx-in-pane");
+ }
+}
 document.querySelectorAll(".settings-nav button").forEach(btn=>btn.onclick=()=>switchSettingsPane(btn.dataset.pane));
 const featurePrefs={motion:true,autoFallback:true,roast:true,empathy:true,...load("nx_features",{})};window.featurePrefs=featurePrefs;
 function applyFeaturePrefs(){document.body.classList.toggle("reduce-motion",featurePrefs.motion===false);document.documentElement.dataset.motion=featurePrefs.motion===false?"reduced":"full"}
@@ -1504,7 +1512,7 @@ document.addEventListener('click',e=>{const t=e.target;if(t.matches&&t.matches(s
 const reset=()=>m.classList.remove('nx-in-pane');
 new MutationObserver(()=>{if(!m.classList.contains('show'))reset();else if(!m._o){m._o=1;reset()}if(!m.classList.contains('show'))m._o=0}).observe(m,{attributes:true,attributeFilter:['class']});
 m.querySelectorAll('.settings-nav button').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.pane!=='appearance')m.classList.add('nx-in-pane')}));
-m.querySelector('.nx-back').addEventListener('click',reset);
+m.querySelector('.nx-back').addEventListener('click',()=>{reset();m.dataset.pane='';m.querySelectorAll('.settings-nav button').forEach(b=>b.classList.remove('active'));});
 })();
 </script>
 <script>
@@ -2031,3 +2039,23 @@ body.nx-light .msg.user{
 </style>
 
 </body></html>
+
+<style id="nianxu-285-repair">
+/* 2.8.5 interaction repair + lightweight layout */
+#settingsModal .nx-pane-bar{display:flex!important;position:sticky;bottom:0;z-index:8;gap:10px;padding:10px 0 max(10px,env(safe-area-inset-bottom));background:linear-gradient(180deg,transparent,var(--panel) 28%);backdrop-filter:blur(10px)}
+#settingsModal.nx-in-pane .settings-hero,#settingsModal.nx-in-pane .nx-profile{display:none!important}
+#settingsModal.nx-in-pane .settings-nav{display:none!important}
+#settingsModal.nx-in-pane .nx-pane-bar{display:flex!important}
+#settingsModal:not(.nx-in-pane) .nx-pane-bar{display:none!important}
+#settingsModal .modal-top [data-close]{z-index:20;min-width:44px;min-height:44px;touch-action:manipulation}
+.modal-back.show{z-index:1000}
+.modal-back.show>.modal{max-height:min(88dvh,760px);overflow-y:auto;overscroll-behavior:contain}
+.composer-wrap{z-index:40!important}
+@media(max-width:760px){
+ .composer-wrap{position:fixed!important;left:8px!important;right:8px!important;bottom:calc(76px + env(safe-area-inset-bottom))!important;z-index:41!important}
+ .mobile-workbar{bottom:env(safe-area-inset-bottom)!important;z-index:40!important}
+ #chat{padding-bottom:calc(230px + env(safe-area-inset-bottom))!important}
+ .composer{max-width:100%!important}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
