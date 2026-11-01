@@ -576,15 +576,17 @@ body.nx-light .cr-item{background:#f3efe0}
  <aside class="sidebar">
   <div class="brand user-head"><div class="logo av-circle">XU</div><div><h1 id="sideUserName">xu nian</h1><small id="sideUserMail">已登录</small></div><button class="iconbtn side-close" id="sideCloseBtn" type="button" aria-label="关闭">≫</button></div>
   <div class="side-actions grok-menu">
-   <button class="ghost menu-item" id="creatorBtnSide" type="button"><span class="mi">✨</span>创新 AI <span class="badge-new">新的</span></button>
-   <button class="ghost menu-item" id="noticeButtonSide" type="button"><span class="mi">📢</span>公告</button>
-   <button class="ghost menu-item" id="adminDrawerButton" type="button"><span class="mi">▣</span>管理后台</button>
-   <button class="ghost menu-item" id="openSettings" type="button"><span class="mi">⚙</span>设置</button>
-   <button class="ghost menu-item" id="openAppearance" type="button"><span class="mi">◐</span>外观与背景</button>
-   <button class="ghost menu-item" id="generateImageBtn" type="button"><span class="mi">▧</span>AI 生图</button>
-   <button class="ghost menu-item" id="exportChat" type="button"><span class="mi">⇩</span>导出记录</button>
-   <button class="ghost menu-item" id="switchAccountBtn" type="button"><span class="mi">⇄</span>切换账号</button>
-   <button class="ghost menu-item" id="newChat" type="button"><span class="mi">＋</span>开启新对话</button>
+   <button class="ghost menu-item" id="newChat" type="button"><span class="mi">＋</span><span class="ml">开启新对话</span></button>
+   <button class="ghost menu-item" id="creatorBtnSide" type="button"><span class="mi">✨</span><span class="ml">创新 AI</span><span class="badge-new">新的</span></button>
+   <button class="ghost menu-item" id="noticeButtonSide" type="button"><span class="mi">📢</span><span class="ml">公告</span></button>
+   <button class="ghost menu-item" id="adminDrawerButton" type="button"><span class="mi">▣</span><span class="ml">管理后台</span></button>
+   <button class="ghost menu-item" id="humanSupportBtnSide" type="button"><span class="mi">💬</span><span class="ml">转人工客服</span></button>
+   <button class="ghost menu-item" id="generateImageBtn" type="button"><span class="mi">▧</span><span class="ml">AI 生图</span></button>
+   <button class="ghost menu-item" id="openAppearance" type="button"><span class="mi">◐</span><span class="ml">外观与背景</span></button>
+   <button class="ghost menu-item" id="exportChat" type="button"><span class="mi">⇩</span><span class="ml">导出记录</span></button>
+   <button class="ghost menu-item" id="clearChatSide" type="button"><span class="mi">🗑</span><span class="ml">清空对话</span></button>
+   <button class="ghost menu-item" id="versionInfoBtn" type="button"><span class="mi">ⓘ</span><span class="ml">版本信息</span></button>
+   <button class="ghost menu-item" id="switchAccountBtn" type="button"><span class="mi">⇄</span><span class="ml">切换账号</span></button>
   </div>
   <div class="premium-banner">
    <div class="pb-text"><b>订阅 Premium 节省 50%</b><small>高级问询 · 语音 · Imagine</small></div>
@@ -592,7 +594,7 @@ body.nx-light .cr-item{background:#f3efe0}
   </div>
   <div class="side-label">对话</div>
   <div class="status"><span class="dot" id="statusDot"></span><span id="statusText">等待发送消息</span></div>
-  <div class="side-note">念绪 AI · 2.8.3 · 流畅深色体验</div>
+  <div class="side-note">念绪 AI · 2.9.0 Pro · 极致流畅 · 免密登录</div>
  </aside>
  <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop" aria-hidden="true"></div>
  <main class="main">
@@ -638,7 +640,7 @@ body.nx-light .cr-item{background:#f3efe0}
  <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="说点什么…"></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">Nianxu Control Room · 2.8.3 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">Nianxu Control Room · 2.9.0 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
  <div class="nx-profile"><div class="av">念</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>服务器接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
  <p class="settings-page-note">管理员可配置服务器接口；普通用户只通过服务器代理使用 AI，接口地址和 API Key 不会发送到浏览器。</p>
  <div id="apiList"></div>
@@ -649,7 +651,7 @@ body.nx-light .cr-item{background:#f3efe0}
  </div>
  <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.8.3 Pro</strong><span>Build 2026.11 · 2.8.3</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、管理后台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.9.0 Pro</strong><span>Build 2026.11 · 2.9.0</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、管理后台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 开启互怼强度匹配</label>
@@ -684,7 +686,7 @@ body.nx-light .cr-item{background:#f3efe0}
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.8.3 Pro" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.9.0 Pro" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -1063,61 +1065,64 @@ body.nx-light .cr-item.official{background:linear-gradient(135deg,color-mix(in s
 .cr-pick button.on{transform:scale(1.1)}
 .cr-save{box-shadow:0 8px 20px #7a6bff44;transition:transform .2s var(--soft)}
 .cr-save:active{transform:scale(.97)}
-/* ===== 2.8.3 Grok-style UI overrides ===== */
-:root{--bg:#000;--panel:#111;--panel2:#1a1a1a;--line:rgba(255,255,255,.08);--text:#f5f5f5;--muted:#9a9a9a;--accent:#1d9bf0}
-body{background:#000!important;color:var(--text)}
-#backdrop{background:#000!important}
-.app{padding:0!important;max-width:none!important;gap:0!important;grid-template-columns:min(300px,86vw) 1fr}
+/* ===== 2.9.0 Fluent Grok-style UI — no blur, high FPS ===== */
+:root{--bg:#000;--panel:#0d0d0d;--panel2:#161616;--line:rgba(255,255,255,.1);--text:#f0f0f0;--muted:#888;--accent:#1d9bf0}
+*{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body{background:#000!important;color:var(--text);font-family:system-ui,-apple-system,sans-serif}
+#backdrop{background:#000!important;display:none}
+.app{padding:0!important;max-width:none!important;gap:0!important;grid-template-columns:min(300px,86vw) 1fr;height:100dvh}
 .sidebar,.main{border-radius:0!important;border:none!important;background:#000!important;box-shadow:none!important}
-.sidebar{padding:12px 10px 20px;border-right:1px solid var(--line)!important}
-.user-head{display:flex;align-items:center;gap:12px;padding:8px 6px 16px}
-.av-circle{width:40px!important;height:40px!important;border-radius:50%!important;background:#5c4a3a!important;font-size:14px!important;font-weight:700;display:grid;place-items:center}
-.user-head h1{font-size:16px;margin:0;font-weight:600}
+.sidebar{padding:10px 8px 16px;border-right:1px solid var(--line)!important;overflow-y:auto;overscroll-behavior:contain}
+.user-head{display:flex;align-items:center;gap:12px;padding:10px 8px 14px}
+.av-circle{width:40px!important;height:40px!important;border-radius:50%!important;background:#3d3229!important;font-size:13px!important;font-weight:700;display:grid;place-items:center;color:#fff}
+.user-head h1{font-size:16px;margin:0;font-weight:600;color:#fff}
 .user-head small{font-size:12px;color:var(--muted)}
-.side-close{margin-left:auto;background:transparent;border:0;font-size:18px;color:var(--muted)}
-.grok-menu{display:flex;flex-direction:column;gap:2px;margin-bottom:12px}
-.menu-item{display:flex!important;align-items:center;gap:12px;padding:12px 14px!important;border-radius:12px!important;border:0!important;background:transparent!important;font-size:15px;color:var(--text)!important;text-align:left}
+.side-close{margin-left:auto;background:transparent;border:0;font-size:18px;color:var(--muted);padding:6px}
+.grok-menu{display:flex;flex-direction:column;gap:1px;margin-bottom:10px}
+.menu-item{display:flex!important;align-items:center;gap:14px;padding:13px 14px!important;border-radius:12px!important;border:0!important;background:transparent!important;font-size:15.5px;color:#eee!important;text-align:left;transition:background .15s}
 .menu-item:hover,.menu-item:active{background:#1a1a1a!important}
-.menu-item .mi{width:22px;text-align:center;opacity:.9}
+.menu-item .mi{width:24px;text-align:center;font-size:17px;opacity:.95}
 .badge-new{margin-left:auto;font-size:11px;padding:2px 8px;border-radius:99px;background:#1d9bf0;color:#fff;font-weight:600}
-.premium-banner{display:flex;align-items:center;gap:10px;margin:8px 4px 16px;padding:12px 14px;border-radius:14px;background:linear-gradient(90deg,#1d9bf0,#0a66c2);color:#fff}
+.premium-banner{display:flex;align-items:center;gap:10px;margin:6px 4px 14px;padding:12px 14px;border-radius:14px;background:#1d9bf0;color:#fff}
 .pb-text{flex:1}.pb-text b{display:block;font-size:13px}.pb-text small{font-size:11px;opacity:.9}
 .pb-btn{border:0;background:#fff;color:#0a66c2;font-weight:700;font-size:12px;padding:6px 12px;border-radius:99px;cursor:pointer}
-.side-label{font-size:13px;color:var(--muted);padding:8px 14px 4px;letter-spacing:0;text-transform:none}
-.topbar{height:56px;padding:0 12px;border-bottom:1px solid var(--line)!important;background:#000!important}
-.top-title{font-size:16px}
-.composer-wrap{background:#000!important;border-top:1px solid var(--line)!important;padding:10px 12px 16px}
-.composer{background:#1a1a1a;border-radius:24px;padding:8px 12px;border:1px solid var(--line)}
+.side-label{font-size:13px;color:var(--muted);padding:10px 14px 4px;letter-spacing:0;text-transform:none}
+.side-note{font-size:11px;color:#666;padding:8px 14px;margin-top:auto}
+.topbar{height:52px;padding:0 10px;border-bottom:1px solid var(--line)!important;background:#000!important}
+.top-title{font-size:15px}
+.top-actions .iconbtn{display:none} /* 功能全进侧栏 */
+.composer-wrap{background:#000!important;border-top:1px solid var(--line)!important;padding:8px 10px 14px}
+.composer{background:#161616;border-radius:22px;padding:8px 12px;border:1px solid var(--line)}
 #prompt{background:transparent;color:var(--text);border:0;font-size:15px}
-.msg{border-radius:16px;background:#1a1a1a}
-.msg.user{background:linear-gradient(135deg,#1d4ed8,#0ea5e9)}
+.msg{border-radius:16px;background:#161616;border:1px solid var(--line)}
+.msg.user{background:linear-gradient(135deg,#1d4ed8,#0ea5e9);border:none}
 .welcome .orb{background:linear-gradient(135deg,#1d9bf0,#8b5cf6)}
 #entryGate{background:#000!important}
-#entryGate .gate-card{background:#111!important;border:1px solid #222!important;border-radius:20px!important;box-shadow:0 20px 60px #000c!important}
-#entryGate .logo{background:linear-gradient(135deg,#1d9bf0,#8b5cf6)!important;box-shadow:0 10px 30px #1d9bf066!important}
-#entryGate .gate-actions .primary{background:linear-gradient(135deg,#1d9bf0,#0a66c2)!important;box-shadow:0 8px 24px #1d9bf055!important}
-#settingsModal .modal{background:#111!important;border:1px solid #222!important}
-#settingsModal .modal-top{background:#111!important}
-#settingsModal .nx-profile{background:#1a1a1a!important;border:1px solid #222}
-#settingsModal .settings-nav button{background:#1a1a1a!important}
+#entryGate .gate-card{background:#111!important;border:1px solid #222!important;border-radius:18px!important;box-shadow:0 16px 48px #000a!important;backdrop-filter:none!important}
+#entryGate .logo{background:linear-gradient(135deg,#1d9bf0,#8b5cf6)!important;box-shadow:none!important}
+#entryGate .gate-actions .primary{background:#1d9bf0!important;box-shadow:none!important}
+#settingsModal{display:none!important} /* 彻底移除设置界面 */
 body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 @media (max-width:860px){
  .app{grid-template-columns:1fr}
- .sidebar{position:fixed;inset:0 auto 0 0;width:min(300px,86vw);z-index:40;transform:translateX(-105%);transition:transform .28s cubic-bezier(.22,1,.36,1);background:#000!important}
+ .sidebar{position:fixed;inset:0 auto 0 0;width:min(300px,86vw);z-index:50;transform:translateX(-105%);transition:transform .25s ease-out;background:#000!important}
  body.mobile-drawer-open .sidebar{transform:translateX(0)}
- .mobile-drawer-backdrop{background:#000a}
+ .mobile-drawer-backdrop{background:rgba(0,0,0,.6)}
 }
+/* 流畅优先：减少动画 */
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.menu-item,.primary,.ghost,.iconbtn,.send{transition:background .12s,transform .12s!important}
 </style>
 <div id="entryGate">
  <div class="gate-stars"></div>
  <div class="gate-card">
   <div class="logo" style="margin:0 auto 16px">念</div>
-  <h2>欢迎使用念绪 AI</h2>
-  <p>请输入账号和密码，登录后开始使用。</p><div class="gate-chips"><span>联网搜索</span><span>专家模式</span><span>AI 生图</span></div>
-  <input id="entryId" autocomplete="username" placeholder="请输入账号"><small class="register-hint" id="entryIdHint">登录或注册时使用此账号 ID（2–32 位）</small>
-  <input id="entryPassword" type="password" autocomplete="current-password" placeholder="请输入密码">
-  <label class="remember-id"><input id="rememberLoginId" type="checkbox"> 记住账号（只保存账号 ID，不保存密码）</label>
-  <div class="gate-actions"><button class="primary" id="enterBtn" type="button">登录</button><button class="ghost" id="showRegisterBtn" type="button">注册账号</button></div>
+  <h2>念绪 AI</h2>
+  <p id="gateDesc">登录一次后自动记住，下次无需密码即可进入</p><div class="gate-chips"><span>联网搜索</span><span>专家模式</span><span>AI 生图</span><span>创新AI</span></div>
+  <input id="entryId" autocomplete="username" placeholder="账号 ID"><small class="register-hint" id="entryIdHint">2–32 位中文/字母/数字</small>
+  <input id="entryPassword" type="password" autocomplete="current-password" placeholder="密码（首次登录需要）">
+  <label class="remember-id"><input id="rememberLoginId" type="checkbox" checked> 记住此账号（下次免密进入）</label>
+  <div class="gate-actions"><button class="primary" id="enterBtn" type="button">登录 / 进入</button><button class="ghost" id="showRegisterBtn" type="button">注册</button></div>
   <div class="register-panel hidden" id="registerPanel"><small class="register-hint">账号为 2–32 位中文、字母、数字、下划线或短横线。</small><div class="password-field"><input id="registerPassword" type="password" minlength="6" maxlength="128" autocomplete="new-password" placeholder="设置密码（至少 6 位）"><button type="button" class="password-toggle" data-password-toggle="registerPassword">显示</button></div><div class="password-field"><input id="registerConfirm" type="password" minlength="6" maxlength="128" autocomplete="new-password" placeholder="再次输入密码"><button type="button" class="password-toggle" data-password-toggle="registerConfirm">显示</button></div><div class="gate-actions"><button class="primary" id="registerBtn" type="button">创建账号</button><button class="ghost" id="backLoginBtn" type="button">返回登录</button></div></div>
   <div class="gate-error" id="entryError"></div><div class="gate-foot"><span>THOUGHTS, IN MOTION</span><em>账号密码仅用于登录 · 请勿在公共设备保存</em></div>
  </div>
@@ -1236,10 +1241,13 @@ document.addEventListener("keydown",e=>{
  if(e.key==="Escape")document.querySelectorAll(".modal-back.show,.extra-modal.show").forEach(layer=>layer.classList.remove("show"));
 });
 document.querySelectorAll(".extra-modal").forEach(layer=>layer.addEventListener("click",e=>{if(e.target===layer)layer.classList.remove("show")}));
-$("openSettings").onclick=$("mobileSettings").onclick=()=>{syncAdminUi();if(currentRole==="admin")renderApis();switchSettingsPane(currentRole==="admin"?"api":"version");openModal("settingsModal")};
 if($("creatorBtnSide"))$("creatorBtnSide").onclick=()=>{$("creatorModal").classList.add("show");if(typeof view==="function")view("home");if(typeof renderHome==="function")renderHome();if(typeof load==="function")load(false)};
 if($("noticeButtonSide"))$("noticeButtonSide").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
-$("openAppearance").onclick=$("mobileAppearance").onclick=()=>openModal("appearanceModal");
+if($("humanSupportBtnSide"))$("humanSupportBtnSide").onclick=()=>{if(currentRole==="admin"){if(typeof openAdminSupportPanel==="function")openAdminSupportPanel();return}openModal("humanSupportModal");if(typeof refreshMySupport==="function")refreshMySupport()};
+if($("clearChatSide"))$("clearChatSide").onclick=()=>{if(confirm("确定清空当前对话？")){const chat=$("chat");if(chat){chat.innerHTML="";const w=document.createElement("div");w.className="welcome";w.id="welcome";w.innerHTML='<div class="orb">念</div><h2>你好，我是念绪 AI</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div>';chat.append(w);setStatus("对话已清空",true)}}};
+if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("念绪 AI 2.9.0 Pro\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 管理后台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
+$("openAppearance").onclick=$("mobileAppearance")?.onclick=()=>openModal("appearanceModal");
+// 设置中心已移除，管理员接口配置请从管理后台进入
 async function renderApis(){
  try{const remote=await apiRequest("/api/admin/apis");apis=remote.apis||[]}catch(e){setStatus("接口配置仅管理员可读取");return}
  $("apiList").innerHTML="";
@@ -1308,7 +1316,12 @@ $("chat").addEventListener("dragover",e=>e.preventDefault());$("chat").addEventL
 // 通过同源安全后端认证；管理员凭据由服务器配置读取。
 let currentRole = "guest";
 const rememberedId=localStorage.getItem("nx_login_id")||"";
-if(rememberedId){$("entryId").value=rememberedId;$("rememberLoginId").checked=true;}
+if(rememberedId){
+ $("entryId").value=rememberedId;
+ if($("rememberLoginId"))$("rememberLoginId").checked=true;
+ const gd=$("gateDesc");if(gd)gd.textContent="欢迎回来，"+rememberedId+"。点击「登录 / 进入」即可免密恢复会话";
+ $("entryPassword").placeholder="密码（会话有效时可留空）";
+}
 function syncAdminUi(){const admin=currentRole==="admin";$("adminButton").classList.remove("hidden");$("adminDrawerButton").classList.remove("hidden");$("adminConfigButton").classList.toggle("hidden",!admin);$("apiSettingsTab").classList.toggle("hidden",!admin);$("apiList").classList.toggle("hidden",!admin);$("apiBackupPanel").classList.toggle("hidden",!admin);$("saveSettings").classList.toggle("hidden",!admin)}
 async function apiRequest(path, options={}){
  const response=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json",...(options.headers||{})},...options});
@@ -1341,9 +1354,23 @@ function refreshNotices(targetId="noticeList", admin=false){
 }
 function buildWelcomeCard(){const card=document.createElement("div");card.className="notice-card welcome-card";const h=document.createElement("h4");h.textContent="🎉 欢迎来到念绪 AI";const p=document.createElement("p");p.textContent="你好，"+currentUserId+"！这里可以聊天、联网搜索、专家分析和 AI 生图。\n点顶栏的「创新AI」，还能和官方奶龙聊天，或打造属于你自己的 AI。";const small=document.createElement("small");small.textContent="新用户欢迎消息";card.append(h,p,small);return card}
 async function showLoginAnnouncement(){let first=false;const key="nx_welcomed_"+currentUserId;try{first=currentRole!=="admin"&&!localStorage.getItem(key)}catch(_){}const has=await refreshNotices();if(first){const box=$("noticeList");if(!has)box.textContent="";box.prepend(buildWelcomeCard());try{localStorage.setItem(key,"1")}catch(_){}}if(has||first)$("noticeModal").classList.add("show")}
-function storeLoginId(id){if($("rememberLoginId").checked)localStorage.setItem("nx_login_id",id);else localStorage.removeItem("nx_login_id")}
+function storeLoginId(id){try{if($("rememberLoginId")?.checked!==false)localStorage.setItem("nx_login_id",id);else localStorage.removeItem("nx_login_id")}catch(_){}}
 async function enterApp(){
- const id=$("entryId").value.trim(),password=$("entryPassword").value;if(!id||!password){$("entryError").textContent="请输入账号和密码";return}
+ const id=$("entryId").value.trim(),password=$("entryPassword").value;
+ if(!id){$("entryError").textContent="请输入账号";return}
+ // 若已有有效会话且无填密码，直接进入（免密）
+ if(!password){
+  $("entryError").textContent="正在恢复会话…";$("enterBtn").disabled=true;
+  try{
+   const data=await apiRequest("/api/session");
+   if(data.authenticated && (data.userId===id || !id)){
+    currentRole=data.role;currentUserId=data.userId||id;
+    document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();setStatus("欢迎回来",true);await loadProfile();await showLoginAnnouncement();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
+    return;
+   }
+  }catch(_){}
+  $("entryError").textContent="请输入密码（首次或会话过期时需要）";$("enterBtn").disabled=false;return;
+ }
  $("entryError").textContent="正在验证…";$("enterBtn").disabled=true;
  try{const data=await apiRequest("/api/login",{method:"POST",body:JSON.stringify({id,password})});storeLoginId(id);currentRole=data.role;currentUserId=data.userId||id;
   document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);await loadProfile();await showLoginAnnouncement();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
@@ -1360,7 +1387,7 @@ document.querySelectorAll("[data-password-toggle]").forEach(button=>button.oncli
 $("registerPassword").addEventListener("keydown",e=>{if(e.key==="Enter")$("registerConfirm").focus()});$("registerConfirm").addEventListener("keydown",e=>{if(e.key==="Enter")$("registerBtn").click()});
 $("registerBtn").onclick=async()=>{const id=$("entryId").value.trim(),password=$("registerPassword").value,error=registrationError();if(error){$("entryError").textContent=error;if(!$("entryId").value.trim()||!/^[A-Za-z0-9_\-\u4e00-\u9fff]{2,32}$/.test($("entryId").value.trim()))$("entryId").focus();else if(password.length<6)$("registerPassword").focus();else $("registerConfirm").focus();return}$("registerBtn").disabled=true;$("entryError").textContent="正在创建账号…";try{await apiRequest("/api/register",{method:"POST",body:JSON.stringify({id,password})});storeLoginId(id);$("registerPanel").classList.add("hidden");$("showRegisterBtn").classList.remove("hidden");$("entryPassword").value=password;$("registerPassword").value="";$("registerConfirm").value="";$("entryError").textContent="账号创建成功，正在登录…";$("registerBtn").disabled=false;await enterApp();return}catch(e){$("entryError").textContent=e.message}finally{$("registerBtn").disabled=false}};
 $("noticeButton").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
-function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");$("adminSupportModal").classList.add("show");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return;$("adminModal").classList.remove("show");renderApis();switchSettingsPane("api");openModal("settingsModal")};
+function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");$("adminSupportModal").classList.add("show");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return;alert("接口配置已整合到管理后台。\n请在管理后台发布公告区下方或通过服务器 api-config.json 管理。\n（2.9.0 已移除独立设置中心，功能全部集中到侧栏与管理后台）")};
 document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dataset.extraClose).classList.remove("show"));
 $("refreshUsers").onclick=refreshUsers;
 $("publishNotice").onclick=async()=>{const title=$("noticeTitle").value.trim(),content=$("noticeContent").value.trim();if(!title||!content){alert("请填写公告标题和内容");return}
