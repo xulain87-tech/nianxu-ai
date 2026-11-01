@@ -633,7 +633,7 @@ body.nx-light .cr-item{background:#f3efe0}
  <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="说点什么…"></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">Nianxu Control Room · 2.8.0 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">Nianxu Control Room · 2.8.2 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
  <div class="nx-profile"><div class="av">念</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>服务器接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
  <p class="settings-page-note">管理员可配置服务器接口；普通用户只通过服务器代理使用 AI，接口地址和 API Key 不会发送到浏览器。</p>
  <div id="apiList"></div>
@@ -643,8 +643,8 @@ body.nx-light .cr-item{background:#f3efe0}
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="iconbtn" id="importConfigBtn">导入配置文件</button><button class="iconbtn" id="exportConfigBtn">导出配置文件</button><input id="configFileInput" type="file" accept=".json,application/json" hidden></div>
  </div>
  <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
- <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.8.0 Pro</strong><span>Build 2026.11 · 2.8</span><p>本次更新：奶龙并入创新AI（官方奶龙设定 + 一键套用模板）；全新动效与更顺滑的滑动（弹窗下滑关闭、左缘右滑开导航）；设置页加强；新用户登录后弹出公告。</p></section>
+ <div class="settings-info-grid" id="settingsInfoGrid">
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.8.2 Pro</strong><span>Build 2026.11 · 2.8</span><p>本次更新：奶龙并入创新AI（官方奶龙设定 + 一键套用模板）；全新动效与更顺滑的滑动（弹窗下滑关闭、左缘右滑开导航）；设置页加强；新用户登录后弹出公告。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 开启互怼强度匹配</label>
@@ -657,6 +657,7 @@ body.nx-light .cr-item{background:#f3efe0}
   </section>
  </div>
  <section class="info-card admin-hint" id="adminHint"><small>SERVICE & ACCESS</small><strong>账号与记忆</strong><span id="roleSummary">当前会话：普通用户</span><div class="grid"><div class="field"><label>显示名字</label><input id="profileName" placeholder="你的名字"></div><div class="field"><label>账号 ID</label><input id="profileId" placeholder="账号 ID"></div></div><div class="grid"><div class="field"><label>当前密码（修改 ID/密码时填写）</label><input id="profileCurrentPassword" type="password" placeholder="当前密码"></div><div class="field"><label>新密码（可留空）</label><input id="profileNewPassword" type="password" placeholder="至少 6 位"></div></div><button class="primary" id="saveProfile" type="button">保存账号资料</button><p class="hint" id="profileStatus"></p><div class="field" style="margin-top:12px"><label>长期记忆（仅保存在当前设备）</label><div style="display:flex;gap:8px"><input id="memoryInput" placeholder="例如：我喜欢简洁、直接的回答"><button class="iconbtn" id="addMemory" type="button">记住</button></div></div><div id="memoryList"></div><p>聊天时会把这些记忆作为上下文提示发送给 AI。不要保存密码、Key 或其他敏感信息。</p></section>
+ <div class="nx-pane-bar"><button type="button" class="ghost" id="nxPaneBack">‹ 返回</button><button type="button" class="primary" data-close="settingsModal">完成</button></div>
  <div class="modal-actions"><button class="iconbtn" data-close="settingsModal">取消</button><button class="primary" id="saveSettings">保存接口配置</button></div>
 </div></div>
 <div class="modal-back" id="imagePromptModal"><div class="modal image-prompt-modal">
@@ -679,7 +680,7 @@ body.nx-light .cr-item{background:#f3efe0}
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.8.0 Pro" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.8.2 Pro" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -961,7 +962,7 @@ body.nx-light ::-webkit-scrollbar-thumb{background:#0003}
 #nxProg{position:fixed;top:0;left:0;right:0;height:2.5px;z-index:10060;pointer-events:none;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--accent,#d97757),#f3b49a,#ffc22e);opacity:0;transition:opacity .3s}
 #nxProg.on{opacity:1}
 body.nx-scrolled .topbar{box-shadow:0 1px 0 var(--line),0 10px 28px #0003}
-.modal-top,.extra-head,.nl-head{touch-action:none;-webkit-user-select:none;user-select:none}
+.nx-grab{position:absolute;left:50%;top:0;width:120px;height:16px;margin-left:-60px;z-index:9;touch-action:none}
 .modal-top::before,.extra-head::before,.nl-head::before{content:"";position:absolute;left:50%;top:4px;width:34px;height:4px;margin-left:-17px;border-radius:4px;background:#ffffff26;pointer-events:none}
 body.nx-light :is(.modal-top,.extra-head,.nl-head)::before{background:#0002}
 .extra-head,.nl-head{position:relative}
@@ -1058,6 +1059,20 @@ body.nx-light .cr-item.official{background:linear-gradient(135deg,color-mix(in s
 .cr-pick button.on{transform:scale(1.1)}
 .cr-save{box-shadow:0 8px 20px #7a6bff44;transition:transform .2s var(--soft)}
 .cr-save:active{transform:scale(.97)}
+
+/* —— 2.8.2 修复：版本信息页 / 子页面退出栏 / 创新AI入口缩小 —— */
+#settingsModal.nx-in-pane[data-pane=version] #settingsInfoGrid,#settingsModal.nx-in-pane[data-pane=features] #settingsInfoGrid{display:block!important}
+#settingsModal.nx-in-pane[data-pane=version] #featurePanel,#settingsModal.nx-in-pane[data-pane=features] #versionPanel{display:none!important}
+#settingsModal.nx-in-pane[data-pane=version] #versionPanel,#settingsModal.nx-in-pane[data-pane=features] #featurePanel{display:block!important}
+.nx-pane-bar{display:flex;gap:8px;position:sticky;bottom:0;z-index:7;margin:10px 0 0!important;padding:10px!important;background:#191918;border-top:1px solid #ffffff12}
+body.nx-light .nx-pane-bar{background:#f6f4ee;border-top-color:#0001}
+.nx-pane-bar button{flex:1;min-height:42px;border-radius:13px;font-size:14px;font-weight:600}
+.nx-pane-bar .primary{background:linear-gradient(135deg,#f3a07c,#d4684a)!important;color:#fff!important;border:0}
+#settingsModal:not(.nx-in-pane) .nx-pane-bar,#settingsModal.nx-in-pane[data-pane=api] .nx-pane-bar{display:none!important}
+#settingsModal .modal-top .iconbtn{min-width:40px;min-height:40px}
+#creatorBtn.nl-btn{padding:3px 9px 3px 7px!important;font-size:11.5px!important;gap:3px!important;line-height:1.5;box-shadow:0 2px 8px #7a6bff44!important}
+#creatorBtn.nl-btn span{font-size:12.5px!important}
+@media(max-width:430px){#creatorBtn.nl-btn{padding:2px 8px 2px 6px!important;font-size:11px!important}}
 </style>
 <div id="entryGate">
  <div class="gate-stars"></div>
@@ -1455,12 +1470,14 @@ req();
 
 /* 2) 弹窗顶部栏下滑关闭（手机触摸） */
 const HEADS='.modal-top,.extra-head,.nl-head';
+document.querySelectorAll(HEADS).forEach(hd=>{const g=document.createElement('i');g.className='nx-grab';hd.append(g)});
 let st=null;
 document.addEventListener('pointerdown',e=>{
  if(e.pointerType==='mouse'||!e.isPrimary)return;
  const t=e.target;if(!t.closest)return;
- const h=t.closest(HEADS);
- if(!h||t.closest('button,input,textarea,select,a'))return;
+ const g=t.closest('.nx-grab');
+ if(!g)return;
+ const h=g.parentElement;
  const back=h.closest('.modal-back,.extra-modal');
  if(!back||!back.classList.contains('show'))return;
  const card=h.closest('.modal,.extra-box,.nl-card');if(!card)return;
@@ -1507,5 +1524,8 @@ document.addEventListener('touchmove',e=>{
  else if(sw.open&&dx<-56){sw.done=true;if(typeof closeMobileDrawer==='function')closeMobileDrawer()}
 },{passive:true});
 })();
+document.addEventListener('pointerup',e=>{const c=e.target.closest&&e.target.closest('[data-close],[data-extra-close]');if(!c)return;const id=c.dataset.close||c.dataset.extraClose,el=id&&document.getElementById(id);if(el&&el.classList.contains('show'))setTimeout(()=>el.classList.remove('show'),0)},true);
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;document.querySelectorAll('.modal-back.show,.extra-modal.show').forEach(m=>m.classList.remove('show'))});
+document.getElementById('nxPaneBack').onclick=()=>{const b=document.querySelector('#settingsModal .nx-back');if(b)b.click()};
 </script>
 </body></html>
