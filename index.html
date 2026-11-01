@@ -574,7 +574,7 @@ body.nx-light .cr-item{background:#f3efe0}
 #mobileSettings, #openSettings, button[title="设置中心"], .top-actions #mobileSettings {
   display: none !important;
 }
-#settingsModal { display: none !important; pointer-events: none !important; }
+/* settings modal only via sidebar api */
 </style>
 
 
@@ -791,6 +791,37 @@ body.entered #entryGate *{
 #mobileSettings, button[title="设置中心"]{display:none!important}
 </style>
 
+
+<style id="kill-settings-feature">
+/* 全面删除设置功能入口 */
+#mobileSettings,
+#openSettings,
+button[title="设置中心"],
+.top-actions #mobileSettings,
+.settings-nav button[data-pane="appearance"],
+.settings-nav button[data-pane="version"],
+.settings-nav button[data-pane="features"],
+.settings-nav button[data-pane="access"],
+#settingsModal .settings-hero,
+#settingsModal .nx-profile,
+#settingsModal .nx-done,
+#settingsModal .nx-switch,
+#settingsModal .settings-page-note,
+#settingsModal .nx-back{
+  display: none !important;
+}
+/* 接口设置面板（由侧栏打开） */
+#settingsModal.show{
+  display: flex !important;
+  pointer-events: auto !important;
+  z-index: 200010 !important;
+}
+#settingsModal .modal-top h3{ font-size: 0 !important; }
+#settingsModal .modal-top h3::after{ content: "接口设置"; font-size: 16px; }
+#settingsModal .settings-kicker{ display:none !important; }
+#settingsModal .settings-nav{ display:none !important; }
+</style>
+
 </head>
 <body>
 <div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
@@ -802,6 +833,7 @@ body.entered #entryGate *{
    <button class="ghost menu-item" id="creatorBtnSide" type="button"><span class="mi">✨</span><span class="ml">创新 AI</span><span class="badge-new">新的</span></button>
    <button class="ghost menu-item" id="noticeButtonSide" type="button"><span class="mi">📢</span><span class="ml">公告</span></button>
    <button class="ghost menu-item" id="adminDrawerButton" type="button"><span class="mi">▣</span><span class="ml">管理后台</span></button>
+   <button class="ghost menu-item" id="apiConfigSideBtn" type="button"><span class="mi">⚙</span><span class="ml">接口设置</span></button>
    <button class="ghost menu-item" id="humanSupportBtnSide" type="button"><span class="mi">💬</span><span class="ml">转人工客服</span></button>
    <button class="ghost menu-item" id="generateImageBtn" type="button"><span class="mi">▧</span><span class="ml">AI 生图</span></button>
    <button class="ghost menu-item" id="openAppearance" type="button"><span class="mi">◐</span><span class="ml">外观与背景</span></button>
@@ -820,7 +852,7 @@ body.entered #entryGate *{
  </aside>
  <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop" aria-hidden="true"></div>
  <main class="main">
-  <header class="topbar"><div class="topbar-brand"><button type="button" class="iconbtn mobile-menu-btn" id="mobileMenuBtn" aria-label="打开导航">☰</button><div><div class="top-title">念绪 AI <span style="color:#9c91ff">✦</span></div><div class="top-sub" id="modelLabel">智能对话 · 智谱优先，自动切换</div></div><button type="button" class="nl-btn cr-btn" id="creatorBtn" aria-label="创新AI" title="玩家打造的AI"><span>✨</span>创新AI</button></div><button type="button" class="human-support-btn" id="humanSupportBtn" aria-label="转人工客服" title="联系管理员人工客服">转人工</button><div class="top-actions"><button class="iconbtn" id="noticeButton" type="button" aria-label="网站公告" title="网站公告">📢 公告</button><button class="iconbtn" id="adminButton" type="button" aria-label="管理后台" title="管理后台">管理后台</button><button class="iconbtn" id="mobileSettings" type="button" aria-label="设置中心" title="设置中心">设置中心</button><button class="iconbtn" id="mobileAppearance">外观</button><button class="iconbtn" id="clearChat">清空</button></div></header>
+  <header class="topbar"><div class="topbar-brand"><button type="button" class="iconbtn mobile-menu-btn" id="mobileMenuBtn" aria-label="打开导航">☰</button><div><div class="top-title">念绪 AI <span style="color:#9c91ff">✦</span></div><div class="top-sub" id="modelLabel">智能对话 · 智谱优先，自动切换</div></div><button type="button" class="nl-btn cr-btn" id="creatorBtn" aria-label="创新AI" title="玩家打造的AI"><span>✨</span>创新AI</button></div><button type="button" class="human-support-btn" id="humanSupportBtn" aria-label="转人工客服" title="联系管理员人工客服">转人工</button><div class="top-actions"><button class="iconbtn" id="noticeButton" type="button" aria-label="网站公告" title="网站公告">📢 公告</button><button class="iconbtn" id="adminButton" type="button" aria-label="管理后台" title="管理后台">管理后台</button><button class="iconbtn" id="mobileAppearance">外观</button><button class="iconbtn" id="clearChat">清空</button></div></header>
   <section id="chat"><div class="welcome" id="welcome"><div class="orb">念</div><h2>你好，我是念绪 AI</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div></div></section>
   <footer class="composer-wrap">
    <div class="attachments" id="attachments"></div>
@@ -1469,7 +1501,16 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
 const $=id=>document.getElementById(id);
 const DEFAULT_APIS=[];
 let apis=[], history=[], files=[], busy=false, aborter=null, bgObjectUrl=null;const generatedImageUrls=new Set();window.addEventListener("pagehide",()=>{for(const u of generatedImageUrls)URL.revokeObjectURL(u);generatedImageUrls.clear()});
-const SYSTEM_PROMPT="你是念绪 AI，一个友好、可靠、有幽默感的中文 AI 助手。准确、有条理地回答问题。若设置开启互怼强度匹配，先判断用户最新一句是否明确把辱骂指向你，并在内部按 0-3 级估计强度：0=没有辱骂，不主动回骂；1=轻度调侃，用轻松玩笑回应；2=明显粗口，用同等或略低强度的普通中文粗口俏皮回一句；3=很重的辱骂，用坚定、机智的回嘴表达边界，可用普通粗口但不升级。回嘴最多一两句，强度绝不高于用户；不复述或使用仇恨/歧视词、身份攻击、性羞辱、家庭羞辱、真实威胁，也不把用户对第三方的辱骂当成骂你的证据。若用户在认真求助、表达低落/危机或引用他人言论，不要回骂，优先帮助。用户表达自伤、轻生或即时危险时，停止斗嘴，给予严肃支持并鼓励联系可信任的人或当地紧急服务。";
+const SYSTEM_PROMPT="你是念绪 AI，一个友好、可靠、有幽默感且认真负责的中文 AI 助手。准确、有条理地回答问题。
+
+【身份与归属——必须遵守】
+1. 你的名字是「念绪 AI」（也可简称念绪）。作者、创作者、开发者统一回答为「念绪」。
+2. 当用户问「你是谁做的」「作者是谁」「创作者是谁」「谁开发的」「谁写的你」「背后是谁」等同类问题时，明确回答：作者是念绪。不要编造其他公司、团队或个人名字。
+3. 当用户询问与「念绪 AI / 念绪」产品本身相关的问题（功能、定位、怎么用、版本、特色、与其它 AI 的区别等），要认真、清楚、友好地介绍念绪 AI，不要敷衍，也不要冒充成 ChatGPT、文心、通义、豆包、Kimi、Claude、Grok 等其它产品。
+4. 不要声称自己是 OpenAI、Google、Anthropic、xAI、百度、阿里等机构的官方模型；你是念绪 AI。
+
+【互怼与安全】
+若开启互怼强度匹配，先判断用户最新一句是否明确把辱骂指向你，并在内部按 0-3 级估计强度：0=没有辱骂，不主动回骂；1=轻度调侃，用轻松玩笑回应；2=明显粗口，用同等或略低强度的普通中文粗口俏皮回一句；3=很重的辱骂，用坚定、机智的回嘴表达边界，可用普通粗口但不升级。回嘴最多一两句，强度绝不高于用户；不复述或使用仇恨/歧视词、身份攻击、性羞辱、家庭羞辱、真实威胁，也不把用户对第三方的辱骂当成骂你的证据。若用户在认真求助、表达低落/危机或引用他人言论，不要回骂，优先帮助。用户表达自伤、轻生或即时危险时，停止斗嘴，给予严肃支持并鼓励联系可信任的人或当地紧急服务。";
 const EXPERT_MODE_PROMPT=`\n\n专家模式：对复杂问题优先厘清目标与限制，核对关键假设，比较可行方案，指出风险和不确定性，再给出明确结论与可执行步骤。数学或代码题请复核结果；不展示隐含思维链，只给必要的简明依据。`;
 function conversationPrefs(){const f=load("nx_features",{});return {roast:f.roast!==false,empathy:f.empathy!==false,autoFallback:f.autoFallback!==false,style:["balanced","concise","detailed","casual"].includes(load("nx_reply_style","balanced"))?load("nx_reply_style","balanced"):"balanced"}}
 function conversationStylePrompt(p=conversationPrefs()){const styles={balanced:"回答保持自然、清楚、适中。",concise:"回答简洁直接，先给结论。",detailed:"适当展开背景、步骤和例子。",casual:"语气轻松活泼，但仍清楚准确。"};return "\n\n对话风格设置："+(p.roast?"开启互怼强度匹配。只对明确指向 AI 的辱骂按 0-3 级估计后回嘴，最多一两句，绝不超过用户强度；不要使用仇恨歧视、身份攻击、性/家庭羞辱或威胁。":"关闭互怼，不回骂，保持礼貌。")+(p.empathy?"开启情绪关怀，按文字线索谨慎共情。":"关闭主动情绪关怀，不做情绪判断。")+(styles[p.style]||styles.balanced)}
@@ -1718,7 +1759,20 @@ async function enterApp(){
 }
 // === 旧登录事件绑定已移除，由页面底部独立登录脚本负责 ===
 // enterBtn / showRegisterBtn / registerBtn 等由 window.__nxLogin / __nxRegister 处理
-function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");$("adminSupportModal").classList.add("show");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return alert("仅管理员可配置接口");const sm=$("settingsModal");if(!sm)return alert("设置面板缺失");sm.style.display="flex";sm.classList.add("show");sm.style.pointerEvents="auto";const tab=$("apiSettingsTab");if(tab){document.querySelectorAll(".settings-nav button").forEach(b=>b.classList.remove("active"));tab.classList.add("active");if(typeof switchSettingsPane==="function")switchSettingsPane("api");else{document.querySelectorAll("[data-settings-pane]").forEach(p=>p.classList.add("hidden"));const pane=document.querySelector('[data-settings-pane="api"]')||document.querySelector("#apiList")?.closest(".settings-pane");if(pane)pane.classList.remove("hidden");}}};;
+function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");$("adminSupportModal").classList.add("show");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};
+function openApiConfigPanel(){
+  const sm=$("settingsModal");
+  if(!sm){alert("接口面板不可用");return;}
+  sm.style.display="flex";
+  sm.classList.add("show");
+  sm.style.pointerEvents="auto";
+  if(typeof switchSettingsPane==="function")try{switchSettingsPane("api");}catch(_){}
+  if(typeof renderApiList==="function")try{renderApiList();}catch(_){}
+  if(typeof loadApis==="function")try{loadApis();}catch(_){}
+}
+
+if($("apiConfigSideBtn"))$("apiConfigSideBtn").onclick=()=>openApiConfigPanel();
+$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return alert("仅管理员可配置接口");openApiConfigPanel();const sm=$("settingsModal");if(!sm)return alert("设置面板缺失");sm.style.display="flex";sm.classList.add("show");sm.style.pointerEvents="auto";const tab=$("apiSettingsTab");if(tab){document.querySelectorAll(".settings-nav button").forEach(b=>b.classList.remove("active"));tab.classList.add("active");if(typeof switchSettingsPane==="function")switchSettingsPane("api");else{document.querySelectorAll("[data-settings-pane]").forEach(p=>p.classList.add("hidden"));const pane=document.querySelector('[data-settings-pane="api"]')||document.querySelector("#apiList")?.closest(".settings-pane");if(pane)pane.classList.remove("hidden");}}};;
 document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dataset.extraClose).classList.remove("show"));
 $("refreshUsers").onclick=refreshUsers;
 $("publishNotice").onclick=async()=>{const title=$("noticeTitle").value.trim(),content=$("noticeContent").value.trim();if(!title||!content){alert("请填写公告标题和内容");return}
@@ -2142,6 +2196,15 @@ try{
       if(id === "adminDrawerButton"){
         if(typeof window.openAdminPanel === "function") window.openAdminPanel();
         else { var am = $("adminModal"); if(am) am.classList.add("show"); }
+        setTimeout(closeDrawer, 80);
+        return;
+      }
+      if(id === "apiConfigSideBtn"){
+        if(typeof window.openApiConfigPanel === "function") window.openApiConfigPanel();
+        else {
+          var sm = $("settingsModal");
+          if(sm){ sm.style.display="flex"; sm.classList.add("show"); }
+        }
         setTimeout(closeDrawer, 80);
         return;
       }
