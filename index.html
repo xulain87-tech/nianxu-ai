@@ -1112,20 +1112,83 @@ body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 /* 流畅优先：减少动画 */
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .menu-item,.primary,.ghost,.iconbtn,.send{transition:background .12s,transform .12s!important}
+
+/* ===== 2.9.0 全新登录界面样式（独立无冲突） ===== */
+#entryGate{
+  position:fixed!important;inset:0!important;z-index:99999!important;
+  display:flex!important;align-items:center;justify-content:center;
+  background:#000!important;padding:20px;
+  font-family:system-ui,-apple-system,sans-serif;
+}
+#entryGate .gate-stars,#entryGate::before,#entryGate::after{display:none!important}
+.nx-login-card{
+  width:min(360px,100%);background:#111;border:1px solid #222;
+  border-radius:20px;padding:32px 28px 24px;text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.7);
+}
+.nx-login-logo{
+  width:56px;height:56px;margin:0 auto 14px;border-radius:16px;
+  background:linear-gradient(135deg,#1d9bf0,#8b5cf6);
+  display:grid;place-items:center;font-size:24px;font-weight:800;color:#fff;
+}
+.nx-login-title{margin:0 0 6px;font-size:22px;font-weight:700;color:#fff}
+.nx-login-desc{margin:0 0 20px;font-size:13px;color:#888}
+.nx-login-form{display:flex;flex-direction:column;gap:10px}
+.nx-login-form input[type="text"],
+.nx-login-form input[type="password"]{
+  width:100%;padding:13px 14px;border-radius:12px;border:1px solid #333;
+  background:#0a0a0a;color:#fff;font-size:15px;outline:none;
+  transition:border-color .15s;
+}
+.nx-login-form input:focus{border-color:#1d9bf0}
+.nx-remember{
+  display:flex;align-items:center;gap:8px;margin:4px 0 6px;
+  font-size:13px;color:#aaa;cursor:pointer;user-select:none;
+}
+.nx-remember input{width:16px;height:16px;accent-color:#1d9bf0}
+.nx-btn{
+  width:100%;padding:13px;border-radius:12px;border:0;font-size:15px;
+  font-weight:600;cursor:pointer;transition:opacity .15s,transform .1s;
+}
+.nx-btn:active{transform:scale(.98)}
+.nx-btn-primary{background:#1d9bf0;color:#fff}
+.nx-btn-primary:hover{opacity:.9}
+.nx-btn-ghost{background:#1a1a1a;color:#ccc;border:1px solid #333}
+.nx-btn-ghost:hover{background:#222}
+.nx-login-error{min-height:20px;margin-top:12px;font-size:13px;color:#ff6b6b}
+.nx-login-foot{margin-top:18px;font-size:11px;color:#555}
+.nx-login-form.hidden{display:none!important}
+body.entered #entryGate{display:none!important}
+
 </style>
-<div id="entryGate">
- <div class="gate-stars"></div>
- <div class="gate-card">
-  <div class="logo" style="margin:0 auto 16px">念</div>
-  <h2>念绪 AI</h2>
-  <p id="gateDesc">登录一次后自动记住，下次无需密码即可进入</p><div class="gate-chips"><span>联网搜索</span><span>专家模式</span><span>AI 生图</span><span>创新AI</span></div>
-  <input id="entryId" autocomplete="username" placeholder="账号 ID"><small class="register-hint" id="entryIdHint">2–32 位中文/字母/数字</small>
-  <input id="entryPassword" type="password" autocomplete="current-password" placeholder="密码（首次登录需要）">
-  <label class="remember-id"><input id="rememberLoginId" type="checkbox" checked> 记住此账号（下次免密进入）</label>
-  <div class="gate-actions"><button class="primary" id="enterBtn" type="button">登录 / 进入</button><button class="ghost" id="showRegisterBtn" type="button">注册</button></div>
-  <div class="register-panel hidden" id="registerPanel"><small class="register-hint">账号为 2–32 位中文、字母、数字、下划线或短横线。</small><div class="password-field"><input id="registerPassword" type="password" minlength="6" maxlength="128" autocomplete="new-password" placeholder="设置密码（至少 6 位）"><button type="button" class="password-toggle" data-password-toggle="registerPassword">显示</button></div><div class="password-field"><input id="registerConfirm" type="password" minlength="6" maxlength="128" autocomplete="new-password" placeholder="再次输入密码"><button type="button" class="password-toggle" data-password-toggle="registerConfirm">显示</button></div><div class="gate-actions"><button class="primary" id="registerBtn" type="button">创建账号</button><button class="ghost" id="backLoginBtn" type="button">返回登录</button></div></div>
-  <div class="gate-error" id="entryError"></div><div class="gate-foot"><span>THOUGHTS, IN MOTION</span><em>账号密码仅用于登录 · 请勿在公共设备保存</em></div>
- </div>
+<!-- ===== 2.9.0 全新干净登录界面 ===== -->
+<div id="entryGate" style="display:flex">
+  <div class="nx-login-card">
+    <div class="nx-login-logo">念</div>
+    <h1 class="nx-login-title">念绪 AI</h1>
+    <p class="nx-login-desc" id="gateDesc">登录一次后自动记住，下次可免密进入</p>
+    
+    <div class="nx-login-form" id="loginForm">
+      <input id="entryId" type="text" autocomplete="username" placeholder="账号 ID" maxlength="32">
+      <input id="entryPassword" type="password" autocomplete="current-password" placeholder="密码">
+      <label class="nx-remember">
+        <input id="rememberLoginId" type="checkbox" checked>
+        <span>记住此账号（下次免密）</span>
+      </label>
+      <button type="button" class="nx-btn nx-btn-primary" id="enterBtn">登 录</button>
+      <button type="button" class="nx-btn nx-btn-ghost" id="showRegisterBtn">注册新账号</button>
+    </div>
+
+    <div class="nx-login-form hidden" id="registerPanel">
+      <input id="registerPassword" type="password" autocomplete="new-password" placeholder="设置密码（至少6位）" minlength="6" maxlength="128">
+      <input id="registerConfirm" type="password" autocomplete="new-password" placeholder="再次输入密码" minlength="6" maxlength="128">
+      <button type="button" class="nx-btn nx-btn-primary" id="registerBtn">创建账号并登录</button>
+      <button type="button" class="nx-btn nx-btn-ghost" id="backLoginBtn">返回登录</button>
+    </div>
+
+    <div class="nx-login-error" id="entryError"></div>
+    <div class="nx-login-foot">v2.9.0 · 流畅深色体验</div>
+  </div>
 </div>
 <div class="extra-modal" id="noticeModal"><div class="extra-box ann-box">
  <div class="extra-head"><h3><span class="ann-bell">📢</span> 网站公告</h3><button class="iconbtn" data-extra-close="noticeModal">关闭</button></div>
@@ -1319,7 +1382,7 @@ const rememberedId=localStorage.getItem("nx_login_id")||"";
 if(rememberedId){
  $("entryId").value=rememberedId;
  if($("rememberLoginId"))$("rememberLoginId").checked=true;
- const gd=$("gateDesc");if(gd)gd.textContent="欢迎回来，"+rememberedId+"。点击「登录 / 进入」即可免密恢复会话";
+ const gd=$("gateDesc");if(gd)gd.textContent="欢迎回来，"+rememberedId+"。点击「登录」即可免密恢复会话";
  $("entryPassword").placeholder="密码（会话有效时可留空）";
 }
 function syncAdminUi(){const admin=currentRole==="admin";$("adminButton").classList.remove("hidden");$("adminDrawerButton").classList.remove("hidden");$("adminConfigButton").classList.toggle("hidden",!admin);$("apiSettingsTab").classList.toggle("hidden",!admin);$("apiList").classList.toggle("hidden",!admin);$("apiBackupPanel").classList.toggle("hidden",!admin);$("saveSettings").classList.toggle("hidden",!admin)}
@@ -1329,7 +1392,15 @@ async function apiRequest(path, options={}){
  if(!response.ok){const error=new Error(data.error||`请求失败 (${response.status})`);error.data=data;error.status=response.status;throw error;}
  return data;
 }
-function showLoginGate(id=currentUserId){if(id){currentUserId=id;$("entryId").value=id;}document.body.classList.remove("entered");$("entryGate").style.display="flex";$("entryPassword").value="";$("registerPanel").classList.add("hidden");$("showRegisterBtn").classList.remove("hidden");}
+function showLoginGate(id=currentUserId){
+  if(id){currentUserId=id; if($("entryId"))$("entryId").value=id;}
+  document.body.classList.remove("entered");
+  const gate=$("entryGate"); if(gate)gate.style.display="flex";
+  if($("entryPassword"))$("entryPassword").value="";
+  if($("registerPanel"))$("registerPanel").classList.add("hidden");
+  if($("loginForm"))$("loginForm").classList.remove("hidden");
+  if($("showRegisterBtn"))$("showRegisterBtn").classList.remove("hidden");
+}
 async function refreshUsers(){const box=$("adminUsersList");box.textContent="正在加载在线用户…";try{const data=await apiRequest("/api/admin/users"),users=data.users||[];box.innerHTML="";if(!users.length){box.textContent="当前没有在线用户。";return}users.forEach(u=>{const row=document.createElement("div");row.className="admin-user-row";const label=document.createElement("span");label.textContent=u.id;const status=document.createElement("span");status.className="online-pill";status.textContent=`在线${u.sessionCount>1?` · ${u.sessionCount} 个会话`:""}`;row.append(label,status);box.append(row)})}catch(e){box.textContent="在线列表加载失败："+e.message}}
 let activeSupportTicketId='';
 const supportStatusText={waiting_admin:'等待管理员回复',waiting_user:'管理员已回复',closed:'已结束'};
@@ -1356,36 +1427,72 @@ function buildWelcomeCard(){const card=document.createElement("div");card.classN
 async function showLoginAnnouncement(){let first=false;const key="nx_welcomed_"+currentUserId;try{first=currentRole!=="admin"&&!localStorage.getItem(key)}catch(_){}const has=await refreshNotices();if(first){const box=$("noticeList");if(!has)box.textContent="";box.prepend(buildWelcomeCard());try{localStorage.setItem(key,"1")}catch(_){}}if(has||first)$("noticeModal").classList.add("show")}
 function storeLoginId(id){try{if($("rememberLoginId")?.checked!==false)localStorage.setItem("nx_login_id",id);else localStorage.removeItem("nx_login_id")}catch(_){}}
 async function enterApp(){
- const id=$("entryId").value.trim(),password=$("entryPassword").value;
- if(!id){$("entryError").textContent="请输入账号";return}
- // 若已有有效会话且无填密码，直接进入（免密）
- if(!password){
-  $("entryError").textContent="正在恢复会话…";$("enterBtn").disabled=true;
+  const idEl=$("entryId"), pwEl=$("entryPassword"), errEl=$("entryError"), btn=$("enterBtn");
+  if(!idEl||!pwEl||!errEl||!btn){console.error("login elements missing");return}
+  const id=idEl.value.trim(), password=pwEl.value;
+  if(!id){errEl.textContent="请输入账号";return}
+  if(!password){
+    errEl.textContent="正在恢复会话…"; btn.disabled=true;
+    try{
+      const data=await apiRequest("/api/session");
+      if(data && data.authenticated){
+        currentRole=data.role; currentUserId=data.userId||id;
+        document.body.classList.add("entered");
+        $("entryGate").style.display="none";
+        syncAdminUi(); setStatus("欢迎回来",true);
+        await loadProfile(); await showLoginAnnouncement();
+        if(currentRole!=="admin") apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
+        return;
+      }
+    }catch(e){console.warn(e)}
+    errEl.textContent="请输入密码（首次或会话过期时需要）"; btn.disabled=false; return;
+  }
+  errEl.textContent="正在验证…"; btn.disabled=true;
   try{
-   const data=await apiRequest("/api/session");
-   if(data.authenticated && (data.userId===id || !id)){
-    currentRole=data.role;currentUserId=data.userId||id;
-    document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();setStatus("欢迎回来",true);await loadProfile();await showLoginAnnouncement();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
-    return;
-   }
-  }catch(_){}
-  $("entryError").textContent="请输入密码（首次或会话过期时需要）";$("enterBtn").disabled=false;return;
- }
- $("entryError").textContent="正在验证…";$("enterBtn").disabled=true;
- try{const data=await apiRequest("/api/login",{method:"POST",body:JSON.stringify({id,password})});storeLoginId(id);currentRole=data.role;currentUserId=data.userId||id;
-  document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);await loadProfile();await showLoginAnnouncement();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
- }catch(e){$("entryError").textContent=e.message}finally{$("enterBtn").disabled=false}
+    const data=await apiRequest("/api/login",{method:"POST",body:JSON.stringify({id,password})});
+    storeLoginId(id);
+    currentRole=data.role; currentUserId=data.userId||id;
+    document.body.classList.add("entered");
+    $("entryGate").style.display="none";
+    syncAdminUi(); setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);
+    await loadProfile(); await showLoginAnnouncement();
+    if(currentRole!=="admin") apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
+  }catch(e){errEl.textContent=e.message||"登录失败"}
+  finally{btn.disabled=false}
 }
 $("enterBtn").addEventListener("click",enterApp);
 $("entryId").addEventListener("keydown",e=>{if(e.key==="Enter")$("registerPanel").classList.contains("hidden")?$("entryPassword").focus():$("registerPassword").focus()});$("entryPassword").addEventListener("keydown",e=>{if(e.key==="Enter")enterApp()});
-$("showRegisterBtn").onclick=()=>{$("registerPanel").classList.remove("hidden");$("showRegisterBtn").classList.add("hidden");$("entryError").textContent="";$("registerPassword").focus();updateRegistrationHint()};
-$("backLoginBtn").onclick=()=>{$("registerPanel").classList.add("hidden");$("showRegisterBtn").classList.remove("hidden");$("entryError").textContent="";$("entryPassword").focus()};
+$("showRegisterBtn").onclick=()=>{const rp=$("registerPanel"),lf=$("loginForm");if(rp)rp.classList.remove("hidden");if(lf)lf.classList.add("hidden");$("entryError").textContent="";const rpw=$("registerPassword");if(rpw)rpw.focus()};$("showRegisterBtn").classList.add("hidden");$("entryError").textContent="";$("registerPassword").focus();updateRegistrationHint()};
+$("backLoginBtn").onclick=()=>{const rp=$("registerPanel"),lf=$("loginForm");if(rp)rp.classList.add("hidden");if(lf)lf.classList.remove("hidden");$("entryError").textContent="";const ep=$("entryPassword");if(ep)ep.focus()};$("showRegisterBtn").classList.remove("hidden");$("entryError").textContent="";$("entryPassword").focus()};
 function registrationError(){const id=$("entryId").value.trim(),password=$("registerPassword").value,confirm=$("registerConfirm").value;if(!id)return "请输入账号 ID";if(!/^[A-Za-z0-9_\-\u4e00-\u9fff]{2,32}$/.test(id))return "账号需为 2–32 位中文、字母、数字、下划线或短横线";if(password.length<6||password.length>128)return "密码需为 6–128 位";if(password!==confirm)return "两次密码不一致";return ""}
 function updateRegistrationHint(){const hint=$("entryIdHint");if(!hint)return;const id=$("entryId").value.trim();hint.textContent=id?( /^[A-Za-z0-9_\-\u4e00-\u9fff]{2,32}$/.test(id)?"账号 ID 格式正确":"账号 ID 需为 2–32 位中文、字母、数字、下划线或短横线"):"登录或注册时使用此账号 ID（2–32 位）";hint.classList.toggle("valid",Boolean(id)&&!registrationError())}
 ["entryId","registerPassword","registerConfirm"].forEach(id=>$(id).addEventListener("input",updateRegistrationHint));
 document.querySelectorAll("[data-password-toggle]").forEach(button=>button.onclick=()=>{const input=$(button.dataset.passwordToggle),shown=input.type==="text";input.type=shown?"password":"text";button.textContent=shown?"显示":"隐藏"});
 $("registerPassword").addEventListener("keydown",e=>{if(e.key==="Enter")$("registerConfirm").focus()});$("registerConfirm").addEventListener("keydown",e=>{if(e.key==="Enter")$("registerBtn").click()});
-$("registerBtn").onclick=async()=>{const id=$("entryId").value.trim(),password=$("registerPassword").value,error=registrationError();if(error){$("entryError").textContent=error;if(!$("entryId").value.trim()||!/^[A-Za-z0-9_\-\u4e00-\u9fff]{2,32}$/.test($("entryId").value.trim()))$("entryId").focus();else if(password.length<6)$("registerPassword").focus();else $("registerConfirm").focus();return}$("registerBtn").disabled=true;$("entryError").textContent="正在创建账号…";try{await apiRequest("/api/register",{method:"POST",body:JSON.stringify({id,password})});storeLoginId(id);$("registerPanel").classList.add("hidden");$("showRegisterBtn").classList.remove("hidden");$("entryPassword").value=password;$("registerPassword").value="";$("registerConfirm").value="";$("entryError").textContent="账号创建成功，正在登录…";$("registerBtn").disabled=false;await enterApp();return}catch(e){$("entryError").textContent=e.message}finally{$("registerBtn").disabled=false}};
+$("registerBtn").onclick=async()=>{
+  const id=($("entryId")&&$("entryId").value||"").trim();
+  const password=($("registerPassword")&&$("registerPassword").value)||"";
+  const confirm=($("registerConfirm")&&$("registerConfirm").value)||"";
+  const errEl=$("entryError");
+  if(!id){errEl.textContent="请输入账号 ID";return}
+  if(id.length<2||id.length>32){errEl.textContent="账号长度需2-32位";return}
+  if(password.length<6){errEl.textContent="密码至少6位";return}
+  if(password!==confirm){errEl.textContent="两次密码不一致";return}
+  const btn=$("registerBtn"); if(btn)btn.disabled=true;
+  errEl.textContent="正在创建账号…";
+  try{
+    await apiRequest("/api/register",{method:"POST",body:JSON.stringify({id,password})});
+    storeLoginId(id);
+    if($("registerPanel"))$("registerPanel").classList.add("hidden");
+    if($("loginForm"))$("loginForm").classList.remove("hidden");
+    if($("entryPassword"))$("entryPassword").value=password;
+    if($("registerPassword"))$("registerPassword").value="";
+    if($("registerConfirm"))$("registerConfirm").value="";
+    errEl.textContent="账号创建成功，正在登录…";
+    await enterApp();
+  }catch(e){errEl.textContent=e.message||"注册失败"}
+  finally{if(btn)btn.disabled=false}
+};
 $("noticeButton").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
 function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");$("adminSupportModal").classList.add("show");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return;alert("接口配置已整合到管理后台。\n请在管理后台发布公告区下方或通过服务器 api-config.json 管理。\n（2.9.0 已移除独立设置中心，功能全部集中到侧栏与管理后台）")};
 document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dataset.extraClose).classList.remove("show"));
