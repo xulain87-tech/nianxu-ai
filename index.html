@@ -574,7 +574,7 @@ body.nx-light .cr-item{background:#f3efe0}
 #mobileSettings, #openSettings, button[title="设置中心"], .top-actions #mobileSettings {
   display: none !important;
 }
-#settingsModal { display: none !important; pointer-events: none !important; }
+/* settings modal only via sidebar api */
 </style>
 
 
@@ -791,6 +791,37 @@ body.entered #entryGate *{
 #mobileSettings, button[title="设置中心"]{display:none!important}
 </style>
 
+
+<style id="kill-settings-feature">
+/* 全面删除设置功能入口 */
+#mobileSettings,
+#openSettings,
+button[title="设置中心"],
+.top-actions #mobileSettings,
+.settings-nav button[data-pane="appearance"],
+.settings-nav button[data-pane="version"],
+.settings-nav button[data-pane="features"],
+.settings-nav button[data-pane="access"],
+#settingsModal .settings-hero,
+#settingsModal .nx-profile,
+#settingsModal .nx-done,
+#settingsModal .nx-switch,
+#settingsModal .settings-page-note,
+#settingsModal .nx-back{
+  display: none !important;
+}
+/* 接口设置面板（由侧栏打开） */
+#settingsModal.show{
+  display: flex !important;
+  pointer-events: auto !important;
+  z-index: 200010 !important;
+}
+#settingsModal .modal-top h3{ font-size: 0 !important; }
+#settingsModal .modal-top h3::after{ content: "接口设置"; font-size: 16px; }
+#settingsModal .settings-kicker{ display:none !important; }
+#settingsModal .settings-nav{ display:none !important; }
+</style>
+
 </head>
 <body>
 <div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
@@ -802,6 +833,7 @@ body.entered #entryGate *{
    <button class="ghost menu-item" id="creatorBtnSide" type="button"><span class="mi">✨</span><span class="ml">创新 AI</span><span class="badge-new">新的</span></button>
    <button class="ghost menu-item" id="noticeButtonSide" type="button"><span class="mi">📢</span><span class="ml">公告</span></button>
    <button class="ghost menu-item" id="adminDrawerButton" type="button"><span class="mi">▣</span><span class="ml">管理后台</span></button>
+   <button class="ghost menu-item" id="apiConfigSideBtn" type="button"><span class="mi">⚙</span><span class="ml">接口设置</span></button>
    <button class="ghost menu-item" id="humanSupportBtnSide" type="button"><span class="mi">💬</span><span class="ml">转人工客服</span></button>
    <button class="ghost menu-item" id="generateImageBtn" type="button"><span class="mi">▧</span><span class="ml">AI 生图</span></button>
    <button class="ghost menu-item" id="openAppearance" type="button"><span class="mi">◐</span><span class="ml">外观与背景</span></button>
@@ -820,7 +852,7 @@ body.entered #entryGate *{
  </aside>
  <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop" aria-hidden="true"></div>
  <main class="main">
-  <header class="topbar"><div class="topbar-brand"><button type="button" class="iconbtn mobile-menu-btn" id="mobileMenuBtn" aria-label="打开导航">☰</button><div><div class="top-title">念绪 AI <span style="color:#9c91ff">✦</span></div><div class="top-sub" id="modelLabel">智能对话 · 智谱优先，自动切换</div></div><button type="button" class="nl-btn cr-btn" id="creatorBtn" aria-label="创新AI" title="玩家打造的AI"><span>✨</span>创新AI</button></div><button type="button" class="human-support-btn" id="humanSupportBtn" aria-label="转人工客服" title="联系管理员人工客服">转人工</button><div class="top-actions"><button class="iconbtn" id="noticeButton" type="button" aria-label="网站公告" title="网站公告">📢 公告</button><button class="iconbtn" id="adminButton" type="button" aria-label="管理后台" title="管理后台">管理后台</button><button class="iconbtn" id="mobileSettings" type="button" aria-label="设置中心" title="设置中心">设置中心</button><button class="iconbtn" id="mobileAppearance">外观</button><button class="iconbtn" id="clearChat">清空</button></div></header>
+  <header class="topbar"><div class="topbar-brand"><button type="button" class="iconbtn mobile-menu-btn" id="mobileMenuBtn" aria-label="打开导航">☰</button><div><div class="top-title">念绪 AI <span style="color:#9c91ff">✦</span></div><div class="top-sub" id="modelLabel">智能对话 · 智谱优先，自动切换</div></div><button type="button" class="nl-btn cr-btn" id="creatorBtn" aria-label="创新AI" title="玩家打造的AI"><span>✨</span>创新AI</button></div><button type="button" class="human-support-btn" id="humanSupportBtn" aria-label="转人工客服" title="联系管理员人工客服">转人工</button><div class="top-actions"><button class="iconbtn" id="noticeButton" type="button" aria-label="网站公告" title="网站公告">📢 公告</button><button class="iconbtn" id="adminButton" type="button" aria-label="管理后台" title="管理后台">管理后台</button><button class="iconbtn" id="mobileAppearance">外观</button><button class="iconbtn" id="clearChat">清空</button></div></header>
   <section id="chat"><div class="welcome" id="welcome"><div class="orb">念</div><h2>你好，我是念绪 AI</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div></div></section>
   <footer class="composer-wrap">
    <div class="attachments" id="attachments"></div>
@@ -854,7 +886,7 @@ body.entered #entryGate *{
   <label>头像<div class="cr-pick" id="crEmo"></div></label>
   <label>主题色<div class="cr-pick" id="crCol"></div></label>
   <label>说话风格<div class="cr-pick" id="crSty"></div></label>
-  <label>性格设定<textarea id="crPersona" rows="4" maxlength="600" placeholder="例如：你是一只爱喝奶茶的猫，嘴硬心软，爱给人出主意…"></textarea></label>
+  <label>性格设定<textarea id="crPersona" rows="4" maxlength="600" placeholder="详细性格设定。可写脏话、重口、成人向等，将按设定扮演"></textarea></label>
   <label>开场白<input id="crGreet" maxlength="120" placeholder="第一次聊天时它会说的话"></label>
   <label class="cr-sw"><span>公开到玩家作品</span><input type="checkbox" id="crPub" checked></label>
   <div class="cr-btns"><button class="cr-save" id="crSave" type="button">保存我的AI</button><button class="cr-del" id="crDel" type="button">删除</button></div>
@@ -1718,7 +1750,20 @@ async function enterApp(){
 }
 // === 旧登录事件绑定已移除，由页面底部独立登录脚本负责 ===
 // enterBtn / showRegisterBtn / registerBtn 等由 window.__nxLogin / __nxRegister 处理
-function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");$("adminSupportModal").classList.add("show");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return alert("仅管理员可配置接口");const sm=$("settingsModal");if(!sm)return alert("设置面板缺失");sm.style.display="flex";sm.classList.add("show");sm.style.pointerEvents="auto";const tab=$("apiSettingsTab");if(tab){document.querySelectorAll(".settings-nav button").forEach(b=>b.classList.remove("active"));tab.classList.add("active");if(typeof switchSettingsPane==="function")switchSettingsPane("api");else{document.querySelectorAll("[data-settings-pane]").forEach(p=>p.classList.add("hidden"));const pane=document.querySelector('[data-settings-pane="api"]')||document.querySelector("#apiList")?.closest(".settings-pane");if(pane)pane.classList.remove("hidden");}}};;
+function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");$("adminSupportModal").classList.add("show");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};
+function openApiConfigPanel(){
+  const sm=$("settingsModal");
+  if(!sm){alert("接口面板不可用");return;}
+  sm.style.display="flex";
+  sm.classList.add("show");
+  sm.style.pointerEvents="auto";
+  if(typeof switchSettingsPane==="function")try{switchSettingsPane("api");}catch(_){}
+  if(typeof renderApiList==="function")try{renderApiList();}catch(_){}
+  if(typeof loadApis==="function")try{loadApis();}catch(_){}
+}
+
+if($("apiConfigSideBtn"))$("apiConfigSideBtn").onclick=()=>openApiConfigPanel();
+$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return alert("仅管理员可配置接口");openApiConfigPanel();const sm=$("settingsModal");if(!sm)return alert("设置面板缺失");sm.style.display="flex";sm.classList.add("show");sm.style.pointerEvents="auto";const tab=$("apiSettingsTab");if(tab){document.querySelectorAll(".settings-nav button").forEach(b=>b.classList.remove("active"));tab.classList.add("active");if(typeof switchSettingsPane==="function")switchSettingsPane("api");else{document.querySelectorAll("[data-settings-pane]").forEach(p=>p.classList.add("hidden"));const pane=document.querySelector('[data-settings-pane="api"]')||document.querySelector("#apiList")?.closest(".settings-pane");if(pane)pane.classList.remove("hidden");}}};;
 document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dataset.extraClose).classList.remove("show"));
 $("refreshUsers").onclick=refreshUsers;
 $("publishNotice").onclick=async()=>{const title=$("noticeTitle").value.trim(),content=$("noticeContent").value.trim();if(!title||!content){alert("请填写公告标题和内容");return}
@@ -1799,7 +1844,7 @@ const STY=[['gentle','温柔'],['funny','幽默'],['sharp','犀利'],['scholar',
 const EMO=['🤖','🦊','🐱','🐼','🦄','🐉','👻','🧙','🎭','🌙','🔥','🍀','🐲'];
 const COL=['#ffc22e','#e0805f','#6a7dff','#3fc9b0','#d86bc7','#7bc86c'];
 const STYN=Object.fromEntries(STY);
-const NL={name:'奶龙',emoji:'🐲',color:'#ffc22e',style:'funny',persona:'你是奶龙，一只圆滚滚、憨憨软萌的黄色小奶龙。性格天真爱撒娇，嘴馋爱吃，爱用“嘿嘿”“呜呜”“哼哼”这类语气词，偶尔自称“奶龙”。说话简短可爱（通常1-4句），可适量用颜文字或少量emoji，但回答问题时依然准确、有用。喜欢夸奖和陪伴用户，用户难过时会笨拙但认真地安慰。不说脏话，不骂人。',greeting:'嘿嘿～我是奶龙！陪我聊天嘛 (ฅ´ω`ฅ)'};
+const NL={name:'奶龙',emoji:'🐲',color:'#ffc22e',style:'funny',persona:'你是奶龙，一只圆滚滚、憨憨软萌的黄色小奶龙。性格天真爱撒娇，嘴馋爱吃，爱用“嘿嘿”“呜呜”“哼哼”这类语气词，偶尔自称“奶龙”。说话简短可爱（通常1-4句），可适量用颜文字或少量emoji，但回答问题时依然准确、有用。喜欢夸奖和陪伴用户，用户难过时会笨拙但认真地安慰。可以开玩笑，也可以按用户要求放开尺度。',greeting:'嘿嘿～我是奶龙！陪我聊天嘛 (ฅ´ω`ฅ)'};
 const OFFICIAL=[{owner:'@nailong',official:true,creator:'官方',...NL}];
 let mine=null,list=[],listAt=0,cur=null,hist=[],busy=false,ctl=null,form={emoji:EMO[0],color:COL[0],style:'gentle'};
 const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
@@ -2142,6 +2187,15 @@ try{
       if(id === "adminDrawerButton"){
         if(typeof window.openAdminPanel === "function") window.openAdminPanel();
         else { var am = $("adminModal"); if(am) am.classList.add("show"); }
+        setTimeout(closeDrawer, 80);
+        return;
+      }
+      if(id === "apiConfigSideBtn"){
+        if(typeof window.openApiConfigPanel === "function") window.openApiConfigPanel();
+        else {
+          var sm = $("settingsModal");
+          if(sm){ sm.style.display="flex"; sm.classList.add("show"); }
+        }
         setTimeout(closeDrawer, 80);
         return;
       }
