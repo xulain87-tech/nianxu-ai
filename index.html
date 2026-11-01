@@ -2095,4 +2095,71 @@ body{color:var(--text);-webkit-tap-highlight-color:transparent}
 .msg,.primary,.send,.iconbtn,.ghost,.modal-back.show .modal{will-change:auto!important}
 
 </style>
+
+<style id="nx-settings-final-fix">
+/* Compact, independently scrollable settings dialog; overrides all previous mobile rules. */
+#settingsModal.modal-back{position:fixed!important;inset:0!important;z-index:12000!important;display:none;align-items:center!important;justify-content:center!important;padding:12px!important;background:rgba(0,0,0,.76)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;touch-action:auto!important}
+#settingsModal.modal-back.show{display:flex!important}
+#settingsModal>.modal{box-sizing:border-box!important;position:relative!important;width:min(360px,calc(100vw - 24px))!important;height:auto!important;min-height:0!important;max-height:min(68dvh,540px)!important;margin:auto!important;padding:0 0 10px!important;display:flex!important;flex-direction:column!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;border-radius:18px!important;background:#111a2b!important;border:1px solid #ffffff20!important;box-shadow:0 18px 55px #000b!important;touch-action:pan-y!important}
+#settingsModal .modal-top{position:sticky!important;top:0!important;z-index:20!important;flex:none!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;margin:0!important;padding:10px 12px!important;background:#172238!important;border-bottom:1px solid #ffffff16!important}
+#settingsModal .modal-top>div{text-align:left!important;flex:1!important}
+#settingsModal .modal-top h3{font-size:15px!important;margin:0!important}
+#settingsModal .modal-top .iconbtn[data-close]{display:flex!important;position:relative!important;inset:auto!important;z-index:30!important;flex:0 0 38px!important;width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;align-items:center!important;justify-content:center!important;padding:0!important;border-radius:50%!important;font-size:21px!important;color:#fff!important;background:#ffffff18!important;border:1px solid #ffffff20!important;pointer-events:auto!important;touch-action:manipulation!important}
+#settingsModal .nx-back{display:none!important}
+#settingsModal .nx-profile{flex:none!important;margin:10px 12px 8px!important;padding:10px 12px!important}
+#settingsModal .settings-hero,#settingsModal .settings-page-note,#settingsModal>.hint{display:none!important}
+#settingsModal .settings-nav{display:flex!important;flex:none!important;flex-direction:column!important;gap:6px!important;overflow:visible!important;position:static!important;margin:4px 12px 8px!important;padding:0!important;background:transparent!important}
+#settingsModal .settings-nav button{display:flex!important;align-items:center!important;gap:10px!important;width:100%!important;min-height:46px!important;padding:8px 10px!important;margin:0!important;border:1px solid #ffffff14!important;border-radius:12px!important;background:#ffffff08!important;color:#e9edfa!important;text-align:left!important;touch-action:manipulation!important}
+#settingsModal .settings-nav button i{flex:0 0 30px!important;width:30px!important;height:30px!important;line-height:30px!important;text-align:center!important;border-radius:9px!important}
+#settingsModal .settings-nav button b{font-size:13px!important}#settingsModal .settings-nav button small{font-size:10px!important}
+#settingsModal .settings-nav button:after{content:'›'!important;margin-left:auto!important;font-size:19px!important;color:#9caaca!important}
+#settingsModal.nx-in-pane .settings-nav{display:none!important}
+#settingsModal:not(.nx-in-pane) #apiList,#settingsModal:not(.nx-in-pane) #apiBackupPanel,#settingsModal:not(.nx-in-pane) #settingsInfoGrid,#settingsModal:not(.nx-in-pane) #adminHint,#settingsModal:not(.nx-in-pane) .modal-actions,#settingsModal:not(.nx-in-pane) .nx-pane-bar{display:none!important}
+#settingsModal.nx-in-pane #settingsInfoGrid,#settingsModal.nx-in-pane #apiList,#settingsModal.nx-in-pane #apiBackupPanel,#settingsModal.nx-in-pane #adminHint{display:block!important;flex:none!important;margin:8px 12px!important}
+#settingsModal.nx-in-pane .nx-pane-bar{display:flex!important;position:sticky!important;bottom:0!important;z-index:15!important;flex:none!important;justify-content:space-between!important;gap:8px!important;margin:8px 12px 0!important;padding:8px 0 2px!important;background:#111a2b!important}
+#settingsModal.nx-in-pane .nx-pane-bar button{min-height:38px!important;padding:8px 14px!important;border-radius:11px!important}
+#settingsModal.nx-in-pane[data-pane="version"] #featurePanel,#settingsModal.nx-in-pane[data-pane="features"] #versionPanel{display:none!important}
+#settingsModal.nx-in-pane[data-pane="version"] #versionPanel,#settingsModal.nx-in-pane[data-pane="features"] #featurePanel{display:block!important}
+#settingsModal.nx-in-pane[data-pane="access"] #adminHint{display:block!important}
+#settingsModal.nx-in-pane[data-pane="api"] #apiList,#settingsModal.nx-in-pane[data-pane="api"] #apiBackupPanel{display:block!important}
+#settingsModal .settings-info-grid{display:block!important;margin:0!important}
+#settingsModal .info-card,#settingsModal .api-card{padding:11px!important;margin:6px 0!important;border-radius:12px!important;background:#ffffff08!important;border:1px solid #ffffff14!important}
+#settingsModal .info-card p{font-size:11px!important;line-height:1.5!important}
+#settingsModal .modal-actions{display:none!important}
+#settingsModal .nx-done{display:block!important;flex:none!important;width:calc(100% - 24px)!important;min-height:40px!important;margin:6px 12px 0!important;border-radius:11px!important}
+#settingsModal .nx-switch{display:flex!important;flex:none!important;width:calc(100% - 24px)!important;min-height:40px!important;margin:6px 12px 0!important;border-radius:11px!important;justify-content:center!important}
+#settingsModal input:not([type=checkbox]),#settingsModal select,#settingsModal textarea{font-size:16px!important;max-width:100%!important}
+@media(max-width:760px){#settingsModal.modal-back{padding:10px!important}#settingsModal>.modal{width:min(360px,calc(100vw - 20px))!important;max-height:68dvh!important;height:auto!important;border-radius:18px!important;padding-bottom:10px!important}#settingsModal .modal-top{padding:9px 11px!important}}
+</style>
+<script id="nx-settings-final-controller">
+(()=>{
+ const m=document.getElementById('settingsModal'); if(!m)return;
+ const close=()=>{m.classList.remove('show','nx-in-pane');m.dataset.pane='';};
+ const pane=(name)=>{
+   if(name==='appearance'){close();const a=document.getElementById('appearanceModal');if(a)a.classList.add('show');return;}
+   m.dataset.pane=name;m.classList.add('nx-in-pane');
+   m.querySelectorAll('.settings-nav button').forEach(b=>b.classList.toggle('active',b.dataset.pane===name));
+   if(name==='access'){
+     try{if(typeof loadProfile==='function')loadProfile();if(typeof renderMemories==='function')renderMemories();}catch(_){ }
+     const role=document.getElementById('roleSummary');if(role)role.textContent='当前会话：'+(window.currentRole==='admin'?'管理员':'普通用户');
+   }
+ };
+ // Capture before legacy handlers so old click/touch listeners cannot swallow settings actions.
+ m.addEventListener('click',e=>{
+   const closeBtn=e.target.closest('[data-close="settingsModal"],.nx-done,.nx-pane-bar [data-close="settingsModal"]');
+   if(closeBtn){e.preventDefault();e.stopImmediatePropagation();close();return;}
+   const back=e.target.closest('.nx-back,#nxPaneBack');
+   if(back){e.preventDefault();e.stopImmediatePropagation();m.classList.remove('nx-in-pane');return;}
+   const nav=e.target.closest('.settings-nav button[data-pane]');
+   if(nav){e.preventDefault();e.stopImmediatePropagation();pane(nav.dataset.pane);return;}
+   if(e.target===m){e.preventDefault();close();}
+ },true);
+ // Reliable close on pointer devices, including Android touch screens.
+ m.addEventListener('pointerup',e=>{const b=e.target.closest('.modal-top [data-close="settingsModal"]');if(b){e.preventDefault();e.stopImmediatePropagation();close();}},true);
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&m.classList.contains('show')){e.preventDefault();close();}},true);
+ const openIds=['openSettings','mobileSettings'];
+ openIds.forEach(id=>{const b=document.getElementById(id);if(b)b.addEventListener('click',()=>{m.classList.remove('nx-in-pane');m.dataset.pane='';setTimeout(()=>{const n=document.getElementById('nxPName'),r=document.getElementById('nxPRole'),badge=document.getElementById('nxPBadge');if(n&&window.currentRole)n.textContent=window.currentRole==='admin'?'管理员':(window.currentUserId||'用户');if(r&&window.currentRole)r.textContent=window.currentRole==='admin'?'管理员账号':'普通用户';if(badge&&window.currentRole)badge.textContent=window.currentRole==='admin'?'Admin':'Free';},0);},true);});
+})();
+</script>
+
 </body></html>
