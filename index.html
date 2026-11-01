@@ -574,20 +574,25 @@ body.nx-light .cr-item{background:#f3efe0}
 <div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
 <div class="app">
  <aside class="sidebar">
-  <div class="brand"><div class="logo">念</div><div><h1>念绪 AI</h1><small>THOUGHTS, IN MOTION</small></div></div>
-  <button class="primary" id="newChat">＋　开启新对话</button>
-  <div class="side-label">工作空间</div>
-  <div class="side-actions">
-   <button class="ghost" id="adminDrawerButton" type="button">▣　管理后台</button>
-   <button class="ghost" id="openSettings">⚙　设置中心</button>
-   <button class="ghost" id="openAppearance">✦　外观与动态背景</button>
-   <button class="ghost" id="generateImageBtn">▧　AI 生图</button>
-   <button class="ghost" id="exportChat">⇩　导出聊天记录</button>
-   <button class="ghost" id="switchAccountBtn" type="button">⇄　切换账号</button>
+  <div class="brand user-head"><div class="logo av-circle">XU</div><div><h1 id="sideUserName">xu nian</h1><small id="sideUserMail">已登录</small></div><button class="iconbtn side-close" id="sideCloseBtn" type="button" aria-label="关闭">≫</button></div>
+  <div class="side-actions grok-menu">
+   <button class="ghost menu-item" id="creatorBtnSide" type="button"><span class="mi">✨</span>创新 AI <span class="badge-new">新的</span></button>
+   <button class="ghost menu-item" id="noticeButtonSide" type="button"><span class="mi">📢</span>公告</button>
+   <button class="ghost menu-item" id="adminDrawerButton" type="button"><span class="mi">▣</span>管理后台</button>
+   <button class="ghost menu-item" id="openSettings" type="button"><span class="mi">⚙</span>设置</button>
+   <button class="ghost menu-item" id="openAppearance" type="button"><span class="mi">◐</span>外观与背景</button>
+   <button class="ghost menu-item" id="generateImageBtn" type="button"><span class="mi">▧</span>AI 生图</button>
+   <button class="ghost menu-item" id="exportChat" type="button"><span class="mi">⇩</span>导出记录</button>
+   <button class="ghost menu-item" id="switchAccountBtn" type="button"><span class="mi">⇄</span>切换账号</button>
+   <button class="ghost menu-item" id="newChat" type="button"><span class="mi">＋</span>开启新对话</button>
   </div>
-  <div class="side-label">连接状态</div>
+  <div class="premium-banner">
+   <div class="pb-text"><b>订阅 Premium 节省 50%</b><small>高级问询 · 语音 · Imagine</small></div>
+   <button class="pb-btn" type="button">领取优惠</button>
+  </div>
+  <div class="side-label">对话</div>
   <div class="status"><span class="dot" id="statusDot"></span><span id="statusText">等待发送消息</span></div>
-  <div class="side-note">念绪 AI · 联网搜索 · 专家分析 · AI 生图。<br>免费公共服务可能限流，请勿输入敏感信息。</div>
+  <div class="side-note">念绪 AI · 2.8.3 · 流畅深色体验</div>
  </aside>
  <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop" aria-hidden="true"></div>
  <main class="main">
@@ -633,7 +638,7 @@ body.nx-light .cr-item{background:#f3efe0}
  <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="说点什么…"></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">Nianxu Control Room · 2.8.0 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">Nianxu Control Room · 2.8.3 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
  <div class="nx-profile"><div class="av">念</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>服务器接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
  <p class="settings-page-note">管理员可配置服务器接口；普通用户只通过服务器代理使用 AI，接口地址和 API Key 不会发送到浏览器。</p>
  <div id="apiList"></div>
@@ -644,7 +649,7 @@ body.nx-light .cr-item{background:#f3efe0}
  </div>
  <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.8.0 Pro</strong><span>Build 2026.11 · 2.8</span><p>本次更新：奶龙并入创新AI（官方奶龙设定 + 一键套用模板）；全新动效与更顺滑的滑动（弹窗下滑关闭、左缘右滑开导航）；设置页加强；新用户登录后弹出公告。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 2.8.3 Pro</strong><span>Build 2026.11 · 2.8.3</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、管理后台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 开启互怼强度匹配</label>
@@ -679,7 +684,7 @@ body.nx-light .cr-item{background:#f3efe0}
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.8.0 Pro" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 2.8.3 Pro" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -1058,6 +1063,50 @@ body.nx-light .cr-item.official{background:linear-gradient(135deg,color-mix(in s
 .cr-pick button.on{transform:scale(1.1)}
 .cr-save{box-shadow:0 8px 20px #7a6bff44;transition:transform .2s var(--soft)}
 .cr-save:active{transform:scale(.97)}
+/* ===== 2.8.3 Grok-style UI overrides ===== */
+:root{--bg:#000;--panel:#111;--panel2:#1a1a1a;--line:rgba(255,255,255,.08);--text:#f5f5f5;--muted:#9a9a9a;--accent:#1d9bf0}
+body{background:#000!important;color:var(--text)}
+#backdrop{background:#000!important}
+.app{padding:0!important;max-width:none!important;gap:0!important;grid-template-columns:min(300px,86vw) 1fr}
+.sidebar,.main{border-radius:0!important;border:none!important;background:#000!important;box-shadow:none!important}
+.sidebar{padding:12px 10px 20px;border-right:1px solid var(--line)!important}
+.user-head{display:flex;align-items:center;gap:12px;padding:8px 6px 16px}
+.av-circle{width:40px!important;height:40px!important;border-radius:50%!important;background:#5c4a3a!important;font-size:14px!important;font-weight:700;display:grid;place-items:center}
+.user-head h1{font-size:16px;margin:0;font-weight:600}
+.user-head small{font-size:12px;color:var(--muted)}
+.side-close{margin-left:auto;background:transparent;border:0;font-size:18px;color:var(--muted)}
+.grok-menu{display:flex;flex-direction:column;gap:2px;margin-bottom:12px}
+.menu-item{display:flex!important;align-items:center;gap:12px;padding:12px 14px!important;border-radius:12px!important;border:0!important;background:transparent!important;font-size:15px;color:var(--text)!important;text-align:left}
+.menu-item:hover,.menu-item:active{background:#1a1a1a!important}
+.menu-item .mi{width:22px;text-align:center;opacity:.9}
+.badge-new{margin-left:auto;font-size:11px;padding:2px 8px;border-radius:99px;background:#1d9bf0;color:#fff;font-weight:600}
+.premium-banner{display:flex;align-items:center;gap:10px;margin:8px 4px 16px;padding:12px 14px;border-radius:14px;background:linear-gradient(90deg,#1d9bf0,#0a66c2);color:#fff}
+.pb-text{flex:1}.pb-text b{display:block;font-size:13px}.pb-text small{font-size:11px;opacity:.9}
+.pb-btn{border:0;background:#fff;color:#0a66c2;font-weight:700;font-size:12px;padding:6px 12px;border-radius:99px;cursor:pointer}
+.side-label{font-size:13px;color:var(--muted);padding:8px 14px 4px;letter-spacing:0;text-transform:none}
+.topbar{height:56px;padding:0 12px;border-bottom:1px solid var(--line)!important;background:#000!important}
+.top-title{font-size:16px}
+.composer-wrap{background:#000!important;border-top:1px solid var(--line)!important;padding:10px 12px 16px}
+.composer{background:#1a1a1a;border-radius:24px;padding:8px 12px;border:1px solid var(--line)}
+#prompt{background:transparent;color:var(--text);border:0;font-size:15px}
+.msg{border-radius:16px;background:#1a1a1a}
+.msg.user{background:linear-gradient(135deg,#1d4ed8,#0ea5e9)}
+.welcome .orb{background:linear-gradient(135deg,#1d9bf0,#8b5cf6)}
+#entryGate{background:#000!important}
+#entryGate .gate-card{background:#111!important;border:1px solid #222!important;border-radius:20px!important;box-shadow:0 20px 60px #000c!important}
+#entryGate .logo{background:linear-gradient(135deg,#1d9bf0,#8b5cf6)!important;box-shadow:0 10px 30px #1d9bf066!important}
+#entryGate .gate-actions .primary{background:linear-gradient(135deg,#1d9bf0,#0a66c2)!important;box-shadow:0 8px 24px #1d9bf055!important}
+#settingsModal .modal{background:#111!important;border:1px solid #222!important}
+#settingsModal .modal-top{background:#111!important}
+#settingsModal .nx-profile{background:#1a1a1a!important;border:1px solid #222}
+#settingsModal .settings-nav button{background:#1a1a1a!important}
+body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
+@media (max-width:860px){
+ .app{grid-template-columns:1fr}
+ .sidebar{position:fixed;inset:0 auto 0 0;width:min(300px,86vw);z-index:40;transform:translateX(-105%);transition:transform .28s cubic-bezier(.22,1,.36,1);background:#000!important}
+ body.mobile-drawer-open .sidebar{transform:translateX(0)}
+ .mobile-drawer-backdrop{background:#000a}
+}
 </style>
 <div id="entryGate">
  <div class="gate-stars"></div>
@@ -1176,7 +1225,7 @@ async function send(){
  aborter=null;setBusy(false);
 }
 function openModal(id){$(id).classList.add("show")}
-function closeMobileDrawer(){$("mobileDrawerBackdrop")?.classList.remove("show");document.body.classList.remove("mobile-drawer-open")}function openMobileDrawer(){document.body.classList.add("mobile-drawer-open");$("mobileDrawerBackdrop")?.classList.add("show")}$("mobileMenuBtn").onclick=()=>document.body.classList.contains("mobile-drawer-open")?closeMobileDrawer():openMobileDrawer();$("mobileDrawerBackdrop").onclick=closeMobileDrawer;document.querySelectorAll(".sidebar button").forEach(b=>b.addEventListener("click",closeMobileDrawer));
+function closeMobileDrawer(){$("mobileDrawerBackdrop")?.classList.remove("show");document.body.classList.remove("mobile-drawer-open")}function openMobileDrawer(){document.body.classList.add("mobile-drawer-open");$("mobileDrawerBackdrop")?.classList.add("show")}$("mobileMenuBtn").onclick=()=>document.body.classList.contains("mobile-drawer-open")?closeMobileDrawer():openMobileDrawer();$("mobileDrawerBackdrop").onclick=closeMobileDrawer;if($("sideCloseBtn"))$("sideCloseBtn").onclick=closeMobileDrawer;document.querySelectorAll(".sidebar button").forEach(b=>b.addEventListener("click",closeMobileDrawer));
 async function switchLoginAccount(adminMode=false){const message=adminMode?"当前是普通账号。是否退出并切换到管理员登录？管理员 ID：念绪968":"退出当前账号并切换到其他账号？";if(!confirm(message))return;try{await apiRequest("/api/logout",{method:"POST",body:JSON.stringify({})})}catch(_){}currentRole="guest";currentUserId="";document.body.classList.remove("entered");$("entryGate").style.display="flex";$("entryId").value=adminMode?"念绪968":"";$("entryPassword").value="";$("entryError").textContent=adminMode?"请输入管理员密码后登录。":"请输入要切换的账号。";syncAdminUi();closeMobileDrawer();setTimeout(()=>$("entryId").focus(),80)}
 $("switchAccountBtn").onclick=()=>switchLoginAccount(false);$("mobileWorkTab").onclick=()=>{$("prompt").focus();window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})};$("mobileCreateTab").onclick=()=>openImageGenerator();$("mobileWriteTab").onclick=()=>{$("prompt").value="请帮我写作：";$("prompt").dispatchEvent(new Event("input",{bubbles:true}));$("prompt").focus()};$("mobileAnswerTab").onclick=()=>{expertMode=true;save("nx_expert_mode",true);syncModeButtons();$("prompt").value="请帮我解答这个话题：";$("prompt").dispatchEvent(new Event("input",{bubbles:true}));$("prompt").focus()};
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>$(b.dataset.close).classList.remove("show"));
@@ -1188,6 +1237,8 @@ document.addEventListener("keydown",e=>{
 });
 document.querySelectorAll(".extra-modal").forEach(layer=>layer.addEventListener("click",e=>{if(e.target===layer)layer.classList.remove("show")}));
 $("openSettings").onclick=$("mobileSettings").onclick=()=>{syncAdminUi();if(currentRole==="admin")renderApis();switchSettingsPane(currentRole==="admin"?"api":"version");openModal("settingsModal")};
+if($("creatorBtnSide"))$("creatorBtnSide").onclick=()=>{$("creatorModal").classList.add("show");if(typeof view==="function")view("home");if(typeof renderHome==="function")renderHome();if(typeof load==="function")load(false)};
+if($("noticeButtonSide"))$("noticeButtonSide").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
 $("openAppearance").onclick=$("mobileAppearance").onclick=()=>openModal("appearanceModal");
 async function renderApis(){
  try{const remote=await apiRequest("/api/admin/apis");apis=remote.apis||[]}catch(e){setStatus("接口配置仅管理员可读取");return}
@@ -1224,7 +1275,7 @@ applyFeaturePrefs();
 if($("replyStyleSelect")){$("replyStyleSelect").value=load("nx_reply_style","balanced");$("replyStyleSelect").onchange=()=>save("nx_reply_style",$("replyStyleSelect").value)}
 async function checkServiceHealth(){try{const r=await fetch("/api/health",{cache:"no-store"});const d=await r.json();$("serviceHealth").textContent=d.status==="ok"?"服务器在线 · "+d.latency+"ms":"服务检查异常";$("roleSummary").textContent="当前会话："+(currentRole==="admin"?"管理员 · 可管理系统":"普通用户 · 配置按设备隔离")}catch(e){$("serviceHealth").textContent="服务检查失败"}}
 checkServiceHealth();
-async function loadProfile(){try{const p=await apiRequest("/api/account/profile");currentUserId=p.id;$("profileName").value=p.displayName||"";$("profileId").value=p.id||"";$("profileId").readOnly=p.role==="admin";renderMemories()}catch(e){$("profileStatus").textContent=e.message}}
+async function loadProfile(){try{const p=await apiRequest("/api/account/profile");currentUserId=p.id;$("profileName").value=p.displayName||"";$("profileId").value=p.id||"";$("profileId").readOnly=p.role==="admin";renderMemories();const nameEl=$("sideUserName");if(nameEl)nameEl.textContent=p.displayName||p.id||"用户";const mailEl=$("sideUserMail");if(mailEl)mailEl.textContent=p.role==="admin"?"管理员":"已登录";const av=$("sideUserName")?.previousElementSibling||document.querySelector(".av-circle");if(av&&p.displayName)av.textContent=(p.displayName.slice(0,2)||"XU").toUpperCase()}catch(e){$("profileStatus").textContent=e.message}}
 $("addMemory").onclick=()=>{const value=$("memoryInput").value.trim().slice(0,200);if(!value)return;const list=readMemories();if(!list.includes(value))list.unshift(value);save(memoryKey(),list.slice(0,20));$("memoryInput").value="";renderMemories()};
 $("saveProfile").onclick=async()=>{const body={displayName:$("profileName").value.trim(),newId:$("profileId").value.trim(),currentPassword:$("profileCurrentPassword").value,newPassword:$("profileNewPassword").value};try{const p=await apiRequest("/api/account/profile",{method:"PUT",body:JSON.stringify(body)});currentUserId=p.id;$("profileId").value=p.id;$("profileCurrentPassword").value="";$("profileNewPassword").value="";$("profileStatus").textContent="账号资料已保存";renderMemories()}catch(e){$("profileStatus").textContent=e.message}};
  $("saveSettings").onclick=async()=>{if(currentRole!=="admin")return alert("只有管理员可以修改接口");try{const result=await apiRequest("/api/admin/apis",{method:"PUT",body:JSON.stringify({apis})});apis=result.apis||apis;$("settingsModal").classList.remove("show");$("modelLabel").textContent="服务器接口 · 智谱优先";setStatus("服务器接口配置已保存",true)}catch(e){alert(e.message)}};
@@ -1367,7 +1418,7 @@ let t=0;const upd=()=>{if(t)return;t=requestAnimationFrame(()=>{t=0;btn.classLis
 chat.addEventListener('scroll',upd,{passive:true});addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);
 new MutationObserver(upd).observe(chat,{childList:true});
 btn.onclick=()=>{if(mobile())scrollTo({top:document.documentElement.scrollHeight,behavior:'smooth'});else chat.scrollTo({top:chat.scrollHeight,behavior:'smooth'})};
-const m=document.getElementById('settingsModal'),fill=()=>{try{document.getElementById('nxPName').textContent=currentRole==='admin'?'管理员':(currentUserId||'未登录');document.getElementById('nxPRole').textContent=currentRole==='admin'?'管理员账号 · '+currentUserId:'普通用户';const b=document.getElementById('nxPBadge');b.textContent=currentRole==='admin'?'Admin':'Free'}catch(e){}};
+const m=document.getElementById('settingsModal'),fill=()=>{try{document.getElementById('nxPName').textContent=currentRole==='admin'?'管理员':(currentUserId||'未登录');document.getElementById('nxPRole').textContent=currentRole==='admin'?'管理员账号 · '+currentUserId:'普通用户';const b=document.getElementById('nxPBadge');b.textContent=currentRole==='admin'?'Admin':'Free';const nameEl=document.getElementById('sideUserName');if(nameEl)nameEl.textContent=currentRole==='admin'?'管理员':(currentUserId||'xu nian');const mailEl=document.getElementById('sideUserMail');if(mailEl)mailEl.textContent=currentRole==='admin'?'管理员':'已登录'}catch(e){}};
 new MutationObserver(()=>{if(m.classList.contains('show'))setTimeout(fill,60)}).observe(m,{attributes:true,attributeFilter:['class']});
 document.getElementById('nxSwitch').onclick=()=>{m.classList.remove('show');switchLoginAccount(false)};
 })();
