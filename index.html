@@ -1310,7 +1310,11 @@ if($("noticeButtonSide"))$("noticeButtonSide").onclick=()=>{refreshNotices();$("
 if($("humanSupportBtnSide"))$("humanSupportBtnSide").onclick=()=>{if(currentRole==="admin"){if(typeof openAdminSupportPanel==="function")openAdminSupportPanel();return}openModal("humanSupportModal");if(typeof refreshMySupport==="function")refreshMySupport()};
 if($("clearChatSide"))$("clearChatSide").onclick=()=>{if(confirm("确定清空当前对话？")){const chat=$("chat");if(chat){chat.innerHTML="";const w=document.createElement("div");w.className="welcome";w.id="welcome";w.innerHTML='<div class="orb">念</div><h2>你好，我是念绪 AI</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div>';chat.append(w);setStatus("对话已清空",true)}}};
 if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("念绪 AI 2.9.0 Pro\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 管理后台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
-$("openAppearance").onclick=$("mobileAppearance")?.onclick=()=>openModal("appearanceModal");
+(function(){
+  const openApp=()=>openModal("appearanceModal");
+  if($("openAppearance")) $("openAppearance").onclick=openApp;
+  if($("mobileAppearance")) $("mobileAppearance").onclick=openApp;
+})();
 // 设置中心已移除，管理员接口配置请从管理后台进入
 async function renderApis(){
  try{const remote=await apiRequest("/api/admin/apis");apis=remote.apis||[]}catch(e){setStatus("接口配置仅管理员可读取");return}
@@ -1461,40 +1465,8 @@ async function enterApp(){
   }catch(e){errEl.textContent=e.message||"登录失败"}
   finally{btn.disabled=false}
 }
-$("enterBtn").addEventListener("click",enterApp);
-$("entryId").addEventListener("keydown",e=>{if(e.key==="Enter")$("registerPanel").classList.contains("hidden")?$("entryPassword").focus():$("registerPassword").focus()});$("entryPassword").addEventListener("keydown",e=>{if(e.key==="Enter")enterApp()});
-$("showRegisterBtn").onclick=()=>{const rp=$("registerPanel"),lf=$("loginForm");if(rp)rp.classList.remove("hidden");if(lf)lf.classList.add("hidden");$("entryError").textContent="";const rpw=$("registerPassword");if(rpw)rpw.focus()};$("showRegisterBtn").classList.add("hidden");$("entryError").textContent="";$("registerPassword").focus();updateRegistrationHint()};
-$("backLoginBtn").onclick=()=>{const rp=$("registerPanel"),lf=$("loginForm");if(rp)rp.classList.add("hidden");if(lf)lf.classList.remove("hidden");$("entryError").textContent="";const ep=$("entryPassword");if(ep)ep.focus()};$("showRegisterBtn").classList.remove("hidden");$("entryError").textContent="";$("entryPassword").focus()};
-function registrationError(){const id=$("entryId").value.trim(),password=$("registerPassword").value,confirm=$("registerConfirm").value;if(!id)return "请输入账号 ID";if(!/^[A-Za-z0-9_\-\u4e00-\u9fff]{2,32}$/.test(id))return "账号需为 2–32 位中文、字母、数字、下划线或短横线";if(password.length<6||password.length>128)return "密码需为 6–128 位";if(password!==confirm)return "两次密码不一致";return ""}
-function updateRegistrationHint(){const hint=$("entryIdHint");if(!hint)return;const id=$("entryId").value.trim();hint.textContent=id?( /^[A-Za-z0-9_\-\u4e00-\u9fff]{2,32}$/.test(id)?"账号 ID 格式正确":"账号 ID 需为 2–32 位中文、字母、数字、下划线或短横线"):"登录或注册时使用此账号 ID（2–32 位）";hint.classList.toggle("valid",Boolean(id)&&!registrationError())}
-["entryId","registerPassword","registerConfirm"].forEach(id=>$(id).addEventListener("input",updateRegistrationHint));
-document.querySelectorAll("[data-password-toggle]").forEach(button=>button.onclick=()=>{const input=$(button.dataset.passwordToggle),shown=input.type==="text";input.type=shown?"password":"text";button.textContent=shown?"显示":"隐藏"});
-$("registerPassword").addEventListener("keydown",e=>{if(e.key==="Enter")$("registerConfirm").focus()});$("registerConfirm").addEventListener("keydown",e=>{if(e.key==="Enter")$("registerBtn").click()});
-$("registerBtn").onclick=async()=>{
-  const id=($("entryId")&&$("entryId").value||"").trim();
-  const password=($("registerPassword")&&$("registerPassword").value)||"";
-  const confirm=($("registerConfirm")&&$("registerConfirm").value)||"";
-  const errEl=$("entryError");
-  if(!id){errEl.textContent="请输入账号 ID";return}
-  if(id.length<2||id.length>32){errEl.textContent="账号长度需2-32位";return}
-  if(password.length<6){errEl.textContent="密码至少6位";return}
-  if(password!==confirm){errEl.textContent="两次密码不一致";return}
-  const btn=$("registerBtn"); if(btn)btn.disabled=true;
-  errEl.textContent="正在创建账号…";
-  try{
-    await apiRequest("/api/register",{method:"POST",body:JSON.stringify({id,password})});
-    storeLoginId(id);
-    if($("registerPanel"))$("registerPanel").classList.add("hidden");
-    if($("loginForm"))$("loginForm").classList.remove("hidden");
-    if($("entryPassword"))$("entryPassword").value=password;
-    if($("registerPassword"))$("registerPassword").value="";
-    if($("registerConfirm"))$("registerConfirm").value="";
-    errEl.textContent="账号创建成功，正在登录…";
-    await enterApp();
-  }catch(e){errEl.textContent=e.message||"注册失败"}
-  finally{if(btn)btn.disabled=false}
-};
-$("noticeButton").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
+// === 旧登录事件绑定已移除，由页面底部独立登录脚本负责 ===
+// enterBtn / showRegisterBtn / registerBtn 等由 window.__nxLogin / __nxRegister 处理
 function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");$("adminSupportModal").classList.add("show");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return;alert("接口配置已整合到管理后台。\n请在管理后台发布公告区下方或通过服务器 api-config.json 管理。\n（2.9.0 已移除独立设置中心，功能全部集中到侧栏与管理后台）")};
 document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dataset.extraClose).classList.remove("show"));
 $("refreshUsers").onclick=refreshUsers;
@@ -1519,8 +1491,7 @@ if($('fontFamily')){$('fontFamily').value=pref.fontFamily;$('fontSize').value=pr
  $('themeMode').onchange=()=>{pref.theme=$('themeMode').value;save('nx_preferences',pref);applyPreferences(pref)};
 }
 // PWA service worker registration
-if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('/sw.js').catch(()=>{});
-</script>
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('/sw.js').catch(()=>{});</script>
 <script>
 (function(){
 const sel='.modal-back,.extra-modal';
