@@ -1158,7 +1158,7 @@ body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 .nx-login-error{min-height:20px;margin-top:12px;font-size:13px;color:#ff6b6b}
 .nx-login-foot{margin-top:18px;font-size:11px;color:#555}
 .nx-login-form.hidden{display:none!important}
-body.entered #entryGate{display:none!important}
+body.entered #entryGate{display:none!important;visibility:hidden!important;pointer-events:none!important}
 
 </style>
 <!-- ===== 2.9.0 全新干净登录界面 ===== -->
@@ -1180,6 +1180,7 @@ body.entered #entryGate{display:none!important}
     </div>
 
     <div class="nx-login-form hidden" id="registerPanel">
+      <input id="registerId" type="text" autocomplete="username" placeholder="账号 ID（2-32位）" maxlength="32">
       <input id="registerPassword" type="password" autocomplete="new-password" placeholder="设置密码（至少6位）" minlength="6" maxlength="128">
       <input id="registerConfirm" type="password" autocomplete="new-password" placeholder="再次输入密码" minlength="6" maxlength="128">
       <button type="button" class="nx-btn nx-btn-primary" id="registerBtn" onclick="window.__nxRegister && window.__nxRegister()">创建账号并登录</button>
@@ -1698,6 +1699,16 @@ document.addEventListener('touchmove',e=>{
 /* ===== 独立登录脚本（不依赖主脚本，保证一定能登录） ===== */
 (function(){
   function $(id){ return document.getElementById(id); }
+  // 刚登录成功后的保护：强制不显示登录门
+  try {
+    if(sessionStorage.getItem("nx_just_logged_in") === "1"){
+      sessionStorage.removeItem("nx_just_logged_in");
+      document.body.classList.add("entered");
+      var g = document.getElementById("entryGate");
+      if(g){ g.style.display="none"; g.style.visibility="hidden"; }
+    }
+  } catch(_){}
+
   function showErr(msg){ var e=$("entryError"); if(e) e.textContent = msg || ""; }
   function setBusy(b){ var btn=$("enterBtn"); if(btn) btn.disabled = !!b; var rbtn=$("registerBtn"); if(rbtn) rbtn.disabled = !!b; }
 
@@ -1764,9 +1775,10 @@ document.addEventListener('touchmove',e=>{
       } catch(_){}
 
       document.body.classList.add("entered");
-      var gate=$("entryGate"); if(gate) gate.style.display="none";
+      try { sessionStorage.setItem("nx_just_logged_in", "1"); } catch(_){}
+      var gate=$("entryGate"); if(gate){ gate.style.display="none"; gate.style.visibility="hidden"; }
       showErr("");
-      // 刷新页面让主脚本正确初始化会话（最稳）
+      // 刷新让主界面正确加载
       location.reload();
     } catch(err) {
       showErr("网络错误：" + (err.message || "请检查网络后重试"));
@@ -1775,7 +1787,7 @@ document.addEventListener('touchmove',e=>{
   };
 
   window.__nxRegister = async function(){
-    var id = ($("entryId") && $("entryId").value || "").trim();
+    var id = ($("registerId") && $("registerId").value || $("entryId") && $("entryId").value || "").trim();
     var password = ($("registerPassword") && $("registerPassword").value) || "";
     var confirm = ($("registerConfirm") && $("registerConfirm").value) || "";
     if(!id){ showErr("请输入账号 ID"); return; }
@@ -1792,16 +1804,18 @@ document.addEventListener('touchmove',e=>{
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({id: id, password: password})
       });
-      var data = await res.json().catch(()=>({}));
+      var data = await res.json().catch(function(){return {};});
       if(!res.ok){
         showErr(data.error || ("注册失败 " + res.status));
         setBusy(false);
         return;
       }
-      // 注册成功后自动用同一密码登录
+      // 注册成功：把账号填回登录框并自动登录
+      if($("entryId")) $("entryId").value = id;
       if($("entryPassword")) $("entryPassword").value = password;
       if($("registerPanel")) $("registerPanel").classList.add("hidden");
       if($("loginForm")) $("loginForm").classList.remove("hidden");
+      try { localStorage.setItem("nx_login_id", id); } catch(_){}
       showErr("账号创建成功，正在登录…");
       await window.__nxLogin();
     } catch(err) {
