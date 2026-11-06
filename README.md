@@ -3,7 +3,7 @@
 ## 部署
 
 - Runtime：Node.js 18+；Build Command：`npm install`；Start Command：`npm start`。
-- 默认管理员 ID 为“ASTRION968”，默认密码为“astrion968”。该默认密码较弱；公开部署前请在平台私密环境变量中改设 `ADMIN_ID` / `ADMIN_PASSWORD`。
+- 默认管理员 ID 为“念绪968”，默认密码为“nianxu968”。该默认密码较弱；公开部署前请在平台私密环境变量中改设 `ADMIN_ID` / `ADMIN_PASSWORD`。
 - 建议挂载持久化磁盘目录并设置 `DATA_DIR=/data`。账号、公告、接口配置和转人工会话均保存在服务端数据目录。
 - `TRUST_PROXY_HOPS` 默认 `0`，仅按 TCP 对端地址限流，不信任请求自带的 `X-Forwarded-For`。只有确认代理会覆盖/追加转发头时，才按可信代理层数配置。
 - AI 接口 Key 只在服务器环境变量或管理员后台保存，不发送到浏览器。智谱 GLM-Image 复用后台配置的智谱 API Key（或服务端 `ZHIPU_API_KEY`）；图片生成可能按智谱开放平台的当前价格计费。
