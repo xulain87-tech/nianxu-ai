@@ -15,7 +15,7 @@ const AI_CONFIG_FILE = path.join(DATA_DIR, 'ai-config.json');
 const ACCOUNTS_FILE = path.join(DATA_DIR, 'accounts.json');
 const SUPPORT_FILE = path.join(DATA_DIR, 'support.json');
 const PRESENCE_TTL = 90 * 1000;
-const APP_VERSION = '1.1.0';
+const APP_VERSION = '1.1.2';
 fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
 if (!fs.existsSync(ACCOUNTS_FILE)) fs.writeFileSync(ACCOUNTS_FILE, '{}');
@@ -134,7 +134,7 @@ async function proxyAiChat(messages,temperature=.7,autoFallback=true){
  for(const api of candidates){
   const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),25000);
   try{
-   const headers={'Content-Type':'application/json','User-Agent':'ASTRION/1.1.0'};
+   const headers={'Content-Type':'application/json','User-Agent':'ASTRION/1.1.2'};
    if(api.key) headers.Authorization='Bearer '+api.key;
    const r=await fetch(api.url,{method:'POST',headers,body:JSON.stringify({model:api.model,messages,temperature}),signal:controller.signal});
    const raw=await r.text();
@@ -172,7 +172,7 @@ async function generatePollinationsImage(prompt, aspect){
   const url='https://image.pollinations.ai/prompt/'+encodeURIComponent(String(prompt).slice(0,800))+'?'+q.toString();
   const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),90000);
   try{
-    const r=await fetch(url,{method:'GET',headers:{'Accept':'image/*','User-Agent':'ASTRION/1.1.0'},signal:controller.signal,redirect:'follow'});
+    const r=await fetch(url,{method:'GET',headers:{'Accept':'image/*','User-Agent':'ASTRION/1.1.2'},signal:controller.signal,redirect:'follow'});
     if(!r.ok) throw new Error('HTTP '+r.status);
     const type=(r.headers.get('content-type')||'image/jpeg').split(';')[0].trim();
     if(!type.startsWith('image/')) throw new Error('非图片响应');
@@ -304,7 +304,7 @@ const server=http.createServer(async(req,res)=>{
    send(res,404,{error:'接口不存在'});return;
   }
 if(url.pathname.startsWith('/api/')){send(res,404,{error:'接口不存在'});return;}
-  if(req.method!=='GET'){send(res,405,{error:'静态资源仅允许 GET'});return;}const publicPaths=new Set(['/','/index.html','/manifest.webmanifest','/icon.svg','/sw.js']);if(!publicPaths.has(url.pathname)){send(res,404,{error:'资源不存在'});return;}let pathname=decodeURIComponent(url.pathname);if(pathname==='/')pathname='/index.html';const file=path.resolve(ROOT,'.'+pathname);if(!file.startsWith(ROOT+path.sep)||file.startsWith(path.resolve(DATA_DIR)+path.sep)){send(res,403,{error:'禁止访问'});return;}
+  if(req.method!=='GET'){send(res,405,{error:'静态资源仅允许 GET'});return;}const publicPaths=new Set(['/','/index.html','/manifest.webmanifest','/icon.svg','/sw.js','/logo.png']);if(!publicPaths.has(url.pathname)){send(res,404,{error:'资源不存在'});return;}let pathname=decodeURIComponent(url.pathname);if(pathname==='/')pathname='/index.html';const file=path.resolve(ROOT,'.'+pathname);if(!file.startsWith(ROOT+path.sep)||file.startsWith(path.resolve(DATA_DIR)+path.sep)){send(res,403,{error:'禁止访问'});return;}
   fs.readFile(file,(err,data)=>{if(err){res.writeHead(404,secureHeaders({'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store'}));res.end('Not found');return;}const ext=path.extname(file);const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.jpg':'image/jpeg','.svg':'image/svg+xml','.webmanifest':'application/manifest+json; charset=utf-8'};res.writeHead(200,secureHeaders({'Content-Type':types[ext]||'application/octet-stream','Cache-Control':(ext==='.html'||file.endsWith('sw.js'))?'no-cache':'public, max-age=3600'}));res.end(data);});
  }catch(e){send(res,e.status||400,{error:e.message||'请求失败'});}
 });

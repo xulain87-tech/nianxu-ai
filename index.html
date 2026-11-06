@@ -56,7 +56,7 @@ body{background:transparent}
 .logo{animation:logoPulse 4s ease-in-out infinite}
 .primary,.send{transition:transform .22s,filter .22s,box-shadow .22s}
 .primary:hover,.send:hover{box-shadow:0 0 24px #8b7cff66}
-@keyframes ambientDrift{from{transform:translate3d(-2%,1%,0) rotate(-4deg) scale(.96)}to{transform:translate3d(3%,-2%,0) rotate(5deg) scale(1.1.08)}}
+@keyframes ambientDrift{from{transform:translate3d(-2%,1%,0) rotate(-4deg) scale(.96)}to{transform:translate3d(3%,-2%,0) rotate(5deg) scale(1.1.28)}}
 @keyframes messageIn{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes orbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @keyframes orbGlow{from{box-shadow:0 10px 28px #827aff44}to{box-shadow:0 14px 42px #49d9ce66}}
@@ -125,7 +125,7 @@ body{background:transparent}
 /* 轻量 UI：保留深色渐变和紫青强调色，移除高耗能模糊与大阴影 */
 .sidebar,.main{backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:0 8px 28px #0004;border-radius:18px}
 #backdrop{background:linear-gradient(135deg,#0a0f1d,#121a2b)}
-.primary,.send{box-shadow:none}.primary:hover,.send:hover{transform:none;filter:brightness(1.1.06)}
+.primary,.send{box-shadow:none}.primary:hover,.send:hover{transform:none;filter:brightness(1.1.26)}
 .modal-back,.extra-modal{backdrop-filter:none;-webkit-backdrop-filter:none;background:#050914f2}.modal-top{backdrop-filter:none;-webkit-backdrop-filter:none}
 .msg,.api-card,.notice-card{box-shadow:none}.settings-hero{background:#ffffff05}.msg.typing{opacity:.82}.msg.typing div:last-child::after{content:"";display:inline-block;width:18px;height:4px;margin-left:6px;border-radius:9px;background:linear-gradient(90deg,#9b8cff,#56e0d0);animation:typingPulse 1s ease-in-out infinite alternate}@keyframes typingPulse{from{opacity:.35;transform:scaleX(.65)}to{opacity:1;transform:scaleX(1)}}
 @media(max-width:760px){
@@ -305,7 +305,7 @@ body{background:radial-gradient(900px 500px at 85% -10%,#e0805f14,transparent 60
 .toolrow button,.mode-btn{border-radius:999px!important;transition:background .2s,color .2s,transform .2s}
 .mode-btn.active{background:#e0805f26!important;color:var(--accent)!important;border-color:#e0805f77!important}
 .send{width:42px!important;height:42px!important;border-radius:50%!important;background:var(--accent-g)!important;box-shadow:0 6px 16px #d4684a55!important;transition:transform .2s!important}
-.send:hover:not(:disabled){transform:scale(1.1.08)}
+.send:hover:not(:disabled){transform:scale(1.1.28)}
 .send:disabled{background:var(--panel)!important;box-shadow:none!important}
 #chat::-webkit-scrollbar{width:8px}#chat::-webkit-scrollbar-thumb{background:#ffffff26;border-radius:8px;border:0}#chat::-webkit-scrollbar-track{background:transparent}
 :is(#settingsModal,#appearanceModal,#imagePromptModal,#humanSupportModal,#noticeModal,#adminModal,#adminSupportModal) :is(.modal,.extra-box){background:var(--panel)!important;border:1px solid var(--line)!important;box-shadow:0 30px 80px #000a!important}
@@ -636,7 +636,7 @@ body.mobile-drawer-open .sidebar .menu-item{
 
 
 <style id="nx-login-premium">
-/* ===== ASTRION1.1.0.1 绚丽多彩登录 ===== */
+/* ===== ASTRION1.1.2.1 绚丽多彩登录 ===== */
 #entryGate{
   position:fixed!important;inset:0!important;z-index:99999!important;
   display:flex!important;align-items:center;justify-content:center;
@@ -657,7 +657,7 @@ body.entered #entryGate *{
 .nx-orb-c{width:36vmax;height:36vmax;left:35%;top:45%;background:radial-gradient(circle,#a855f7aa,transparent 70%);opacity:.55;animation:nxOrbC 12s ease-in-out infinite alternate}
 .nx-grid{position:absolute;inset:0;opacity:.06;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:42px 42px;mask-image:radial-gradient(ellipse at center,black 15%,transparent 72%)}
 @keyframes nxOrbA{from{transform:translate(0,0) scale(1)}to{transform:translate(8%,5%) scale(1.1)}}
-@keyframes nxOrbB{from{transform:translate(0,0) scale(1)}to{transform:translate(-6%,-4%) scale(1.1.08)}}
+@keyframes nxOrbB{from{transform:translate(0,0) scale(1)}to{transform:translate(-6%,-4%) scale(1.1.28)}}
 @keyframes nxOrbC{from{transform:translate(-50%,-50%) scale(1)}to{transform:translate(-35%,-55%) scale(1.15)}}
 
 .nx-login-card{
@@ -701,7 +701,7 @@ body.entered #entryGate *{
 .nx-login-logo span{font-size:30px;font-weight:800;color:#fff;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.25)}
 @keyframes nxLogoPulse{
   0%,100%{box-shadow:0 14px 36px rgba(255,107,157,.4),0 0 0 1px rgba(255,255,255,.2) inset;transform:scale(1)}
-  50%{box-shadow:0 16px 44px rgba(96,165,250,.45),0 0 0 1px rgba(255,255,255,.25) inset;transform:scale(1.1.03)}
+  50%{box-shadow:0 16px 44px rgba(96,165,250,.45),0 0 0 1px rgba(255,255,255,.25) inset;transform:scale(1.1.23)}
 }
 
 .nx-login-title{
@@ -751,7 +751,7 @@ body.entered #entryGate *{
   background-size:180% 100%;
   box-shadow:0 12px 32px rgba(255,107,157,.35);
 }
-.nx-btn-primary:hover{filter:brightness(1.1.08);background-position:100% 0}
+.nx-btn-primary:hover{filter:brightness(1.1.28);background-position:100% 0}
 .nx-btn-ghost{
   color:#d4c4e8;background:rgba(255,255,255,.04);
   border:1px solid rgba(255,180,220,.15)!important;
@@ -1494,6 +1494,73 @@ body.entered #welcome .orb {
 .as-ver{text-align:center; color:#636366; font-size:12px; margin-top:18px}
 </style>
 
+
+<style id="nx-hotfix-111">
+/* logo 真图 */
+.nx-login-logo{width:120px!important;height:120px!important;margin:8px auto 16px!important;border-radius:50%!important;overflow:hidden!important;background:#000!important;box-shadow:0 0 40px rgba(80,140,255,.4)!important}
+.nx-login-logo img,.as-avatar img,.dola-user-av img,.top-logo,.dola-side-brand img,.dola-back-pill img{width:100%!important;height:100%!important;object-fit:cover!important;display:block!important;border-radius:50%!important}
+.as-avatar{width:72px!important;height:72px!important;border-radius:50%!important;overflow:hidden!important;margin:0 auto 10px!important;padding:0!important;background:#000!important}
+.dola-user-av{width:36px!important;height:36px!important;border-radius:50%!important;overflow:hidden!important;display:inline-block!important;background:#111!important}
+.top-logo{width:22px!important;height:22px!important;margin-right:6px!important;display:inline-block!important;vertical-align:middle!important}
+.dola-side-brand img{width:28px!important;height:28px!important}
+.dola-back-pill img{width:22px!important;height:22px!important}
+
+/* 禁止 CSS 再往登录标题塞重复字 */
+#entryGate h1::before,#entryGate .nx-login-title::before,#entryGate .login-title::before{content:none!important}
+#entryGate .nx-login-title{font-size:14px!important;color:#c7c7cc!important;font-weight:400!important}
+
+/* 顶栏分开 */
+.topbar{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;padding:8px 10px!important;background:#000!important}
+.topbar-left,.topbar-center,.top-actions{display:flex!important;align-items:center!important;gap:8px!important}
+.topbar-center .cr-btn,.topbar-center .human-support-btn{
+  display:inline-flex!important;align-items:center!important;gap:4px!important;
+  padding:6px 12px!important;border-radius:16px!important;font-size:12px!important;
+  white-space:nowrap!important;border:0!important;background:#1c1c1e!important;color:#fff!important;
+}
+.topbar-center .cr-btn{background:#1a1530!important}
+.top-title{font-size:15px!important;font-weight:600!important;display:flex!important;align-items:center!important}
+.top-sub{font-size:11px!important;color:#8e8e93!important}
+
+/* 发送键必须可见 */
+.composer,.input-bar{
+  position:fixed!important;left:10px!important;right:10px!important;bottom:10px!important;
+  z-index:80!important;display:flex!important;flex-direction:column!important;
+  background:#1c1c1e!important;border:1px solid rgba(255,255,255,.08)!important;
+  border-radius:22px!important;padding:8px 10px!important;
+}
+.composer .input-row{display:flex!important;align-items:center!important;gap:8px!important;width:100%!important}
+.composer textarea,#prompt{flex:1!important;min-width:0!important;background:transparent!important;border:0!important;color:#fff!important}
+.composer .send,#sendBtn.send,button.send,#sendBtn{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:40px!important;height:40px!important;min-width:40px!important;
+  border-radius:50%!important;border:0!important;
+  background:#0a84ff!important;color:#fff!important;font-size:18px!important;
+  opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+  flex-shrink:0!important;position:relative!important;z-index:81!important;
+}
+.composer .send:disabled,#sendBtn:disabled{opacity:.45!important}
+
+/* 去掉重复欢迎条 */
+#dolaHome{display:none!important}
+#welcome h2{font-size:1.2rem!important}
+
+/* 非管理员隐藏管理入口（JS 再加固） */
+body:not(.role-admin) #adminButton,
+body:not(.role-admin) #adminDrawerButton,
+body:not(.role-admin) #apiConfigSideBtn,
+body:not(.role-admin) #asApiRow,
+body:not(.role-admin) #asAdminRow{display:none!important}
+</style>
+
+
+<style id="nx-top-clean">
+.topbar-center, .topbar .cr-btn, .topbar .human-support-btn, .topbar #adminButton{display:none!important}
+#hiddenTopTriggers{position:absolute!important;width:0!important;height:0!important;overflow:hidden!important;opacity:0!important;pointer-events:none!important}
+#dolaHome{display:none!important;visibility:hidden!important;height:0!important;overflow:hidden!important}
+/* 防止旧样式把隐藏按钮拉回顶栏 */
+.topbar .nl-btn.cr-btn, .topbar #creatorBtn, .topbar #humanSupportBtn{display:none!important}
+</style>
+
 </head>
 <body>
 <div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
@@ -1504,9 +1571,7 @@ body.entered #welcome .orb {
       <div class="dola-search"><span>🔍</span><input id="sideSearch" type="search" placeholder="搜索" autocomplete="off"/></div>
       <button type="button" class="dola-icon-btn" id="newChat" title="新对话">✎</button>
     </div>
-    <button type="button" class="dola-side-brand" id="sideHomeBtn">
-      <img src="/logo.png" alt="ASTRION"/><span>ASTRION</span>
-    </button>
+    <button type="button" class="dola-side-brand" id="sideHomeBtn"><img src="/logo.png" alt=""/><span>ASTRION</span></button>
     <div class="dola-side-list">
       <button type="button" class="dola-side-item" id="creatorBtnSide"><span class="ico">✨</span><span>创新 AI</span></button>
       <button type="button" class="dola-side-item" id="generateImageBtn"><span class="ico">🖼</span><span>创意生图</span></button>
@@ -1520,7 +1585,7 @@ body.entered #welcome .orb {
     <button type="button" class="dola-back-pill" id="sideCloseBtn"><img src="/logo.png" alt=""/><span>回到 ASTRION</span></button>
     <div class="dola-user-bar">
       <button type="button" class="dola-user" id="openSettingsBtn">
-        <span class="dola-user-av" id="sideUserAv">A</span>
+        <span class="dola-user-av" id="sideUserAv"><img src="/logo.png" alt=""/></span>
         <span class="dola-user-meta"><b id="sideUserName">用户</b><small id="sideUserMail">已登录</small></span>
       </button>
       <button type="button" class="dola-icon-btn" id="noticeButton" title="公告">🔔</button>
@@ -1530,8 +1595,27 @@ body.entered #welcome .orb {
 </aside>
  <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop" aria-hidden="true"></div>
  <main class="main">
-  <header class="topbar"><div class="topbar-brand"><button type="button" class="iconbtn mobile-menu-btn" id="mobileMenuBtn" aria-label="打开导航">☰</button><div><div class="top-title">ASTRION <span style="color:#9c91ff">✦</span></div><div class="top-sub" id="modelLabel">智能对话 · 智谱优先，自动切换</div></div><button type="button" class="nl-btn cr-btn" id="creatorBtn" aria-label="创新AI" title="玩家打造的AI"><span>✨</span>创新AI</button></div><button type="button" class="human-support-btn" id="humanSupportBtn" aria-label="转人工客服" title="联系管理员人工客服">转人工</button><div class="top-actions"><button class="iconbtn" id="noticeButton" type="button" aria-label="网站公告" title="网站公告">📢 公告</button><button class="iconbtn" id="adminButton" type="button" aria-label="管理后台" title="管理后台">管理后台</button><button class="iconbtn" id="mobileAppearance">外观</button><button class="iconbtn" id="clearChat">清空</button></div></header>
-  <section id="chat"><div class="welcome" id="welcome"><div class="orb" style="background-image:url(/logo.png)"></div><h2>你好，我是ASTRION</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div></div></section>
+  <header class="topbar">
+  <div class="topbar-left">
+    <button type="button" class="iconbtn mobile-menu-btn" id="mobileMenuBtn" aria-label="打开导航">☰</button>
+    <div class="top-brand-wrap">
+      <div class="top-title"><img class="top-logo" src="/logo.png" alt=""/>ASTRION</div>
+      <div class="top-sub" id="modelLabel">AI 生成可能有误 注意核实</div>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button class="iconbtn" id="noticeButton" type="button" aria-label="公告">🔔</button>
+  </div>
+  <!-- 保留隐藏按钮供侧栏 JS 触发，不在顶栏显示 -->
+  <div id="hiddenTopTriggers" style="position:absolute;width:0;height:0;overflow:hidden;opacity:0;pointer-events:none">
+    <button type="button" id="creatorBtn" aria-hidden="true">创新AI</button>
+    <button type="button" id="humanSupportBtn" aria-hidden="true">转人工</button>
+    <button type="button" id="adminButton" aria-hidden="true">管理</button>
+    <button type="button" id="clearChat" aria-hidden="true">清空</button>
+    <button type="button" id="mobileAppearance" aria-hidden="true">外观</button>
+  </div>
+</header>
+  <section id="chat"><div class="welcome" id="welcome"><div class="orb" style="background-image:url(/logo.png)"></div><h2>你好，我是 ASTRION</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div></div></section>
   <footer class="composer-wrap">
    <div class="attachments" id="attachments"></div>
    <div class="composer"><div class="input-row"><div class="toolrow"><button id="attachBtn" title="上传图片或文件">＋</button><button id="mobileGenerateImage" title="AI 生图" aria-label="AI 生图">图</button><button class="mode-btn" id="searchModeBtn" type="button" title="联网搜索并附来源" aria-pressed="false">搜</button><button class="mode-btn" id="expertModeBtn" type="button" title="更严谨的专家分析" aria-pressed="false">专</button></div><textarea id="prompt" rows="1" placeholder="发消息或按住说话..."></textarea><button class="send" id="sendBtn" disabled>↑</button></div><div class="composer-foot"><span>情绪理解 · 附件 · 搜索 · 专家 · 生图</span><span id="busyLabel"></span></div></div>
@@ -1572,7 +1656,7 @@ body.entered #welcome .orb {
  <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="发消息或按住说话..."></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 1.1.0 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 1.1.2 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
  <div class="nx-profile"><div class="av">A</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>服务器接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
  <p class="settings-page-note">管理员可配置服务器接口；普通用户只通过服务器代理使用 AI，接口地址和 API Key 不会发送到浏览器。</p>
  <div id="apiList"></div>
@@ -1583,7 +1667,7 @@ body.entered #welcome .orb {
  </div>
  <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION1.1.0.1</strong><span>Build 2026.11 · ASTRION1.1.0.1</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、管理后台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION1.1.2.1</strong><span>Build 2026.11 · ASTRION1.1.2.1</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、管理后台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 开启互怼强度匹配</label>
@@ -1618,7 +1702,7 @@ body.entered #welcome .orb {
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION1.1.0.1" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION1.1.2.1" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -1695,8 +1779,8 @@ body.reduce-motion *{animation:none!important;transition-duration:.01ms!importan
 
 /* Premium, low-cost motion: opacity/transform only; no continuous blur or huge layers. */
 @keyframes messageLift{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
-@keyframes orbBreathe{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.1.025)}}
-@keyframes statusPulse{0%,100%{opacity:.65;transform:scale(.92)}50%{opacity:1;transform:scale(1.1.08)}}
+@keyframes orbBreathe{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.1.225)}}
+@keyframes statusPulse{0%,100%{opacity:.65;transform:scale(.92)}50%{opacity:1;transform:scale(1.1.28)}}
 @media(prefers-reduced-motion:no-preference){body:not(.reduce-motion) .msg{animation:messageLift .24s ease-out both!important}body:not(.reduce-motion) .welcome .orb{animation:orbBreathe 3.8s ease-in-out infinite}body:not(.reduce-motion) #statusDot{animation:statusPulse 2.4s ease-in-out infinite}}
 @media(max-height:680px){#entryGate{justify-content:flex-start;padding-top:max(10px,env(safe-area-inset-top));padding-bottom:max(10px,env(safe-area-inset-bottom))}#entryGate .gate-card{margin:0 auto}}
 @media(max-width:760px){#entryGate{padding-left:12px;padding-right:12px}#entryGate .gate-card{width:min(440px,100%);padding:22px 20px}}
@@ -1876,7 +1960,7 @@ body.reduce-motion *{animation:none!important;transition-duration:.01ms!importan
 .primary,.ghost,.iconbtn,.suggestions button,.side-actions .ghost,.cr-item,.cr-tpl,.cr-cta{transition:transform .22s var(--soft),filter .2s,background-color .2s,border-color .2s,box-shadow .2s}
 .primary:active:not(:disabled),.ghost:active,.iconbtn:active,.suggestions button:active,.cr-cta:active{transform:scale(.96)}
 @media(hover:hover){
- .primary:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.1.07)}
+ .primary:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.1.27)}
  .side-actions .ghost:hover{transform:translateX(3px)}
  .suggestions button:hover{transform:translateY(-2px)}
  .cr-item:hover{transform:translateY(-1px)}
@@ -1997,7 +2081,7 @@ body.nx-light .cr-item.official{background:linear-gradient(135deg,color-mix(in s
 .cr-pick button.on{transform:scale(1.1)}
 .cr-save{box-shadow:0 8px 20px #7a6bff44;transition:transform .2s var(--soft)}
 .cr-save:active{transform:scale(.97)}
-/* ===== 1.1.0 Fluent Grok-style UI — no blur, high FPS ===== */
+/* ===== 1.1.2 Fluent Grok-style UI — no blur, high FPS ===== */
 :root{--bg:#000;--panel:#0d0d0d;--panel2:#161616;--line:rgba(255,255,255,.1);--text:#f0f0f0;--muted:#888;--accent:#1d9bf0}
 *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 body{background:#000!important;color:var(--text);font-family:system-ui,-apple-system,sans-serif}
@@ -2045,7 +2129,7 @@ body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .menu-item,.primary,.ghost,.iconbtn,.send{transition:background .12s,transform .12s!important}
 
-/* ===== 1.1.0 全新登录界面样式（独立无冲突） ===== */
+/* ===== 1.1.2 全新登录界面样式（独立无冲突） ===== */
 #entryGate{
   position:fixed!important;inset:0!important;z-index:99999!important;
   display:flex!important;align-items:center;justify-content:center;
@@ -2093,7 +2177,7 @@ body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 body.entered #entryGate{display:none!important;visibility:hidden!important;pointer-events:none!important}
 
 </style>
-<!-- ===== 1.1.0 全新干净登录界面 ===== -->
+<!-- ===== 1.1.2 全新干净登录界面 ===== -->
 <div id="entryGate" style="display:flex">
   <div class="nx-ambient" aria-hidden="true">
     <span class="nx-orb nx-orb-a"></span>
@@ -2102,10 +2186,8 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
     <span class="nx-grid"></span>
   </div>
   <div class="nx-login-card">
-    <div class="nx-login-badge">astrion · 1.1.0</div>
-    <div class="nx-login-logo"><span></span></div>
-    <h1 class="nx-login-title">ASTRION</h1>
-    <p class="nx-login-desc" id="gateDesc">登录一次后自动记住，下次可免密进入</p>
+    <div class="nx-login-badge">astrion · 1.1.2</div>
+    <div class="nx-login-logo"><img src="/logo.png" alt="ASTRION"/></div><h1 class="nx-login-title">登录以解锁更多功能</h1><p class="nx-login-desc" id="gateDesc">欢迎使用 ASTRION</p>
 
     <div class="nx-login-form" id="loginForm">
       <div class="nx-field">
@@ -2270,7 +2352,7 @@ if($("creatorBtnSide"))$("creatorBtnSide").onclick=()=>{$("creatorModal").classL
 if($("noticeButtonSide"))$("noticeButtonSide").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
 if($("humanSupportBtnSide"))$("humanSupportBtnSide").onclick=()=>{if(currentRole==="admin"){if(typeof openAdminSupportPanel==="function")openAdminSupportPanel();return}openModal("humanSupportModal");if(typeof refreshMySupport==="function")refreshMySupport()};
 if($("clearChatSide"))$("clearChatSide").onclick=()=>{if(confirm("确定清空当前对话？")){const chat=$("chat");if(chat){chat.innerHTML="";const w=document.createElement("div");w.className="welcome";w.id="welcome";w.innerHTML='<div class="orb" style="background-image:url(/logo.png)"></div><h2>你好，我是ASTRION</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div>';chat.append(w);setStatus("对话已清空",true)}}};
-if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION1.1.0.1\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 管理后台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
+if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION1.1.2.1\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 管理后台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
 (function(){
   const openApp=()=>openModal("appearanceModal");
   if($("openAppearance")) $("openAppearance").onclick=openApp;
@@ -2916,7 +2998,7 @@ try{
         return;
       }
       if(id === "versionInfoBtn"){
-        alert("ASTRION1.1.0.1\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
+        alert("ASTRION1.1.2.1\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
         setTimeout(closeDrawer, 80);
         return;
       }
@@ -3195,41 +3277,7 @@ try{
 </style>
 
 
-<script id="nx-fix-tabs">
-(function(){
-  function splitTabs(){
-    const candidates=[...document.querySelectorAll('.topbar button, .topbar .tab, .top-tabs button, [data-tab]')];
-    candidates.forEach(btn=>{
-      const t=(btn.textContent||'').replace(/\s+/g,' ').trim();
-      if(/创新.*转人工|创新AI转人工/.test(t)){
-        btn.textContent='✨ 创新AI';
-        if(!document.getElementById('supportTabFixed')){
-          const b=document.createElement('button');
-          b.type='button'; b.id='supportTabFixed'; b.className=btn.className;
-          b.textContent='转人工';
-          b.style.marginLeft='8px';
-          b.onclick=function(){
-            const hit=[...document.querySelectorAll('button,a')].find(x=>/转人工|客服/.test(x.textContent||''));
-            if(hit && hit!==b) hit.click();
-          };
-          btn.parentNode.insertBefore(b, btn.nextSibling);
-        }
-      }
-    });
-    // also split if one element contains both words as HTML
-    document.querySelectorAll('.topbar, .top-tabs').forEach(bar=>{
-      const html=bar.innerHTML;
-      if(/创新AI转人工/.test(html)){
-        bar.innerHTML=html.replace(/创新AI转人工/g,'<button type="button" class="tab" data-tab="create">✨ 创新AI</button><button type="button" class="tab" data-tab="support" id="supportTabFixed">转人工</button>');
-      }
-    });
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',splitTabs);
-  else splitTabs();
-  setTimeout(splitTabs,400);
-  setTimeout(splitTabs,1200);
-})();
-</script>
+
 
 
 <script id="nx-logo-avatars">
@@ -3281,7 +3329,7 @@ try{
       <button type="button" class="as-more" aria-hidden="true">···</button>
     </div>
     <div class="as-profile">
-      <div class="as-avatar" id="asAvatar">A</div>
+      <div class="as-avatar" id="asAvatar"><img src="/logo.png" alt=""/></div>
       <div class="as-name" id="asName">用户</div>
       <div class="as-id" id="asId"></div>
       <button type="button" class="as-manage" id="asAccountBtn">ASTRION 账号管理</button>
@@ -3306,7 +3354,7 @@ try{
       <button type="button" class="as-row" id="asSwitchRow"><span class="as-ico c-gray">⇄</span><span class="as-lab">切换账号</span><span class="as-right">›</span></button>
       <button type="button" class="as-row danger" id="asLogoutRow"><span class="as-ico c-red">→</span><span class="as-lab">退出登录</span><span class="as-right">›</span></button>
     </div>
-    <div class="as-ver">Version: 1.1.0 · ASTRION</div>
+    <div class="as-ver">Version: 1.1.2 · ASTRION</div>
   </div>
 </div>
 
@@ -3367,6 +3415,94 @@ try{
   else bind();
   setTimeout(bind,500);
   window.openAstrionSettings=openSettings;
+})();
+</script>
+
+
+<script id="nx-role-and-ui">
+(function(){
+  function applyRole(){
+    // body class from session
+    fetch('/api/session',{credentials:'include'}).then(r=>r.json()).then(d=>{
+      if(d && d.authenticated && d.role==='admin') document.body.classList.add('role-admin');
+      else document.body.classList.remove('role-admin');
+      if(d && d.displayName){
+        const n=document.getElementById('sideUserName'); if(n) n.textContent=d.displayName;
+        const m=document.getElementById('sideUserMail'); if(m) m.textContent=d.userId||'已登录';
+      }
+    }).catch(()=>{});
+  }
+  function fixDupTitle(){
+    const w=document.getElementById('welcome');
+    if(w){
+      const h2=w.querySelector('h2');
+      if(h2){ h2.textContent='你好，我是 ASTRION'; }
+    }
+    // remove floating duplicate if any
+    document.querySelectorAll('body > div, #app > div').forEach(el=>{
+      if(el && el.textContent && el.children.length===0 && /你好，我是\s*ASTRION你好/.test(el.textContent)) el.remove();
+    });
+  }
+  function ensureSend(){
+    const btn=document.getElementById('sendBtn');
+    if(btn){ btn.style.display='inline-flex'; btn.style.visibility='visible'; btn.style.opacity='1'; }
+  }
+  function boot(){ applyRole(); fixDupTitle(); ensureSend(); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot);
+  else boot();
+  setInterval(ensureSend,2000);
+  setTimeout(boot,600);
+})();
+</script>
+
+
+<script id="nx-side-wire">
+(function(){
+  function $(id){return document.getElementById(id)}
+  function openSide(){document.body.classList.add('sidebar-open');const sb=document.querySelector('.sidebar');if(sb){sb.classList.add('open','show');sb.style.transform='translateX(0)';}}
+  function closeSide(){document.body.classList.remove('sidebar-open');const sb=document.querySelector('.sidebar');if(sb){sb.classList.remove('open','show');}}
+  function bindSide(){
+    const map=[
+      ['creatorBtnSide','creatorBtn'],
+      ['humanSupportBtnSide','humanSupportBtn'],
+      ['adminDrawerButton','adminButton'],
+      ['noticeButtonSide','noticeButton'],
+    ];
+    map.forEach(([from,to])=>{
+      const a=$(from), b=$(to);
+      if(a && b){
+        a.onclick=function(e){
+          e.preventDefault(); e.stopPropagation();
+          closeSide();
+          setTimeout(function(){ b.click(); }, 50);
+        };
+      }
+    });
+    // generate image
+    const gi=$('generateImageBtn'), mi=$('mobileGenerateImage');
+    if(gi){ gi.onclick=function(e){ e.preventDefault(); closeSide(); if(mi) mi.click(); else if(window.openImageModal) openImageModal(); }; }
+    // api config
+    const api=$('apiConfigSideBtn');
+    if(api){ api.onclick=function(e){ e.preventDefault(); closeSide(); if(window.openApiConfigPanel) openApiConfigPanel(); }; }
+    // settings
+    ['openSettingsBtn','openSettingsBtn2'].forEach(id=>{
+      const el=$(id); if(el) el.onclick=function(e){e.preventDefault(); closeSide(); if(window.openAstrionSettings) openAstrionSettings();};
+    });
+  }
+  // remove any leftover floating title node
+  function cleanDup(){
+    document.querySelectorAll('body *').forEach(el=>{
+      if(el.childNodes.length===1 && el.textContent && /^你好，我是\s*ASTRION你好，我是\s*ASTRION$/.test(el.textContent.trim())){
+        el.textContent='你好，我是 ASTRION';
+      }
+    });
+    const w=$('welcome'); if(w){ const h2=w.querySelector('h2'); if(h2) h2.textContent='你好，我是 ASTRION'; }
+  }
+  function boot(){ bindSide(); cleanDup(); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+  setTimeout(boot, 400);
+  setTimeout(boot, 1200);
 })();
 </script>
 
