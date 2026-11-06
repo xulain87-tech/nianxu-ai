@@ -1,6 +1,6 @@
 {
-  "name": "astrion-admin-backend",
-  "version": "2.9.0",
+  "name": "astrion",
+  "version": "1.0",
   "private": true,
   "description": "ASTRION admin backend",
   "scripts": {

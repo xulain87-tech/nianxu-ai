@@ -8,14 +8,14 @@ const net = require('node:net');
 const ROOT = __dirname;
 const PORT = Number(process.env.PORT || 3000);
 const ADMIN_ID = process.env.ADMIN_ID || 'ASTRION968';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'nianxu968';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'astrion968';
 const DATA_DIR = process.env.DATA_DIR || path.join(ROOT, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'notices.json');
 const AI_CONFIG_FILE = path.join(DATA_DIR, 'ai-config.json');
 const ACCOUNTS_FILE = path.join(DATA_DIR, 'accounts.json');
 const SUPPORT_FILE = path.join(DATA_DIR, 'support.json');
 const PRESENCE_TTL = 90 * 1000;
-const APP_VERSION = '3.0.4';
+const APP_VERSION = '1.1.0';
 fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
 if (!fs.existsSync(ACCOUNTS_FILE)) fs.writeFileSync(ACCOUNTS_FILE, '{}');
@@ -134,7 +134,7 @@ async function proxyAiChat(messages,temperature=.7,autoFallback=true){
  for(const api of candidates){
   const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),25000);
   try{
-   const headers={'Content-Type':'application/json','User-Agent':'ASTRION/3.0.4'};
+   const headers={'Content-Type':'application/json','User-Agent':'ASTRION/1.1.0'};
    if(api.key) headers.Authorization='Bearer '+api.key;
    const r=await fetch(api.url,{method:'POST',headers,body:JSON.stringify({model:api.model,messages,temperature}),signal:controller.signal});
    const raw=await r.text();
@@ -172,7 +172,7 @@ async function generatePollinationsImage(prompt, aspect){
   const url='https://image.pollinations.ai/prompt/'+encodeURIComponent(String(prompt).slice(0,800))+'?'+q.toString();
   const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),90000);
   try{
-    const r=await fetch(url,{method:'GET',headers:{'Accept':'image/*','User-Agent':'ASTRION/3.0.4'},signal:controller.signal,redirect:'follow'});
+    const r=await fetch(url,{method:'GET',headers:{'Accept':'image/*','User-Agent':'ASTRION/1.1.0'},signal:controller.signal,redirect:'follow'});
     if(!r.ok) throw new Error('HTTP '+r.status);
     const type=(r.headers.get('content-type')||'image/jpeg').split(';')[0].trim();
     if(!type.startsWith('image/')) throw new Error('非图片响应');
