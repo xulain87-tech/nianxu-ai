@@ -1,8 +1,8 @@
 {
-  "name": "nianxu-ai-admin-backend",
+  "name": "astrion-admin-backend",
   "version": "2.9.0",
   "private": true,
-  "description": "Nianxu AI admin backend",
+  "description": "ASTRION admin backend",
   "scripts": {
     "start": "node server.js"
   },

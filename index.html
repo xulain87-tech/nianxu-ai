@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#090d18">
-<title>念绪 AI · 网页版</title>
+<title>ASTRION · 网页版</title>
 <style>
 :root{--bg:#090d18;--panel:rgba(18,25,42,.78);--panel2:rgba(27,36,57,.82);--line:rgba(180,198,255,.14);--text:#eef2ff;--muted:#9ba8c4;--accent:#8b7cff;--accent2:#4bd6c7;--shadow:0 18px 60px #0007}
 *{box-sizing:border-box}html,body{height:100%;margin:0}body{font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);overflow:hidden}
@@ -42,7 +42,7 @@
   .grid{grid-template-columns:1fr}
   .top-sub{display:none}
 }
-/* 念绪 AI 视觉升级：更紧凑、背景更通透、轻量动态效果 */
+/* ASTRION 视觉升级：更紧凑、背景更通透、轻量动态效果 */
 :root{--panel:rgba(14,20,34,.58);--panel2:rgba(17,25,42,.62)}
 body{background:transparent}
 #backdrop{z-index:-1;overflow:hidden;background:radial-gradient(ellipse at 15% 10%,#34306b 0,transparent 40%),radial-gradient(ellipse at 90% 80%,#124e5c 0,transparent 38%),linear-gradient(135deg,#090d18,#111a2c)}
@@ -294,7 +294,7 @@ body{background:radial-gradient(900px 500px at 85% -10%,#e0805f14,transparent 60
 .msg.user{background:var(--accent-g)!important;color:#fff!important;border:0!important;border-radius:20px 20px 6px 20px!important;box-shadow:0 6px 20px #d4684a33!important}
 .msg.user .role,.msg.user .role span{color:#fff9!important}
 .msg.ai{position:relative;padding:2px 0 2px 44px!important}
-.msg.ai::before{content:"念";position:absolute;left:0;top:2px;width:32px;height:32px;border-radius:10px;background:var(--accent-g);color:#fff;font:700 15px/32px system-ui;text-align:center;box-shadow:0 4px 12px #d4684a44}
+.msg.ai::before{content:none!important;display:none!important;width:0!important;height:0!important}
 .msg.ai .role{font-size:12px;font-weight:600;color:var(--accent)!important}
 .msg-tools button{border:1px solid var(--line)!important;background:transparent!important;color:var(--muted)!important;border-radius:999px!important;padding:3px 11px!important;font-size:12px;transition:.2s}
 .msg-tools button:hover{color:var(--accent)!important;border-color:var(--accent)!important}
@@ -636,7 +636,7 @@ body.mobile-drawer-open .sidebar .menu-item{
 
 
 <style id="nx-login-premium">
-/* ===== 念绪 3.0.3 绚丽多彩登录 ===== */
+/* ===== ASTRION 3.0.4 绚丽多彩登录 ===== */
 #entryGate{
   position:fixed!important;inset:0!important;z-index:99999!important;
   display:flex!important;align-items:center;justify-content:center;
@@ -996,10 +996,7 @@ body.entered #dolaHome.show{display:flex}
 #dolaHome .tile .ico{font-size:1.25rem;margin-bottom:8px}
 /* 隐藏设置 */
 #mobileSettings,#openSettings,button[title="设置中心"]{display:none!important}
-</style>
-
-
-<style id="nx-dola-clone">
+</style>你好，我是 ASTRION<style id="nx-dola-clone">
 /* ===== 完全仿 Dola 移动端深色聊天 ===== */
 :root{
   --dola-bg:#000000;
@@ -1142,6 +1139,59 @@ html,body{background:#000!important;color:var(--dola-text)!important;font-family
 
 /* 隐藏多余齿轮/设置 */
 .top-actions #mobileSettings{display:none!important}
+</style>你好，我是 ASTRION<style id="nx-astrion-ui">
+/* 去掉 AI 头像 */
+.msg.ai .avatar, .msg.bot .avatar, .bubble.ai .avatar,
+.ai-avatar, .bot-avatar, .msg-avatar, .message-avatar,
+.msg.ai > img.avatar, .msg.ai .avatar-wrap,
+[class*="ai-avatar"], .avatar.ai, .avatar.bot {
+  display:none!important; width:0!important; height:0!important; margin:0!important; padding:0!important;
+}
+/* AI 气泡左边距收紧 */
+.msg.ai, .msg.bot, .bubble.ai { margin-left:0!important; padding-left:12px!important; }
+
+/* 顶部标签间距加大 */
+.topbar .tabs, .top-tabs, .mode-tabs, .chat-tabs {
+  gap:10px!important;
+}
+.topbar .tab, .top-tabs .tab, .mode-pill, .chat-tabs button,
+button[data-tab], .topbar a.tab {
+  margin:0 4px!important;
+  padding:6px 12px!important;
+  font-size:13px!important;
+  border-radius:16px!important;
+}
+/* 转人工与创新AI 拉开 */
+.topbar .tab + .tab, .top-tabs > * + * { margin-left:8px!important; }
+
+/* 名字字号略小 */
+.msg .name, .msg-name, .bubble-name, .sender-name {
+  font-size:12px!important; font-weight:600!important;
+}
+.msg.ai, .msg.bot, .bubble.ai {
+  font-size:14px!important; line-height:1.5!important;
+}
+
+/* 品牌名 */
+.brand-name, .top-title { font-size:15px!important; font-weight:600!important; }
+</style>
+
+
+<style id="nx-no-ai-avatar">
+.msg.ai .orb, .msg.bot .orb, .msg.ai .avatar, .msg.bot .avatar,
+.msg.ai > .label img, .msg.ai .meta img,
+.msg.ai .avatar-wrap, .bot-avatar, .ai-avatar,
+.msg.ai .head-ico, .msg.ai .ico-circle {
+  display:none!important;
+}
+.msg.ai .label, .msg.bot .label, .msg.ai .meta {
+  font-size:12px!important;
+}
+/* 顶部 创新AI / 转人工 间距 */
+.topbar .tab, .topbar button.tab, .chat-tabs button {
+  margin-left:6px!important; margin-right:6px!important;
+}
+.topbar .tabs { column-gap:12px!important; gap:12px!important; }
 </style>
 
 </head>
@@ -1170,12 +1220,12 @@ html,body{background:#000!important;color:var(--dola-text)!important;font-family
   </div>
   <div class="side-label">对话</div>
   <div class="status"><span class="dot" id="statusDot"></span><span id="statusText">等待发送消息</span></div>
-  <div class="side-note">念绪 AI · 3.0.3 Pro · 极致流畅 · 免密登录</div>
+  <div class="side-note">ASTRION · 3.0.4 Pro · 极致流畅 · 免密登录</div>
  </aside>
  <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop" aria-hidden="true"></div>
  <main class="main">
-  <header class="topbar"><div class="topbar-brand"><button type="button" class="iconbtn mobile-menu-btn" id="mobileMenuBtn" aria-label="打开导航">☰</button><div><div class="top-title">念绪 AI <span style="color:#9c91ff">✦</span></div><div class="top-sub" id="modelLabel">智能对话 · 智谱优先，自动切换</div></div><button type="button" class="nl-btn cr-btn" id="creatorBtn" aria-label="创新AI" title="玩家打造的AI"><span>✨</span>创新AI</button></div><button type="button" class="human-support-btn" id="humanSupportBtn" aria-label="转人工客服" title="联系管理员人工客服">转人工</button><div class="top-actions"><button class="iconbtn" id="noticeButton" type="button" aria-label="网站公告" title="网站公告">📢 公告</button><button class="iconbtn" id="adminButton" type="button" aria-label="管理后台" title="管理后台">管理后台</button><button class="iconbtn" id="mobileAppearance">外观</button><button class="iconbtn" id="clearChat">清空</button></div></header>
-  <section id="chat"><div class="welcome" id="welcome"><div class="orb">念</div><h2>你好，我是念绪 AI</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div></div></section>
+  <header class="topbar"><div class="topbar-brand"><button type="button" class="iconbtn mobile-menu-btn" id="mobileMenuBtn" aria-label="打开导航">☰</button><div><div class="top-title">ASTRION <span style="color:#9c91ff">✦</span></div><div class="top-sub" id="modelLabel">智能对话 · 智谱优先，自动切换</div></div><button type="button" class="nl-btn cr-btn" id="creatorBtn" aria-label="创新AI" title="玩家打造的AI"><span>✨</span>创新AI</button></div><button type="button" class="human-support-btn" id="humanSupportBtn" aria-label="转人工客服" title="联系管理员人工客服">转人工</button><div class="top-actions"><button class="iconbtn" id="noticeButton" type="button" aria-label="网站公告" title="网站公告">📢 公告</button><button class="iconbtn" id="adminButton" type="button" aria-label="管理后台" title="管理后台">管理后台</button><button class="iconbtn" id="mobileAppearance">外观</button><button class="iconbtn" id="clearChat">清空</button></div></header>
+  <section id="chat"><div class="welcome" id="welcome"><div class="orb">A</div><h2>你好，我是ASTRION</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div></div></section>
   <footer class="composer-wrap">
    <div class="attachments" id="attachments"></div>
    <div class="composer"><div class="input-row"><div class="toolrow"><button id="attachBtn" title="上传图片或文件">＋</button><button id="mobileGenerateImage" title="AI 生图" aria-label="AI 生图">图</button><button class="mode-btn" id="searchModeBtn" type="button" title="联网搜索并附来源" aria-pressed="false">搜</button><button class="mode-btn" id="expertModeBtn" type="button" title="更严谨的专家分析" aria-pressed="false">专</button></div><textarea id="prompt" rows="1" placeholder="发消息或按住说话..."></textarea><button class="send" id="sendBtn" disabled>↑</button></div><div class="composer-foot"><span>情绪理解 · 附件 · 搜索 · 专家 · 生图</span><span id="busyLabel"></span></div></div>
@@ -1216,8 +1266,8 @@ html,body{background:#000!important;color:var(--dola-text)!important;font-family
  <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="发消息或按住说话..."></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">Nianxu Control Room · 3.0.3 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
- <div class="nx-profile"><div class="av">念</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>服务器接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
+ <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 3.0.4 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="nx-profile"><div class="av">A</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>服务器接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
  <p class="settings-page-note">管理员可配置服务器接口；普通用户只通过服务器代理使用 AI，接口地址和 API Key 不会发送到浏览器。</p>
  <div id="apiList"></div>
  <div class="api-card" id="apiBackupPanel">
@@ -1227,7 +1277,7 @@ html,body{background:#000!important;color:var(--dola-text)!important;font-family
  </div>
  <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 3.0.3 Pro</strong><span>Build 2026.11 · 3.0.3</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、管理后台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION 3.0.4 Pro</strong><span>Build 2026.11 · 3.0.4</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、管理后台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 开启互怼强度匹配</label>
@@ -1262,7 +1312,7 @@ html,body{background:#000!important;color:var(--dola-text)!important;font-family
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 3.0.3 Pro" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION 3.0.4 Pro" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -1641,7 +1691,7 @@ body.nx-light .cr-item.official{background:linear-gradient(135deg,color-mix(in s
 .cr-pick button.on{transform:scale(1.1)}
 .cr-save{box-shadow:0 8px 20px #7a6bff44;transition:transform .2s var(--soft)}
 .cr-save:active{transform:scale(.97)}
-/* ===== 3.0.3 Fluent Grok-style UI — no blur, high FPS ===== */
+/* ===== 3.0.4 Fluent Grok-style UI — no blur, high FPS ===== */
 :root{--bg:#000;--panel:#0d0d0d;--panel2:#161616;--line:rgba(255,255,255,.1);--text:#f0f0f0;--muted:#888;--accent:#1d9bf0}
 *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 body{background:#000!important;color:var(--text);font-family:system-ui,-apple-system,sans-serif}
@@ -1689,7 +1739,7 @@ body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .menu-item,.primary,.ghost,.iconbtn,.send{transition:background .12s,transform .12s!important}
 
-/* ===== 3.0.3 全新登录界面样式（独立无冲突） ===== */
+/* ===== 3.0.4 全新登录界面样式（独立无冲突） ===== */
 #entryGate{
   position:fixed!important;inset:0!important;z-index:99999!important;
   display:flex!important;align-items:center;justify-content:center;
@@ -1737,7 +1787,7 @@ body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 body.entered #entryGate{display:none!important;visibility:hidden!important;pointer-events:none!important}
 
 </style>
-<!-- ===== 3.0.3 全新干净登录界面 ===== -->
+<!-- ===== 3.0.4 全新干净登录界面 ===== -->
 <div id="entryGate" style="display:flex">
   <div class="nx-ambient" aria-hidden="true">
     <span class="nx-orb nx-orb-a"></span>
@@ -1746,9 +1796,9 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
     <span class="nx-grid"></span>
   </div>
   <div class="nx-login-card">
-    <div class="nx-login-badge">NIANXU · 3.0.3</div>
-    <div class="nx-login-logo"><span>念</span></div>
-    <h1 class="nx-login-title">念绪 AI</h1>
+    <div class="nx-login-badge">NIANXU · 3.0.4</div>
+    <div class="nx-login-logo"><span>A</span></div>
+    <h1 class="nx-login-title">ASTRION</h1>
     <p class="nx-login-desc" id="gateDesc">登录一次后自动记住，下次可免密进入</p>
 
     <div class="nx-login-form" id="loginForm">
@@ -1802,7 +1852,7 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
  <div class="modal-actions ann-foot"><button class="primary" type="button" data-extra-close="noticeModal">我知道了</button></div>
 </div></div>
 <div class="extra-modal" id="adminModal"><div class="extra-box">
- <div class="extra-head"><h3>念绪 AI · 管理后台</h3><div style="display:flex;gap:6px;align-items:center"><button class="iconbtn" id="adminSupportButton" type="button">客服工单</button><button class="iconbtn hidden" id="adminConfigButton" type="button">AI 接口设置</button><button class="iconbtn" data-extra-close="adminModal">关闭</button></div></div>
+ <div class="extra-head"><h3>ASTRION · 管理后台</h3><div style="display:flex;gap:6px;align-items:center"><button class="iconbtn" id="adminSupportButton" type="button">客服工单</button><button class="iconbtn hidden" id="adminConfigButton" type="button">AI 接口设置</button><button class="iconbtn" data-extra-close="adminModal">关闭</button></div></div>
  <div class="admin-modal-body" id="adminModalBody">
  <h4>发布全站公告</h4>
  <input id="noticeTitle" placeholder="公告标题">
@@ -1823,7 +1873,7 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
 const $=id=>document.getElementById(id);
 const DEFAULT_APIS=[];
 let apis=[], history=[], files=[], busy=false, aborter=null, bgObjectUrl=null;const generatedImageUrls=new Set();window.addEventListener("pagehide",()=>{for(const u of generatedImageUrls)URL.revokeObjectURL(u);generatedImageUrls.clear()});
-const SYSTEM_PROMPT=`你是念绪 AI，一个友好、可靠、有幽默感你是念绪 AI。作者与创作者是念绪。被问作者/创作者/谁开发时，统一回答念绪。关于念绪 AI 本身的问题须认真介绍。不要冒充其它产品。的中文 AI 助手。准确、有条理地回答问题。若设置开启互怼强度匹配，先判断用户最新一句是否明确把辱骂指向你，并在内部按 0-3 级估计强度：0=没有辱骂，不主动回骂；1=轻度调侃，用轻松玩笑回应；2=明显粗口，用同等或略低强度的普通中文粗口俏皮回一句；3=很重的辱骂，用坚定、机智的回嘴表达边界，可用普通粗口但不升级。回嘴最多一两句，强度绝不高于用户；不复述或使用仇恨/歧视词、身份攻击、性羞辱、家庭羞辱、真实威胁，也不把用户对第三方的辱骂当成骂你的证据。若用户在认真求助、表达低落/危机或引用他人言论，不要回骂，优先帮助。用户表达自伤、轻生或即时危险时，停止斗嘴，给予严肃支持并鼓励联系可信任的人或当地紧急服务。`;
+const SYSTEM_PROMPT=`你是ASTRION，一个友好、可靠、有幽默感你是ASTRION。作者与创作者是ASTRION。被问作者/创作者/谁开发时，统一回答ASTRION。关于ASTRION 本身的问题须认真介绍。不要冒充其它产品。的中文 AI 助手。准确、有条理地回答问题。若设置开启互怼强度匹配，先判断用户最新一句是否明确把辱骂指向你，并在内部按 0-3 级估计强度：0=没有辱骂，不主动回骂；1=轻度调侃，用轻松玩笑回应；2=明显粗口，用同等或略低强度的普通中文粗口俏皮回一句；3=很重的辱骂，用坚定、机智的回嘴表达边界，可用普通粗口但不升级。回嘴最多一两句，强度绝不高于用户；不复述或使用仇恨/歧视词、身份攻击、性羞辱、家庭羞辱、真实威胁，也不把用户对第三方的辱骂当成骂你的证据。若用户在认真求助、表达低落/危机或引用他人言论，不要回骂，优先帮助。用户表达自伤、轻生或即时危险时，停止斗嘴，给予严肃支持并鼓励联系可信任的人或当地紧急服务。`;
 const EXPERT_MODE_PROMPT=`\n\n专家模式：对复杂问题优先厘清目标与限制，核对关键假设，比较可行方案，指出风险和不确定性，再给出明确结论与可执行步骤。数学或代码题请复核结果；不展示隐含思维链，只给必要的简明依据。`;
 function conversationPrefs(){const f=load("nx_features",{});return {roast:f.roast!==false,empathy:f.empathy!==false,autoFallback:f.autoFallback!==false,style:["balanced","concise","detailed","casual"].includes(load("nx_reply_style","balanced"))?load("nx_reply_style","balanced"):"balanced"}}
 function conversationStylePrompt(p=conversationPrefs()){const styles={balanced:"回答保持自然、清楚、适中。",concise:"回答简洁直接，先给结论。",detailed:"适当展开背景、步骤和例子。",casual:"语气轻松活泼，但仍清楚准确。"};return "\n\n对话风格设置："+(p.roast?"开启互怼强度匹配。只对明确指向 AI 的辱骂按 0-3 级估计后回嘴，最多一两句，绝不超过用户强度；不要使用仇恨歧视、身份攻击、性/家庭羞辱或威胁。":"关闭互怼，不回骂，保持礼貌。")+(p.empathy?"开启情绪关怀，按文字线索谨慎共情。":"关闭主动情绪关怀，不做情绪判断。")+(styles[p.style]||styles.balanced)}
@@ -1848,7 +1898,7 @@ function addMessage(role,text,err=false,images=[]){
    const avatar=document.createElement("img");avatar.className="user-avatar";avatar.alt="我的头像";
    avatar.src=load("nx_avatar","")||"data:image/svg+xml;charset=utf-8,"+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x2='1' y2='1'><stop stop-color='#9b8cff'/><stop offset='1' stop-color='#49d9ce'/></linearGradient></defs><rect width='64' height='64' rx='32' fill='url(#g)'/><circle cx='32' cy='24' r='11' fill='#172033'/><path d='M12 58c2-14 10-21 20-21s18 7 20 21' fill='#172033'/></svg>");
    label.append(avatar);const name=document.createElement("span");name.textContent="你";label.append(name);
- }else{label.textContent="念绪 AI"}
+ }else{label.textContent="ASTRION"}
  box.append(label);
  const body=document.createElement("div");body.className="message-text";body.textContent=text;box.append(body);
  images.forEach(src=>{const im=document.createElement("img");im.src=src;box.append(im)});
@@ -1900,7 +1950,7 @@ async function send(){
 }
 function openModal(id){$(id).classList.add("show")}
 function closeMobileDrawer(){$("mobileDrawerBackdrop")?.classList.remove("show");document.body.classList.remove("mobile-drawer-open")}function openMobileDrawer(){document.body.classList.add("mobile-drawer-open");$("mobileDrawerBackdrop")?.classList.add("show")}$("mobileMenuBtn").onclick=()=>document.body.classList.contains("mobile-drawer-open")?closeMobileDrawer():openMobileDrawer();$("mobileDrawerBackdrop").onclick=closeMobileDrawer;if($("sideCloseBtn"))$("sideCloseBtn").onclick=closeMobileDrawer;document.querySelectorAll(".sidebar button").forEach(b=>b.addEventListener("click",closeMobileDrawer));
-async function switchLoginAccount(adminMode=false){const message=adminMode?"当前是普通账号。是否退出并切换到管理员登录？管理员 ID：念绪968":"退出当前账号并切换到其他账号？";if(!confirm(message))return;try{await apiRequest("/api/logout",{method:"POST",body:JSON.stringify({})})}catch(_){}currentRole="guest";currentUserId="";document.body.classList.remove("entered");$("entryGate").style.display="flex";$("entryId").value=adminMode?"念绪968":"";$("entryPassword").value="";$("entryError").textContent=adminMode?"请输入管理员密码后登录。":"请输入要切换的账号。";syncAdminUi();closeMobileDrawer();setTimeout(()=>$("entryId").focus(),80)}
+async function switchLoginAccount(adminMode=false){const message=adminMode?"当前是普通账号。是否退出并切换到管理员登录？管理员 ID：ASTRION968":"退出当前账号并切换到其他账号？";if(!confirm(message))return;try{await apiRequest("/api/logout",{method:"POST",body:JSON.stringify({})})}catch(_){}currentRole="guest";currentUserId="";document.body.classList.remove("entered");$("entryGate").style.display="flex";$("entryId").value=adminMode?"ASTRION968":"";$("entryPassword").value="";$("entryError").textContent=adminMode?"请输入管理员密码后登录。":"请输入要切换的账号。";syncAdminUi();closeMobileDrawer();setTimeout(()=>$("entryId").focus(),80)}
 $("switchAccountBtn").onclick=()=>switchLoginAccount(false);$("mobileWorkTab").onclick=()=>{$("prompt").focus();window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})};$("mobileCreateTab").onclick=()=>openImageGenerator();$("mobileWriteTab").onclick=()=>{const p=$("prompt");if(!p)return;p.value="请帮我写一篇文章，主题是：";p.focus();const len=p.value.length;p.setSelectionRange(len,len);p.dispatchEvent(new Event("input",{bubbles:true}));};$("mobileAnswerTab").onclick=()=>{expertMode=true;save("nx_expert_mode",true);syncModeButtons();const p=$("prompt");if(p){p.value="请帮我解答这个问题：";p.focus();const len=p.value.length;p.setSelectionRange(len,len);p.dispatchEvent(new Event("input",{bubbles:true}));}};
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>$(b.dataset.close).classList.remove("show"));
 document.querySelectorAll(".modal-back").forEach(layer=>{
@@ -1913,8 +1963,8 @@ document.querySelectorAll(".extra-modal").forEach(layer=>layer.addEventListener(
 if($("creatorBtnSide"))$("creatorBtnSide").onclick=()=>{$("creatorModal").classList.add("show");if(typeof view==="function")view("home");if(typeof renderHome==="function")renderHome();if(typeof load==="function")load(false)};
 if($("noticeButtonSide"))$("noticeButtonSide").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
 if($("humanSupportBtnSide"))$("humanSupportBtnSide").onclick=()=>{if(currentRole==="admin"){if(typeof openAdminSupportPanel==="function")openAdminSupportPanel();return}openModal("humanSupportModal");if(typeof refreshMySupport==="function")refreshMySupport()};
-if($("clearChatSide"))$("clearChatSide").onclick=()=>{if(confirm("确定清空当前对话？")){const chat=$("chat");if(chat){chat.innerHTML="";const w=document.createElement("div");w.className="welcome";w.id="welcome";w.innerHTML='<div class="orb">念</div><h2>你好，我是念绪 AI</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div>';chat.append(w);setStatus("对话已清空",true)}}};
-if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("念绪 AI 3.0.3 Pro\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 管理后台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
+if($("clearChatSide"))$("clearChatSide").onclick=()=>{if(confirm("确定清空当前对话？")){const chat=$("chat");if(chat){chat.innerHTML="";const w=document.createElement("div");w.className="welcome";w.id="welcome";w.innerHTML='<div class="orb">A</div><h2>你好，我是ASTRION</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div>';chat.append(w);setStatus("对话已清空",true)}}};
+if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION 3.0.4 Pro\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 管理后台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
 (function(){
   const openApp=()=>openModal("appearanceModal");
   if($("openAppearance")) $("openAppearance").onclick=openApp;
@@ -1970,11 +2020,11 @@ async function generateImage(){
  const clean=prompt.slice(0,1200),aspect=$("imageAspectSelect").value||"square",enhance=$("imageEnhanceToggle").checked;
  $("imagePromptModal").classList.remove("show");$("imagePromptText").value="";$("imagePromptCount").textContent="0 / 1000";addMessage("user","AI 生图（智谱 GLM-Image）："+clean);setStatus(enhance?"AI 正在润色描述并生成图片…":"AI 正在生成图片…");const box=addMessage("ai","正在准备画面…");
  const request=async()=>{const r=await fetch("/api/ai/image",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({prompt:clean,aspect,enhance})});if(!r.ok){const e=await r.json().catch(()=>({}));throw Error(e.error||"生图服务暂不可用")}if((r.headers.get("content-type")||"").includes("application/json")){const d=await r.json();return {url:d.url,promptUsed:d.promptUsed||clean,fallback:Boolean(d.fallback)}}const url=URL.createObjectURL(await r.blob());generatedImageUrls.add(url);return {url,promptUsed:clean,fallback:false}};
- try{let result=await request();const im=new Image();im.alt=clean;im.className="generated-image";im.loading="lazy";im.src=result.url;box.textContent="已完成 AI 生图（智谱 GLM-Image）："+clean;box.parentElement.appendChild(im);const actions=document.createElement("div");actions.className="image-result-actions";const download=document.createElement("a");download.className="iconbtn image-download";download.textContent="下载图片";download.href=result.url;download.download="nianxu-ai-image.png";download.target="_blank";download.rel="noopener noreferrer";const reuse=document.createElement("button");reuse.type="button";reuse.className="iconbtn image-reuse";reuse.textContent="复用描述再生成";reuse.onclick=()=>{openImageGenerator();$("imagePromptText").value=clean;$("imagePromptCount").textContent=clean.length+" / 1000";$("imageAspectSelect").value=aspect;$("imageEnhanceToggle").checked=enhance};actions.append(download,reuse);box.parentElement.append(actions);if(result.fallback){im.onerror=()=>{box.textContent="图片服务暂时无法预览，可尝试打开或稍后重新生成。"};setStatus("图片由智谱生成，正在使用原始图片链接预览",true)}else setStatus("AI 图片已生成",true)}catch(e){box.textContent="AI 生图失败："+e.message;box.parentElement.classList.add("error");setStatus("生图服务暂不可用")}
+ try{let result=await request();const im=new Image();im.alt=clean;im.className="generated-image";im.loading="lazy";im.src=result.url;box.textContent="已完成 AI 生图（智谱 GLM-Image）："+clean;box.parentElement.appendChild(im);const actions=document.createElement("div");actions.className="image-result-actions";const download=document.createElement("a");download.className="iconbtn image-download";download.textContent="下载图片";download.href=result.url;download.download="astrion-image.png";download.target="_blank";download.rel="noopener noreferrer";const reuse=document.createElement("button");reuse.type="button";reuse.className="iconbtn image-reuse";reuse.textContent="复用描述再生成";reuse.onclick=()=>{openImageGenerator();$("imagePromptText").value=clean;$("imagePromptCount").textContent=clean.length+" / 1000";$("imageAspectSelect").value=aspect;$("imageEnhanceToggle").checked=enhance};actions.append(download,reuse);box.parentElement.append(actions);if(result.fallback){im.onerror=()=>{box.textContent="图片服务暂时无法预览，可尝试打开或稍后重新生成。"};setStatus("图片由智谱生成，正在使用原始图片链接预览",true)}else setStatus("AI 图片已生成",true)}catch(e){box.textContent="AI 生图失败："+e.message;box.parentElement.classList.add("error");setStatus("生图服务暂不可用")}
 }
 $("generateImageBtn").onclick=$("mobileGenerateImage").onclick=openImageGenerator;
-$("newChat").onclick=$("clearChat").onclick=()=>{if(busy){if(aborter)aborter.abort()}history=[];for(const u of generatedImageUrls)URL.revokeObjectURL(u);generatedImageUrls.clear();$("chat").innerHTML='<div class="welcome" id="welcome"><div class="orb">念</div><h2>新对话已开启</h2><p>继续把你的想法交给念绪 AI。</p></div>';setBusy(false);setStatus("等待发送消息")};
-$("exportChat").onclick=()=>{const text=[...$("chat").querySelectorAll(".msg")].map(m=>(m.querySelector(".role")?.textContent||"")+"\n"+(m.children[1]?.textContent||"")).join("\n\n");const blob=new Blob([text],{type:"text/plain;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="念绪AI聊天记录.txt";a.click();URL.revokeObjectURL(a.href)};
+$("newChat").onclick=$("clearChat").onclick=()=>{if(busy){if(aborter)aborter.abort()}history=[];for(const u of generatedImageUrls)URL.revokeObjectURL(u);generatedImageUrls.clear();$("chat").innerHTML='<div class="welcome" id="welcome"><div class="orb">A</div><h2>新对话已开启</h2><p>继续把你的想法交给ASTRION。</p></div>';setBusy(false);setStatus("等待发送消息")};
+$("exportChat").onclick=()=>{const text=[...$("chat").querySelectorAll(".msg")].map(m=>(m.querySelector(".role")?.textContent||"")+"\n"+(m.children[1]?.textContent||"")).join("\n\n");const blob=new Blob([text],{type:"text/plain;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="ASTRION聊天记录.txt";a.click();URL.revokeObjectURL(a.href)};
 document.querySelectorAll(".suggestions button").forEach(b=>b.onclick=()=>{$("prompt").value=b.textContent;$("sendBtn").disabled=false;send()});
 $("bgFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;if(bgObjectUrl)URL.revokeObjectURL(bgObjectUrl);bgObjectUrl=URL.createObjectURL(f);if(f.type.startsWith("video/")){setBgVideo(bgObjectUrl)}else{setBgImage(bgObjectUrl)}};
 function setBgImage(url){$("bgVideo").pause();$("bgVideo").style.display="none";$("backdrop").style.background=`center/cover no-repeat fixed url("${url}")`;}
@@ -2033,7 +2083,7 @@ function refreshNotices(targetId="noticeList", admin=false){
   return notices.length>0;
  }).catch(e=>{box.textContent="公告加载失败："+e.message;return false});
 }
-function buildWelcomeCard(){const card=document.createElement("div");card.className="notice-card welcome-card";const h=document.createElement("h4");h.textContent="🎉 欢迎来到念绪 AI";const p=document.createElement("p");p.textContent="你好，"+currentUserId+"！这里可以聊天、联网搜索、专家分析和 AI 生图。\n点顶栏的「创新AI」，还能和官方奶龙聊天，或打造属于你自己的 AI。";const small=document.createElement("small");small.textContent="新用户欢迎消息";card.append(h,p,small);return card}
+function buildWelcomeCard(){const card=document.createElement("div");card.className="notice-card welcome-card";const h=document.createElement("h4");h.textContent="🎉 欢迎来到ASTRION";const p=document.createElement("p");p.textContent="你好，"+currentUserId+"！这里可以聊天、联网搜索、专家分析和 AI 生图。\n点顶栏的「创新AI」，还能和官方奶龙聊天，或打造属于你自己的 AI。";const small=document.createElement("small");small.textContent="新用户欢迎消息";card.append(h,p,small);return card}
 async function showLoginAnnouncement(){let first=false;const key="nx_welcomed_"+currentUserId;try{first=currentRole!=="admin"&&!localStorage.getItem(key)}catch(_){}const has=await refreshNotices();if(first){const box=$("noticeList");if(!has)box.textContent="";box.prepend(buildWelcomeCard());try{localStorage.setItem(key,"1")}catch(_){}}if(has||first)$("noticeModal").classList.add("show")}
 function storeLoginId(id){try{if($("rememberLoginId")?.checked!==false)localStorage.setItem("nx_login_id",id);else localStorage.removeItem("nx_login_id")}catch(_){}}
 async function enterApp(){
@@ -2064,7 +2114,7 @@ async function enterApp(){
     currentRole=data.role; currentUserId=data.userId||id;
     document.body.classList.add("entered");
     $("entryGate").style.display="none";
-    syncAdminUi(); setStatus(currentRole==="admin"?"管理员已登录":"已进入念绪 AI",true);
+    syncAdminUi(); setStatus(currentRole==="admin"?"管理员已登录":"已进入ASTRION",true);
     await loadProfile(); await showLoginAnnouncement();
     if(currentRole!=="admin") apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
   }catch(e){errEl.textContent=e.message||"登录失败"}
@@ -2446,7 +2496,7 @@ try{
     }
   } catch(_){}
 
-  console.log("[念绪] 独立登录脚本已就绪");
+  console.log("[ASTRION] 独立登录脚本已就绪");
 })();
 </script>
 
@@ -2560,7 +2610,7 @@ try{
         return;
       }
       if(id === "versionInfoBtn"){
-        alert("念绪 AI 3.0.3 Pro\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
+        alert("ASTRION 3.0.4 Pro\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
         setTimeout(closeDrawer, 80);
         return;
       }
@@ -2697,7 +2747,7 @@ try{
     const wrap=document.createElement('div');
     wrap.innerHTML=`
 <div id="dolaHome" class="show">
-  <h1>你好，我是念绪 AI</h1>
+  <h1>你好，我是ASTRION</h1>
   <p>今天想聊点什么？选择一个开始</p>
   <div class="grid">
     <div class="tile" data-dola="chat"><div class="ico">💬</div><b>智能对话</b><span>提问、解惑、陪聊</span></div>
