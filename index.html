@@ -1561,6 +1561,30 @@ body:not(.role-admin) #asAdminRow{display:none!important}
 .topbar .nl-btn.cr-btn, .topbar #creatorBtn, .topbar #humanSupportBtn{display:none!important}
 </style>
 
+
+<style id="nx-hide-dup-title">
+/* 隐藏异常重复欢迎顶条 */
+body > .welcome-dup, .fixed-welcome{display:none!important}
+</style>
+
+
+<style id="nx-cr-avatar-admin">
+.cr-av-row{display:flex;gap:12px;align-items:center;margin-top:6px}
+.cr-av-preview{width:64px;height:64px;border-radius:50%;object-fit:cover;background:#222;border:1px solid rgba(255,255,255,.12)}
+.cr-av-actions{display:flex;flex-direction:column;gap:6px}
+.cr-av-btn{border:0;border-radius:10px;padding:8px 12px;background:#0a84ff;color:#fff;font-size:13px}
+.cr-av-btn.ghost{background:#2c2c2e}
+/* 管理/转人工弹层强制可显示 */
+#adminModal.show,#adminSupportModal.show,#humanSupportModal.show,#creatorModal.show{
+  display:flex!important; align-items:center!important; justify-content:center!important;
+  opacity:1!important; visibility:visible!important; pointer-events:auto!important;
+  z-index:100060!important;
+}
+#adminModal .extra-box,#adminSupportModal .extra-box,#humanSupportModal .modal{
+  max-height:88vh; overflow:auto;
+}
+</style>
+
 </head>
 <body>
 <div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
@@ -1645,7 +1669,17 @@ body:not(.role-admin) #asAdminRow{display:none!important}
  <div class="cr-view" id="crEdit"><div class="cr-scroll">
   <button type="button" class="cr-tpl" id="crTplNl"><span>🐲</span><div><b>套用奶龙设定</b><small>名字、头像、性格、开场白一键填好</small></div></button>
   <label>名字<input id="crName" maxlength="12" placeholder="给你的 AI 起个名字"></label>
-  <label>头像<div class="cr-pick" id="crEmo"></div></label>
+  <label>头像照片
+    <div class="cr-av-row">
+      <img id="crAvatarPreview" class="cr-av-preview" alt="头像预览" src="/logo.png"/>
+      <div class="cr-av-actions">
+        <button type="button" class="cr-av-btn" id="crAvatarPick">从相册选择</button>
+        <button type="button" class="cr-av-btn ghost" id="crAvatarClear">清除照片</button>
+        <input type="file" id="crAvatarFile" accept="image/*" capture="environment" hidden/>
+      </div>
+    </div>
+  </label>
+  <label>表情头像（无照片时使用）<div class="cr-pick" id="crEmo"></div></label>
   <label>主题色<div class="cr-pick" id="crCol"></div></label>
   <label>说话风格<div class="cr-pick" id="crSty"></div></label>
   <label>性格设定<textarea id="crPersona" rows="4" maxlength="600" placeholder="详细性格设定。可写脏话、重口、成人向等，将按设定扮演"></textarea></label>
@@ -2626,10 +2660,10 @@ function openEdit(){form=mine?{emoji:mine.emoji,color:mine.color,style:mine.styl
 $('crSave').onclick=async()=>{const b=$('crSave');b.disabled=true;$('crErr').textContent='';try{const d=await api('/api/custom-ai/mine',{method:'PUT',body:JSON.stringify({name:$('crName').value,persona:$('crPersona').value,greeting:$('crGreet').value,public:$('crPub').checked,...form})});mine=d.ai;listAt=0;renderHome();view('home')}catch(e){$('crErr').className='cr-err',$('crErr').textContent=e.message}finally{b.disabled=false}};
 $('crDel').onclick=async()=>{if(!confirm('删除后无法恢复，确定删除你的 AI 吗？'))return;try{await api('/api/custom-ai/mine',{method:'DELETE'});mine=null;renderHome();view('home')}catch(e){$('crErr').className='cr-err',$('crErr').textContent=e.message}};
 const add=(cls,t)=>{const d=el('div','nl-m '+cls,t);box.append(d);while(box.children.length>60)box.firstChild.remove();box.scrollTop=box.scrollHeight;return d};
-function openChat(ai,owner){cur={ai,owner:owner==='__me__'?null:owner};hist=[];box.replaceChildren();theme(ai);$('crTitle').textContent=ai.name;$('crSub').textContent=(STYN[ai.style]||'')+' · 在线';add('bot',ai.greeting||('你好，我是'+ai.name));card.dataset.view='chat';setTimeout(()=>inp.focus(),150)}
+function openChat(ai,owner){cur={ai,owner:(owner==='__me__'||owner==null||owner==='')?(window.currentUserId||currentUserId||''):owner};hist=[];box.replaceChildren();theme(ai);$('crTitle').textContent=ai.name;$('crSub').textContent=(STYN[ai.style]||'')+' · 在线';add('bot',ai.greeting||('你好，我是'+ai.name));card.dataset.view='chat';setTimeout(()=>inp.focus(),150)}
 function upd(){sendB.disabled=busy||!inp.value.trim()}
 async function send(){const text=inp.value.trim();if(!text||busy||!cur)return;inp.value='';inp.style.height='auto';busy=true;upd();add('me',text);hist.push({role:'user',content:text});hist=hist.slice(-16);
- const p=add('bot','');p.classList.add('typing');ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),45000);const owner=cur.owner||(window.currentUserId||currentUserId);
+ const p=add('bot','');p.classList.add('typing');ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),5500);const owner=cur.owner||window.currentUserId||(typeof currentUserId!=='undefined'?currentUserId:'')||'';
  try{const d=await api('/api/custom-ai/chat',{method:'POST',signal:ctl.signal,body:JSON.stringify({owner,messages:hist})});p.classList.remove('typing');p.textContent=d.answer;hist.push({role:'assistant',content:d.answer});hist=hist.slice(-16)}
  catch(e){p.classList.remove('typing');p.classList.add('err');p.textContent=e.name==='AbortError'?'等太久啦，再试一次吧':'出错了：'+e.message;hist.pop()}
  finally{clearTimeout(timer);busy=false;ctl=null;upd();box.scrollTop=box.scrollHeight}}
@@ -3503,6 +3537,172 @@ try{
   else boot();
   setTimeout(boot, 400);
   setTimeout(boot, 1200);
+})();
+</script>
+
+
+<script id="nx-suggestions-fix">
+(function(){
+  document.addEventListener('click',function(e){
+    const b=e.target.closest('.suggestions button');
+    if(!b) return;
+    e.preventDefault();
+    const prompt=document.getElementById('prompt');
+    const send=document.getElementById('sendBtn');
+    if(prompt){
+      prompt.value=b.textContent.trim();
+      prompt.dispatchEvent(new Event('input',{bubbles:true}));
+      prompt.focus();
+    }
+    if(send){
+      send.disabled=false;
+      setTimeout(function(){ try{send.click()}catch(_){ } }, 30);
+    }
+  }, true);
+  // 去掉页面顶部重复标题条
+  function cleanTitle(){
+    const nodes=document.querySelectorAll('body > div, #app > div, .status, .toast, .banner');
+    nodes.forEach(el=>{
+      const t=(el.textContent||'').trim();
+      if(t==='你好，我是 ASTRION你好，我是 ASTRION' || t==='你好，我是ASTRION你好，我是ASTRION'){
+        el.remove();
+      }
+    });
+    // 若有 fixed 顶条
+    document.querySelectorAll('*').forEach(el=>{
+      if(el.children.length===0){
+        const t=(el.textContent||'').trim();
+        if(/^你好，我是\s*ASTRION你好，我是\s*ASTRION$/.test(t)) el.remove();
+      }
+    });
+  }
+  setTimeout(cleanTitle,200);
+  setTimeout(cleanTitle,1000);
+})();
+</script>
+
+
+<script id="nx-admin-avatar-fix">
+(function(){
+  function $(id){return document.getElementById(id)}
+  function forceShow(id){
+    const el=$(id); if(!el) return false;
+    el.classList.add('show');
+    el.style.display='flex';
+    el.style.zIndex='100060';
+    el.style.opacity='1';
+    el.style.visibility='visible';
+    el.style.pointerEvents='auto';
+    return true;
+  }
+  window.openAdminPanel=function(){
+    if((window.currentRole||'')!=='admin' && !document.body.classList.contains('role-admin')){
+      alert('需要管理员登录'); return;
+    }
+    try{ if(typeof refreshNotices==='function') refreshNotices('adminNoticeList',true); }catch(_){}
+    try{ if(typeof refreshUsers==='function') refreshUsers(); }catch(_){}
+    const as=$('adminSupportModal'); if(as) as.classList.remove('show');
+    forceShow('adminModal');
+  };
+  window.openAdminSupportPanel=function(){
+    if((window.currentRole||'')!=='admin' && !document.body.classList.contains('role-admin')){
+      alert('需要管理员登录'); return;
+    }
+    const am=$('adminModal'); if(am) am.classList.remove('show');
+    forceShow('adminSupportModal');
+    try{ if(typeof refreshSupportTickets==='function') refreshSupportTickets(); }catch(_){}
+  };
+  window.openHumanSupport=function(){
+    if((window.currentRole||'')==='admin' || document.body.classList.contains('role-admin')){
+      window.openAdminSupportPanel(); return;
+    }
+    forceShow('humanSupportModal');
+    try{ if(typeof refreshMySupport==='function') refreshMySupport(); }catch(_){}
+  };
+  function bindAdmin(){
+    [['adminButton',window.openAdminPanel],['adminDrawerButton',window.openAdminPanel],['humanSupportBtn',window.openHumanSupport],['humanSupportBtnSide',window.openHumanSupport]].forEach(function(pair){
+      const el=$(pair[0]); if(!el) return;
+      el.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); document.body.classList.remove('sidebar-open'); setTimeout(pair[1], 60); }, true);
+    });
+  }
+
+  let pendingAvatar='';
+  function setPreview(src){ const img=$('crAvatarPreview'); if(img) img.src=src||'/logo.png'; }
+
+  function bindAvatar(){
+    const pick=$('crAvatarPick'), file=$('crAvatarFile'), clear=$('crAvatarClear');
+    if(pick&&file){
+      pick.onclick=function(){ file.click(); };
+      file.onchange=function(){
+        const f=file.files&&file.files[0]; if(!f) return;
+        if(!/^image\//.test(f.type)){ alert('请选择图片'); return; }
+        if(f.size>1200000){ alert('图片请小于 1MB'); return; }
+        const rd=new FileReader();
+        rd.onload=function(){
+          const im=new Image();
+          im.onload=function(){
+            const c=document.createElement('canvas'); const size=256; c.width=size; c.height=size;
+            const ctx=c.getContext('2d');
+            const sc=Math.max(size/im.width,size/im.height);
+            const w=im.width*sc, hh=im.height*sc;
+            ctx.drawImage(im,(size-w)/2,(size-hh)/2,w,hh);
+            pendingAvatar=c.toDataURL('image/jpeg',0.85);
+            window.__crPendingAvatar=pendingAvatar;
+            setPreview(pendingAvatar);
+          };
+          im.src=String(rd.result||'');
+        };
+        rd.readAsDataURL(f);
+      };
+    }
+    if(clear) clear.onclick=function(){ pendingAvatar=''; window.__crPendingAvatar=''; setPreview('/logo.png'); if(file) file.value=''; };
+  }
+
+  const _fetch=window.fetch.bind(window);
+  window.fetch=function(input, init){
+    let url='', method=(init&&init.method||'GET').toUpperCase();
+    try{ url=(typeof input==='string')?input:(input&&input.url)||''; }catch(_){}
+    if(url.indexOf('/api/custom-ai/mine')>=0 && method==='PUT' && init && init.body){
+      try{
+        const data=JSON.parse(init.body);
+        if(window.__crPendingAvatar) data.avatar=window.__crPendingAvatar;
+        else if(pendingAvatar) data.avatar=pendingAvatar;
+        init=Object.assign({}, init, {body:JSON.stringify(data)});
+      }catch(_){}
+    }
+    const p=_fetch(input, init);
+    if(url.indexOf('/api/custom-ai/mine')>=0 && method==='GET'){
+      p.then(function(r){ const c=r.clone(); c.json().then(function(d){
+        if(d&&d.ai&&d.ai.avatar){ pendingAvatar=d.ai.avatar; window.__crPendingAvatar=d.ai.avatar; setPreview(d.ai.avatar); }
+      }).catch(function(){}); }).catch(function(){});
+    }
+    if(url.indexOf('/api/custom-ai/list')>=0){
+      p.then(function(r){ const c=r.clone(); c.json().then(function(d){ setTimeout(upgradeListAvatars, 50); }).catch(function(){}); }).catch(function(){});
+    }
+    return p;
+  };
+
+  function upgradeListAvatars(){
+    document.querySelectorAll('.cr-item').forEach(function(d){
+      const ai=d._ai; if(!ai||!ai.avatar) return;
+      if(d.querySelector('img.cr-list-av')) return;
+      const img=document.createElement('img');
+      img.className='cr-list-av';
+      img.src=ai.avatar;
+      img.alt='';
+      img.style.cssText='width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0';
+      const left=d.firstElementChild;
+      if(left) d.insertBefore(img, left);
+      else d.prepend(img);
+    });
+  }
+  const obs=new MutationObserver(function(){ upgradeListAvatars(); });
+  if(document.body) obs.observe(document.body,{childList:true,subtree:true});
+
+  function boot(){ bindAdmin(); bindAvatar(); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+  setTimeout(boot,600);
 })();
 </script>
 

@@ -15,7 +15,7 @@ const AI_CONFIG_FILE = path.join(DATA_DIR, 'ai-config.json');
 const ACCOUNTS_FILE = path.join(DATA_DIR, 'accounts.json');
 const SUPPORT_FILE = path.join(DATA_DIR, 'support.json');
 const PRESENCE_TTL = 90 * 1000;
-const APP_VERSION = '1.1.2';
+const APP_VERSION = '1.1.5';
 fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
 if (!fs.existsSync(ACCOUNTS_FILE)) fs.writeFileSync(ACCOUNTS_FILE, '{}');
@@ -86,7 +86,10 @@ const CUSTOM_COLORS=['#ffc22e','#e0805f','#6a7dff','#3fc9b0','#d86bc7','#7bc86c'
 const hasOwn=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
 function readCustom(){try{const v=JSON.parse(fs.readFileSync(CUSTOM_FILE,'utf8'));return v&&typeof v==='object'&&!Array.isArray(v)?v:{}}catch{return {}}}
 function writeCustom(v){fs.writeFileSync(CUSTOM_FILE,JSON.stringify(v,null,2))}
-function cleanCustom(d){const g=(x,n)=>String(x||'').trim().slice(0,n);const name=g(d.name,12);if(!name)return {error:'请给你的 AI 起个名字'};const persona=g(d.persona,600);if(!persona)return {error:'请写下 AI 的性格设定'};return {ok:{name,emoji:[...g(d.emoji,8)].slice(0,2).join('')||'✨',color:CUSTOM_COLORS.includes(d.color)?d.color:CUSTOM_COLORS[0],style:hasOwn(STYLE_PROMPTS,d.style)?d.style:'gentle',persona,greeting:g(d.greeting,120)||('你好，我是'+name+'！'),public:d.public!==false,updatedAt:new Date().toISOString()}}}
+function cleanCustom(d){const g=(x,n)=>String(x||'').trim().slice(0,n);const name=g(d.name,12);if(!name)return {error:'请给你的 AI 起个名字'};const persona=g(d.persona,800);if(!persona)return {error:'请写下 AI 的性格设定'};
+ let avatar='';const rawAv=String(d.avatar||'');
+ if(rawAv.startsWith('data:image/')&&rawAv.length<250000){avatar=rawAv}
+ return {ok:{name,emoji:[...g(d.emoji,8)].slice(0,2).join('')||'✨',avatar,color:CUSTOM_COLORS.includes(d.color)?d.color:CUSTOM_COLORS[0],style:hasOwn(STYLE_PROMPTS,d.style)?d.style:'gentle',persona,greeting:g(d.greeting,120)||('你好，我是'+name+'！'),public:d.public!==false,updatedAt:new Date().toISOString()}}}
 if(!fs.existsSync(AI_CONFIG_FILE)) fs.writeFileSync(AI_CONFIG_FILE, JSON.stringify(DEFAULT_AI_APIS,null,2));
 function needsApiKey(api){const u=String(api&&api.url||'');return /bigmodel\.cn|deepseek\.com|openai\.com|anthropic|googleapis|groq\.com/i.test(u)}
 function readAiApis(){try{const v=JSON.parse(fs.readFileSync(AI_CONFIG_FILE,'utf8'));if(Array.isArray(v)&&v.length)return v.map(a=>({name:String(a.name||'接口').slice(0,120),url:String(a.url||'').slice(0,500),model:String(a.model||'openai').slice(0,160),enabled:a.enabled!==false,key:String(a.key||'')}));}catch{}return DEFAULT_AI_APIS.map(a=>({...a}))}
@@ -128,25 +131,39 @@ async function proxyAiChat(messages,temperature=.7,autoFallback=true){
   const score=x=>/kilo\.ai|pollinations|免费|快速/i.test(String(x.name||'')+String(x.url||''))?0:(needsApiKey(x)?2:1);
   return score(a)-score(b);
  });
- const candidates=autoFallback?available:available.slice(0,1);
+ const candidates=autoFallback?available.slice(0,4):available.slice(0,1);
  if(!candidates.length) throw new Error('暂时繁忙，请稍后再试');
- let last;
- for(const api of candidates){
-  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),25000);
+
+ async function callOne(api,ms){
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),ms);
   try{
-   const headers={'Content-Type':'application/json','User-Agent':'ASTRION/1.1.2'};
+   const headers={'Content-Type':'application/json','User-Agent':'ASTRION/1.1.5'};
    if(api.key) headers.Authorization='Bearer '+api.key;
-   const r=await fetch(api.url,{method:'POST',headers,body:JSON.stringify({model:api.model,messages,temperature}),signal:controller.signal});
+   const r=await fetch(api.url,{method:'POST',headers,body:JSON.stringify({model:api.model,messages,temperature,max_tokens:768}),signal:controller.signal});
    const raw=await r.text();
-   if(!r.ok) throw new Error('HTTP '+r.status+' '+raw.slice(0,120));
+   if(!r.ok) throw new Error('HTTP '+r.status);
    let data; try{data=JSON.parse(raw)}catch{data={text:raw}}
    const answer=aiAnswer(data);
    if(!answer||!String(answer).trim()) throw new Error('空响应');
    return {answer,used:api.name};
-  }catch(e){last=e}
-  finally{clearTimeout(timer)}
+  } finally { clearTimeout(timer); }
  }
- throw last||new Error('暂时繁忙，请稍后再试');
+
+ // 并行竞速，总时限约 5 秒
+ const PER=4500;
+ let lastErr=new Error('暂时繁忙，请稍后再试');
+ const promises=candidates.map(api=>callOne(api,PER).then(v=>({ok:true,v})).catch(e=>({ok:false,e})));
+ const timeout=new Promise(resolve=>setTimeout(()=>resolve({ok:false,e:new Error('响应超时'),timeout:true}),5000));
+ // 使用 Promise.any 风格：取第一个成功
+ try{
+  const winner=await Promise.any(candidates.map(api=>callOne(api,PER)));
+  return winner;
+ }catch(agg){
+  lastErr=new Error('暂时繁忙，请稍后再试');
+ }
+ try{ return await callOne(candidates[0],1500); }catch(e){ lastErr=e; }
+ throw lastErr;
 }
 function zhipuApiKey(){const api=readAiApis().find(isZhipuApi);return String(api?.key||process.env.ZHIPU_API_KEY||'').trim()}
 function isPrivateIp(address){
@@ -290,11 +307,28 @@ const server=http.createServer(async(req,res)=>{
     if(url.pathname.startsWith('/api/custom-ai/')){
    const s=session(req);if(!s){authFailure(req,res,'请先登录');return;}s.lastSeen=Date.now();
    if(req.method==='GET'&&url.pathname==='/api/custom-ai/mine'){const c=readCustom();send(res,200,{ai:hasOwn(c,s.userId)?c[s.userId]:null});return;}
-   if(req.method==='PUT'&&url.pathname==='/api/custom-ai/mine'){const d=await body(req,8000),r=cleanCustom(d);if(r.error){send(res,400,{error:r.error});return;}const c=readCustom();c[s.userId]=r.ok;writeCustom(c);send(res,200,{ai:r.ok});return;}
+   if(req.method==='PUT'&&url.pathname==='/api/custom-ai/mine'){const d=await body(req,300000),r=cleanCustom(d);if(r.error){send(res,400,{error:r.error});return;}const c=readCustom();c[s.userId]=r.ok;writeCustom(c);send(res,200,{ai:r.ok});return;}
    if(req.method==='DELETE'&&url.pathname==='/api/custom-ai/mine'){const c=readCustom();delete c[s.userId];writeCustom(c);send(res,200,{ok:true});return;}
-   if(req.method==='GET'&&url.pathname==='/api/custom-ai/list'){const c=readCustom(),acc=readAccounts(),items=Object.entries(c).filter(([k,v])=>v&&v.public&&k!==s.userId).sort((a,b)=>Date.parse(b[1].updatedAt||0)-Date.parse(a[1].updatedAt||0)).slice(0,60).map(([k,v])=>({owner:k,creator:k===ADMIN_ID?'管理员':(hasOwn(acc,k)?acc[k].displayName||k:k),name:v.name,emoji:v.emoji,color:v.color,style:v.style}));send(res,200,{items});return;}
+   if(req.method==='GET'&&url.pathname==='/api/custom-ai/list'){const c=readCustom(),acc=readAccounts(),items=Object.entries(c).filter(([k,v])=>v&&v.public&&k!==s.userId).sort((a,b)=>Date.parse(b[1].updatedAt||0)-Date.parse(a[1].updatedAt||0)).slice(0,60).map(([k,v])=>({owner:k,creator:k===ADMIN_ID?'管理员':(hasOwn(acc,k)?acc[k].displayName||k:k),name:v.name,emoji:v.emoji,avatar:v.avatar||'',color:v.color,style:v.style}));send(res,200,{items});return;}
    if(req.method==='POST'&&url.pathname==='/api/custom-ai/chat'){
-    const d=await body(req,40000),owner=String(d.owner||''),c=readCustom(),isNl=owner===NAILONG_OWNER;if(!isNl&&!hasOwn(c,owner)){send(res,404,{error:'这个 AI 不存在'});return;}const ai=isNl?NAILONG_AI:c[owner];if(!isNl&&!ai.public&&owner!==s.userId){send(res,404,{error:'这个 AI 不存在'});return;}
+    const d=await body(req,40000);let owner=String(d.owner||'').trim();const c=readCustom();const isNl=owner===NAILONG_OWNER||owner==='nailong'||owner==='奶龙';
+    // 兼容：空 owner / __me__ / 自己 → 当前用户
+    if(!owner||owner==='__me__'||owner==='mine'||owner==='me') owner=s.userId;
+    let ai=null;
+    if(isNl){ ai=NAILONG_AI; owner=NAILONG_OWNER; }
+    else if(hasOwn(c,owner)){ ai=c[owner]; }
+    else if(hasOwn(c,s.userId)){ ai=c[s.userId]; owner=s.userId; }
+    else {
+      // 按名字在公开 AI 里找
+      const want=String(d.name||d.aiName||'').trim();
+      if(want){
+        for(const [k,v] of Object.entries(c)){
+          if(v&&v.public&&String(v.name||'')===want){ ai=v; owner=k; break; }
+        }
+      }
+    }
+    if(!ai){send(res,404,{error:'这个 AI 不存在'});return;}
+    if(!isNl&&!ai.public&&owner!==s.userId){send(res,404,{error:'这个 AI 不存在'});return;}
     if(!Array.isArray(d.messages)||d.messages.length>24){send(res,400,{error:'消息上下文无效'});return;}
     const history=d.messages.filter(m=>m&&(m.role==='user'||m.role==='assistant')&&typeof m.content==='string').map(m=>({role:m.role,content:m.content.slice(0,1500)})).slice(-16);
     if(!history.length||history[history.length-1].role!=='user'){send(res,400,{error:'请先输入内容'});return;}
