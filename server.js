@@ -15,17 +15,16 @@ const AI_CONFIG_FILE = path.join(DATA_DIR, 'ai-config.json');
 const ACCOUNTS_FILE = path.join(DATA_DIR, 'accounts.json');
 const SUPPORT_FILE = path.join(DATA_DIR, 'support.json');
 const PRESENCE_TTL = 90 * 1000;
-const APP_VERSION = '3.0.0';
+const APP_VERSION = '3.0.3';
 fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
 if (!fs.existsSync(ACCOUNTS_FILE)) fs.writeFileSync(ACCOUNTS_FILE, '{}');
 if (!fs.existsSync(SUPPORT_FILE)) fs.writeFileSync(SUPPORT_FILE, '[]');
 const DEFAULT_AI_APIS = [
- {name:'免费·Pollinations',url:'https://text.pollinations.ai/openai',model:'openai',enabled:true,key:''},
- {name:'免费·Pollinations-Fast',url:'https://text.pollinations.ai/openai',model:'openai-fast',enabled:true,key:''},
- {name:'免费·Pollinations-Roboto',url:'https://text.pollinations.ai/openai',model:'roboto',enabled:true,key:''},
- {name:'免费·Pollinations-Unity',url:'https://text.pollinations.ai/openai',model:'unity',enabled:true,key:''},
- {name:'念绪AI',url:'https://open.bigmodel.cn/api/paas/v4/chat/completions',model:'GLM-5.3',enabled:true,key:process.env.ZHIPU_API_KEY||process.env.ZAI_API_KEY||''}
+ {name:'免费快速·Kilo',url:'https://api.kilo.ai/api/gateway/v1/chat/completions',model:'openrouter/free',enabled:true,key:''},
+ {name:'免费快速·Kilo自动',url:'https://api.kilo.ai/api/gateway/v1/chat/completions',model:'kilo-auto/free',enabled:true,key:''},
+ {name:'免费快速·Pollinations',url:'https://text.pollinations.ai/openai',model:'openai',enabled:true,key:''},
+ {name:'念绪AI·智谱',url:'https://open.bigmodel.cn/api/paas/v4/chat/completions',model:'glm-4-flash',enabled:false,key:process.env.ZHIPU_API_KEY||process.env.ZAI_API_KEY||''}
 ];
 if (!fs.existsSync(AI_CONFIG_FILE)) {
   fs.writeFileSync(AI_CONFIG_FILE, JSON.stringify(DEFAULT_AI_APIS,null,2));
@@ -88,29 +87,58 @@ const hasOwn=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
 function readCustom(){try{const v=JSON.parse(fs.readFileSync(CUSTOM_FILE,'utf8'));return v&&typeof v==='object'&&!Array.isArray(v)?v:{}}catch{return {}}}
 function writeCustom(v){fs.writeFileSync(CUSTOM_FILE,JSON.stringify(v,null,2))}
 function cleanCustom(d){const g=(x,n)=>String(x||'').trim().slice(0,n);const name=g(d.name,12);if(!name)return {error:'请给你的 AI 起个名字'};const persona=g(d.persona,600);if(!persona)return {error:'请写下 AI 的性格设定'};return {ok:{name,emoji:[...g(d.emoji,8)].slice(0,2).join('')||'✨',color:CUSTOM_COLORS.includes(d.color)?d.color:CUSTOM_COLORS[0],style:hasOwn(STYLE_PROMPTS,d.style)?d.style:'gentle',persona,greeting:g(d.greeting,120)||('你好，我是'+name+'！'),public:d.public!==false,updatedAt:new Date().toISOString()}}}
-function readAiApis(){try{const v=JSON.parse(fs.readFileSync(AI_CONFIG_FILE,'utf8'));if(!Array.isArray(v))return DEFAULT_AI_APIS;return DEFAULT_AI_APIS.map((base,i)=>({...base,...(v[i]||{}),key:(v[i]?.key||base.key||'')}))}catch{return DEFAULT_AI_APIS}}
+if(!fs.existsSync(AI_CONFIG_FILE)) fs.writeFileSync(AI_CONFIG_FILE, JSON.stringify(DEFAULT_AI_APIS,null,2));
+function needsApiKey(api){const u=String(api&&api.url||'');return /bigmodel\.cn|deepseek\.com|openai\.com|anthropic|googleapis|groq\.com/i.test(u)}
+function readAiApis(){try{const v=JSON.parse(fs.readFileSync(AI_CONFIG_FILE,'utf8'));if(Array.isArray(v)&&v.length)return v.map(a=>({name:String(a.name||'接口').slice(0,120),url:String(a.url||'').slice(0,500),model:String(a.model||'openai').slice(0,160),enabled:a.enabled!==false,key:String(a.key||'')}));}catch{}return DEFAULT_AI_APIS.map(a=>({...a}))}
 function writeAiApis(v){fs.writeFileSync(AI_CONFIG_FILE,JSON.stringify(v,null,2))}
+
+// 确保免费快速接口存在（Kilo + Pollinations）
+try{
+  const cur=readAiApis();
+  let changed=false;
+  let next=cur.map(a=>{
+    if(/bigmodel/i.test(a.url||'') && !String(a.key||'').trim()){ changed=true; return {...a, enabled:false}; }
+    return a;
+  });
+  const hasKilo=next.some(a=>/kilo\.ai/i.test(a.url||''));
+  if(!hasKilo){
+    next.unshift(
+      {name:'免费快速·Kilo',url:'https://api.kilo.ai/api/gateway/v1/chat/completions',model:'openrouter/free',enabled:true,key:''},
+      {name:'免费快速·Kilo自动',url:'https://api.kilo.ai/api/gateway/v1/chat/completions',model:'kilo-auto/free',enabled:true,key:''}
+    );
+    changed=true;
+  }
+  if(!next.some(a=>a.enabled && /pollinations/i.test(a.url||''))){
+    next.push({name:'免费快速·Pollinations',url:'https://text.pollinations.ai/openai',model:'openai',enabled:true,key:''});
+    changed=true;
+  }
+  if(changed) writeAiApis(next);
+}catch(_){}
+
 function publicAiApis(includeKeys=false){return readAiApis().map(a=>includeKeys?{...a,keySet:Boolean(a.key)}:{name:a.name,url:a.url,model:a.model,enabled:a.enabled,keySet:Boolean(a.key)})}
 
 function aiAnswer(data){const answer=data?.choices?.[0]?.message?.content??data?.choices?.[0]?.text??data?.text??data?.result;if(typeof answer==='string'&&answer.trim())return answer.trim();if(Array.isArray(answer)){const s=answer.map(x=>x.text||'').join('');if(s.trim())return s.trim()}throw new Error(data?.error?.message||'无法识别接口返回内容')}
 function isZhipuApi(api){return /bigmodel\.cn|zhipu/i.test(String(api?.url||'')+' '+String(api?.name||''))}
 async function proxyAiChat(messages,temperature=.7,autoFallback=true){
- const available=readAiApis().filter(a=>a.enabled&&a.url&&a.model).sort((a,b)=>{
-  const free=x=>/pollinations|免费/i.test(String(x.name||'')+String(x.url||''))?0:1;
-  const z=x=>Number(isZhipuApi(x));
-  return free(a)-free(b) || z(b)-z(a);
+ const available=readAiApis().filter(a=>{
+  if(!a.enabled||!a.url||!a.model) return false;
+  if(needsApiKey(a)&&!String(a.key||'').trim()) return false;
+  return true;
+ }).sort((a,b)=>{
+  const score=x=>/kilo\.ai|pollinations|免费|快速/i.test(String(x.name||'')+String(x.url||''))?0:(needsApiKey(x)?2:1);
+  return score(a)-score(b);
  });
  const candidates=autoFallback?available:available.slice(0,1);
- if(!candidates.length)throw new Error('管理员尚未启用服务器接口');
+ if(!candidates.length) throw new Error('暂时繁忙，请稍后再试');
  let last;
  for(const api of candidates){
-  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),28000);
+  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),25000);
   try{
-   const headers={'Content-Type':'application/json','User-Agent':'NianxuAI/3.0.0'};
+   const headers={'Content-Type':'application/json','User-Agent':'NianxuAI/3.0.3'};
    if(api.key) headers.Authorization='Bearer '+api.key;
    const r=await fetch(api.url,{method:'POST',headers,body:JSON.stringify({model:api.model,messages,temperature}),signal:controller.signal});
    const raw=await r.text();
-   if(!r.ok) throw new Error('HTTP '+r.status+' '+raw.slice(0,160));
+   if(!r.ok) throw new Error('HTTP '+r.status+' '+raw.slice(0,120));
    let data; try{data=JSON.parse(raw)}catch{data={text:raw}}
    const answer=aiAnswer(data);
    if(!answer||!String(answer).trim()) throw new Error('空响应');
@@ -118,7 +146,7 @@ async function proxyAiChat(messages,temperature=.7,autoFallback=true){
   }catch(e){last=e}
   finally{clearTimeout(timer)}
  }
- throw last||new Error('服务器接口均不可用');
+ throw last||new Error('暂时繁忙，请稍后再试');
 }
 function zhipuApiKey(){const api=readAiApis().find(isZhipuApi);return String(api?.key||process.env.ZHIPU_API_KEY||'').trim()}
 function isPrivateIp(address){
@@ -144,7 +172,7 @@ async function generatePollinationsImage(prompt, aspect){
   const url='https://image.pollinations.ai/prompt/'+encodeURIComponent(String(prompt).slice(0,800))+'?'+q.toString();
   const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),90000);
   try{
-    const r=await fetch(url,{method:'GET',headers:{'Accept':'image/*','User-Agent':'NianxuAI/3.0.0'},signal:controller.signal,redirect:'follow'});
+    const r=await fetch(url,{method:'GET',headers:{'Accept':'image/*','User-Agent':'NianxuAI/3.0.3'},signal:controller.signal,redirect:'follow'});
     if(!r.ok) throw new Error('HTTP '+r.status);
     const type=(r.headers.get('content-type')||'image/jpeg').split(';')[0].trim();
     if(!type.startsWith('image/')) throw new Error('非图片响应');
@@ -198,7 +226,7 @@ const server=http.createServer(async(req,res)=>{
   if(req.method==='POST'&&url.pathname==='/api/presence'){const s=session(req);if(!s){authFailure(req,res,'未登录');return;}s.lastSeen=Date.now();send(res,200,{ok:true});return;}
   if(req.method==='GET'&&url.pathname==='/api/admin/apis'){if(!requireAdmin(req,res))return;send(res,200,{apis:publicAiApis(true)});return;}
   if(req.method==='PUT'&&url.pathname==='/api/admin/apis'){
-   if(!requireAdmin(req,res))return;const d=await body(req);if(!Array.isArray(d.apis)||d.apis.length!==2){send(res,400,{error:'接口配置必须正好包含第一个和第二个接口'});return;}
+   if(!requireAdmin(req,res))return;const d=await body(req);if(!Array.isArray(d.apis)||d.apis.length<1||d.apis.length>12){send(res,400,{error:'接口配置数量需在 1-12 个之间'});return;}
    const old=readAiApis();const next=d.apis.map((a,i)=>{const prev=old[i]||{};return {name:String(a.name||'').slice(0,120),url:String(a.url||'').slice(0,500),model:String(a.model||'').slice(0,160),enabled:Boolean(a.enabled),key:String(a.key||'')||prev.key||''}});writeAiApis(next);send(res,200,{ok:true,apis:publicAiApis()});return;
   }
   if(req.method==='POST'&&url.pathname==='/api/ai/chat'){

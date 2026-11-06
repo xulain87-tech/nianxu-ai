@@ -636,7 +636,7 @@ body.mobile-drawer-open .sidebar .menu-item{
 
 
 <style id="nx-login-premium">
-/* ===== 念绪 3.0.0 绚丽多彩登录 ===== */
+/* ===== 念绪 3.0.3 绚丽多彩登录 ===== */
 #entryGate{
   position:fixed!important;inset:0!important;z-index:99999!important;
   display:flex!important;align-items:center;justify-content:center;
@@ -998,6 +998,152 @@ body.entered #dolaHome.show{display:flex}
 #mobileSettings,#openSettings,button[title="设置中心"]{display:none!important}
 </style>
 
+
+<style id="nx-dola-clone">
+/* ===== 完全仿 Dola 移动端深色聊天 ===== */
+:root{
+  --dola-bg:#000000;
+  --dola-panel:#1c1c1e;
+  --dola-bubble:#2c2c2e;
+  --dola-user:#0a84ff;
+  --dola-text:#f5f5f7;
+  --dola-muted:#8e8e93;
+  --dola-line:rgba(255,255,255,.08);
+  --dola-bar:#0c0c0e;
+}
+html,body{background:#000!important;color:var(--dola-text)!important;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif!important}
+
+/* 顶栏：中间品牌 + 小字提示 */
+.topbar{
+  background:#000!important;
+  border-bottom:1px solid var(--dola-line)!important;
+  min-height:48px!important;
+  padding:8px 12px!important;
+}
+.topbar .brand-name,.top-title,.topbar h1{
+  font-size:17px!important;font-weight:600!important;letter-spacing:.02em!important;
+  text-align:center!important;
+}
+/* 仿 Dola 副标题 */
+.topbar::after{
+  content:"AI 生成可能有误 注意核实";
+  display:block;text-align:center;
+  font-size:11px;color:var(--dola-muted);font-weight:400;margin-top:1px;
+}
+.top-actions button, .topbar button{
+  background:transparent!important;border:0!important;color:#fff!important;
+}
+
+/* 设置齿轮彻底隐藏 */
+#mobileSettings,#openSettings,button[title="设置中心"]{display:none!important;width:0!important;height:0!important;overflow:hidden!important}
+
+/* 聊天区 */
+#messages,.messages,#chatLog,.chat-log{
+  background:#000!important;
+  padding:12px 12px 160px!important;
+}
+.msg.ai,.msg.bot,.bubble.ai,.ai-bubble{
+  background:var(--dola-bubble)!important;
+  color:var(--dola-text)!important;
+  border:0!important;
+  border-radius:18px!important;
+  padding:12px 14px!important;
+  max-width:92%!important;
+  line-height:1.55!important;
+  font-size:15px!important;
+}
+.msg.user,.bubble.user,.user-bubble{
+  background:var(--dola-user)!important;
+  color:#fff!important;
+  border-radius:18px!important;
+  padding:10px 14px!important;
+  max-width:85%!important;
+  font-size:15px!important;
+}
+
+/* 底部四键导航 —— 仿 Dola */
+.work-dock,.bottom-work,.work-bar,#workDock{
+  position:fixed!important;left:0;right:0;
+  bottom:58px!important;
+  display:flex!important;justify-content:space-around!important;
+  gap:6px!important;padding:6px 10px!important;
+  background:transparent!important;z-index:50!important;
+  border:0!important;box-shadow:none!important;
+}
+.work-dock button,.work-bar button,#workDock button,.bottom-work button{
+  flex:1!important;
+  background:var(--dola-panel)!important;
+  color:#ddd!important;
+  border:1px solid var(--dola-line)!important;
+  border-radius:14px!important;
+  padding:10px 6px!important;
+  font-size:12px!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;gap:4px!important;
+}
+.work-dock button .work-icon,.work-bar .work-icon{font-size:16px!important}
+
+/* 输入条 —— 仿 Dola 圆角深色 */
+.composer,.input-bar,#composerBar{
+  position:fixed!important;left:10px;right:10px;bottom:10px!important;
+  background:var(--dola-panel)!important;
+  border:1px solid var(--dola-line)!important;
+  border-radius:24px!important;
+  padding:8px 10px!important;
+  display:flex!important;align-items:center!important;gap:8px!important;
+  box-shadow:0 8px 30px rgba(0,0,0,.45)!important;
+  z-index:60!important;
+}
+#prompt,textarea#prompt,.composer textarea{
+  background:transparent!important;border:0!important;color:#fff!important;
+  font-size:15px!important;min-height:24px!important;
+}
+#prompt::placeholder{color:#6c6c70!important}
+.send,#sendBtn,.send-btn{
+  background:var(--dola-user)!important;
+  width:34px!important;height:34px!important;border-radius:50%!important;
+  border:0!important;box-shadow:none!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+}
+
+/* 侧栏 */
+.sidebar{
+  background:#111114!important;
+  border-right:1px solid var(--dola-line)!important;
+}
+.sidebar .menu-item{border-radius:12px!important;color:#eee!important}
+.sidebar .menu-item:hover{background:rgba(10,132,255,.12)!important}
+
+/* 弹窗卡片 */
+.modal .card,.extra-box,.cr-card{
+  background:#1c1c1e!important;
+  border:1px solid var(--dola-line)!important;
+  border-radius:20px!important;
+}
+
+/* 登录 */
+#entryGate{
+  background:#000!important;
+}
+#entryGate .nx-login-card,#entryGate .card{
+  background:#1c1c1e!important;
+  border:1px solid var(--dola-line)!important;
+  border-radius:22px!important;
+}
+
+/* 首页 Dola 卡片改深色 */
+#dolaHome h1{
+  background:none!important;-webkit-text-fill-color:#fff!important;color:#fff!important;
+  font-size:1.4rem!important;
+}
+#dolaHome .tile{
+  background:#1c1c1e!important;border:1px solid var(--dola-line)!important;
+}
+#dolaHome .tile:hover{border-color:rgba(10,132,255,.5)!important}
+
+/* 隐藏多余齿轮/设置 */
+.top-actions #mobileSettings{display:none!important}
+</style>
+
 </head>
 <body>
 <div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
@@ -1024,7 +1170,7 @@ body.entered #dolaHome.show{display:flex}
   </div>
   <div class="side-label">对话</div>
   <div class="status"><span class="dot" id="statusDot"></span><span id="statusText">等待发送消息</span></div>
-  <div class="side-note">念绪 AI · 3.0.0 Pro · 极致流畅 · 免密登录</div>
+  <div class="side-note">念绪 AI · 3.0.3 Pro · 极致流畅 · 免密登录</div>
  </aside>
  <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop" aria-hidden="true"></div>
  <main class="main">
@@ -1032,7 +1178,7 @@ body.entered #dolaHome.show{display:flex}
   <section id="chat"><div class="welcome" id="welcome"><div class="orb">念</div><h2>你好，我是念绪 AI</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div></div></section>
   <footer class="composer-wrap">
    <div class="attachments" id="attachments"></div>
-   <div class="composer"><div class="input-row"><div class="toolrow"><button id="attachBtn" title="上传图片或文件">＋</button><button id="mobileGenerateImage" title="AI 生图" aria-label="AI 生图">图</button><button class="mode-btn" id="searchModeBtn" type="button" title="联网搜索并附来源" aria-pressed="false">搜</button><button class="mode-btn" id="expertModeBtn" type="button" title="更严谨的专家分析" aria-pressed="false">专</button></div><textarea id="prompt" rows="1" placeholder="给念绪 AI 发消息…（Enter 发送，Shift+Enter 换行）"></textarea><button class="send" id="sendBtn" disabled>↑</button></div><div class="composer-foot"><span>情绪理解 · 附件 · 搜索 · 专家 · 生图</span><span id="busyLabel"></span></div></div>
+   <div class="composer"><div class="input-row"><div class="toolrow"><button id="attachBtn" title="上传图片或文件">＋</button><button id="mobileGenerateImage" title="AI 生图" aria-label="AI 生图">图</button><button class="mode-btn" id="searchModeBtn" type="button" title="联网搜索并附来源" aria-pressed="false">搜</button><button class="mode-btn" id="expertModeBtn" type="button" title="更严谨的专家分析" aria-pressed="false">专</button></div><textarea id="prompt" rows="1" placeholder="发消息或按住说话..."></textarea><button class="send" id="sendBtn" disabled>↑</button></div><div class="composer-foot"><span>情绪理解 · 附件 · 搜索 · 专家 · 生图</span><span id="busyLabel"></span></div></div>
    <input id="fileInput" type="file" multiple accept="image/*,.txt,.md,.csv,.json,.html,.xml,.log,.pdf" hidden>
   </footer>
   <nav class="mobile-workbar" id="mobileWorkbar" aria-label="常用功能">
@@ -1067,10 +1213,10 @@ body.entered #dolaHome.show{display:flex}
   <label class="cr-sw"><span>公开到玩家作品</span><input type="checkbox" id="crPub" checked></label>
   <div class="cr-btns"><button class="cr-save" id="crSave" type="button">保存我的AI</button><button class="cr-del" id="crDel" type="button">删除</button></div>
   <p class="cr-err" id="crErr"></p></div></div>
- <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="说点什么…"></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
+ <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="发消息或按住说话..."></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">Nianxu Control Room · 3.0.0 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">Nianxu Control Room · 3.0.3 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把念绪调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
  <div class="nx-profile"><div class="av">念</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>服务器接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
  <p class="settings-page-note">管理员可配置服务器接口；普通用户只通过服务器代理使用 AI，接口地址和 API Key 不会发送到浏览器。</p>
  <div id="apiList"></div>
@@ -1081,7 +1227,7 @@ body.entered #dolaHome.show{display:flex}
  </div>
  <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 3.0.0 Pro</strong><span>Build 2026.11 · 3.0.0</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、管理后台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>念绪 AI 3.0.3 Pro</strong><span>Build 2026.11 · 3.0.3</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、管理后台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 开启互怼强度匹配</label>
@@ -1116,7 +1262,7 @@ body.entered #dolaHome.show{display:flex}
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 3.0.0 Pro" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="念绪 AI 3.0.3 Pro" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -1495,7 +1641,7 @@ body.nx-light .cr-item.official{background:linear-gradient(135deg,color-mix(in s
 .cr-pick button.on{transform:scale(1.1)}
 .cr-save{box-shadow:0 8px 20px #7a6bff44;transition:transform .2s var(--soft)}
 .cr-save:active{transform:scale(.97)}
-/* ===== 3.0.0 Fluent Grok-style UI — no blur, high FPS ===== */
+/* ===== 3.0.3 Fluent Grok-style UI — no blur, high FPS ===== */
 :root{--bg:#000;--panel:#0d0d0d;--panel2:#161616;--line:rgba(255,255,255,.1);--text:#f0f0f0;--muted:#888;--accent:#1d9bf0}
 *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 body{background:#000!important;color:var(--text);font-family:system-ui,-apple-system,sans-serif}
@@ -1543,7 +1689,7 @@ body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .menu-item,.primary,.ghost,.iconbtn,.send{transition:background .12s,transform .12s!important}
 
-/* ===== 3.0.0 全新登录界面样式（独立无冲突） ===== */
+/* ===== 3.0.3 全新登录界面样式（独立无冲突） ===== */
 #entryGate{
   position:fixed!important;inset:0!important;z-index:99999!important;
   display:flex!important;align-items:center;justify-content:center;
@@ -1591,7 +1737,7 @@ body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 body.entered #entryGate{display:none!important;visibility:hidden!important;pointer-events:none!important}
 
 </style>
-<!-- ===== 3.0.0 全新干净登录界面 ===== -->
+<!-- ===== 3.0.3 全新干净登录界面 ===== -->
 <div id="entryGate" style="display:flex">
   <div class="nx-ambient" aria-hidden="true">
     <span class="nx-orb nx-orb-a"></span>
@@ -1600,7 +1746,7 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
     <span class="nx-grid"></span>
   </div>
   <div class="nx-login-card">
-    <div class="nx-login-badge">NIANXU · 3.0.0</div>
+    <div class="nx-login-badge">NIANXU · 3.0.3</div>
     <div class="nx-login-logo"><span>念</span></div>
     <h1 class="nx-login-title">念绪 AI</h1>
     <p class="nx-login-desc" id="gateDesc">登录一次后自动记住，下次可免密进入</p>
@@ -1749,7 +1895,7 @@ async function send(){
  setStatus(useSearch?"正在联网搜索并整理来源…":useExpert?"专家模式思考中…":"正在连接 AI…");
  try{const result=useSearch?await callServerSearch(text,useExpert,controller.signal,prefs):await callServerChat(apiHistory,controller.signal,useExpert,prefs);answer=result.answer;used=result.used||used;searchResults=result.results||[]}catch(e){lastError=e}finally{clearTimeout(timer);aborter=null}
  if(answer){pending.parentElement.classList.remove("typing");pending.textContent=answer;const copyButton=pending.parentElement.querySelector(".msg-tools button");if(copyButton)copyButton.onclick=()=>navigator.clipboard?.writeText(answer);addSearchSources(pending,searchResults);history.push({role:"user",content:userContent},{role:"assistant",content:answer});if(history.length>20)history=history.slice(-20);setStatus("已连接："+used,true);$("modelLabel").textContent=(useSearch?"联网搜索 · ":useExpert?"专家模式 · ":"服务器接口 · ")+used;}
- else{pending.parentElement.classList.remove("typing");pending.textContent="请求暂不可用："+(lastError?.message||"未知错误")+(useSearch?"。请检查网络后重试。":"。请联系管理员检查接口配置。");pending.parentElement.classList.add("error");setStatus(useSearch?"搜索暂不可用":"服务器接口暂不可用");}
+ else{pending.parentElement.classList.remove("typing");pending.textContent="暂时繁忙："+(lastError?.message||"未知错误")+(useSearch?"。请检查网络后重试。":"。请稍后再试。");pending.parentElement.classList.add("error");setStatus(useSearch?"搜索暂不可用":"服务器接口暂不可用");}
  aborter=null;setBusy(false);
 }
 function openModal(id){$(id).classList.add("show")}
@@ -1768,7 +1914,7 @@ if($("creatorBtnSide"))$("creatorBtnSide").onclick=()=>{$("creatorModal").classL
 if($("noticeButtonSide"))$("noticeButtonSide").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
 if($("humanSupportBtnSide"))$("humanSupportBtnSide").onclick=()=>{if(currentRole==="admin"){if(typeof openAdminSupportPanel==="function")openAdminSupportPanel();return}openModal("humanSupportModal");if(typeof refreshMySupport==="function")refreshMySupport()};
 if($("clearChatSide"))$("clearChatSide").onclick=()=>{if(confirm("确定清空当前对话？")){const chat=$("chat");if(chat){chat.innerHTML="";const w=document.createElement("div");w.className="welcome";w.id="welcome";w.innerHTML='<div class="orb">念</div><h2>你好，我是念绪 AI</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div>';chat.append(w);setStatus("对话已清空",true)}}};
-if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("念绪 AI 3.0.0 Pro\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 管理后台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
+if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("念绪 AI 3.0.3 Pro\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 管理后台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
 (function(){
   const openApp=()=>openModal("appearanceModal");
   if($("openAppearance")) $("openAppearance").onclick=openApp;
@@ -2414,7 +2560,7 @@ try{
         return;
       }
       if(id === "versionInfoBtn"){
-        alert("念绪 AI 3.0.0 Pro\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
+        alert("念绪 AI 3.0.3 Pro\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
         setTimeout(closeDrawer, 80);
         return;
       }
@@ -2577,5 +2723,129 @@ try{
   },true);
 })();
 </script>
+
+
+<script id="nx-api-settings">
+(function(){
+  function el(id){return document.getElementById(id)}
+  async function loadApis(){
+    try{
+      const r=await fetch('/api/admin/apis',{credentials:'include'});
+      if(!r.ok) throw new Error('无法加载');
+      const d=await r.json();
+      renderApiList(d.apis||[]);
+    }catch(e){
+      const box=el('nxApiList');
+      if(box) box.innerHTML='<p style="color:#f88;padding:12px">加载失败：需要管理员登录</p>';
+    }
+  }
+  function renderApiList(apis){
+    const box=el('nxApiList'); if(!box) return;
+    box.innerHTML='';
+    (apis||[]).forEach((a,i)=>{
+      const row=document.createElement('div');
+      row.className='nx-api-row';
+      row.innerHTML=`
+        <div class="nx-api-head"><b>#${i+1} ${a.name||'接口'}</b>
+          <label><input type="checkbox" data-k="enabled" ${a.enabled?'checked':''}/> 启用</label>
+        </div>
+        <label>名称<input data-k="name" value="${(a.name||'').replace(/"/g,'&quot;')}"/></label>
+        <label>URL<input data-k="url" value="${(a.url||'').replace(/"/g,'&quot;')}"/></label>
+        <label>模型<input data-k="model" value="${(a.model||'').replace(/"/g,'&quot;')}"/></label>
+        <label>Key（留空保留原值）<input data-k="key" placeholder="${a.keySet?'已配置': '可选'}" value=""/></label>`;
+      box.appendChild(row);
+    });
+    window.__nxApisCount=(apis||[]).length;
+  }
+  function collectApis(){
+    return [...document.querySelectorAll('#nxApiList .nx-api-row')].map(row=>{
+      const g=k=>row.querySelector(`[data-k="${k}"]`);
+      return {
+        name:(g('name')?.value||'').trim(),
+        url:(g('url')?.value||'').trim(),
+        model:(g('model')?.value||'').trim(),
+        enabled:!!g('enabled')?.checked,
+        key:(g('key')?.value||'').trim()
+      };
+    });
+  }
+  async function saveApis(){
+    const apis=collectApis();
+    const r=await fetch('/api/admin/apis',{method:'PUT',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({apis})});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok){alert(d.error||'保存失败');return}
+    alert('接口已保存');
+    loadApis();
+  }
+  function openApiConfigPanel(){
+    let panel=el('nxApiPanel');
+    if(!panel){
+      panel=document.createElement('div');
+      panel.id='nxApiPanel';
+      panel.innerHTML=`
+        <div class="nx-api-mask" data-close></div>
+        <div class="nx-api-sheet">
+          <div class="nx-api-top"><b>接口设置</b><button type="button" data-close>✕</button></div>
+          <p class="nx-api-hint">推荐启用「免费快速·Pollinations」。智谱等需填写 Key 才启用。</p>
+          <div id="nxApiList"></div>
+          <div class="nx-api-actions">
+            <button type="button" id="nxApiAdd">添加接口</button>
+            <button type="button" id="nxApiSave" class="primary">保存</button>
+          </div>
+        </div>`;
+      document.body.appendChild(panel);
+      panel.addEventListener('click',e=>{if(e.target.matches('[data-close],.nx-api-mask')) panel.classList.remove('show')});
+      el('nxApiSave').onclick=saveApis;
+      el('nxApiAdd').onclick=()=>{
+        const box=el('nxApiList');
+        const row=document.createElement('div');
+        row.className='nx-api-row';
+        row.innerHTML=`
+          <div class="nx-api-head"><b>新接口</b><label><input type="checkbox" data-k="enabled" checked/> 启用</label></div>
+          <label>名称<input data-k="name" value="自定义接口"/></label>
+          <label>URL<input data-k="url" value="https://text.pollinations.ai/openai"/></label>
+          <label>模型<input data-k="model" value="openai"/></label>
+          <label>Key<input data-k="key" placeholder="可选"/></label>`;
+        box.appendChild(row);
+      };
+    }
+    panel.classList.add('show');
+    loadApis();
+  }
+  window.openApiConfigPanel=openApiConfigPanel;
+  window.loadApis=loadApis;
+  window.renderApiList=renderApiList;
+  document.addEventListener('DOMContentLoaded',()=>{
+    const b=el('apiConfigSideBtn'); if(b) b.onclick=()=>openApiConfigPanel();
+    const a=el('adminConfigButton'); if(a) a.onclick=()=>openApiConfigPanel();
+  });
+})();
+</script>
+<style id="nx-api-panel-css">
+#nxApiPanel{position:fixed;inset:0;z-index:100000;display:none;align-items:flex-end;justify-content:center}
+#nxApiPanel.show{display:flex}
+#nxApiPanel .nx-api-mask{position:absolute;inset:0;background:rgba(0,0,0,.55)}
+#nxApiPanel .nx-api-sheet{position:relative;width:100%;max-width:520px;max-height:85vh;overflow:auto;
+  background:#1c1c1e;border-radius:18px 18px 0 0;padding:14px 14px 24px;border:1px solid rgba(255,255,255,.08)}
+#nxApiPanel .nx-api-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+#nxApiPanel .nx-api-top button{background:#333;border:0;color:#fff;border-radius:50%;width:32px;height:32px}
+#nxApiPanel .nx-api-hint{color:#8e8e93;font-size:12px;margin:0 0 10px}
+#nxApiPanel .nx-api-row{background:#2c2c2e;border-radius:14px;padding:10px;margin-bottom:10px}
+#nxApiPanel .nx-api-head{display:flex;justify-content:space-between;margin-bottom:8px}
+#nxApiPanel label{display:block;font-size:12px;color:#aaa;margin:6px 0}
+#nxApiPanel input[type=text],#nxApiPanel input:not([type]),#nxApiPanel input[type=password],
+#nxApiPanel input[data-k]{width:100%;box-sizing:border-box;background:#111;border:1px solid #333;color:#fff;
+  border-radius:10px;padding:8px 10px;margin-top:4px}
+#nxApiPanel .nx-api-actions{display:flex;gap:8px;margin-top:12px}
+#nxApiPanel .nx-api-actions button{flex:1;padding:12px;border:0;border-radius:12px;background:#3a3a3c;color:#fff}
+#nxApiPanel .nx-api-actions button.primary{background:#0a84ff}
+/* 登录仿 Dola */
+#entryGate{background:#000!important}
+#entryGate .nx-login-card,#entryGate .card,#entryGate .panel{
+  background:#1c1c1e!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:22px!important;
+  box-shadow:0 20px 60px rgba(0,0,0,.55)!important}
+#entryGate input{background:#2c2c2e!important;border:1px solid #333!important;color:#fff!important;border-radius:12px!important}
+#entryGate button.primary,#loginBtn{background:#0a84ff!important;border:0!important;border-radius:14px!important;color:#fff!important}
+</style>
 
 </body></html>
