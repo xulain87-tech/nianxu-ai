@@ -10,6 +10,7 @@ const { spawn, spawnSync } = require('node:child_process');
 
 const project = path.resolve(__dirname, '..');
 const counts = { slow: 0, fast: 0, empty: 0 };
+const upstreamPayloads = [];
 let slowTimer;
 
 function listen(server) {
@@ -44,24 +45,30 @@ async function waitForHealth(baseUrl, child) {
     const name = req.url.slice(1);
     if (!(name in counts)) return json(res, 404, { error: 'not found' });
     counts[name]++;
-    req.resume();
-    if (name === 'slow') {
-      slowTimer = setTimeout(() => json(res, 200, {
-        choices: [{ message: { content: '慢接口答案' }, finish_reason: 'stop' }]
-      }), 1200);
-      res.on('close', () => clearTimeout(slowTimer));
-      return;
-    }
-    if (name === 'empty') {
-      return json(res, 200, { choices: [{ message: { content: null }, finish_reason: 'stop' }] });
-    }
-    return setTimeout(() => json(res, 200, {
-      choices: [{ message: { content: '快速接口答案' }, finish_reason: 'stop' }]
-    }), 60);
+    let raw = '';
+    req.setEncoding('utf8');
+    req.on('data', chunk => { raw += chunk; });
+    req.on('end', () => {
+      try { upstreamPayloads.push({ name, body: JSON.parse(raw || '{}') }); } catch (_) {}
+      if (name === 'slow') {
+        slowTimer = setTimeout(() => json(res, 200, {
+          choices: [{ message: { content: '慢接口答案' }, finish_reason: 'stop' }]
+        }), 1200);
+        res.on('close', () => clearTimeout(slowTimer));
+        return;
+      }
+      if (name === 'empty') {
+        return json(res, 200, { choices: [{ message: { content: null }, finish_reason: 'stop' }] });
+      }
+      return setTimeout(() => json(res, 200, {
+        choices: [{ message: { content: '快速接口答案' }, finish_reason: 'stop' }]
+      }), 60);
+    });
   });
 
   let app;
   let dataDir;
+  let logs = '';
   try {
     const upstreamPort = await listen(upstream);
     const appPortServer = http.createServer();
@@ -76,6 +83,7 @@ async function waitForHealth(baseUrl, child) {
     assert.equal(missingSecrets.status, 1, 'server should refuse to start without private login secrets');
     assert.match(missingSecrets.stderr, /Private login secrets are missing/);
     assert.doesNotMatch(missingSecrets.stderr, /smokeadmin|smoke-.*password/);
+
     app = spawn(process.execPath, ['server.js'], {
       cwd: project,
       env: {
@@ -85,17 +93,18 @@ async function waitForHealth(baseUrl, child) {
         NODE_ENV: 'test',
         ADMIN_ID: 'smokeadmin',
         ADMIN_PASSWORD: adminPassword,
+        ZHIPU_API_KEY: '',
+        ZAI_API_KEY: '',
         TRUST_PROXY_HOPS: '0'
       },
       stdio: ['ignore', 'pipe', 'pipe']
     });
-    let logs = '';
     app.stdout.on('data', chunk => { logs += chunk.toString(); });
     app.stderr.on('data', chunk => { logs += chunk.toString(); });
     const baseUrl = `http://127.0.0.1:${appPort}`;
     const health = await waitForHealth(baseUrl, app);
     assert.equal(health.status, 'ok');
-    assert.equal(health.version, '1.1.7');
+    assert.equal(health.version, '1.1.8');
 
     const unauthorized = await fetch(`${baseUrl}/api/ai/chat`, {
       method: 'POST', headers: { 'content-type': 'application/json' },
@@ -119,32 +128,66 @@ async function waitForHealth(baseUrl, child) {
     const adminProfile = await fetch(`${baseUrl}/api/account/profile`, { headers: { cookie } }).then(r => r.json());
     assert.equal(adminProfile.id, 'ASTRION', 'profile must not expose the configured account ID');
 
+    const getApis = async () => fetch(`${baseUrl}/api/admin/apis`, { headers: { cookie } });
+    let apiResponse = await getApis();
+    assert.equal(apiResponse.status, 200);
+    let apiData = await apiResponse.json();
+    assert.equal(apiData.apis.length, 5, 'server should expose exactly five shared slots');
+    assert.equal(apiData.apis[0].model, 'glm-4.7-flash', 'first slot should be GLM-4.7-Flash');
+    assert.equal(apiData.apis[0].url, 'https://open.bigmodel.cn/api/paas/v4/chat/completions');
+    assert.ok(apiData.apis.every(slot => !Object.hasOwn(slot, 'key')), 'API keys must never be returned');
+
     const invalid = await fetch(`${baseUrl}/api/ai/chat`, {
       method: 'POST', headers: { 'content-type': 'application/json', cookie },
       body: JSON.stringify({ messages: [] })
     });
     assert.equal(invalid.status, 400, 'invalid chat payload should be rejected clearly');
+    const wrongSlotCount = await fetch(`${baseUrl}/api/admin/apis`, {
+      method: 'PUT', headers: { 'content-type': 'application/json', cookie },
+      body: JSON.stringify({ apis: [{ name: 'one' }] })
+    });
+    assert.equal(wrongSlotCount.status, 400, 'configuration must reject anything other than five slots');
 
-    const configure = async apis => {
-      const response = await fetch(`${baseUrl}/api/admin/apis`, {
-        method: 'PUT',
-        headers: { 'content-type': 'application/json', cookie },
-        body: JSON.stringify({ apis })
-      });
-      assert.equal(response.status, 200, 'admin should be able to save API configuration');
-    };
-    const api = name => ({
+    const fakeSecret = 'unit-test-secret-not-real';
+    const provider = name => ({
       name,
       url: `http://127.0.0.1:${upstreamPort}/${name}`,
       model: 'mock-model', enabled: true, key: ''
     });
-    const chat = async () => fetch(`${baseUrl}/api/ai/chat`, {
+    const slot = (name, url = '', model = '', enabled = false, key = '') => ({ name, url, model, enabled, key });
+    const configure = async (providers, secret = '') => {
+      const apis = [
+        slot('ignored first-slot input', 'https://invalid.example/chat', 'ignored', false),
+        providers[0] || slot('接口 2'),
+        providers[1] || slot('接口 3'),
+        providers[2] || slot('接口 4'),
+        providers[3] || slot('接口 5', 'https://example.invalid/chat', 'mock-model', false, secret)
+      ];
+      const response = await fetch(`${baseUrl}/api/admin/apis`, {
+        method: 'PUT', headers: { 'content-type': 'application/json', cookie },
+        body: JSON.stringify({ apis })
+      });
+      assert.equal(response.status, 200, 'admin should be able to save all five shared slots');
+    };
+    await configure([provider('slow'), provider('fast')], fakeSecret);
+    apiResponse = await getApis();
+    apiData = await apiResponse.json();
+    assert.equal(apiData.apis.length, 5);
+    assert.equal(apiData.apis[0].model, 'glm-4.7-flash', 'admin cannot overwrite the fixed first slot');
+    assert.equal(apiData.apis[4].keySet, true, 'server reports key presence only');
+    assert.doesNotMatch(JSON.stringify(apiData), new RegExp(fakeSecret));
+
+    const chat = async (includeUntrustedSystem = true) => fetch(`${baseUrl}/api/ai/chat`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', cookie },
-      body: JSON.stringify({ messages: [{ role: 'user', content: '测试回复' }] })
+      body: JSON.stringify({
+        messages: [
+          ...(includeUntrustedSystem ? [{ role: 'system', content: 'CLIENT_SYSTEM_SENTINEL' }] : []),
+          { role: 'user', content: '测试回复' }
+        ]
+      })
     });
 
-    await configure([api('slow'), api('fast')]);
     let started = Date.now();
     let response = await chat();
     let elapsed = Date.now() - started;
@@ -156,9 +199,14 @@ async function waitForHealth(baseUrl, child) {
     await new Promise(resolve => setTimeout(resolve, 30));
     assert.equal(counts.slow, 1, 'slow provider should be called only once');
     assert.equal(counts.fast, 1, 'fast provider should be called only once');
+    assert.ok(upstreamPayloads.length > 0);
+    assert.ok(upstreamPayloads.every(x => !JSON.stringify(x.body).includes('CLIENT_SYSTEM_SENTINEL')),
+      'client system-role messages must be discarded before reaching providers');
+    assert.ok(upstreamPayloads.some(x => JSON.stringify(x.body).includes('ASTRION')),
+      'server-owned system context should be supplied');
 
-    await configure([api('empty'), api('fast')]);
-    response = await chat();
+    await configure([provider('empty'), provider('fast')]);
+    response = await chat(false);
     result = await response.json();
     assert.equal(response.status, 200);
     assert.equal(result.answer, '快速接口答案', 'empty upstream responses should fall back');
@@ -175,6 +223,19 @@ async function waitForHealth(baseUrl, child) {
     assert.equal(largeChat.status, 200, 'compressed image chat payloads above 1MB should be accepted');
     assert.equal((await largeChat.json()).answer, '快速接口答案');
 
+    const privateList = await fetch(`${baseUrl}/api/custom-ai/list`);
+    assert.equal(privateList.status, 401, 'custom AI data must require authentication');
+    const customList = await fetch(`${baseUrl}/api/custom-ai/list`, { headers: { cookie } });
+    assert.equal(customList.status, 200, 'custom AI list route should load for an authenticated user');
+    const myAi = await fetch(`${baseUrl}/api/custom-ai/mine`, { headers: { cookie } });
+    assert.equal(myAi.status, 200, 'custom AI profile route should load for an authenticated user');
+
+    const createNotice = await fetch(`${baseUrl}/api/admin/notices`, {
+      method: 'POST', headers: { 'content-type': 'application/json', cookie },
+      body: JSON.stringify({ title: '测试公告', content: '所有登录用户可查看。' })
+    });
+    assert.ok([200, 201].includes(createNotice.status), 'admin should be able to publish a notice');
+
     const register = await fetch(`${baseUrl}/api/register`, {
       method: 'POST', headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ id: 'smokeuser', password: 'register-password' })
@@ -190,6 +251,25 @@ async function waitForHealth(baseUrl, child) {
     const userData = await userSession.json();
     assert.equal(userData.authenticated, true);
     assert.equal(userData.role, 'guest');
+    const userApiAccess = await fetch(`${baseUrl}/api/admin/apis`, { headers: { cookie: userCookie } });
+    assert.equal(userApiAccess.status, 401, 'ordinary users cannot edit shared provider settings');
+    const sharedChat = await fetch(`${baseUrl}/api/ai/chat`, {
+      method: 'POST', headers: { 'content-type': 'application/json', cookie: userCookie },
+      body: JSON.stringify({ messages: [{ role: 'user', content: '共享配置测试' }] })
+    });
+    assert.equal(sharedChat.status, 200);
+    assert.equal((await sharedChat.json()).used, 'fast', 'ordinary users should use the same server-side provider slots');
+    const published = await fetch(`${baseUrl}/api/notices`, { headers: { cookie: userCookie } });
+    assert.equal(published.status, 200, 'all logged-in users should be able to fetch published notices');
+    const publishedData = await published.json();
+    assert.ok((publishedData.notices || []).some(n => n.title === '测试公告'));
+
+    const imageWithoutKey = await fetch(`${baseUrl}/api/ai/image`, {
+      method: 'POST', headers: { 'content-type': 'application/json', cookie: userCookie },
+      body: JSON.stringify({ prompt: 'test image', enhance: false })
+    });
+    assert.equal(imageWithoutKey.status, 400, 'image endpoint should fail clearly without a server-side key');
+    assert.doesNotMatch(await imageWithoutKey.text(), new RegExp(fakeSecret));
 
     const logout = await fetch(`${baseUrl}/api/logout`, {
       method: 'POST', headers: { 'content-type': 'application/json', cookie }, body: '{}'
@@ -198,7 +278,7 @@ async function waitForHealth(baseUrl, child) {
     const session = await fetch(`${baseUrl}/api/session`, { headers: { cookie } });
     assert.equal((await session.json()).authenticated, false);
 
-    console.log('PASS: health, admin/user auth, payload validation, one-shot race, empty-response fallback, logout');
+    console.log('PASS: health, authentication, shared five-slot configuration, key redaction, server-owned prompt, race/fallback, custom AI routes, notices, image-key guard, logout');
   } catch (error) {
     console.error(error);
     if (app && app.exitCode !== null) console.error('server logs:', logs);

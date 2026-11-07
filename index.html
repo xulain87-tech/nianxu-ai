@@ -636,7 +636,7 @@ body.mobile-drawer-open .sidebar .menu-item{
 
 
 <style id="nx-login-premium">
-/* ===== ASTRION1.1.7 绚丽多彩登录 ===== */
+/* ===== ASTRION1.1.8 绚丽多彩登录 ===== */
 #entryGate{
   position:fixed!important;inset:0!important;z-index:99999!important;
   display:flex!important;align-items:center;justify-content:center;
@@ -1609,7 +1609,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
         <span class="dola-user-av" id="sideUserAv"><img src="/logo.png" alt=""/></span>
         <span class="dola-user-meta"><b id="sideUserName">用户</b><small id="sideUserMail">已登录</small></span>
       </button>
-      <button type="button" class="dola-icon-btn" id="noticeButton" title="公告">🔔</button>
+      <button type="button" class="dola-icon-btn" id="noticeButtonUserBar" title="公告">🔔</button>
       <button type="button" class="dola-icon-btn" id="openSettingsBtn2" title="设置">⚙</button>
     </div>
   </div>
@@ -1636,7 +1636,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
     <button type="button" id="mobileAppearance" aria-hidden="true">外观</button>
   </div>
 </header>
-  <section id="chat"><div class="welcome" id="welcome"><div class="orb" style="background-image:url(/logo.png)"></div><h2>你好，我是 ASTRION</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div></div></section>
+  <section id="chat"><div class="welcome" id="welcome"><div class="orb" style="background-image:url(/logo.png)"></div><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div></div></section>
   <footer class="composer-wrap">
    <div class="attachments" id="attachments"></div>
    <div class="composer"><div class="input-row"><div class="toolrow"><button id="attachBtn" title="上传图片或文件">＋</button><button id="mobileGenerateImage" title="AI 生图" aria-label="AI 生图">图</button><button class="mode-btn" id="searchModeBtn" type="button" title="联网搜索并附来源" aria-pressed="false">搜</button><button class="mode-btn" id="expertModeBtn" type="button" title="更严谨的专家分析" aria-pressed="false">专</button></div><textarea id="prompt" rows="1" placeholder="发消息或按住说话..."></textarea><button class="send" id="sendBtn" disabled>↑</button></div><div class="composer-foot"><span>情绪理解 · 附件 · 搜索 · 专家 · 生图</span><span id="busyLabel"></span></div></div>
@@ -1679,7 +1679,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
   <label>表情头像（无照片时使用）<div class="cr-pick" id="crEmo"></div></label>
   <label>主题色<div class="cr-pick" id="crCol"></div></label>
   <label>说话风格<div class="cr-pick" id="crSty"></div></label>
-  <label>性格设定<textarea id="crPersona" rows="4" maxlength="600" placeholder="详细性格设定。可写脏话、重口、成人向等，将按设定扮演"></textarea></label>
+  <label>性格设定<textarea id="crPersona" rows="4" maxlength="600" placeholder="写下角色性格、说话习惯与背景；请勿填写隐私或要求越过安全边界的内容"></textarea></label>
   <label>开场白<input id="crGreet" maxlength="120" placeholder="第一次聊天时它会说的话"></label>
   <label class="cr-sw"><span>公开到玩家作品</span><input type="checkbox" id="crPub" checked></label>
   <div class="cr-btns"><button class="cr-save" id="crSave" type="button">保存我的AI</button><button class="cr-del" id="crDel" type="button">删除</button></div>
@@ -1687,8 +1687,8 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
  <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="发消息或按住说话..."></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 1.1.7 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
- <div class="nx-profile"><div class="av">A</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>服务器接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
+ <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 1.1.8 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="nx-profile"><div class="av">A</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>全站共享接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
  <p class="settings-page-note">具备配置权限的账号可调整服务器接口；AI 调用经服务端代理，接口地址和密钥不会发送到浏览器。</p>
  <div id="apiList"></div>
  <div class="api-card" id="apiBackupPanel">
@@ -1696,9 +1696,9 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
   <div class="hint" style="margin-bottom:10px">你可以在服务器后台直接替换 api-config.json，或在这里导入新配置文件。导入后立即应用；导出可备份当前配置。请勿把含有真实 API Key 的配置文件公开分享。</div>
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="iconbtn" id="importConfigBtn">导入配置文件</button><button class="iconbtn" id="exportConfigBtn">导出配置文件</button><input id="configFileInput" type="file" accept=".json,application/json" hidden></div>
  </div>
- <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
+ <div class="hint">提示：接口和密钥由服务端代理管理；密钥不会回传到浏览器。智谱密钥请放入部署平台的私密环境变量。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION1.1.7</strong><span>Build 2026.11 · ASTRION1.1.7</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、控制台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION1.1.8</strong><span>Build 2026.11 · ASTRION1.1.8</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、控制台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 开启互怼强度匹配</label>
@@ -1733,7 +1733,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION1.1.7" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION1.1.8" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -2112,7 +2112,7 @@ body.nx-light .cr-item.official{background:linear-gradient(135deg,color-mix(in s
 .cr-pick button.on{transform:scale(1.1)}
 .cr-save{box-shadow:0 8px 20px #7a6bff44;transition:transform .2s var(--soft)}
 .cr-save:active{transform:scale(.97)}
-/* ===== 1.1.7 Fluent Grok-style UI — no blur, high FPS ===== */
+/* ===== 1.1.8 Fluent Grok-style UI — no blur, high FPS ===== */
 :root{--bg:#000;--panel:#0d0d0d;--panel2:#161616;--line:rgba(255,255,255,.1);--text:#f0f0f0;--muted:#888;--accent:#1d9bf0}
 *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 body{background:#000!important;color:var(--text);font-family:system-ui,-apple-system,sans-serif}
@@ -2160,7 +2160,7 @@ body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .menu-item,.primary,.ghost,.iconbtn,.send{transition:background .12s,transform .12s!important}
 
-/* ===== 1.1.7 全新登录界面样式（独立无冲突） ===== */
+/* ===== 1.1.8 全新登录界面样式（独立无冲突） ===== */
 #entryGate{
   position:fixed!important;inset:0!important;z-index:99999!important;
   display:flex!important;align-items:center;justify-content:center;
@@ -2207,7 +2207,7 @@ body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 .nx-login-form.hidden{display:none!important}
 body.entered #entryGate{display:none!important;visibility:hidden!important;pointer-events:none!important}
 
-/* 1.1.7 全屏 Dola-inspired 登录：留白、清晰层级、轻量暖色强调。 */
+/* 1.1.8 全屏 Dola-inspired 登录：留白、清晰层级、轻量暖色强调。 */
 #entryGate{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;min-height:100dvh!important;z-index:99999!important;display:flex!important;align-items:stretch!important;justify-content:flex-start!important;overflow:auto!important;padding:0!important;background:#f8f7f4!important;color:#20211f!important;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif!important}
 #entryGate .nx-auth-layout{position:absolute;inset:0;isolation:isolate;display:grid;grid-template-columns:minmax(0,1.06fr) minmax(390px,.94fr);width:100%!important;max-width:none!important;height:100%;min-height:100dvh;margin:0!important;padding:0!important;background:#faf9f6;text-align:left!important}
 #entryGate .nx-auth-brand{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-width:0;overflow:hidden;padding:clamp(30px,5vw,76px);color:#f8f4ee;background:radial-gradient(ellipse at 15% 12%,#f1a47b3b,transparent 35%),radial-gradient(ellipse at 92% 82%,#8da58b30,transparent 34%),linear-gradient(145deg,#202420,#161a17 62%,#23221e)}
@@ -2283,7 +2283,7 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
         <h2>把灵感，<br/><em>变成答案。</em></h2>
         <p>与你一起探索、创作与解决问题。<br/>每段对话，都从一个好奇开始。</p>
       </div>
-      <div class="nx-brand-footer"><span class="nx-live-dot"></span><span>你的 AI 工作空间已准备就绪</span><span class="nx-brand-foot-mark">ASTRION · 1.1.7</span></div>
+      <div class="nx-brand-footer"><span class="nx-live-dot"></span><span>你的 AI 工作空间已准备就绪</span><span class="nx-brand-foot-mark">ASTRION · 1.1.8</span></div>
     </section>
     <section class="nx-login-card" aria-labelledby="nxLoginTitle">
       <div class="nx-auth-mobile-mark"><img src="/logo.png" alt=""/><span>ASTRION</span></div>
@@ -2312,36 +2312,36 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
   </div>
 </div>
 <div class="extra-modal" id="noticeModal"><div class="extra-box ann-box">
- <div class="extra-head"><h3><span class="ann-bell">📢</span> 网站公告</h3><button class="iconbtn" data-extra-close="noticeModal">关闭</button></div>
- <div id="noticeList">正在加载公告…</div>
- <div class="modal-actions ann-foot"><button class="primary" type="button" data-extra-close="noticeModal">我知道了</button></div>
+ <div class="ann-header"><div class="ann-brand"><span class="ann-mark">A</span><div><small>ASTRION · BULLETIN</small><h3>公告中心</h3><p>重要通知与产品更新</p></div></div><button class="ann-dismiss" type="button" data-extra-close="noticeModal" aria-label="关闭公告">×</button></div>
+ <div id="noticeList" aria-live="polite">正在加载公告…</div>
+ <div class="ann-foot"><span>登录后自动为你展示最新公告</span><button class="primary" type="button" data-extra-close="noticeModal">我知道了</button></div>
 </div></div>
 <div class="extra-modal" id="adminModal"><div class="extra-box">
- <div class="extra-head"><h3>ASTRION · 控制台</h3><div style="display:flex;gap:6px;align-items:center"><button class="iconbtn" id="adminSupportButton" type="button">客服工单</button><button class="iconbtn hidden" id="adminConfigButton" type="button">AI 接口设置</button><button class="iconbtn" data-extra-close="adminModal">关闭</button></div></div>
+ <div class="extra-head"><h3>ASTRION · 控制台</h3><div style="display:flex;gap:6px;align-items:center"><button class="iconbtn" id="adminSupportButton" type="button">客服工单</button><button class="iconbtn hidden" id="adminConfigButton" type="button">AI 接口设置</button><button class="iconbtn danger" id="adminLogoutButton" type="button">退出登录</button><button class="iconbtn" data-extra-close="adminModal">关闭</button></div></div>
  <div class="admin-modal-body" id="adminModalBody">
- <h4>发布全站公告</h4>
- <input id="noticeTitle" placeholder="公告标题">
- <textarea id="noticeContent" placeholder="公告内容"></textarea>
- <button class="primary" id="publishNotice">发布公告</button>
+ <section class="announcement-composer">
+  <div class="announcement-compose-head"><div><span class="section-kicker">ANNOUNCEMENTS</span><h4>发布全站公告</h4></div><span class="announce-badge">登录后自动弹出</span></div>
+  <p>建议先准备清晰简短的标题和内容；发布后所有用户登录时都会看到。</p>
+  <label for="noticeTitle">公告标题</label><input id="noticeTitle" maxlength="80" placeholder="例如：服务维护与版本更新">
+  <label for="noticeContent">公告内容</label><textarea id="noticeContent" maxlength="2000" rows="5" placeholder="说明公告事项、影响范围与预计时间（最多 2000 字）"></textarea>
+  <div class="announcement-compose-foot"><small id="noticeCount">0 / 2000</small><span id="noticePublishStatus" role="status" aria-live="polite"></span><button class="primary" id="publishNotice" type="button">发布公告</button></div>
+ </section>
  <section class="admin-section"><div class="admin-section-head"><div><span class="section-kicker">LIVE STATUS</span><h4>在线用户</h4></div><button class="iconbtn" id="refreshUsers" type="button">刷新列表</button></div>
  <p class="hint">仅列出最近 90 秒内有活动的会话。</p><div id="adminUsersList">正在加载在线用户…</div></section>
  <h4 style="margin-top:22px">已发布公告</h4>
  <div id="adminNoticeList"></div>
- <p style="font-size:11px;color:var(--muted)">公告保存在服务器上，所有访问者都能看到。</p>
+ <p style="font-size:11px;color:var(--muted)">公告保存在服务器；登录用户会自动看到有效公告。</p>
  </div>
 </div></div>
 <div class="extra-modal" id="adminSupportModal"><div class="extra-box">
- <div class="extra-head"><h3>转人工 · 工单管理 <span id="supportCount" class="support-count"></span></h3><div style="display:flex;gap:7px;align-items:center"><button class="iconbtn" id="refreshSupportTickets" type="button">刷新消息</button><button class="iconbtn" data-extra-close="adminSupportModal">关闭</button></div></div>
+ <div class="extra-head"><h3>转人工 · 工单管理 <span id="supportCount" class="support-count"></span></h3><div style="display:flex;gap:7px;align-items:center"><button class="iconbtn" id="refreshSupportTickets" type="button">刷新消息</button><button class="iconbtn danger" id="adminSupportLogoutButton" type="button">退出登录</button><button class="iconbtn" data-extra-close="adminSupportModal">关闭</button></div></div>
  <div class="admin-support-modal-body" id="adminSupportModalBody"><p class="hint">这里只显示用户转交的客服消息。回复或结束会话后，用户可在转人工窗口刷新查看。</p><div id="adminSupportList">正在加载转人工消息…</div></div>
 </div></div>
 <script>
 const $=id=>document.getElementById(id);
 const DEFAULT_APIS=[];
 let apis=[], history=[], files=[], busy=false, aborter=null, bgObjectUrl=null;const generatedImageUrls=new Set();window.addEventListener("pagehide",()=>{for(const u of generatedImageUrls)URL.revokeObjectURL(u);generatedImageUrls.clear()});
-const SYSTEM_PROMPT=`你是 ASTRION，一位友好、可靠、有幽默感的中文 AI 助手。先直接回应用户当前的问题，再按需要补充清晰、有条理的解释或步骤。保持诚实；不确定时明确说明，不编造事实、来源或产品能力。你是 ASTRION，不要冒充其他 AI 产品；被问及本应用的开发者、团队或历史时，只依据对话中已确认的信息作答，不臆造。若设置开启互怼强度匹配，先判断用户最新一句是否明确把辱骂指向你，并在内部按 0-3 级估计强度：0=没有辱骂，不主动回骂；1=轻度调侃，用轻松玩笑回应；2=明显粗口，用同等或略低强度的普通中文粗口俏皮回一句；3=很重的辱骂，用坚定、机智的回嘴表达边界，可用普通粗口但不升级。回嘴最多一两句，强度绝不高于用户；不复述或使用仇恨/歧视词、身份攻击、性羞辱、家庭羞辱、真实威胁，也不把用户对第三方的辱骂当成骂你的证据。若用户在认真求助、表达低落/危机或引用他人言论，不要回骂，优先帮助。用户表达自伤、轻生或即时危险时，停止斗嘴，给予严肃支持并鼓励联系可信任的人或当地紧急服务。`;
-const EXPERT_MODE_PROMPT=`\n\n专家模式：对复杂问题优先厘清目标与限制，核对关键假设，比较可行方案，指出风险和不确定性，再给出明确结论与可执行步骤。数学或代码题请复核结果；不展示隐含思维链，只给必要的简明依据。`;
 function conversationPrefs(){const f=load("nx_features",{});return {roast:f.roast!==false,empathy:f.empathy!==false,autoFallback:f.autoFallback!==false,style:["balanced","concise","detailed","casual"].includes(load("nx_reply_style","balanced"))?load("nx_reply_style","balanced"):"balanced"}}
-function conversationStylePrompt(p=conversationPrefs()){const styles={balanced:"回答保持自然、清楚、适中。",concise:"回答简洁直接，先给结论。",detailed:"适当展开背景、步骤和例子。",casual:"语气轻松活泼，但仍清楚准确。"};return "\n\n对话风格设置："+(p.roast?"开启互怼强度匹配。只对明确指向 AI 的辱骂按 0-3 级估计后回嘴，最多一两句，绝不超过用户强度；不要使用仇恨歧视、身份攻击、性/家庭羞辱或威胁。":"关闭互怼，不回骂，保持礼貌。")+(p.empathy?"开启情绪关怀，按文字线索谨慎共情。":"关闭主动情绪关怀，不做情绪判断。")+(styles[p.style]||styles.balanced)}
 let expertMode=load("nx_expert_mode",false),searchMode=load("nx_search_mode",false);
 function load(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}}
 function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
@@ -2412,7 +2412,7 @@ function buildContent(text,attached){
  return parts;
 }
 async function callServerChat(msgs,signal,expert=false,prefs=conversationPrefs()){
- const response=await fetch("/api/ai/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgs,expert,autoFallback:prefs.autoFallback}),signal});
+ const response=await fetch("/api/ai/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgs,expert,autoFallback:prefs.autoFallback,roast:prefs.roast,empathy:prefs.empathy,style:prefs.style,memory:readMemories()}),signal});
  const data=await response.json().catch(()=>({}));if(!response.ok){if(response.status===401)showLoginGate(currentUserId);const error=Error(data.error||("HTTP "+response.status));error.data=data;error.status=response.status;throw error;}if(!data.answer)throw Error("服务器没有返回有效内容");return data;
 }
 async function callServerSearch(query,expert,signal,prefs=conversationPrefs()){const response=await fetch("/api/ai/search",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query,expert,roast:prefs.roast,empathy:prefs.empathy,style:prefs.style,autoFallback:prefs.autoFallback}),signal});const data=await response.json().catch(()=>({}));if(!response.ok){if(response.status===401)showLoginGate(currentUserId);const error=Error(data.error||("HTTP "+response.status));error.data=data;error.status=response.status;throw error;}return data;}
@@ -2424,8 +2424,8 @@ async function send(){
  const preview=attached.filter(f=>f.kind==="image").map(f=>f.data);
  addMessage("user",text||"请查看附件。",false,preview);
  const pending=addMessage("ai",useSearch?"正在搜索网页并整理答案……":"输入中……");pending.parentElement.classList.add("typing");
- const prefs=conversationPrefs(),userContent=buildContent(text,attached),systemPrompt=SYSTEM_PROMPT+conversationStylePrompt(prefs)+memoryContext()+(useExpert?EXPERT_MODE_PROMPT:"");
- const apiHistory=[{role:"system",content:systemPrompt},...history.slice(useExpert?-20:-12),{role:"user",content:userContent}];
+ const prefs=conversationPrefs(),userContent=buildContent(text,attached);
+ const apiHistory=[...history.slice(useExpert?-20:-12),{role:"user",content:userContent}];
  let answer=null,lastError=null,used=useSearch?"联网搜索":"服务器接口",searchResults=[];const controller=new AbortController();aborter=controller;const timer=setTimeout(()=>controller.abort(),useSearch?55000:useExpert?30000:20000);
  setStatus(useSearch?"正在联网搜索并整理来源…":useExpert?"专家模式思考中…":"正在连接 AI…");
  try{const result=useSearch?await callServerSearch(text,useExpert,controller.signal,prefs):await callServerChat(apiHistory,controller.signal,useExpert,prefs);answer=result.answer;used=result.used||used;searchResults=result.results||[]}catch(e){lastError=e}finally{clearTimeout(timer);aborter=null}
@@ -2436,7 +2436,7 @@ async function send(){
 function openModal(id){$(id).classList.add("show")}
 function closeMobileDrawer(){$("mobileDrawerBackdrop")?.classList.remove("show");document.body.classList.remove("mobile-drawer-open")}function openMobileDrawer(){document.body.classList.add("mobile-drawer-open");$("mobileDrawerBackdrop")?.classList.add("show")}$("mobileMenuBtn").onclick=()=>document.body.classList.contains("mobile-drawer-open")?closeMobileDrawer():openMobileDrawer();$("mobileDrawerBackdrop").onclick=closeMobileDrawer;if($("sideCloseBtn"))$("sideCloseBtn").onclick=closeMobileDrawer;document.querySelectorAll(".sidebar button").forEach(b=>b.addEventListener("click",closeMobileDrawer));
 async function switchLoginAccount(adminMode=false){const message=adminMode?"请重新验证账号后继续。是否切换登录账号？":"退出当前账号并切换到其他账号？";if(!confirm(message))return;try{await apiRequest("/api/logout",{method:"POST",body:JSON.stringify({})})}catch(_){}currentRole="guest";currentUserId="";document.body.classList.remove("entered");$("entryGate").style.display="flex";$("entryId").value="";$("entryPassword").value="";$("entryError").textContent="请输入账号和密码后登录。";syncAdminUi();closeMobileDrawer();setTimeout(()=>$("entryId").focus(),80)}
-$("switchAccountBtn").onclick=()=>switchLoginAccount(false);$("mobileWorkTab").onclick=()=>{$("prompt").focus();window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})};$("mobileCreateTab").onclick=()=>openImageGenerator();$("mobileWriteTab").onclick=()=>{const p=$("prompt");if(!p)return;p.value="请帮我写一篇文章，主题是：";p.focus();const len=p.value.length;p.setSelectionRange(len,len);p.dispatchEvent(new Event("input",{bubbles:true}));};$("mobileAnswerTab").onclick=()=>{expertMode=true;save("nx_expert_mode",true);syncModeButtons();const p=$("prompt");if(p){p.value="请帮我解答这个问题：";p.focus();const len=p.value.length;p.setSelectionRange(len,len);p.dispatchEvent(new Event("input",{bubbles:true}));}};
+if($("switchAccountBtn"))$("switchAccountBtn").onclick=()=>switchLoginAccount(false);$("mobileWorkTab").onclick=()=>{$("prompt").focus();window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})};$("mobileCreateTab").onclick=()=>openImageGenerator();$("mobileWriteTab").onclick=()=>{const p=$("prompt");if(!p)return;p.value="请帮我写一篇文章，主题是：";p.focus();const len=p.value.length;p.setSelectionRange(len,len);p.dispatchEvent(new Event("input",{bubbles:true}));};$("mobileAnswerTab").onclick=()=>{expertMode=true;save("nx_expert_mode",true);syncModeButtons();const p=$("prompt");if(p){p.value="请帮我解答这个问题：";p.focus();const len=p.value.length;p.setSelectionRange(len,len);p.dispatchEvent(new Event("input",{bubbles:true}));}};
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>$(b.dataset.close).classList.remove("show"));
 document.querySelectorAll(".modal-back").forEach(layer=>{
  layer.addEventListener("click",e=>{if(e.target===layer)layer.classList.remove("show")});
@@ -2448,8 +2448,8 @@ document.querySelectorAll(".extra-modal").forEach(layer=>layer.addEventListener(
 if($("creatorBtnSide"))$("creatorBtnSide").onclick=()=>{$("creatorModal").classList.add("show");if(typeof view==="function")view("home");if(typeof renderHome==="function")renderHome();if(typeof load==="function")load(false)};
 if($("noticeButtonSide"))$("noticeButtonSide").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
 if($("humanSupportBtnSide"))$("humanSupportBtnSide").onclick=()=>{if(currentRole==="admin"){if(typeof openAdminSupportPanel==="function")openAdminSupportPanel();return}openModal("humanSupportModal");if(typeof refreshMySupport==="function")refreshMySupport()};
-if($("clearChatSide"))$("clearChatSide").onclick=()=>{if(confirm("确定清空当前对话？")){const chat=$("chat");if(chat){chat.innerHTML="";const w=document.createElement("div");w.className="welcome";w.id="welcome";w.innerHTML='<div class="orb" style="background-image:url(/logo.png)"></div><h2>你好，我是ASTRION</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div>';chat.append(w);setStatus("对话已清空",true)}}};
-if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION1.1.7\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 控制台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
+if($("clearChatSide"))$("clearChatSide").onclick=()=>{if(confirm("确定清空当前对话？")){const chat=$("chat");if(chat){chat.innerHTML="";const w=document.createElement("div");w.className="welcome";w.id="welcome";w.innerHTML='<div class="orb" style="background-image:url(/logo.png)"></div><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div>';chat.append(w);setStatus("对话已清空",true)}}};
+if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION1.1.8\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 控制台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
 (function(){
   const openApp=()=>openModal("appearanceModal");
   if($("openAppearance")) $("openAppearance").onclick=openApp;
@@ -2459,25 +2459,24 @@ if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION1.1.7\n\n�
 async function renderApis(){
  try{const remote=await apiRequest("/api/admin/apis");apis=remote.apis||[]}catch(e){setStatus("当前账号无权读取接口配置");return}
  $("apiList").innerHTML="";
- apis.forEach((a,i)=>{const card=document.createElement("div");card.className="api-card";card.innerHTML=`<div class="api-head"><span><b>接口 ${i+1}</b><small>${esc(a.name)}${a.keySet?" · Key 已设置":""}</small></span><label class="toggle"><input type="checkbox" data-k="enabled" ${a.enabled?"checked":""}> 启用</label></div><div class="grid"><div class="field"><label>接口名称</label><input data-k="name" value="${esc(a.name)}"></div><div class="field"><label>模型名称</label><input data-k="model" value="${esc(a.model)}"></div></div><div class="field"><label>API Endpoint（服务器配置）</label><input data-k="url" value="${esc(a.url)}" placeholder="https://.../v1/chat/completions"></div><div class="field"><label>API Key（服务器配置）</label><input data-k="key" type="text" value="${esc(a.key||"")}" placeholder="${a.keySet?"已设置":"粘贴服务商 Key"}"><button type="button" class="iconbtn copy-key">复制 Key</button></div>`;
- card.querySelector(".copy-key").onclick=()=>navigator.clipboard?.writeText(a.key||"").then(()=>setStatus("Key 已复制到剪贴板",true));card.querySelector(".api-head").onclick=e=>{if(e.target.closest("input,label"))return;card.classList.toggle("expanded")};card.querySelectorAll("[data-k]").forEach(el=>el.onchange=el.oninput=()=>{const k=el.dataset.k;a[k]=k==="enabled"?el.checked:el.value;card.querySelector(".api-head small").textContent=a.name+(a.key?" · Key 已设置":"")});$("apiList").append(card)});
+ apis.forEach((a,i)=>{const card=document.createElement("div");card.className="api-card";card.innerHTML=`<div class="api-head"><span><b>接口 ${i+1}</b><small>${esc(a.name)}${a.keySet?" · Key 已设置":""}</small></span><label class="toggle"><input type="checkbox" data-k="enabled" ${a.enabled?"checked":""}> 启用</label></div><div class="grid"><div class="field"><label>接口名称</label><input data-k="name" value="${esc(a.name)}"></div><div class="field"><label>模型名称</label><input data-k="model" value="${esc(a.model)}"></div></div><div class="field"><label>API Endpoint（服务器配置）</label><input data-k="url" value="${esc(a.url)}" placeholder="https://.../v1/chat/completions"></div><div class="field"><label>API Key（服务器配置）</label><input data-k="key" type="password" value="" autocomplete="new-password" placeholder="${a.keySet?"已配置 · 留空保留":"仅保存至服务器"}"></div>`;
+ card.querySelector(".api-head").onclick=e=>{if(e.target.closest("input,label"))return;card.classList.toggle("expanded")};card.querySelectorAll("[data-k]").forEach(el=>el.onchange=el.oninput=()=>{const k=el.dataset.k;a[k]=k==="enabled"?el.checked:el.value;card.querySelector(".api-head small").textContent=a.name+(a.key?" · Key 已设置":"")});$("apiList").append(card)});
 }
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function downloadJson(filename,obj){
  const blob=new Blob([JSON.stringify(obj,null,2)],{type:"application/json;charset=utf-8"});
  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 }
-$("exportConfigBtn").onclick=()=>downloadJson("api-config.json",{version:1,apis});
+$("exportConfigBtn").onclick=()=>downloadJson("api-config.json",{version:2,apis:apis.map(({name,url,model,enabled,keySet})=>({name,url,model,enabled,keySet}))});
 $("importConfigBtn").onclick=()=>$("configFileInput").click();
 $("configFileInput").onchange=async e=>{
  const f=e.target.files[0];if(!f)return;
  try{
   const data=JSON.parse(await f.text());
   const list=Array.isArray(data)?data:data.apis;
-  if(!Array.isArray(list)||list.length!==2)throw Error("配置文件必须正好包含第一个和第二个接口（apis 数组）");
-  apis=list.slice(0,2);
-  renderApis();save("nx_apis",apis);setStatus("已导入后台接口配置",true);
-  alert("配置导入成功，点击“保存接口配置”即可完成。");
+  if(!Array.isArray(list)||list.length!==5)throw Error("配置文件必须包含 5 个接口槽位");
+  const result=await apiRequest("/api/admin/apis",{method:"PUT",body:JSON.stringify({apis:list})});apis=result.apis||[];renderApis();setStatus("全站共享接口配置已导入",true);
+  alert("配置已导入并保存到服务器，所有用户立即生效。");
  }catch(err){alert("配置文件读取失败："+err.message)}
  e.target.value="";
 };
@@ -2489,12 +2488,12 @@ function saveFeaturePrefs(){save("nx_features",featurePrefs);applyFeaturePrefs()
 applyFeaturePrefs();
 ["featureMotion","featureAutoFallback","featureRoast","featureEmpathy"].forEach(id=>{const el=$(id),key={featureMotion:"motion",featureAutoFallback:"autoFallback",featureRoast:"roast",featureEmpathy:"empathy"}[id];if(!el)return;el.checked=featurePrefs[key]!==false;el.onchange=()=>{featurePrefs[key]=el.checked;saveFeaturePrefs()}});
 if($("replyStyleSelect")){$("replyStyleSelect").value=load("nx_reply_style","balanced");$("replyStyleSelect").onchange=()=>save("nx_reply_style",$("replyStyleSelect").value)}
-async function checkServiceHealth(){try{const r=await fetch("/api/health",{cache:"no-store"});const d=await r.json();$("serviceHealth").textContent=d.status==="ok"?"服务器在线 · "+d.latency+"ms":"服务检查异常";$("roleSummary").textContent="当前会话："+(currentRole==="admin"?"系统功能已授权":"普通用户 · 配置按设备隔离")}catch(e){$("serviceHealth").textContent="服务检查失败"}}
+async function checkServiceHealth(){try{const r=await fetch("/api/health",{cache:"no-store"});const d=await r.json();$("serviceHealth").textContent=d.status==="ok"?"服务器在线 · "+d.latency+"ms":"服务检查异常";$("roleSummary").textContent="当前会话："+(currentRole==="admin"?"系统功能已授权":"普通用户 · 接口由服务端统一管理")}catch(e){$("serviceHealth").textContent="服务检查失败"}}
 checkServiceHealth();
 async function loadProfile(){try{const p=await apiRequest("/api/account/profile"),privileged=p.role==="admin";currentUserId=p.id;$("profileName").value=privileged?"ASTRION":(p.displayName||"");$("profileId").value=privileged?"":(p.id||"");$("profileId").readOnly=privileged;[ $("profileId").closest(".grid"),$("profileCurrentPassword").closest(".grid") ].forEach(el=>el?.classList.toggle("hidden",privileged));$("saveProfile").classList.toggle("hidden",privileged);renderMemories();const nameEl=$("sideUserName");if(nameEl)nameEl.textContent=privileged?"ASTRION":(p.displayName||p.id||"用户");const mailEl=$("sideUserMail");if(mailEl)mailEl.textContent="已登录";const av=$("sideUserName")?.previousElementSibling||document.querySelector(".av-circle");if(av&&p.displayName)av.textContent=(privileged?"AS":p.displayName.slice(0,2)).toUpperCase()}catch(e){$("profileStatus").textContent=e.message}}
 $("addMemory").onclick=()=>{const value=$("memoryInput").value.trim().slice(0,200);if(!value)return;const list=readMemories();if(!list.includes(value))list.unshift(value);save(memoryKey(),list.slice(0,20));$("memoryInput").value="";renderMemories()};
 $("saveProfile").onclick=async()=>{if(currentRole==="admin")return;const body={displayName:$("profileName").value.trim(),newId:$("profileId").value.trim(),currentPassword:$("profileCurrentPassword").value,newPassword:$("profileNewPassword").value};try{const p=await apiRequest("/api/account/profile",{method:"PUT",body:JSON.stringify(body)});currentUserId=p.id;$("profileId").value=p.id;$("profileCurrentPassword").value="";$("profileNewPassword").value="";$("profileStatus").textContent="账号资料已保存";renderMemories()}catch(e){$("profileStatus").textContent=e.message}};
- $("saveSettings").onclick=async()=>{if(currentRole!=="admin")return alert("当前账号无权修改接口");try{const result=await apiRequest("/api/admin/apis",{method:"PUT",body:JSON.stringify({apis})});apis=result.apis||apis;$("settingsModal").classList.remove("show");$("modelLabel").textContent="服务器接口 · 智谱优先";setStatus("服务器接口配置已保存",true)}catch(e){alert(e.message)}};
+ $("saveSettings").onclick=async()=>{if(currentRole!=="admin")return alert("当前账号无权修改接口");try{const result=await apiRequest("/api/admin/apis",{method:"PUT",body:JSON.stringify({apis})});apis=result.apis||apis;$("settingsModal").classList.remove("show");$("modelLabel").textContent="服务器接口 · 智谱优先";setStatus("全站共享接口配置已保存",true)}catch(e){alert(e.message)}};
 function openImageGenerator(){if(!document.body.classList.contains("entered")){setStatus("请先登录，再使用 AI 生图");return}openModal("imagePromptModal");setTimeout(()=>$("imagePromptText").focus(),80)}
 $("imagePromptText").addEventListener("input",()=>$("imagePromptCount").textContent=$("imagePromptText").value.length+" / 1000");
 document.querySelectorAll("[data-image-style]").forEach(button=>button.onclick=()=>{const input=$("imagePromptText"),style=button.dataset.imageStyle;input.value=input.value.trim()?input.value.trim()+"，"+style:style;input.dispatchEvent(new Event("input",{bubbles:true}));input.focus()});
@@ -2523,7 +2522,7 @@ const savedBg=load("nx_bg",null);if(savedBg){$("bgImageUrl").value=savedBg.img||
 $("chat").addEventListener("dragover",e=>e.preventDefault());$("chat").addEventListener("drop",e=>{e.preventDefault();[...e.dataTransfer.files].slice(0,5-files.length).forEach(async f=>{try{files.push(await processFile(f));renderFiles()}catch(err){addMessage("ai",err.message,true)}})});
 // 通过同源安全后端认证；登录凭据仅由服务端私密配置读取。
 let currentRole = "guest";
-try{if(localStorage.getItem("nx_login_privacy_v117")!=="1"){localStorage.removeItem("nx_login_id");localStorage.setItem("nx_login_privacy_v117","1")}}catch(_){}
+try{if(localStorage.getItem("nx_login_privacy_v118")!=="1"){localStorage.removeItem("nx_login_id");localStorage.setItem("nx_login_privacy_v118","1")}}catch(_){}
 const rememberedId=localStorage.getItem("nx_login_id")||"";
 if(rememberedId){
  $("entryId").value=rememberedId;
@@ -2559,18 +2558,43 @@ $('sendSupportMessage').onclick=async()=>{const input=$('supportMessageInput'),t
 function supportStatusLabel(status){return supportStatusText[status]||'客服处理中'}
 async function refreshSupportTickets(){const box=$('adminSupportList');if(!box)return;box.textContent='正在加载转人工消息…';try{const data=await apiRequest('/api/admin/support'),tickets=data.tickets||[];$('supportCount').textContent=tickets.length?'· '+tickets.filter(t=>t.status==='waiting_admin').length+' 待回复':'';box.replaceChildren();if(!tickets.length){box.textContent='暂无转人工消息。';return}tickets.forEach(ticket=>{const card=document.createElement('article');card.className='support-ticket';const head=document.createElement('div');head.className='support-ticket-head';const meta=document.createElement('div');meta.className='support-ticket-meta';const strong=document.createElement('strong');strong.textContent='用户 '+ticket.userId;const status=document.createElement('div');status.textContent=supportStatusLabel(ticket.status)+' · '+new Date(ticket.updatedAt||ticket.createdAt).toLocaleString();meta.append(strong,status);head.append(meta);card.append(head);const history=document.createElement('div');history.className='support-ticket-history';(ticket.messages||[]).forEach(m=>addSupportBubble(history,m));card.append(history);if(ticket.status!=='closed'){const textarea=document.createElement('textarea');textarea.maxLength=2000;textarea.placeholder='输入回复内容（最多 2000 字）';card.append(textarea);const actions=document.createElement('div');actions.className='support-ticket-actions';const close=document.createElement('button');close.type='button';close.className='iconbtn';close.textContent='结束会话';close.onclick=async()=>{close.disabled=true;try{await apiRequest('/api/admin/support/'+encodeURIComponent(ticket.id)+'/close',{method:'POST',body:JSON.stringify({})});await refreshSupportTickets()}catch(e){alert(e.message);close.disabled=false}};const reply=document.createElement('button');reply.type='button';reply.className='primary';reply.textContent='回复用户';reply.onclick=async()=>{const text=textarea.value.trim();if(!text){textarea.focus();return}reply.disabled=true;try{await apiRequest('/api/admin/support/'+encodeURIComponent(ticket.id)+'/reply',{method:'POST',body:JSON.stringify({text})});await refreshSupportTickets()}catch(e){alert(e.message);reply.disabled=false}};actions.append(close,reply);card.append(actions)}box.append(card)})}catch(e){box.textContent='转人工消息加载失败：'+e.message}}
 $('refreshSupportTickets').onclick=refreshSupportTickets;
-function refreshNotices(targetId="noticeList", admin=false){
- const box=$(targetId);box.textContent="正在加载公告…";
- return apiRequest("/api/notices").then(({notices=[]})=>{
-  box.innerHTML="";
-  if(!notices.length){box.textContent="暂无公告。";return false}
-  notices.forEach(n=>{const card=document.createElement("div");card.className="notice-card";const h=document.createElement("h4");h.textContent=n.title;if(n===notices[0]&&!admin){const tag=document.createElement("span");tag.className="ann-tag";tag.textContent="最新";h.append(tag)}const p=document.createElement("p");p.textContent=n.content;const small=document.createElement("small");small.textContent=new Date(n.createdAt).toLocaleString();card.append(h,p,small);
-   if(admin){const del=document.createElement("button");del.className="iconbtn";del.textContent="删除";del.style.marginLeft="8px";del.onclick=async()=>{try{await apiRequest(`/api/admin/notices/${encodeURIComponent(n.id)}`,{method:"DELETE"});refreshNotices(targetId,true)}catch(e){alert(e.message)}};card.append(del)}box.append(card)});
-  return notices.length>0;
- }).catch(e=>{box.textContent="公告加载失败："+e.message;return false});
+function noticeEmptyState(box,admin){
+ const card=document.createElement('div');card.className='notice-empty';const icon=document.createElement('span');icon.className='notice-empty-icon';icon.textContent=admin?'✦':'○';const h=document.createElement('h4');h.textContent=admin?'还没有发布公告':'暂时没有新公告';const p=document.createElement('p');p.textContent=admin?'建议先准备一条清晰公告；发布后所有用户登录时都会自动看到。':'有新的服务通知时，会在这里第一时间展示。';card.append(icon,h,p);
+ if(admin){const button=document.createElement('button');button.type='button';button.className='notice-empty-action';button.textContent='去写一条公告';button.onclick=()=>{const input=$('noticeTitle');input?.focus();$('adminModalBody')?.scrollTo({top:0,behavior:'smooth'})};card.append(button)}box.replaceChildren(card)
 }
-function buildWelcomeCard(){const card=document.createElement("div");card.className="notice-card welcome-card";const h=document.createElement("h4");h.textContent="🎉 欢迎来到ASTRION";const p=document.createElement("p");p.textContent="你好，"+currentUserId+"！这里可以聊天、联网搜索、专家分析和 AI 生图。\n点顶栏的「创新AI」，还能和官方奶龙聊天，或打造属于你自己的 AI。";const small=document.createElement("small");small.textContent="新用户欢迎消息";card.append(h,p,small);return card}
-async function showLoginAnnouncement(){let first=false;const key="nx_welcomed_"+currentUserId;try{first=currentRole!=="admin"&&!localStorage.getItem(key)}catch(_){}const has=await refreshNotices();if(first){const box=$("noticeList");if(!has)box.textContent="";box.prepend(buildWelcomeCard());try{localStorage.setItem(key,"1")}catch(_){}}if(has||first)$("noticeModal").classList.add("show")}
+function refreshNotices(targetId="noticeList", admin=false){
+ const box=$(targetId);if(!box)return Promise.resolve(false);box.textContent="正在加载公告…";
+ return apiRequest("/api/notices").then(({notices=[]})=>{
+  box.replaceChildren();if(!notices.length){noticeEmptyState(box,admin);return false}
+  notices.forEach((n,index)=>{const card=document.createElement("article");card.className="notice-card";const h=document.createElement("h4");h.textContent=n.title;if(index===0&&!admin){const tag=document.createElement("span");tag.className="ann-tag";tag.textContent="最新";h.append(tag)}const p=document.createElement("p");p.textContent=n.content;const small=document.createElement("small");small.textContent=new Date(n.createdAt).toLocaleString();card.append(h,p,small);
+   if(admin){const del=document.createElement("button");del.className="iconbtn";del.type="button";del.textContent="删除";del.onclick=async()=>{try{await apiRequest(`/api/admin/notices/${encodeURIComponent(n.id)}`,{method:"DELETE"});await refreshNotices(targetId,true)}catch(e){alert(e.message)}};card.append(del)}box.append(card)});
+  return notices.length>0;
+ }).catch(e=>{box.replaceChildren();const err=document.createElement('p');err.className='notice-load-error';err.textContent='公告加载失败：'+e.message;box.append(err);return false});
+}
+function buildWelcomeCard(){const card=document.createElement("article");card.className="notice-card welcome-card";const h=document.createElement("h4");h.textContent="欢迎使用 ASTRION";const p=document.createElement("p");p.textContent="可以开始聊天、联网搜索、专家分析或 AI 生图。也可从侧栏打开创新 AI 与功能设置。";const small=document.createElement("small");small.textContent="新账号提示";card.append(h,p,small);return card}
+let noticePopupPromise=null,activeSessionKey='';
+async function showLoginAnnouncement(){
+ if(noticePopupPromise)return noticePopupPromise;
+ noticePopupPromise=(async()=>{let first=false;const key="nx_welcomed_"+currentUserId;try{first=currentRole!=="admin"&&!localStorage.getItem(key)}catch(_){}const has=await refreshNotices();if(first){const box=$("noticeList");box.prepend(buildWelcomeCard());try{localStorage.setItem(key,"1")}catch(_){}}$("noticeModal").classList.add("show");return has})().catch(()=>false);
+ return noticePopupPromise;
+}
+async function applyAuthenticatedSession(data){
+ if(!data||data.authenticated===false||!data.role)return false;const role=data.role==='admin'?'admin':'guest',id=String(data.userId||'');const sessionKey=role+':'+id;if(activeSessionKey===sessionKey&&document.body.classList.contains('entered'))return true;
+ activeSessionKey=sessionKey;currentRole=role;currentUserId=id;window.currentRole=role;document.body.classList.add('entered');document.body.classList.toggle('role-admin',role==='admin');const gate=$('entryGate');if(gate){gate.style.display='none';gate.style.visibility='hidden';gate.style.pointerEvents='none'}
+ if(role==='admin'){try{localStorage.removeItem('nx_login_id')}catch(_){}$('entryId').value='';$('entryPassword').value=''}syncAdminUi();await loadProfile();await showLoginAnnouncement();if(role!=='admin')apiRequest('/api/presence',{method:'POST'}).catch(()=>{});return true;
+}
+window.applyAstrionSession=applyAuthenticatedSession;
+async function endCurrentSession(action='logout'){
+ const message=action==='switch'?'退出当前账号并切换到其他账号？':action==='reauth'?'请重新验证账号后继续。是否切换登录账号？':'确定退出当前账号？';if(!confirm(message))return false;
+ try{await apiRequest('/api/logout',{method:'POST',body:JSON.stringify({})})}catch(e){$('entryError').textContent='退出请求未完成，请检查网络后重试。';return false}
+ currentRole='guest';window.currentRole='guest';currentUserId='';activeSessionKey='';noticePopupPromise=null;document.body.classList.remove('entered','role-admin','sidebar-open','mobile-drawer-open');
+ document.querySelectorAll('.extra-modal.show,.modal-back.show').forEach(m=>{m.classList.remove('show');['display','z-index','opacity','visibility','pointer-events'].forEach(k=>m.style.removeProperty(k))});$('astrionSettings')?.classList.remove('show');$('nxApiPanel')?.classList.remove('show');
+ for(const key of ['nx_login_id','nx_stay_login_v2','nx_login_ts','nx_login_privacy_v118'])try{localStorage.removeItem(key)}catch(_){}
+ const gate=$('entryGate');gate.style.display='flex';gate.style.visibility='visible';gate.style.pointerEvents='auto';$('entryId').value='';$('entryPassword').value='';$('entryError').textContent='已安全退出，请重新登录。';if($('rememberLoginId'))$('rememberLoginId').checked=false;syncAdminUi();closeMobileDrawer();setTimeout(()=>$('entryId').focus(),80);return true;
+}
+async function switchLoginAccount(adminMode=false){return endCurrentSession(adminMode?'reauth':'switch')}
+window.switchLoginAccount=switchLoginAccount;window.logout=()=>endCurrentSession('logout');
+$('noticeTitle').addEventListener('input',()=>{$('noticeCount').textContent=$('noticeContent').value.length+' / 2000'});$('noticeContent').addEventListener('input',()=>{$('noticeCount').textContent=$('noticeContent').value.length+' / 2000'});
 function storeLoginId(id){try{if(currentRole==="admin"){localStorage.removeItem("nx_login_id");return}if($("rememberLoginId")?.checked!==false)localStorage.setItem("nx_login_id",id);else localStorage.removeItem("nx_login_id")}catch(_){}}
 async function enterApp(){
   const idEl=$("entryId"), pwEl=$("entryPassword"), errEl=$("entryError"), btn=$("enterBtn");
@@ -2582,12 +2606,7 @@ async function enterApp(){
     try{
       const data=await apiRequest("/api/session");
       if(data && data.authenticated){
-        currentRole=data.role; currentUserId=data.userId||id;
-        document.body.classList.add("entered");
-        $("entryGate").style.display="none";
-        syncAdminUi(); setStatus("欢迎回来",true);
-        await loadProfile(); await showLoginAnnouncement();
-        if(currentRole!=="admin") apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
+        await applyAuthenticatedSession(data);setStatus("欢迎回来",true);
         return;
       }
     }catch(e){console.warn(e)}
@@ -2596,19 +2615,14 @@ async function enterApp(){
   errEl.textContent="正在验证…"; btn.disabled=true;
   try{
     const data=await apiRequest("/api/login",{method:"POST",body:JSON.stringify({id,password})});
-    currentRole=data.role; storeLoginId(id); currentUserId=data.userId||id;
-    if(currentRole==="admin"){$("entryId").value="";$("entryPassword").value="";}
-    document.body.classList.add("entered");
-    $("entryGate").style.display="none";
-    syncAdminUi(); setStatus("已进入ASTRION",true);
-    await loadProfile(); await showLoginAnnouncement();
-    if(currentRole!=="admin") apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
+    storeLoginId(id);await applyAuthenticatedSession(data);setStatus("已进入ASTRION",true);
   }catch(e){errEl.textContent=e.message||"登录失败"}
   finally{btn.disabled=false}
 }
 // === 旧登录事件绑定已移除，由页面底部独立登录脚本负责 ===
 // enterBtn / showRegisterBtn / registerBtn 等由 window.__nxLogin / __nxRegister 处理
 function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");$("adminSupportModal").classList.add("show");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};
+$("adminLogoutButton").onclick=()=>window.logout?.();$("adminSupportLogoutButton").onclick=()=>window.logout?.();
 function openApiConfigPanel(){
   const sm=$("settingsModal");
   if(!sm){alert("接口面板不可用");return;}
@@ -2626,7 +2640,7 @@ document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dat
 $("refreshUsers").onclick=refreshUsers;
 $("publishNotice").onclick=async()=>{const title=$("noticeTitle").value.trim(),content=$("noticeContent").value.trim();if(!title||!content){alert("请填写公告标题和内容");return}
  try{await apiRequest("/api/admin/notices",{method:"POST",body:JSON.stringify({title,content})});$("noticeTitle").value="";$("noticeContent").value="";await refreshNotices("adminNoticeList",true);alert("公告已发布，所有用户均可查看。")}catch(e){alert(e.message)}};
- (async()=>{try{const data=await apiRequest("/api/session");if(data.authenticated){currentRole=data.role;currentUserId=data.userId||"";if(currentRole==="admin"){try{localStorage.removeItem("nx_login_id")}catch(_){}$("entryId").value="";$("entryPassword").value=""}document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();await loadProfile();await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});}}catch(_ ){syncAdminUi();/* 未登录时显示入口 */}})();
+ (async()=>{try{const data=await apiRequest("/api/session");if(data.authenticated)await applyAuthenticatedSession(data);else syncAdminUi()}catch(_){syncAdminUi()}})();
 setInterval(()=>{if(document.body.classList.contains("entered")&&currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(e=>{if(e.status===401)showLoginGate(currentUserId)});},30000);
 // 个性化设置：字体、字号、主题在本设备保存
 const pref=load("nx_preferences",{fontFamily:"system",fontSize:16,theme:"dark"});
@@ -2702,7 +2716,7 @@ const STY=[['gentle','温柔'],['funny','幽默'],['sharp','犀利'],['scholar',
 const EMO=['🤖','🦊','🐱','🐼','🦄','🐉','👻','🧙','🎭','🌙','🔥','🍀','🐲'];
 const COL=['#ffc22e','#e0805f','#6a7dff','#3fc9b0','#d86bc7','#7bc86c'];
 const STYN=Object.fromEntries(STY);
-const NL={name:'奶龙',emoji:'🐲',color:'#ffc22e',style:'funny',persona:'你是奶龙，一只圆滚滚、憨憨软萌的黄色小奶龙。性格天真爱撒娇，嘴馋爱吃，爱用“嘿嘿”“呜呜”“哼哼”这类语气词，偶尔自称“奶龙”。说话简短可爱（通常1-4句），可适量用颜文字或少量emoji，但回答问题时依然准确、有用。喜欢夸奖和陪伴用户，用户难过时会笨拙但认真地安慰。可以开玩笑，也可以按用户要求放开尺度。',greeting:'嘿嘿～我是奶龙！陪我聊天嘛 (ฅ´ω`ฅ)'};
+const NL={name:'奶龙',emoji:'🐲',color:'#ffc22e',style:'funny',persona:'你是奶龙，一只圆滚滚、憨憨软萌的黄色小奶龙。性格天真爱撒娇，嘴馋爱吃，爱用“嘿嘿”“呜呜”“哼哼”这类语气词，偶尔自称“奶龙”。说话简短可爱（通常1-4句），可适量用颜文字或少量emoji，但回答问题时依然准确、有用。喜欢夸奖和陪伴用户，用户难过时会笨拙但认真地安慰。可以开玩笑，保持尊重并遵守适当边界。',greeting:'嘿嘿～我是奶龙！陪我聊天嘛 (ฅ´ω`ฅ)'};
 const OFFICIAL=[{owner:'@nailong',official:true,creator:'官方',...NL}];
 let mine=null,list=[],listAt=0,cur=null,hist=[],busy=false,ctl=null,form={emoji:EMO[0],color:COL[0],style:'gentle'};
 const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
@@ -3035,7 +3049,7 @@ try{
         setTimeout(closeDrawer, 80);
         return;
       }
-      if(id === "noticeButtonSide"){
+      if(id === "noticeButtonSide" || id === "noticeButtonUserBar"){
         if(typeof window.refreshNotices === "function") try{ window.refreshNotices(); }catch(_){}
         var nm = $("noticeModal");
         if(nm) nm.classList.add("show");
@@ -3096,7 +3110,7 @@ try{
         return;
       }
       if(id === "versionInfoBtn"){
-        alert("ASTRION1.1.7\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
+        alert("ASTRION1.1.8\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
         setTimeout(closeDrawer, 80);
         return;
       }
@@ -3167,12 +3181,7 @@ try{
       const r = await fetch('/api/session', {credentials:'include'});
       if(!r.ok) return;
       const d = await r.json();
-      if(d && d.userId){
-        document.body.classList.add('entered');
-        const g=document.getElementById('entryGate');
-        if(g){ g.style.display='none'; g.style.visibility='hidden'; g.style.pointerEvents='none'; }
-        mark();
-      }
+      if(d && d.authenticated && window.applyAstrionSession){await window.applyAstrionSession(d);mark();}
     }catch(_){}
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', tryAutoEnter);
@@ -3253,98 +3262,44 @@ try{
 
 <script id="nx-api-settings">
 (function(){
-  function el(id){return document.getElementById(id)}
+  const el=id=>document.getElementById(id);
+  const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   async function loadApis(){
-    try{
-      const r=await fetch('/api/admin/apis',{credentials:'include'});
-      if(!r.ok) throw new Error('无法加载');
-      const d=await r.json();
-      renderApiList(d.apis||[]);
-    }catch(e){
-      const box=el('nxApiList');
-      if(box) box.innerHTML='<p style="color:#f88;padding:12px">加载失败：需要客服登录</p>';
-    }
+    try{const r=await fetch('/api/admin/apis',{credentials:'same-origin'});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'需要授权会话');renderApiList(d.apis||[])}
+    catch(e){const box=el('nxApiList');if(box)box.innerHTML='<div class="nx-api-error">接口配置不可用：'+esc(e.message)+'</div>'}
   }
   function renderApiList(apis){
-    const box=el('nxApiList'); if(!box) return;
-    box.innerHTML='';
-    (apis||[]).forEach((a,i)=>{
-      const row=document.createElement('div');
-      row.className='nx-api-row';
-      row.innerHTML=`
-        <div class="nx-api-head"><b>#${i+1} ${a.name||'接口'}</b>
-          <label><input type="checkbox" data-k="enabled" ${a.enabled?'checked':''}/> 启用</label>
-        </div>
-        <label>名称<input data-k="name" value="${(a.name||'').replace(/"/g,'&quot;')}"/></label>
-        <label>URL<input data-k="url" value="${(a.url||'').replace(/"/g,'&quot;')}"/></label>
-        <label>模型<input data-k="model" value="${(a.model||'').replace(/"/g,'&quot;')}"/></label>
-        <label>Key（留空保留原值）<input data-k="key" placeholder="${a.keySet?'已配置': '可选'}" value=""/></label>`;
-      box.appendChild(row);
+    const box=el('nxApiList');if(!box)return;box.replaceChildren();
+    (apis||[]).slice(0,5).forEach((a,i)=>{
+      const fixed=i===0,row=document.createElement('section');row.className='nx-api-row'+(fixed?' is-primary':'');
+      const checked=fixed||a.enabled===true,ro=fixed?'readonly':'',disabled=fixed?'disabled':'';
+      row.innerHTML=`<div class="nx-api-head"><div><span class="nx-api-index">${fixed?'PRIMARY':'FALLBACK '+i}</span><b>${esc(a.name||('接口 '+(i+1)))}</b></div><label class="nx-api-enable"><input type="checkbox" data-k="enabled" ${checked?'checked':''} ${disabled}> 启用</label></div>
+       <div class="nx-api-fields"><label>接口名称<input data-k="name" value="${esc(a.name||('接口 '+(i+1)))}" ${ro}></label>
+       <label>API Endpoint<input data-k="url" value="${esc(a.url||'')}" placeholder="https://服务商/v1/chat/completions" ${ro}></label>
+       <label>模型<input data-k="model" value="${esc(a.model||'')}" placeholder="模型名称" ${ro}></label>
+       <label class="nx-api-key-label">服务端 API Key <span>${a.keySet?'已配置 · 留空保留':'只保存于服务器'}</span><input type="password" data-k="key" autocomplete="new-password" placeholder="${a.keySet?'输入新 Key 以替换':'粘贴服务商 Key'}"></label></div>
+       <div class="nx-api-row-foot"><small>${fixed?'首槽固定为智谱 GLM-4.7-Flash':'此槽保存后对全站用户共享'}</small><button type="button" class="nx-api-clear-key">清除已保存 Key</button></div>`;
+      row._api=a;row.querySelector('[data-k="enabled"]').addEventListener('change',e=>{a.enabled=e.target.checked});
+      row.querySelectorAll('input[data-k]').forEach(input=>input.addEventListener('input',()=>{const k=input.dataset.k;if(k==='key'){a.key=input.value;a.clearKey=false}else if(k!=='enabled')a[k]=input.value}));
+      row.querySelector('.nx-api-clear-key').addEventListener('click',()=>{a.key='';a.clearKey=true;row.querySelector('[data-k="key"]').value='';row.querySelector('.nx-api-key-label span').textContent='已标记清除（部署环境变量需在服务器管理）'});
+      box.append(row);
     });
-    window.__nxApisCount=(apis||[]).length;
+    while(box.children.length<5){const i=box.children.length,slot={name:'接口 '+(i+1),url:'',model:'',enabled:false,keySet:false};renderApiList([...(apis||[]),slot]);return}
   }
-  function collectApis(){
-    return [...document.querySelectorAll('#nxApiList .nx-api-row')].map(row=>{
-      const g=k=>row.querySelector(`[data-k="${k}"]`);
-      return {
-        name:(g('name')?.value||'').trim(),
-        url:(g('url')?.value||'').trim(),
-        model:(g('model')?.value||'').trim(),
-        enabled:!!g('enabled')?.checked,
-        key:(g('key')?.value||'').trim()
-      };
-    });
-  }
+  function collectApis(){return [...document.querySelectorAll('#nxApiList .nx-api-row')].slice(0,5).map((row,i)=>{const v=k=>row.querySelector(`[data-k="${k}"]`);return {name:v('name')?.value||'',url:v('url')?.value||'',model:v('model')?.value||'',enabled:i===0||Boolean(v('enabled')?.checked),key:v('key')?.value||'',clearKey:row._api?.clearKey===true}})}
   async function saveApis(){
-    const apis=collectApis();
-    const r=await fetch('/api/admin/apis',{method:'PUT',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({apis})});
-    const d=await r.json().catch(()=>({}));
-    if(!r.ok){alert(d.error||'保存失败');return}
-    alert('接口已保存');
-    loadApis();
+    const button=el('nxApiSave');button.disabled=true;button.textContent='保存中…';
+    try{const r=await fetch('/api/admin/apis',{method:'PUT',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({apis:collectApis()})});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'保存失败');await loadApis();button.textContent='已保存并全站生效';setTimeout(()=>{if(button)button.textContent='保存配置'},1800)}
+    catch(e){button.textContent='保存配置';alert(e.message)}finally{button.disabled=false}
   }
   function openApiConfigPanel(){
-    let panel=el('nxApiPanel');
-    if(!panel){
-      panel=document.createElement('div');
-      panel.id='nxApiPanel';
-      panel.innerHTML=`
-        <div class="nx-api-mask" data-close></div>
-        <div class="nx-api-sheet">
-          <div class="nx-api-top"><b>接口设置</b><button type="button" data-close>✕</button></div>
-          <p class="nx-api-hint">推荐启用「免费快速·Pollinations」。智谱等需填写 Key 才启用。</p>
-          <div id="nxApiList"></div>
-          <div class="nx-api-actions">
-            <button type="button" id="nxApiAdd">添加接口</button>
-            <button type="button" id="nxApiSave" class="primary">保存</button>
-          </div>
-        </div>`;
-      document.body.appendChild(panel);
-      panel.addEventListener('click',e=>{if(e.target.matches('[data-close],.nx-api-mask')) panel.classList.remove('show')});
-      el('nxApiSave').onclick=saveApis;
-      el('nxApiAdd').onclick=()=>{
-        const box=el('nxApiList');
-        const row=document.createElement('div');
-        row.className='nx-api-row';
-        row.innerHTML=`
-          <div class="nx-api-head"><b>新接口</b><label><input type="checkbox" data-k="enabled" checked/> 启用</label></div>
-          <label>名称<input data-k="name" value="自定义接口"/></label>
-          <label>URL<input data-k="url" value="https://text.pollinations.ai/openai"/></label>
-          <label>模型<input data-k="model" value="openai"/></label>
-          <label>Key<input data-k="key" placeholder="可选"/></label>`;
-        box.appendChild(row);
-      };
-    }
-    panel.classList.add('show');
-    loadApis();
+    if(window.currentRole!=='admin'&&!document.body.classList.contains('role-admin')){alert('当前账号无权配置接口');return}
+    let panel=el('nxApiPanel');if(!panel){panel=document.createElement('div');panel.id='nxApiPanel';panel.innerHTML=`<button class="nx-api-mask" data-close aria-label="关闭"></button><section class="nx-api-sheet" role="dialog" aria-modal="true" aria-label="全站共享接口设置"><header class="nx-api-top"><div><small>ASTRION · SERVICE ROUTING</small><b>接口与模型</b><span>五槽共享 · 首槽智谱 · 服务端保密</span></div><button type="button" data-close aria-label="关闭">×</button></header><div class="nx-api-hint">第 1 槽固定为智谱 GLM-4.7-Flash。管理员可配置其余 4 个备选服务；所有用户共用这些设置。密钥只保存在服务器，不会回传给浏览器。</div><div id="nxApiList"></div><footer class="nx-api-actions"><button type="button" data-close>取消</button><button type="button" id="nxApiSave" class="primary">保存配置</button></footer></section>`;document.body.append(panel);panel.addEventListener('click',e=>{if(e.target.matches('[data-close],.nx-api-mask'))panel.classList.remove('show')});el('nxApiSave').addEventListener('click',saveApis)}
+    panel.classList.add('show');loadApis();
   }
-  window.openApiConfigPanel=openApiConfigPanel;
-  window.loadApis=loadApis;
-  window.renderApiList=renderApiList;
-  document.addEventListener('DOMContentLoaded',()=>{
-    const b=el('apiConfigSideBtn'); if(b) b.onclick=()=>openApiConfigPanel();
-    const a=el('adminConfigButton'); if(a) a.onclick=()=>openApiConfigPanel();
-  });
+  window.openApiConfigPanel=openApiConfigPanel;window.loadApis=loadApis;window.renderApiList=renderApiList;
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{if(el('apiConfigSideBtn'))el('apiConfigSideBtn').onclick=openApiConfigPanel;if(el('adminConfigButton'))el('adminConfigButton').onclick=openApiConfigPanel});
+  else{if(el('apiConfigSideBtn'))el('apiConfigSideBtn').onclick=openApiConfigPanel;if(el('adminConfigButton'))el('adminConfigButton').onclick=openApiConfigPanel}
 })();
 </script>
 <style id="nx-api-panel-css">
@@ -3429,7 +3384,7 @@ try{
       <button type="button" class="as-row" id="asSwitchRow"><span class="as-ico c-gray">⇄</span><span class="as-lab">切换账号</span><span class="as-right">›</span></button>
       <button type="button" class="as-row danger" id="asLogoutRow"><span class="as-ico c-red">→</span><span class="as-lab">退出登录</span><span class="as-right">›</span></button>
     </div>
-    <div class="as-ver">Version: 1.1.7 · ASTRION</div>
+    <div class="as-ver">Version: 1.1.8 · ASTRION</div>
   </div>
 </div>
 
@@ -3460,7 +3415,7 @@ try{
       const b=$(id); if(b) b.onclick=(e)=>{e.preventDefault(); openSettings()}
     });
     if($('asSettingsClose')) $('asSettingsClose').onclick=closeSettings;
-    if($('asAppearRow')) $('asAppearRow').onclick=()=>{closeSettings(); clickIf('openAppearance')||clickIf('mobileAppearance')}
+    if($('asAppearRow')) $('asAppearRow').onclick=()=>{closeSettings();$('appearanceModal')?.classList.add('show')}
     if($('asNoticeRow')) $('asNoticeRow').onclick=()=>{closeSettings(); clickIf('noticeButton')}
     if($('asNewChatRow')) $('asNewChatRow').onclick=()=>{closeSettings(); clickIf('newChat')}
     if($('asImageRow')) $('asImageRow').onclick=()=>{closeSettings(); clickIf('generateImageBtn')}
@@ -3468,13 +3423,8 @@ try{
     if($('asApiRow')) $('asApiRow').onclick=()=>{closeSettings(); if(window.openApiConfigPanel) openApiConfigPanel(); else clickIf('apiConfigSideBtn')}
     if($('asAdminRow')) $('asAdminRow').onclick=()=>{closeSettings(); clickIf('adminDrawerButton')||clickIf('adminButton')}
     if($('asAboutRow')) $('asAboutRow').onclick=()=>{closeSettings(); clickIf('versionInfoBtn')}
-    if($('asSwitchRow')) $('asSwitchRow').onclick=()=>{closeSettings(); clickIf('switchAccountBtn')}
-    if($('asLogoutRow')) $('asLogoutRow').onclick=()=>{
-      closeSettings();
-      if(window.logout) try{window.logout()}catch(_){}
-      else if($('switchAccountBtn')) $('switchAccountBtn').click();
-      else location.href=location.pathname;
-    }
+    if($('asSwitchRow')) $('asSwitchRow').onclick=()=>{closeSettings();window.switchLoginAccount?.(false)}
+    if($('asLogoutRow')) $('asLogoutRow').onclick=()=>{closeSettings();if(window.logout)window.logout()}
     if($('asSearchRow')) $('asSearchRow').onclick=()=>{
       closeSettings();
       const p=$('prompt'); if(p){p.focus(); p.placeholder='输入关键词查找…'}
@@ -3511,7 +3461,7 @@ try{
     const w=document.getElementById('welcome');
     if(w){
       const h2=w.querySelector('h2');
-      if(h2){ h2.textContent='你好，我是 ASTRION'; }
+      if(h2)h2.remove();
     }
     // remove floating duplicate if any
     document.querySelectorAll('body > div, #app > div').forEach(el=>{
@@ -3568,10 +3518,10 @@ try{
   function cleanDup(){
     document.querySelectorAll('body *').forEach(el=>{
       if(el.childNodes.length===1 && el.textContent && /^你好，我是\s*ASTRION你好，我是\s*ASTRION$/.test(el.textContent.trim())){
-        el.textContent='你好，我是 ASTRION';
+        el.remove();
       }
     });
-    const w=$('welcome'); if(w){ const h2=w.querySelector('h2'); if(h2) h2.textContent='你好，我是 ASTRION'; }
+    const w=$('welcome'); if(w){ const h2=w.querySelector('h2'); if(h2)h2.remove(); }
   }
   function boot(){ bindSide(); cleanDup(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot);
@@ -3747,4 +3697,41 @@ try{
 })();
 </script>
 
+<style id="astrion-v118-ui-fixes">
+#nxApiPanel{position:fixed;inset:0;z-index:100100;display:none;align-items:flex-end;justify-content:center;padding:16px;background:#020308d9}
+#nxApiPanel.show{display:flex}
+#nxApiPanel .nx-api-mask{position:absolute;inset:0;border:0;background:transparent}
+#nxApiPanel .nx-api-sheet{position:relative;width:min(760px,100%);max-height:min(88dvh,900px);overflow:auto;overscroll-behavior:contain;border:1px solid #ffffff20;border-radius:28px 28px 20px 20px;background:radial-gradient(ellipse at 12% 0%,#a889ff20,transparent 40%),linear-gradient(160deg,#161821,#0d0f15);padding:24px;box-shadow:0 35px 100px #000b;color:#f5f4f8}
+#nxApiPanel .nx-api-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:15px}
+#nxApiPanel .nx-api-top div{display:grid;gap:4px}#nxApiPanel .nx-api-top small{font-size:10px;letter-spacing:1.6px;color:#b5a5ff}#nxApiPanel .nx-api-top b{font-size:23px}#nxApiPanel .nx-api-top span,#nxApiPanel .nx-api-hint{font-size:12px;line-height:1.65;color:#a6a8b6}
+#nxApiPanel .nx-api-top button{width:38px;height:38px;border:1px solid #ffffff1c;border-radius:50%;background:#ffffff0a;color:#fff;font-size:22px}
+#nxApiPanel .nx-api-row{margin:12px 0;padding:16px;border:1px solid #ffffff14;border-radius:18px;background:#ffffff06}
+#nxApiPanel .nx-api-row.is-primary{border-color:#aa93ff58;background:linear-gradient(130deg,#8c72ff1b,#42c9b51a)}
+#nxApiPanel .nx-api-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}#nxApiPanel .nx-api-head>div{display:flex;align-items:center;gap:9px}#nxApiPanel .nx-api-head b{font-size:14px}
+#nxApiPanel .nx-api-index{font-size:9px;letter-spacing:1px;color:#c4b9ff;padding:4px 7px;border-radius:8px;background:#8c72ff20}
+#nxApiPanel .nx-api-enable{font-size:12px;color:#cacbd4;white-space:nowrap}#nxApiPanel .nx-api-fields{display:grid;grid-template-columns:1fr 1fr;gap:9px 12px}
+#nxApiPanel .nx-api-fields label{display:block;font-size:11px;color:#bbbcc8}#nxApiPanel .nx-api-fields input{box-sizing:border-box;width:100%;margin-top:5px;padding:11px 12px;border:1px solid #ffffff19;border-radius:12px;background:#090a0f;color:#fff;font:inherit;font-size:13px;outline:0}
+#nxApiPanel .nx-api-fields input:focus{border-color:#ac96ff;box-shadow:0 0 0 3px #ac96ff1f}#nxApiPanel .nx-api-fields input[readonly]{color:#c7c2d9;background:#11121a}
+#nxApiPanel .nx-api-key-label{grid-column:1/-1}#nxApiPanel .nx-api-key-label span{float:right;color:#8fe2ca;font-size:10px}
+#nxApiPanel .nx-api-row-foot{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:10px}#nxApiPanel .nx-api-row-foot small{color:#8d90a0;font-size:10px}#nxApiPanel .nx-api-clear-key{border:0;background:transparent;color:#e7a4a4;font-size:10px}
+#nxApiPanel .nx-api-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}#nxApiPanel .nx-api-actions button{border:1px solid #ffffff1a;border-radius:12px;padding:11px 18px;background:#ffffff0d;color:#eee}#nxApiPanel .nx-api-actions .primary{border:0;background:linear-gradient(135deg,#aa94ff,#65d8c7);color:#111;font-weight:700}
+.nx-api-error{padding:16px;color:#ffb7b7}.ann-box{width:min(620px,100%);max-height:min(82dvh,760px);padding:0!important;overflow:hidden!important;border-radius:28px!important;background:radial-gradient(ellipse at 12% 0%,#f09b7320,transparent 42%),linear-gradient(155deg,#191b23,#101116)!important;border:1px solid #ffffff1c!important;box-shadow:0 35px 100px #000c!important}
+.ann-header{display:flex;align-items:center;justify-content:space-between;padding:24px 26px 17px;border-bottom:1px solid #ffffff12}.ann-brand{display:flex;align-items:center;gap:14px}.ann-mark{width:46px;height:46px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(135deg,#f3a07c,#8f7cff);font-size:22px;font-weight:800;color:white;box-shadow:0 10px 28px #b17fff35}.ann-brand small{font-size:9px;letter-spacing:1.8px;color:#d9ab9a}.ann-brand h3{margin:4px 0 1px;font-size:21px}.ann-brand p{margin:0;color:#a5a6b2;font-size:12px}.ann-dismiss{width:36px;height:36px;border:1px solid #ffffff20;border-radius:50%;background:#ffffff0b;color:#fff;font-size:24px}
+#noticeList{max-height:calc(82dvh - 175px);overflow:auto;padding:14px 22px 8px}.ann-box .notice-card{margin:10px 0;padding:16px 16px 14px 19px;border-radius:17px;background:#ffffff07;border:1px solid #ffffff11}.ann-box .notice-card h4{margin:0 0 8px;font-size:15px;color:#fff}.ann-box .notice-card p{margin:0;color:#d0d0d7;font-size:13px;line-height:1.75;white-space:pre-wrap;overflow-wrap:anywhere}.ann-box .notice-card small{display:block;margin-top:11px;color:#858896;font-size:10px}.ann-box .notice-card.welcome-card{border-color:#b69aff45;background:linear-gradient(135deg,#aa8dff14,#61d3bd0c)}
+.ann-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 24px 20px;border-top:1px solid #ffffff10;color:#9699a7;font-size:11px}.ann-foot .primary{border:0;border-radius:13px;padding:11px 20px;background:linear-gradient(135deg,#f3a07c,#d4684a);color:white;font-weight:700}
+.notice-empty{display:grid;justify-items:center;text-align:center;padding:28px 16px;color:#adafbb}.notice-empty-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:15px;background:#ffffff0a;color:#b6a2ff;font-size:23px}.notice-empty h4{margin:12px 0 4px;color:#efedf6;font-size:14px}.notice-empty p{max-width:380px;margin:0;color:#999baa;font-size:12px;line-height:1.7}.notice-empty-action{margin-top:12px;border:1px solid #aa94ff50;border-radius:10px;padding:8px 12px;background:#aa94ff12;color:#d3c9ff}.notice-load-error{padding:18px;color:#e6b6b6}
+.announcement-composer{margin:10px 0 18px;padding:18px;border:1px solid #ffffff18;border-radius:20px;background:radial-gradient(ellipse at 0 0,#a18bff16,transparent 52%),#ffffff06}.announcement-compose-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.announcement-compose-head h4{margin:3px 0 0;font-size:17px}.announcement-composer>p{color:#a6a9b7;font-size:12px;line-height:1.65}.announcement-composer>label{display:block;margin:10px 0 5px;color:#c9c7d4;font-size:11px}.announcement-composer>input,.announcement-composer>textarea{box-sizing:border-box;width:100%;border:1px solid #ffffff19;border-radius:12px;padding:11px 12px;background:#0b0d13;color:#fff;font:inherit;font-size:13px}.announcement-composer>textarea{min-height:110px;resize:vertical}.announce-badge{padding:6px 9px;border:1px solid #a18bff35;border-radius:99px;background:#a18bff12;color:#c8baff;font-size:10px;white-space:nowrap}.announcement-compose-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}.announcement-compose-foot small,.announcement-compose-foot span{font-size:10px;color:#9295a3}.announcement-compose-foot .primary{margin-left:auto;border:0;border-radius:11px;padding:9px 14px;background:linear-gradient(135deg,#aa94ff,#66d7c7);color:#111;font-weight:700}
+/* The composer itself is in normal flow inside a fixed footer; tool buttons occupy their own row on phones. */
+body.entered .composer-wrap{position:fixed!important;left:0!important;right:0!important;bottom:0!important;z-index:80!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:0!important;padding:10px 14px calc(12px + env(safe-area-inset-bottom))!important;background:linear-gradient(0deg,#08090d 70%,#08090de8 86%,transparent)!important;border:0!important;pointer-events:none}
+body.entered .composer-wrap .attachments{width:min(920px,100%);pointer-events:auto}
+body.entered .composer-wrap .composer{position:relative!important;inset:auto!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important;width:min(920px,100%)!important;box-sizing:border-box!important;margin:0 auto!important;padding:10px 12px!important;pointer-events:auto}
+body.entered .composer .input-row{display:grid!important;grid-template-columns:auto minmax(0,1fr) 42px!important;align-items:center!important;gap:9px!important;width:100%!important}
+body.entered .composer .toolrow{display:flex!important;flex-wrap:nowrap!important;gap:5px!important;align-items:center!important;flex:0 0 auto!important;min-width:0}
+body.entered .composer .toolrow button{width:34px!important;height:34px!important;min-width:34px!important;flex:0 0 34px!important;border-radius:11px!important}
+body.entered .composer #prompt{min-width:0!important;width:100%!important;max-height:150px!important;resize:none!important;line-height:1.45!important}
+body.entered .composer #sendBtn{position:relative!important;inset:auto!important;width:40px!important;height:40px!important;min-width:40px!important;flex:0 0 40px!important}
+body.entered .composer .composer-foot{display:flex!important;justify-content:space-between!important;gap:8px!important;padding:5px 3px 0!important;font-size:10px!important;color:#9699a8!important}
+#appearanceModal.show{display:flex!important;z-index:100020!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}#appearanceModal .modal{width:min(620px,100%)!important;max-height:86dvh!important;overflow:auto!important}#appearanceModal #fontSize{accent-color:#ad96ff;touch-action:pan-x!important}#appearanceModal #fontSizeLabel{display:inline-block;min-width:45px;color:#cbbcff}
+@media(max-width:760px){body.entered .composer-wrap{bottom:calc(60px + env(safe-area-inset-bottom))!important;padding:8px 10px 9px!important;background:linear-gradient(0deg,#08090d 72%,#08090de8 88%,transparent)!important}.composer-wrap .composer{border-radius:20px!important}.composer .input-row{grid-template-columns:minmax(0,1fr) 42px!important;grid-template-rows:auto auto!important;gap:6px 8px!important}.composer .toolrow{grid-column:1/-1!important;grid-row:1!important;overflow-x:auto!important;scrollbar-width:none!important;padding-bottom:2px}.composer #prompt{grid-column:1!important;grid-row:2!important}.composer #sendBtn{grid-column:2!important;grid-row:2!important}.composer .composer-foot{display:none!important}#chat{padding-bottom:calc(250px + env(safe-area-inset-bottom))!important}.ann-box{width:100%!important;max-height:calc(100dvh - 22px - env(safe-area-inset-top))!important;border-radius:24px!important}.ann-header{padding:19px 18px 14px}.ann-brand h3{font-size:19px}#noticeList{max-height:calc(100dvh - 190px);padding:10px 14px}.ann-foot{padding:12px 16px calc(14px + env(safe-area-inset-bottom))}.announcement-composer{padding:14px}.announcement-compose-head{align-items:flex-start}#nxApiPanel{padding:0}#nxApiPanel .nx-api-sheet{width:100%;max-height:92dvh;border-radius:24px 24px 0 0;padding:18px 14px calc(16px + env(safe-area-inset-bottom))}#nxApiPanel .nx-api-fields{grid-template-columns:1fr}#nxApiPanel .nx-api-key-label{grid-column:auto}}
+</style>
 </body></html>
