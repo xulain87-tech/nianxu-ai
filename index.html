@@ -1661,6 +1661,98 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
 .toggle{color:#c5d0e9!important}
 input[type="checkbox"]{accent-color:#ff6b9d!important}
 </style>
+<style id="nx-chat-redesign">
+/* ===== ASTRION 1.2 聊天界面重设计 · Aurora 玻璃拟态 ===== */
+/* -- 顶栏：毛玻璃 + 渐变品牌字 -- */
+.topbar{background:linear-gradient(180deg,rgba(30,20,45,.55),rgba(12,14,28,.25))!important;border-bottom:1px solid rgba(255,150,200,.14)!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important}
+.topbar-brand b,.top-title{background:linear-gradient(90deg,#fff,#f9a8d4 45%,#c4b5fd 75%,#93c5fd)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important}
+.top-sub{color:#b8b0c8!important}
+.top-actions .iconbtn{background:rgba(255,255,255,.05)!important;border:1px solid rgba(255,150,200,.18)!important;transition:.2s!important}
+.top-actions .iconbtn:hover{background:rgba(255,107,157,.14)!important;border-color:rgba(255,107,157,.4)!important;color:#fff!important}
+#statusDot{box-shadow:0 0 12px currentColor!important;animation:nxHeartbeat 2.4s ease-in-out infinite!important}
+@keyframes nxHeartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+/* -- 聊天区 -- */
+#chat{padding-top:20px!important}
+.msg{position:relative!important;border-radius:20px!important;padding:16px 19px!important;line-height:1.75!important;overflow:hidden}
+.msg .role{display:flex!important;align-items:center!important;gap:7px!important;font-weight:700!important;letter-spacing:.6px!important;margin-bottom:8px!important}
+.msg .role::before{content:"";width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#ff6b9d,#60a5fa);box-shadow:0 0 10px #ff6b9d88}
+/* AI 气泡：深色玻璃 + 渐变细描边 + 左侧光条 */
+.msg.ai{
+  background:linear-gradient(160deg,rgba(30,20,45,.78),rgba(12,14,28,.86))!important;
+  border:1px solid transparent!important;
+  border-bottom-left-radius:6px!important;
+  box-shadow:0 10px 34px rgba(0,0,0,.38),0 0 40px rgba(255,107,157,.06)!important;
+}
+.msg.ai::before{content:"";position:absolute;left:0;top:14%;bottom:14%;width:3px;border-radius:3px;background:linear-gradient(180deg,#ff6b9d,#c084fc,#60a5fa);opacity:.85}
+.msg.ai::after{content:"";position:absolute;inset:0;border-radius:20px;padding:1px;background:linear-gradient(135deg,rgba(255,107,157,.35),rgba(139,92,246,.22) 45%,rgba(91,141,255,.3));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.msg.ai .role{color:#f9a8d4!important}
+/* 用户气泡：粉紫渐变实底 */
+.msg.user{
+  background:linear-gradient(120deg,#e1568f 0%,#a861e0 55%,#5d8df0 100%)!important;
+  border:0!important;color:#fff!important;border-bottom-right-radius:6px!important;
+  box-shadow:0 10px 30px rgba(225,86,143,.32)!important;
+}
+.msg.user .role{color:rgba(255,255,255,.9)!important}
+.msg.user .role::before{background:rgba(255,255,255,.85);box-shadow:0 0 8px rgba(255,255,255,.7)}
+.msg.user a{color:#ffe3f0!important}
+/* 错误气泡 */
+.msg.error{background:linear-gradient(160deg,rgba(80,20,35,.5),rgba(30,10,18,.6))!important;border:1px solid rgba(255,107,130,.4)!important}
+.msg.error .role::before{background:#ff7a8a;box-shadow:0 0 10px #ff7a8a}
+/* 消息内图片圆角光晕 */
+.msg img{border-radius:16px!important;box-shadow:0 8px 26px rgba(0,0,0,.4),0 0 0 1px rgba(255,150,200,.2)!important}
+/* 复制按钮 */
+.msg-tools button{padding:5px 12px!important;border-radius:999px!important;background:rgba(255,255,255,.05)!important;border:1px solid rgba(255,150,200,.18)!important;color:#c4b5fd!important;transition:.2s}
+.msg-tools button:hover{background:rgba(255,107,157,.16)!important;color:#fff!important;border-color:rgba(255,107,157,.45)!important}
+/* 搜索来源卡片 */
+.search-sources{margin-top:12px;padding:11px 13px;border-radius:14px!important;background:rgba(91,141,255,.07)!important;border:1px solid rgba(91,141,255,.22)!important}
+.search-sources b{color:#93c5fd!important;font-size:11px!important;letter-spacing:.8px}
+.search-sources a{color:#c4b5fd!important;text-decoration:none}
+.search-sources a:hover{color:#fff!important;text-decoration:underline}
+.search-sources small{display:block;color:#8d86a3!important;font-size:10.5px!important;margin:2px 0 6px!important}
+/* -- 打字指示器：三点弹跳 -- */
+.msg.typing .message-text::after{content:"● ● ●";letter-spacing:5px;font-size:9px;background:none!important;width:auto!important;height:auto!important;animation:nxTypeBounce 1.2s ease-in-out infinite!important;color:#c084fc!important;vertical-align:middle!important;margin-left:6px!important}
+@keyframes nxTypeBounce{0%,100%{opacity:.35;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+.msg.typing div:last-child::after{display:none!important}
+/* -- 欢迎区 -- */
+.welcome .orb{border-radius:28px!important;background:linear-gradient(135deg,#ff6b9d 0%,#c084fc 45%,#60a5fa 100%)!important;box-shadow:0 16px 46px rgba(255,107,157,.4),0 0 0 1px rgba(255,255,255,.25) inset!important;animation:nxOrbFloat 4.5s ease-in-out infinite!important}
+@keyframes nxOrbFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.04)}}
+.welcome h2{background:linear-gradient(90deg,#fff 0%,#f9a8d4 35%,#c4b5fd 65%,#93c5fd 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;font-weight:800!important}
+.welcome p{color:#b8b0c8!important}
+.suggestions button{background:rgba(255,255,255,.04)!important;border:1px solid rgba(255,150,200,.22)!important;color:#e6dcf5!important;border-radius:999px!important;transition:.2s!important}
+.suggestions button:hover{background:linear-gradient(105deg,rgba(255,107,157,.16),rgba(96,165,250,.16))!important;border-color:rgba(255,107,157,.5)!important;color:#fff!important;transform:translateY(-2px)!important}
+/* -- 输入区：渐变描边胶囊 + 聚焦流光 -- */
+.composer{position:relative!important;background:linear-gradient(160deg,rgba(30,20,45,.9),rgba(12,14,28,.94))!important;border:1px solid rgba(255,150,200,.22)!important;border-radius:24px!important;box-shadow:0 14px 44px rgba(0,0,0,.45),0 0 34px rgba(255,107,157,.07)!important;transition:box-shadow .3s,border-color .3s!important}
+.composer:focus-within{border-color:rgba(255,107,157,.55)!important;box-shadow:0 14px 44px rgba(0,0,0,.45),0 0 0 3px rgba(255,107,157,.16),0 0 44px rgba(192,132,252,.12)!important}
+#prompt::placeholder{color:#6f6a85!important}
+.composer .toolrow button{border-radius:10px!important;transition:.2s!important}
+.composer .toolrow button:hover{background:linear-gradient(120deg,rgba(255,107,157,.18),rgba(96,165,250,.18))!important;color:#fff!important}
+.mode-btn[aria-pressed="true"]{background:linear-gradient(105deg,rgba(255,107,157,.28),rgba(96,165,250,.28))!important;color:#fff!important;border:1px solid rgba(255,107,157,.5)!important}
+/* 发送按钮：渐变 + 光晕 + 呼吸 */
+#sendBtn{background:linear-gradient(120deg,#ff6b9d 0%,#c084fc 50%,#60a5fa 100%)!important;background-size:170% 100%!important;color:#fff!important;font-weight:900!important;border-radius:15px!important;box-shadow:0 10px 28px rgba(255,107,157,.4)!important;transition:transform .18s,filter .2s,background-position .4s!important;animation:nxSendGlow 3.2s ease-in-out infinite!important}
+@keyframes nxSendGlow{0%,100%{box-shadow:0 10px 28px rgba(255,107,157,.38)}50%{box-shadow:0 12px 34px rgba(96,165,250,.45)}}
+#sendBtn:hover{filter:brightness(1.12)!important;background-position:100% 0!important}
+#sendBtn:active{transform:scale(.9)!important}
+#sendBtn:disabled{opacity:.35!important;animation:none!important;cursor:not-allowed!important}
+#busyLabel{color:#c4b5fd!important}
+.composer-foot{color:#8d86a3!important}
+/* 附件 chip */
+.file-chip{background:rgba(255,107,157,.1)!important;border:1px solid rgba(255,150,200,.28)!important;color:#ffd9e8!important;border-radius:999px!important}
+.file-chip button{color:#ff9db8!important}
+/* 滚动条 */
+#chat::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#ff6b9d66,#60a5fa66)!important;border-radius:10px!important}
+/* 移动端适配 */
+@media(max-width:760px){
+  .msg{padding:14px 15px!important;border-radius:18px!important}
+  .msg.ai::before{top:10%;bottom:10%}
+  .composer{border-radius:20px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #statusDot,.welcome .orb,#sendBtn,.msg.typing .message-text::after{animation:none!important}
+}
+/* 免 Key 预置按钮 */
+.nx-free-btn{background:linear-gradient(105deg,rgba(255,107,157,.16),rgba(96,165,250,.16))!important;border:1px solid rgba(255,107,157,.4)!important;color:#ffd9e8!important}
+.nx-free-btn:hover{background:linear-gradient(105deg,rgba(255,107,157,.3),rgba(96,165,250,.3))!important;color:#fff!important}
+</style>
 </head>
 <body>
 <div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
@@ -1766,7 +1858,7 @@ input[type="checkbox"]{accent-color:#ff6b9d!important}
  <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="发消息或按住说话..."></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 1.2.0 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>外观偏好保存在本机；接口配置由服务器保存并供全站共享。读取配置不会返回 Key。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 1.2.1 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>外观偏好保存在本机；接口配置由服务器保存并供全站共享。读取配置不会返回 Key。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
  <div class="nx-profile"><div class="av">A</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>全站共享接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
  <p class="settings-page-note">具备配置权限的账号可调整服务器接口；AI 调用经服务端代理，配置读取不会回传 Key。</p>
  <div id="apiList" hidden></div>
@@ -1777,7 +1869,7 @@ input[type="checkbox"]{accent-color:#ff6b9d!important}
  </div>
  <div class="hint">提示：Groq 主槽只读取服务端环境变量；备用槽密钥由授权账号提交后保存在服务器，不会通过读取接口返回。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION 1.2.0</strong><span>Build 2026.11 · ASTRION 1.2.0</span><p>本次更新：修复 AI 消息卡在“输入中”、弹窗关闭失效问题；侧栏加宽；设置/公告/控制台全面换用登录页同款粉紫蓝主题；清理新旧混合代码。历史更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、控制台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION 1.2.1</strong><span>Build 2026.11 · ASTRION 1.2.1</span><p>本次更新：新增 3 个免 Key 接口预置与一键填入；主槽名称解锁；聊天界面全面重设计（Aurora 玻璃拟态）；延续 1.2.0 全部修复。历史更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、控制台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 允许轻松幽默回应</label>
@@ -1812,7 +1904,7 @@ input[type="checkbox"]{accent-color:#ff6b9d!important}
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION 1.2.0" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION 1.2.1" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -2362,7 +2454,7 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
         <h2>把灵感，<br/><em>变成答案。</em></h2>
         <p>与你一起探索、创作与解决问题。<br/>每段对话，都从一个好奇开始。</p>
       </div>
-      <div class="nx-brand-footer"><span class="nx-live-dot"></span><span>你的 AI 工作空间已准备就绪</span><span class="nx-brand-foot-mark">ASTRION · 1.2.0</span></div>
+      <div class="nx-brand-footer"><span class="nx-live-dot"></span><span>你的 AI 工作空间已准备就绪</span><span class="nx-brand-foot-mark">ASTRION · 1.2.1</span></div>
     </section>
     <section class="nx-login-card" aria-labelledby="nxLoginTitle">
       <div class="nx-auth-mobile-mark"><img src="/logo.png" alt=""/><span>ASTRION</span></div>
@@ -2542,7 +2634,7 @@ if($("creatorBtnSide"))$("creatorBtnSide").onclick=()=>{$("creatorModal").classL
 if($("noticeButtonSide"))$("noticeButtonSide").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
 if($("humanSupportBtnSide"))$("humanSupportBtnSide").onclick=()=>{if(currentRole==="admin"){if(typeof openAdminSupportPanel==="function")openAdminSupportPanel();return}openModal("humanSupportModal");if(typeof refreshMySupport==="function")refreshMySupport()};
 if($("clearChatSide"))$("clearChatSide").onclick=()=>{if(confirm("确定清空当前对话？")){const chat=$("chat");if(chat){chat.innerHTML="";const w=document.createElement("div");w.className="welcome";w.id="welcome";w.innerHTML='<div class="orb" style="background-image:url(/logo.png)"></div><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div>';chat.append(w);setStatus("对话已清空",true)}}};
-if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION 1.2.0\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 控制台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
+if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION 1.2.1\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 控制台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
 (function(){
   const openApp=()=>openModal("appearanceModal");
   if($("openAppearance")) $("openAppearance").onclick=openApp;
@@ -3344,18 +3436,36 @@ try{
     (apis||[]).slice(0,5).forEach((a,i)=>{
       const fixed=i===0,row=document.createElement('section');row.className='nx-api-row'+(fixed?' is-primary':'');
       const checked=fixed||a.enabled===true,ro=fixed?'readonly':'',disabled=fixed?'disabled':'';
-      row.innerHTML=`<div class="nx-api-head"><div><span class="nx-api-index">${fixed?'PRIMARY':'FALLBACK '+i}</span><b>${esc(a.name||('接口 '+(i+1)))}</b></div><label class="nx-api-enable"><input type="checkbox" data-k="enabled" ${checked?'checked':''} ${disabled}> 启用</label></div>
-       <div class="nx-api-fields"><label>接口名称<input data-k="name" value="${esc(a.name||('接口 '+(i+1)))}" ${ro}></label>
+      row.innerHTML=`<div class="nx-api-head"><div><span class="nx-api-index">${fixed?'PRIMARY · 主聊天':'FALLBACK '+i+' · 备用'}</span><b>${esc(a.name||('接口 '+(i+1)))}</b></div><label class="nx-api-enable"><input type="checkbox" data-k="enabled" ${checked?'checked':''} ${fixed?'disabled':''}> ${fixed?'始终启用':'启用'}</label></div>
+       <div class="nx-api-fields"><label>接口名称<input data-k="name" value="${esc(a.name||('接口 '+(i+1)))}"></label>
        <label>API Endpoint<input data-k="url" value="${esc(a.url||'')}" placeholder="https://服务商/v1/chat/completions" ${ro}></label>
        <label>模型<input data-k="model" value="${esc(a.model||'')}" placeholder="模型名称" ${ro}></label>
-       <label class="nx-api-key-label">${fixed?'Groq Key（服务端环境变量）':'服务端 API Key'} <span>${fixed?(a.keySet?'环境变量已配置':'未检测到 GROQ_API_KEY'):(a.keySet?'已配置 · 留空保留':'提交后保存在服务器')}</span><input type="password" data-k="key" autocomplete="new-password" placeholder="${fixed?'由服务端环境变量配置':a.keySet?'输入新 Key 以替换':'粘贴服务商 Key'}" ${fixed?'disabled':''}></label></div>
-       <div class="nx-api-row-foot"><small>${fixed?'首槽固定为 Groq openai/gpt-oss-120b':'此槽保存后对全站用户共享'}</small><button type="button" class="nx-api-clear-key" ${fixed?'hidden':''}>清除已保存 Key</button></div>`;
+       <label class="nx-api-key-label">${fixed?'Groq Key（服务端环境变量）':'API Key（免 Key 服务可留空）'} <span>${fixed?(a.keySet?'环境变量已配置':'未检测到 GROQ_API_KEY'):(a.keySet?'已配置 · 留空保留':'免 Key 服务无需填写')}</span><input type="password" data-k="key" autocomplete="new-password" placeholder="${fixed?'由服务端环境变量配置':a.keySet?'输入新 Key 以替换':'免 Key 服务可留空'}" ${fixed?'disabled':''}></label></div>
+       <div class="nx-api-row-foot"><small>${fixed?'地址与模型锁定为 Groq（保护服务端 Key 不外泄）；名称可自定义':'保存后对全站用户共享；免 Key 服务 Key 留空即可'}</small><button type="button" class="nx-api-clear-key" ${fixed?'hidden':''}>清除已保存 Key</button></div>`;
       row._api=a;row.querySelector('[data-k="enabled"]').addEventListener('change',e=>{a.enabled=e.target.checked});
       row.querySelectorAll('input[data-k]').forEach(input=>input.addEventListener('input',()=>{const k=input.dataset.k;if(k==='key'){a.key=input.value;a.clearKey=false}else if(k!=='enabled')a[k]=input.value}));
       row.querySelector('.nx-api-clear-key').addEventListener('click',()=>{a.key='';a.clearKey=true;row.querySelector('[data-k="key"]').value='';row.querySelector('.nx-api-key-label span').textContent='已标记清除（部署环境变量需在服务器管理）'});
       box.append(row);
     });
     while(box.children.length<5){const i=box.children.length,slot={name:'接口 '+(i+1),url:'',model:'',enabled:false,keySet:false};renderApiList([...(apis||[]),slot]);return}
+  }
+  // 免 Key 接口一键预置（2026-11 实测可用，无需任何 API Key）
+  const FREE_PRESETS=[
+    {name:'Pollinations · GPT-OSS-20B（免Key）',url:'https://text.pollinations.ai/openai',model:'openai-fast'},
+    {name:'AirForce · GPT-OSS-20B（免Key·限速1条/秒）',url:'https://api.airforce/v1/chat/completions',model:'gpt-oss-20b'},
+    {name:'Pollinations · OpenAI 大池（免Key·高峰拥挤）',url:'https://text.pollinations.ai/openai',model:'openai'}
+  ];
+  function applyFreePresets(){
+    const rows=[...document.querySelectorAll('#nxApiList .nx-api-row')];
+    FREE_PRESETS.forEach((p,j)=>{
+      const row=rows[j+1];if(!row)return;const a=row._api;if(!a)return;
+      a.name=p.name;a.url=p.url;a.model=p.model;a.enabled=true;a.keySet=false;a.key='';a.clearKey=false;
+      row.querySelector('[data-k="name"]').value=p.name;
+      row.querySelector('[data-k="url"]').value=p.url;
+      row.querySelector('[data-k="model"]').value=p.model;
+      row.querySelector('[data-k="enabled"]').checked=true;
+    });
+    const b=el('nxApiFree');if(b){b.textContent='已填入，点「保存配置」生效';setTimeout(()=>{if(b)b.textContent='一键填入免 Key 接口'},2600)}
   }
   function collectApis(){return [...document.querySelectorAll('#nxApiList .nx-api-row')].slice(0,5).map((row,i)=>{const v=k=>row.querySelector(`[data-k="${k}"]`);return {name:v('name')?.value||'',url:v('url')?.value||'',model:v('model')?.value||'',enabled:i===0||Boolean(v('enabled')?.checked),key:i===0?'':(v('key')?.value||''),clearKey:i!==0&&row._api?.clearKey===true}})}
   async function saveApis(){
@@ -3365,7 +3475,7 @@ try{
   }
   function openApiConfigPanel(){
     if(window.currentRole!=='admin'&&!document.body.classList.contains('role-admin')){alert('当前账号无权配置接口');return}
-    let panel=el('nxApiPanel');if(!panel){panel=document.createElement('div');panel.id='nxApiPanel';panel.innerHTML=`<button class="nx-api-mask" data-close aria-label="关闭"></button><section class="nx-api-sheet" role="dialog" aria-modal="true" aria-label="全站共享接口设置"><header class="nx-api-top"><div><small>ASTRION · SERVICE ROUTING</small><b>接口与模型</b><span>五槽共享 · 首槽 Groq · 服务端保密</span></div><button type="button" data-close aria-label="关闭">×</button></header><div class="nx-api-hint">第 1 槽固定为 Groq openai/gpt-oss-120b。管理员可配置其余 4 个备选服务；所有用户共用这些设置。Groq 主槽 Key 仅由服务端环境变量提供；备用槽 Key 仅随授权提交请求传入服务端，读取接口不会返回 Key。</div><div id="nxApiList"></div><footer class="nx-api-actions"><button type="button" data-close>取消</button><button type="button" id="nxApiSave" class="primary">保存配置</button></footer></section>`;document.body.append(panel);panel.addEventListener('click',e=>{if(e.target.matches('[data-close],.nx-api-mask'))panel.classList.remove('show')});el('nxApiSave').addEventListener('click',saveApis)}
+    let panel=el('nxApiPanel');if(!panel){panel=document.createElement('div');panel.id='nxApiPanel';panel.innerHTML=`<button class="nx-api-mask" data-close aria-label="关闭"></button><section class="nx-api-sheet" role="dialog" aria-modal="true" aria-label="全站共享接口设置"><header class="nx-api-top"><div><small>ASTRION · SERVICE ROUTING</small><b>接口与模型</b><span>五槽共享 · 首槽 Groq · 服务端保密</span></div><button type="button" data-close aria-label="关闭">×</button></header><div class="nx-api-hint">主聊天固定走 Groq（Key 只存在服务端环境变量，改地址会导致 Key 外泄，因此地址与模型锁定、名称可自定义）。下方 3 个免 Key 接口已实测可用，点「一键填入」再「保存配置」即可全站启用；聊天时五槽竞速，谁快用谁、失败自动回退。</div><div id="nxApiList"></div><footer class="nx-api-actions"><button type="button" data-close>取消</button><button type="button" id="nxApiFree" class="nx-free-btn">一键填入免 Key 接口</button><button type="button" id="nxApiSave" class="primary">保存配置</button></footer></section>`;document.body.append(panel);panel.addEventListener('click',e=>{if(e.target.matches('[data-close],.nx-api-mask'))panel.classList.remove('show')});el('nxApiSave').addEventListener('click',saveApis);el('nxApiFree').addEventListener('click',applyFreePresets)}
     panel.classList.add('show');loadApis();
   }
   window.openApiConfigPanel=openApiConfigPanel;window.loadApis=loadApis;window.renderApiList=renderApiList;
@@ -3455,7 +3565,7 @@ try{
       <button type="button" class="as-row" id="asSwitchRow"><span class="as-ico c-gray">⇄</span><span class="as-lab">切换账号</span><span class="as-right">›</span></button>
       <button type="button" class="as-row danger" id="asLogoutRow"><span class="as-ico c-red">→</span><span class="as-lab">退出登录</span><span class="as-right">›</span></button>
     </div>
-    <div class="as-ver">Version: 1.2.0 · ASTRION</div>
+    <div class="as-ver">Version: 1.2.1 · ASTRION</div>
   </div>
 </div>
 

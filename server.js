@@ -89,7 +89,7 @@ function normalizeAiApis(input, previous=[]) {
   const item=source[i]&&typeof source[i]==='object'?source[i]:{};
   const prior=old[i]&&typeof old[i]==='object'?old[i]:{};
   const key=item.clearKey===true?'':String(item.key||prior.key||'').trim().slice(0,1000);
-  if(i===0)return {...base,enabled:true,key:'',primary:true};
+  if(i===0)return {...base,name:(String(item.name||'').trim().slice(0,120)||base.name),enabled:true,key:'',primary:true};
   return {name:String(item.name||base.name).trim().slice(0,120)||base.name,url:String(item.url||'').trim().slice(0,500),model:String(item.model||'').trim().slice(0,160),enabled:item.enabled===true,key};
  });
 }
