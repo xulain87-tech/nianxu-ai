@@ -148,7 +148,7 @@ async function proxyAiChat(messages,temperature=.7,autoFallback=true){
  }
  return await new Promise((resolve,reject)=>{
   let pending=candidates.length,lastError=null,settled=false;
-  const timers=controllers.map(controller=>setTimeout(()=>controller.abort(),8000));
+  const timers=controllers.map(controller=>setTimeout(()=>controller.abort(),200000));
   const finish=(fn,value)=>{if(settled)return;settled=true;timers.forEach(clearTimeout);fn(value)};
   candidates.forEach((api,index)=>{
    callOne(api,controllers[index]).then(result=>{
