@@ -2349,7 +2349,14 @@ function load(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{retur
 function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
 function syncModeButtons(){$("searchModeBtn").classList.toggle("active",searchMode);$("searchModeBtn").setAttribute("aria-pressed",String(searchMode));$("expertModeBtn").classList.toggle("active",expertMode);$("expertModeBtn").setAttribute("aria-pressed",String(expertMode))}
 syncModeButtons();$("searchModeBtn").onclick=()=>{searchMode=!searchMode;save("nx_search_mode",searchMode);syncModeButtons()};$("expertModeBtn").onclick=()=>{expertMode=!expertMode;save("nx_expert_mode",expertMode);syncModeButtons()};
-function setStatus(t,ok=false){$("statusText").textContent=t;$("statusDot").style.background=ok?"#4bd6a2":"#f0bd65"}
+function setStatus(t,ok=false){
+  const st=$("statusText"), sd=$("statusDot"), ml=$("modelLabel"), bl=$("busyLabel");
+  if(st) st.textContent=t||"";
+  if(sd) sd.style.background=ok?"#4bd6a2":"#f0bd65";
+  if(ml && t) ml.textContent=t;
+  if(bl && !ok) bl.textContent=t||"";
+  if(bl && ok) bl.textContent="";
+}
 let currentUserId="";
 function memoryKey(){return "nx_memory_"+(currentUserId||"guest")}
 function readMemories(){return load(memoryKey(),[]).filter(x=>typeof x==="string").slice(0,20)}
@@ -2428,7 +2435,7 @@ async function send(){
  const pending=addMessage("ai",useSearch?"正在搜索网页并整理答案……":"输入中……");pending.parentElement.classList.add("typing");
  const prefs=conversationPrefs(),userContent=buildContent(text,attached);
  const apiHistory=[...history.slice(useExpert?-20:-12),{role:"user",content:userContent}];
- let answer=null,lastError=null,used=useSearch?"联网搜索":"服务器接口",searchResults=[];const controller=new AbortController();aborter=controller;const timer=setTimeout(()=>controller.abort(),200000);
+ let answer=null,lastError=null,used=useSearch?"联网搜索":"服务器接口",searchResults=[];const controller=new AbortController();aborter=controller;const timer=setTimeout(()=>controller.abort(),90000);
  setStatus(useSearch?"正在联网搜索并整理来源…":useExpert?"专家模式思考中…":"正在连接 AI…");
  try{const result=useSearch?await callServerSearch(text,useExpert,controller.signal,prefs):await callServerChat(apiHistory,controller.signal,useExpert,prefs);answer=result.answer;used=result.used||used;searchResults=result.results||[]}catch(e){lastError=e}finally{clearTimeout(timer);aborter=null}
  try{
@@ -2512,7 +2519,7 @@ async function generateImage(){
 }
 $("generateImageBtn").onclick=$("mobileGenerateImage").onclick=openImageGenerator;
 $("newChat").onclick=$("clearChat").onclick=()=>{if(busy){if(aborter)aborter.abort()}history=[];for(const u of generatedImageUrls)URL.revokeObjectURL(u);generatedImageUrls.clear();$("chat").innerHTML='<div class="welcome" id="welcome"><div class="orb" style="background-image:url(/logo.png)"></div><h2>新对话已开启</h2><p>继续把你的想法交给ASTRION。</p></div>';setBusy(false);setStatus("等待发送消息")};
-$("exportChat").onclick=()=>{const text=[...$("chat").querySelectorAll(".msg")].map(m=>(m.querySelector(".role")?.textContent||"")+"\n"+(m.children[1]?.textContent||"")).join("\n\n");const blob=new Blob([text],{type:"text/plain;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="ASTRION聊天记录.txt";a.click();URL.revokeObjectURL(a.href)};
+if($("exportChat"))$("exportChat").onclick=()=>{const text=[...$("chat").querySelectorAll(".msg")].map(m=>(m.querySelector(".role")?.textContent||"")+"\n"+(m.children[1]?.textContent||"")).join("\n\n");const blob=new Blob([text],{type:"text/plain;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="ASTRION聊天记录.txt";a.click();URL.revokeObjectURL(a.href)};
 document.querySelectorAll(".suggestions button").forEach(b=>b.onclick=()=>{$("prompt").value=b.textContent;$("sendBtn").disabled=false;send()});
 $("bgFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;if(bgObjectUrl)URL.revokeObjectURL(bgObjectUrl);bgObjectUrl=URL.createObjectURL(f);if(f.type.startsWith("video/")){setBgVideo(bgObjectUrl)}else{setBgImage(bgObjectUrl)}};
 function setBgImage(url){$("bgVideo").pause();$("bgVideo").style.display="none";$("backdrop").style.background=`center/cover no-repeat fixed url("${url}")`;}
@@ -3588,4 +3595,274 @@ body.entered .mobile-workbar{background:#fffefa!important;border:1px solid #ded9
   });
 })();
 </script>
+
+<style id="nx-login-match-repair">
+/* ========== Match login UI: dark + terracotta ========== */
+:root{
+  --nx-bg:#0b0d0c;
+  --nx-panel:#161a17;
+  --nx-panel2:#1c221e;
+  --nx-line:#2a332c;
+  --nx-text:#f3efe6;
+  --nx-muted:#a8b0a4;
+  --nx-accent:#e0805f;
+  --nx-accent2:#f0956f;
+  --nx-accent-g:linear-gradient(135deg,#f0956f,#d4684a);
+}
+html,body{background:var(--nx-bg)!important;color:var(--nx-text)!important}
+body.entered{background:var(--nx-bg)!important}
+#backdrop{background:var(--nx-bg)!important;filter:none!important;opacity:1!important}
+#backdrop:before,#backdrop:after{display:none!important}
+
+/* Main layout */
+body.entered .app{background:var(--nx-bg)!important}
+body.entered .main,
+body.entered .sidebar{
+  background:linear-gradient(160deg,#1a201c,#121612)!important;
+  border-color:var(--nx-line)!important;
+  color:var(--nx-text)!important;
+  backdrop-filter:none!important;
+}
+body.entered .topbar{
+  background:#121612ee!important;
+  border-bottom:1px solid var(--nx-line)!important;
+  color:var(--nx-text)!important;
+}
+body.entered .top-title,body.entered .top-sub{color:var(--nx-muted)!important}
+body.entered .iconbtn,body.entered .ghost{
+  background:#222a24!important;color:var(--nx-text)!important;border:1px solid var(--nx-line)!important;
+}
+
+/* Messages */
+body.entered .msg.ai{
+  background:#1a211c!important;border:1px solid #2a342e!important;color:var(--nx-text)!important;
+}
+body.entered .msg.user{
+  background:linear-gradient(135deg,#c96b4a,#a8553a)!important;color:#fff!important;border:0!important;
+}
+body.entered .msg .role{color:var(--nx-accent2)!important}
+body.entered .msg-tools button{color:var(--nx-muted)!important;background:#222a24!important;border-radius:8px!important}
+
+/* Composer */
+body.entered .composer-wrap{
+  background:linear-gradient(0deg,#121612 70%,#121612cc 90%,transparent)!important;
+}
+body.entered .composer{
+  background:#1a211c!important;border:1px solid var(--nx-line)!important;border-radius:18px!important;
+}
+body.entered .composer #prompt{color:var(--nx-text)!important}
+body.entered .composer #prompt::placeholder{color:#7a857c!important}
+body.entered .composer .toolrow button{
+  background:#222a24!important;color:var(--nx-text)!important;border:1px solid var(--nx-line)!important;
+}
+body.entered .composer .toolrow button[aria-pressed="true"],
+body.entered .mode-btn.active{
+  background:#e0805f33!important;color:var(--nx-accent)!important;border-color:#e0805f77!important;
+}
+body.entered .composer #sendBtn,
+body.entered .send{
+  background:var(--nx-accent-g)!important;color:#fff!important;border:0!important;
+  box-shadow:0 6px 16px #d4684a55!important;
+}
+body.entered .composer-foot{color:var(--nx-muted)!important}
+
+/* Sidebar - desktop */
+body.entered .sidebar{
+  background:linear-gradient(180deg,#1a201c,#121612)!important;
+  min-width:280px!important;
+}
+body.entered .sidebar .brand h1,body.entered .sidebar button{color:var(--nx-text)!important}
+body.entered .sidebar button:hover{background:#e0805f22!important}
+
+/* Mobile drawer - wide enough */
+@media (max-width:900px){
+  body.entered #sidebar.sidebar,
+  body.entered .sidebar{
+    position:fixed!important;
+    left:0!important;top:0!important;
+    width:min(92vw,400px)!important;
+    max-width:100vw!important;
+    height:100dvh!important;
+    min-height:100dvh!important;
+    z-index:5000!important;
+    transform:translateX(-105%)!important;
+    transition:transform .28s cubic-bezier(.22,1,.36,1)!important;
+    display:flex!important;
+    border-radius:0 18px 18px 0!important;
+    box-shadow:8px 0 40px #000a!important;
+    padding:16px!important;
+    overflow-y:auto!important;
+  }
+  body.mobile-drawer-open #sidebar.sidebar,
+  body.mobile-drawer-open .sidebar,
+  body.sidebar-open #sidebar.sidebar,
+  body.sidebar-open .sidebar{
+    transform:translateX(0)!important;
+  }
+  #mobileDrawerBackdrop.show{
+    display:block!important;
+    position:fixed!important;inset:0!important;
+    background:#00000099!important;
+    z-index:4990!important;
+  }
+}
+
+/* Settings panel full screen on mobile, login colors */
+#astrionSettings{
+  background:#0b0d0ccc!important;
+}
+#astrionSettings.show{display:flex!important;align-items:stretch!important;justify-content:center!important}
+#astrionSettings .as-settings-panel,
+#astrionSettings .as-panel,
+.as-settings-panel{
+  background:linear-gradient(160deg,#202420,#161a17)!important;
+  border:1px solid var(--nx-line)!important;
+  color:var(--nx-text)!important;
+  border-radius:20px!important;
+}
+@media (max-width:900px){
+  #astrionSettings .as-settings-panel,
+  #astrionSettings .as-panel{
+    width:100vw!important;height:100dvh!important;max-width:100vw!important;
+    border-radius:0!important;margin:0!important;
+  }
+}
+#astrionSettings .as-row,
+#astrionSettings button,
+#astrionSettings .as-section-title{
+  color:var(--nx-text)!important;
+  border-color:var(--nx-line)!important;
+}
+#astrionSettings .as-row:hover{background:#e0805f18!important}
+#asSettingsClose,#astrionSettings [data-close]{
+  background:#222a24!important;color:var(--nx-text)!important;border:1px solid var(--nx-line)!important;
+  min-width:44px!important;min-height:40px!important;
+}
+
+/* Modals & notices */
+.modal-back .modal,
+.extra-modal .extra-box,
+#noticeModal .modal,
+#appearanceModal .modal,
+#settingsModal .modal,
+.nl-card{
+  background:linear-gradient(160deg,#202420,#161a17)!important;
+  border:1px solid var(--nx-line)!important;
+  color:var(--nx-text)!important;
+}
+.modal-top,.extra-head,.modal-actions{
+  background:#161a17f2!important;border-color:var(--nx-line)!important;color:var(--nx-text)!important;
+}
+.modal-top h3,.extra-head h3{color:var(--nx-text)!important}
+.field input,.field select,textarea,.modal input,.modal select{
+  background:#0e120f!important;border:1px solid var(--nx-line)!important;color:var(--nx-text)!important;
+}
+.primary,button.primary{
+  background:var(--nx-accent-g)!important;color:#fff!important;border:0!important;
+  box-shadow:0 8px 20px #d4684a44!important;
+}
+.notice-card,.api-card{
+  background:#1a211c!important;border:1px solid var(--nx-line)!important;color:var(--nx-text)!important;
+}
+
+/* Kill residual light theme overrides that fight login look */
+body.entered .composer-wrap{
+  background:linear-gradient(0deg,#121612 70%,#121612cc 90%,transparent)!important;
+}
+body.nx-light, .nx-light, body.entered.nx-light{
+  --text:var(--nx-text)!important;
+  --muted:var(--nx-muted)!important;
+  --panel:var(--nx-panel)!important;
+  background:var(--nx-bg)!important;color:var(--nx-text)!important;
+}
+</style>
+<script id="nx-repair-runtime">
+(function(){
+  function $(id){return document.getElementById(id)}
+  function hardHide(el){
+    if(!el) return;
+    el.classList.remove('show','open');
+    el.setAttribute('aria-hidden','true');
+    ['display','z-index','opacity','visibility','pointer-events','transform'].forEach(function(k){
+      try{ el.style.removeProperty(k); }catch(_){}
+    });
+  }
+  function hardShow(el){
+    if(!el) return false;
+    el.classList.add('show');
+    el.setAttribute('aria-hidden','false');
+    el.style.display='flex';
+    el.style.zIndex='100060';
+    el.style.opacity='1';
+    el.style.visibility='visible';
+    el.style.pointerEvents='auto';
+    return true;
+  }
+  // Robust dismiss for every close button / backdrop / Escape
+  document.addEventListener('click', function(e){
+    const t = e.target;
+    if(!t || !t.closest) return;
+    const closeBtn = t.closest('[data-close],[data-extra-close],#asSettingsClose,[aria-label*="关闭"],[aria-label*="close"]');
+    if(closeBtn){
+      e.preventDefault();
+      e.stopPropagation();
+      const id = closeBtn.dataset.close || closeBtn.dataset.extraClose;
+      if(id) hardHide(document.getElementById(id));
+      if(closeBtn.id==='asSettingsClose' || closeBtn.closest('#astrionSettings')) hardHide($('astrionSettings'));
+      // also clear any parent modal-back / extra-modal
+      const layer = closeBtn.closest('.modal-back,.extra-modal,#astrionSettings');
+      if(layer) hardHide(layer);
+      return;
+    }
+    // backdrop click
+    if(t.classList && (t.classList.contains('modal-back') || t.classList.contains('extra-modal') || t.id==='astrionSettings')){
+      hardHide(t);
+    }
+  }, true);
+
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape'){
+      document.querySelectorAll('.modal-back.show,.extra-modal.show,#astrionSettings.show,#nxApiPanel.show,.modal-back[style*="flex"]').forEach(hardHide);
+    }
+  });
+
+  // Patch forceShow globally
+  window.forceShow = function(id){ return hardShow($(id)); };
+  const _openAdmin = window.openAdminPanel;
+  window.openAdminPanel = function(){ hardShow($('adminModal')); if(typeof _openAdmin==='function') try{_openAdmin()}catch(_){} };
+  const _openSupport = window.openAdminSupportPanel;
+  window.openAdminSupportPanel = function(){ hardShow($('adminSupportModal')); if(typeof _openSupport==='function') try{_openSupport()}catch(_){} };
+  const _openHuman = window.openHumanSupport;
+  window.openHumanSupport = function(){ hardShow($('humanSupportModal')); if(typeof _openHuman==='function') try{_openHuman()}catch(_){} };
+
+  // Ensure mobile drawer uses body class
+  const menu = $('mobileMenuBtn');
+  if(menu){
+    menu.addEventListener('click', function(){
+      document.body.classList.toggle('mobile-drawer-open');
+      document.body.classList.toggle('sidebar-open');
+      const bd = $('mobileDrawerBackdrop');
+      if(bd) bd.classList.toggle('show', document.body.classList.contains('mobile-drawer-open'));
+    }, true);
+  }
+  const bd = $('mobileDrawerBackdrop');
+  if(bd){
+    bd.addEventListener('click', function(){
+      document.body.classList.remove('mobile-drawer-open','sidebar-open');
+      bd.classList.remove('show');
+    });
+  }
+
+  // Keep setStatus safe if later scripts redefine it
+  if(typeof window.setStatus !== 'function'){
+    window.setStatus = function(t,ok){
+      const ml=$('modelLabel'), bl=$('busyLabel');
+      if(ml && t) ml.textContent = t;
+      if(bl) bl.textContent = ok ? '' : (t||'');
+    };
+  }
+  console.info('[ASTRION repair] login-style UI + dismiss + status guards active');
+})();
+</script>
+
 </body></html>

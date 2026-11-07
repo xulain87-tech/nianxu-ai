@@ -121,7 +121,8 @@ function needsApiKey(api){const u=String(api&&api.url||'');return /bigmodel\.cn|
 function publicAiApis(){return readAiApis().map(a=>({name:a.name,url:a.url,model:a.model,enabled:a.enabled,keySet:Boolean(apiKeyFor(a))}))}
 readAiApis(); // 初始化或迁移服务端的五槽配置
 function aiAnswer(data){
- const answer=data?.choices?.[0]?.message?.content??data?.choices?.[0]?.text??data?.text??data?.result;
+ const msg=data?.choices?.[0]?.message||{};
+ let answer=msg.content??data?.choices?.[0]?.text??data?.text??data?.result??msg.reasoning_content;
  if(typeof answer==='string'&&answer.trim())return answer.trim();
  if(Array.isArray(answer)){const text=answer.map(x=>typeof x==='string'?x:(x?.text||'')).join('');if(text.trim())return text.trim()}
  const reason=data?.choices?.[0]?.finish_reason;
@@ -140,7 +141,7 @@ async function proxyAiChat(messages,temperature=.7,autoFallback=true){
  async function callOne(api,controller){
   const headers={'Content-Type':'application/json','Accept':'application/json','User-Agent':'ASTRION/1.9.1'};
   const apiKey=apiKeyFor(api);if(apiKey)headers.Authorization='Bearer '+apiKey;
-  const response=await fetch(api.url,{method:'POST',headers,body:JSON.stringify({model:api.model,messages,temperature,max_tokens:480}),signal:controller.signal});
+  const response=await fetch(api.url,{method:'POST',headers,body:JSON.stringify({model:api.model,messages,temperature,max_tokens:2048}),signal:controller.signal});
   const raw=await response.text();
   let data;try{data=JSON.parse(raw)}catch{data={text:raw}}
   if(!response.ok){const detail=String(data?.error?.message||data?.message||'').trim().slice(0,180);throw new Error(`${api.name||'AI接口'} HTTP ${response.status}${detail?': '+detail:''}`)}
