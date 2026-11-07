@@ -10,7 +10,7 @@
 *{box-sizing:border-box}html,body{height:100%;margin:0}body{font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);overflow:hidden}
 #backdrop{position:fixed;inset:0;z-index:-3;background:radial-gradient(ellipse at 15% 10%,#34306b 0,transparent 40%),radial-gradient(ellipse at 90% 80%,#124e5c 0,transparent 38%),linear-gradient(135deg,#090d18,#111a2c)}
 #bgVideo{display:none;position:absolute;width:100%;height:100%;object-fit:cover;opacity:.34}#bgOverlay{position:absolute;inset:0;background:linear-gradient(120deg,#080d1966,#10182a55)}
-.app{height:100dvh;min-height:0;display:grid;grid-template-columns:270px minmax(0,1fr);max-width:1600px;margin:auto;padding:14px;gap:14px}
+.app{height:100dvh;min-height:0;display:grid;grid-template-columns:300px minmax(0,1fr);max-width:1600px;margin:auto;padding:14px;gap:14px}
 .sidebar,.main{background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:24px;box-shadow:var(--shadow);min-height:0}
 .sidebar{display:flex;flex-direction:column;padding:20px;gap:18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:43px;height:43px;border-radius:15px;background:linear-gradient(135deg,#9b8cff,#49d9ce);display:grid;place-items:center;color:#101629;font-size:23px;font-weight:900;box-shadow:0 8px 24px #8378ff55}.brand h1{font-size:19px;letter-spacing:.5px;margin:0}.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:1.5px}
 .primary,.ghost,.iconbtn,.send{border:0;cursor:pointer;color:var(--text);transition:.2s}.primary{padding:12px 14px;border-radius:14px;background:linear-gradient(110deg,#8576ff,#4dbecb);font-weight:700;box-shadow:0 8px 24px #6c68ff38}.primary:hover,.send:hover{filter:brightness(1.12);transform:translateY(-1px)}.ghost{padding:11px 13px;border:1px solid var(--line);border-radius:13px;background:#ffffff08;text-align:left}.ghost:hover,.iconbtn:hover{background:#ffffff15}.side-label{font-size:11px;color:var(--muted);letter-spacing:1.4px;text-transform:uppercase}.side-note{margin-top:auto;color:var(--muted);font-size:12px}.status{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:#f0bd65;box-shadow:0 0 12px currentColor}.side-actions{display:grid;gap:9px}
@@ -210,7 +210,8 @@ html.nx-lock{overflow:hidden!important}
 body.nx-light{--bg:#faf9f5;--panel:#f0eee6;--panel2:#ffffff;--line:#1f1e1d1f;--text:#2b2a27;--muted:#6f6c64;--shadow:0 8px 30px #0001}
 body{background:var(--bg)!important;color:var(--text)}
 #backdrop{background:var(--bg)!important}#backdrop::before,#backdrop::after,#bgOverlay{display:none!important}
-.app{max-width:none!important;padding:0!important;gap:0!important;grid-template-columns:260px minmax(0,1fr)!important}
+.app{max-width:none!important;padding:0!important;gap:0!important;grid-template-columns:300px minmax(0,1fr)!important}
+@media (min-width:1500px){.app{grid-template-columns:330px minmax(0,1fr)!important}}
 .sidebar{background:var(--panel)!important;border:0!important;border-right:1px solid var(--line)!important;border-radius:0!important;box-shadow:none!important;animation:none!important}
 .main{background:var(--bg)!important;border:0!important;border-radius:0!important;box-shadow:none!important;animation:none!important}
 .logo{background:var(--accent)!important;color:#fff!important;border-radius:12px!important;box-shadow:none!important;animation:none!important}
@@ -1582,6 +1583,84 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
 }
 </style>
 
+<style id="nx-theme-unify">
+/* ===== 全局主题统一：与登录页同款粉紫蓝渐变（Aurora） ===== */
+:root{
+  --nx-grad:linear-gradient(105deg,#ff6b9d 0%,#c084fc 45%,#60a5fa 100%);
+  --nx-grad-soft:linear-gradient(135deg,#ff6b9d33,#8b5cf633 45%,#5b8dff33);
+  --nx-card:linear-gradient(160deg,rgba(30,20,45,.92),rgba(12,14,28,.95));
+  --nx-line:rgba(255,150,200,.22);
+  --nx-text:#f8f7ff;--nx-muted:#b8b0c8;
+}
+/* 弹窗卡片：登录卡片同款深色毛玻璃 + 渐变描边 */
+.modal-back.show .modal,.extra-modal.show .extra-box,#nxApiPanel .nx-api-sheet,.as-settings-panel{
+  background:var(--nx-card)!important;
+  border:1px solid var(--nx-line)!important;
+  box-shadow:0 28px 90px rgba(0,0,0,.55),0 0 80px rgba(255,107,157,.10),0 0 120px rgba(91,141,255,.08)!important;
+}
+/* 遮罩：深色紫底 */
+.modal-back,.extra-modal,#nxApiPanel .nx-api-mask{background:rgba(7,6,12,.82)!important}
+/* 弹窗标题与文字 */
+.modal h3,.extra-head h3,.ann-header h3,.modal-top h3,.nx-api-top b{color:var(--nx-text)!important}
+.modal p,.hint,.nx-api-hint,.ann-header p,.extra-head small{color:var(--nx-muted)!important}
+/* 顶栏与底部操作条 */
+.modal-top,.modal-actions,.ann-header,.extra-head,.nx-api-top,.nx-api-actions,.announcement-composer{
+  background:transparent!important;border-color:rgba(255,150,200,.14)!important;
+}
+.modal-top{border-bottom:1px solid rgba(255,150,200,.14)!important}
+.modal-actions{background:linear-gradient(180deg,rgba(30,20,45,0),rgba(30,20,45,.9) 40%)!important}
+/* 主按钮：登录按钮同款渐变 */
+.primary,#nxApiPanel .nx-api-actions button.primary,.ann-foot .primary,#publishNotice{
+  background:var(--nx-grad)!important;color:#fff!important;border:0!important;font-weight:700!important;
+  box-shadow:0 12px 32px rgba(255,107,157,.30)!important;
+}
+.primary:hover{filter:brightness(1.1)!important}
+/* 图标/次级按钮 */
+.iconbtn,.ghost,.nx-api-actions button:not(.primary),[data-close],[data-extra-close]{
+  background:rgba(255,255,255,.05)!important;border:1px solid rgba(255,180,220,.16)!important;color:#d4c4e8!important;
+}
+.iconbtn:hover,[data-close]:hover,[data-extra-close]:hover{background:rgba(255,255,255,.10)!important;color:#fff!important}
+/* 输入框：登录输入框同款 */
+.field input,.field select,.modal input[type="text"],.modal input[type="password"],.modal textarea,
+.extra-box input[type="text"],.extra-box input[type="password"],.extra-box textarea,
+#nxApiPanel input[data-k],.nx-api-fields input,.as-settings-panel input,.as-settings-panel textarea{
+  background:rgba(0,0,0,.45)!important;border:1px solid rgba(255,255,255,.12)!important;color:var(--nx-text)!important;
+  border-radius:12px!important;
+}
+.field input:focus,.field select:focus,.modal input:focus,.modal textarea:focus,
+.extra-box input:focus,.extra-box textarea:focus,#nxApiPanel input:focus{
+  border-color:rgba(255,107,157,.55)!important;box-shadow:0 0 0 3px rgba(255,107,157,.18)!important;outline:none!important;
+}
+.field label,.nx-api-fields label,.announcement-composer label{color:#c4b5fd!important}
+/* 公告中心 */
+.ann-mark{background:var(--nx-grad)!important;color:#fff!important;box-shadow:0 10px 26px rgba(255,107,157,.4)!important}
+.ann-box{border-color:var(--nx-line)!important}
+.ann-dismiss{color:#f9a8d4!important}
+.notice-card{background:rgba(255,255,255,.04)!important;border:1px solid rgba(255,150,200,.14)!important}
+#noticeList b,#adminNoticeList b{color:var(--nx-text)!important}
+/* 设置面板 */
+.settings-nav button{color:#c4b5fd!important}
+.settings-nav button.active,.settings-nav button:hover{background:rgba(255,107,157,.14)!important;border-color:rgba(255,107,157,.35)!important;color:#fff!important}
+.settings-hero{background:linear-gradient(120deg,rgba(255,107,157,.10),rgba(139,92,246,.10) 50%,rgba(91,141,255,.10))!important;border:1px solid rgba(255,150,200,.18)!important}
+.settings-hero b{color:var(--nx-text)!important}
+.health-pill{background:rgba(52,211,153,.10)!important;border:1px solid rgba(52,211,153,.25)!important}
+/* 控制台 */
+.announcement-composer,.admin-section{border:1px solid rgba(255,150,200,.14)!important;background:rgba(255,255,255,.03)!important;border-radius:16px}
+.section-kicker{color:#f9a8d4!important}
+.announce-badge{background:linear-gradient(90deg,rgba(255,107,157,.15),rgba(139,92,246,.15))!important;color:#f9a8d4!important;border:1px solid rgba(255,150,200,.2)!important}
+/* 生图 / 创新AI / 外观面板统一 */
+.image-prompt-modal .modal-top,.appearanceModal .modal-top{border-bottom:1px solid rgba(255,150,200,.14)!important}
+.appearanceModal .appearance-option.active{border-color:rgba(255,107,157,.55)!important;box-shadow:0 0 0 3px rgba(255,107,157,.18)!important}
+/* 接口面板（旧深灰） */
+#nxApiPanel .nx-api-row{background:rgba(255,255,255,.04)!important;border:1px solid rgba(255,150,200,.12)!important}
+#nxApiPanel .nx-api-top button{background:rgba(255,255,255,.06)!important}
+.nx-api-index{color:#f9a8d4!important}
+/* 滚动条 */
+.modal::-webkit-scrollbar-thumb,.extra-box::-webkit-scrollbar-thumb,#nxApiPanel .nx-api-sheet::-webkit-scrollbar-thumb{background:rgba(192,132,252,.4)!important}
+/* 标签/勾选 */
+.toggle{color:#c5d0e9!important}
+input[type="checkbox"]{accent-color:#ff6b9d!important}
+</style>
 </head>
 <body>
 <div id="backdrop"><video id="bgVideo" autoplay muted loop playsinline></video><div id="bgOverlay"></div></div>
@@ -1687,7 +1766,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
  <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="发消息或按住说话..."></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 1.1.9 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>外观偏好保存在本机；接口配置由服务器保存并供全站共享。读取配置不会返回 Key。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 1.2.0 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>外观偏好保存在本机；接口配置由服务器保存并供全站共享。读取配置不会返回 Key。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
  <div class="nx-profile"><div class="av">A</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>全站共享接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
  <p class="settings-page-note">具备配置权限的账号可调整服务器接口；AI 调用经服务端代理，配置读取不会回传 Key。</p>
  <div id="apiList" hidden></div>
@@ -1698,7 +1777,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
  </div>
  <div class="hint">提示：Groq 主槽只读取服务端环境变量；备用槽密钥由授权账号提交后保存在服务器，不会通过读取接口返回。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION1.1.9</strong><span>Build 2026.11 · ASTRION1.1.9</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、控制台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION 1.2.0</strong><span>Build 2026.11 · ASTRION 1.2.0</span><p>本次更新：修复 AI 消息卡在“输入中”、弹窗关闭失效问题；侧栏加宽；设置/公告/控制台全面换用登录页同款粉紫蓝主题；清理新旧混合代码。历史更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、控制台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 允许轻松幽默回应</label>
@@ -1733,7 +1812,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION1.1.9" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION 1.2.0" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -2152,7 +2231,7 @@ body{background:#000!important;color:var(--text);font-family:system-ui,-apple-sy
 body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 @media (max-width:860px){
  .app{grid-template-columns:1fr}
- .sidebar{position:fixed;inset:0 auto 0 0;width:min(300px,86vw);z-index:50;transform:translateX(-105%);transition:transform .25s ease-out;background:#000!important}
+ .sidebar{position:fixed;inset:0 auto 0 0;width:min(84vw,340px);z-index:50;transform:translateX(-105%);transition:transform .25s ease-out;background:#000!important}
  body.mobile-drawer-open .sidebar{transform:translateX(0)}
  .mobile-drawer-backdrop{background:rgba(0,0,0,.6)}
 }
@@ -2283,7 +2362,7 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
         <h2>把灵感，<br/><em>变成答案。</em></h2>
         <p>与你一起探索、创作与解决问题。<br/>每段对话，都从一个好奇开始。</p>
       </div>
-      <div class="nx-brand-footer"><span class="nx-live-dot"></span><span>你的 AI 工作空间已准备就绪</span><span class="nx-brand-foot-mark">ASTRION · 1.1.9</span></div>
+      <div class="nx-brand-footer"><span class="nx-live-dot"></span><span>你的 AI 工作空间已准备就绪</span><span class="nx-brand-foot-mark">ASTRION · 1.2.0</span></div>
     </section>
     <section class="nx-login-card" aria-labelledby="nxLoginTitle">
       <div class="nx-auth-mobile-mark"><img src="/logo.png" alt=""/><span>ASTRION</span></div>
@@ -2373,7 +2452,7 @@ function addMessage(role,text,err=false,images=[]){
 function renderFiles(){$("attachments").innerHTML="";files.forEach((f,i)=>{const c=document.createElement("span");c.className="file-chip";c.textContent=(f.name.length>22?f.name.slice(0,19)+"…":f.name);const b=document.createElement("button");b.textContent="×";b.onclick=()=>{files.splice(i,1);renderFiles()};c.append(b);$("attachments").append(c)})}
 function setBusy(v){busy=v;$("sendBtn").disabled=v||(!$("prompt").value.trim()&&!files.length);$("busyLabel").textContent=v?"正在连接…":""}
 $("prompt").addEventListener("input",()=>{const p=$("prompt");p.style.height="auto";p.style.height=Math.min(p.scrollHeight,170)+"px";$("sendBtn").disabled=busy||(!p.value.trim()&&!files.length)});
-$("prompt").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}});
+$("prompt").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing&&e.keyCode!==229){e.preventDefault();send()}});
 $("sendBtn").onclick=send;
 $("attachBtn").onclick=()=>$("fileInput").click();
 $("fileInput").onchange=async e=>{for(const f of e.target.files){if(files.length>=5)break;try{files.push(await processFile(f))}catch(err){addMessage("ai","文件读取失败："+f.name+"（"+err.message+"）",true)}}renderFiles();$("sendBtn").disabled=busy||(!$("prompt").value.trim()&&!files.length);e.target.value=""};
@@ -2424,32 +2503,46 @@ async function send(){
  const preview=attached.filter(f=>f.kind==="image").map(f=>f.data);
  addMessage("user",text||"请查看附件。",false,preview);
  const pending=addMessage("ai",useSearch?"正在搜索网页并整理答案……":"输入中……");pending.parentElement.classList.add("typing");
- const prefs=conversationPrefs(),userContent=buildContent(text,attached);
- const apiHistory=[...history.slice(useExpert?-20:-12),{role:"user",content:userContent}];
- let answer=null,lastError=null,used=useSearch?"联网搜索":"服务器接口",searchResults=[];const controller=new AbortController();aborter=controller;const timer=setTimeout(()=>controller.abort(),useSearch?55000:useExpert?30000:20000);
- setStatus(useSearch?"正在联网搜索并整理来源…":useExpert?"专家模式思考中…":"正在连接 AI…");
- try{const result=useSearch?await callServerSearch(text,useExpert,controller.signal,prefs):await callServerChat(apiHistory,controller.signal,useExpert,prefs);answer=result.answer;used=result.used||used;searchResults=result.results||[]}catch(e){lastError=e}finally{clearTimeout(timer);aborter=null}
- if(answer){pending.parentElement.classList.remove("typing");pending.textContent=answer;const copyButton=pending.parentElement.querySelector(".msg-tools button");if(copyButton)copyButton.onclick=()=>navigator.clipboard?.writeText(answer);addSearchSources(pending,searchResults);history.push({role:"user",content:userContent},{role:"assistant",content:answer});if(history.length>20)history=history.slice(-20);setStatus("已连接："+used,true);$("modelLabel").textContent=(useSearch?"联网搜索 · ":useExpert?"专家模式 · ":"服务器接口 · ")+used;}
- else{pending.parentElement.classList.remove("typing");pending.textContent="暂时繁忙："+(lastError?.message||"未知错误")+(useSearch?"。请检查网络后重试。":"。请稍后再试。");pending.parentElement.classList.add("error");setStatus(useSearch?"搜索暂不可用":"服务器接口暂不可用");}
- aborter=null;setBusy(false);
+ let answer=null,lastError=null,used=useSearch?"联网搜索":"服务器接口",searchResults=[];
+ try{
+  const prefs=conversationPrefs(),userContent=buildContent(text,attached);
+  const apiHistory=[...history.slice(useExpert?-20:-12),{role:"user",content:userContent}];
+  const controller=new AbortController();aborter=controller;const timer=setTimeout(()=>controller.abort(),useSearch?60000:useExpert?45000:35000);
+  setStatus(useSearch?"正在联网搜索并整理来源…":useExpert?"专家模式思考中…":"正在连接 AI…");
+  try{const result=useSearch?await callServerSearch(text,useExpert,controller.signal,prefs):await callServerChat(apiHistory,controller.signal,useExpert,prefs);answer=result.answer;used=result.used||used;searchResults=result.results||[]}catch(e){lastError=e}finally{clearTimeout(timer);aborter=null}
+  if(answer){pending.parentElement.classList.remove("typing");pending.textContent=answer;const copyButton=pending.parentElement.querySelector(".msg-tools button");if(copyButton)copyButton.onclick=()=>navigator.clipboard?.writeText(answer);addSearchSources(pending,searchResults);history.push({role:"user",content:userContent},{role:"assistant",content:answer});if(history.length>20)history=history.slice(-20);setStatus("已连接："+used,true);$("modelLabel").textContent=(useSearch?"联网搜索 · ":useExpert?"专家模式 · ":"服务器接口 · ")+used;}
+  else{pending.parentElement.classList.remove("typing");pending.textContent="暂时繁忙："+(lastError?.message||"未知错误")+(useSearch?"。请检查网络后重试。":"。请稍后再试。");pending.parentElement.classList.add("error");setStatus(useSearch?"搜索暂不可用":"服务器接口暂不可用");}
+ }catch(fatal){
+  try{pending.parentElement.classList.remove("typing");pending.textContent="出错了："+(fatal?.message||"未知错误，请重试");pending.parentElement.classList.add("error")}catch(_){}
+  setStatus("请求出错，请重试");
+ }finally{
+  aborter=null;setBusy(false);
+  try{pending.parentElement.classList.remove("typing")}catch(_){}
+ }
 }
-function openModal(id){$(id).classList.add("show")}
+function openModal(id){closeMobileDrawer();$(id).classList.add("show")}
+window.closeLayer=function(el){
+ if(!el)return;el.classList.remove("show");
+ ["display","z-index","opacity","visibility","pointer-events"].forEach(k=>el.style.removeProperty(k));
+};
 function closeMobileDrawer(){$("mobileDrawerBackdrop")?.classList.remove("show");document.body.classList.remove("mobile-drawer-open")}function openMobileDrawer(){document.body.classList.add("mobile-drawer-open");$("mobileDrawerBackdrop")?.classList.add("show")}$("mobileMenuBtn").onclick=()=>document.body.classList.contains("mobile-drawer-open")?closeMobileDrawer():openMobileDrawer();$("mobileDrawerBackdrop").onclick=closeMobileDrawer;if($("sideCloseBtn"))$("sideCloseBtn").onclick=closeMobileDrawer;document.querySelectorAll(".sidebar button").forEach(b=>b.addEventListener("click",closeMobileDrawer));
 async function switchLoginAccount(adminMode=false){const message=adminMode?"请重新验证账号后继续。是否切换登录账号？":"退出当前账号并切换到其他账号？";if(!confirm(message))return;try{await apiRequest("/api/logout",{method:"POST",body:JSON.stringify({})})}catch(_){}currentRole="guest";currentUserId="";document.body.classList.remove("entered");$("entryGate").style.display="flex";$("entryId").value="";$("entryPassword").value="";$("entryError").textContent="请输入账号和密码后登录。";syncAdminUi();closeMobileDrawer();setTimeout(()=>$("entryId").focus(),80)}
 if($("switchAccountBtn"))$("switchAccountBtn").onclick=()=>switchLoginAccount(false);$("mobileWorkTab").onclick=()=>{$("prompt").focus();window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})};$("mobileCreateTab").onclick=()=>openImageGenerator();$("mobileWriteTab").onclick=()=>{const p=$("prompt");if(!p)return;p.value="请帮我写一篇文章，主题是：";p.focus();const len=p.value.length;p.setSelectionRange(len,len);p.dispatchEvent(new Event("input",{bubbles:true}));};$("mobileAnswerTab").onclick=()=>{expertMode=true;save("nx_expert_mode",true);syncModeButtons();const p=$("prompt");if(p){p.value="请帮我解答这个问题：";p.focus();const len=p.value.length;p.setSelectionRange(len,len);p.dispatchEvent(new Event("input",{bubbles:true}));}};
-document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>$(b.dataset.close).classList.remove("show"));
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>window.closeLayer($(b.dataset.close)));
+document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>window.closeLayer($(b.dataset.extraClose)));
 document.querySelectorAll(".modal-back").forEach(layer=>{
- layer.addEventListener("click",e=>{if(e.target===layer)layer.classList.remove("show")});
+ layer.addEventListener("click",e=>{if(e.target===layer)window.closeLayer(layer)});
 });
 document.addEventListener("keydown",e=>{
- if(e.key==="Escape")document.querySelectorAll(".modal-back.show,.extra-modal.show").forEach(layer=>layer.classList.remove("show"));
+ if(e.key==="Escape")document.querySelectorAll(".modal-back.show,.extra-modal.show").forEach(layer=>window.closeLayer(layer));
+ if(e.key==="Escape"){$("nxApiPanel")?.classList.remove("show");const as=$("astrionSettings");if(as){as.classList.remove("show");as.setAttribute("aria-hidden","true")}}
 });
-document.querySelectorAll(".extra-modal").forEach(layer=>layer.addEventListener("click",e=>{if(e.target===layer)layer.classList.remove("show")}));
+document.querySelectorAll(".extra-modal").forEach(layer=>layer.addEventListener("click",e=>{if(e.target===layer)window.closeLayer(layer)}));
 if($("creatorBtnSide"))$("creatorBtnSide").onclick=()=>{$("creatorModal").classList.add("show");if(typeof view==="function")view("home");if(typeof renderHome==="function")renderHome();if(typeof load==="function")load(false)};
 if($("noticeButtonSide"))$("noticeButtonSide").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
 if($("humanSupportBtnSide"))$("humanSupportBtnSide").onclick=()=>{if(currentRole==="admin"){if(typeof openAdminSupportPanel==="function")openAdminSupportPanel();return}openModal("humanSupportModal");if(typeof refreshMySupport==="function")refreshMySupport()};
 if($("clearChatSide"))$("clearChatSide").onclick=()=>{if(confirm("确定清空当前对话？")){const chat=$("chat");if(chat){chat.innerHTML="";const w=document.createElement("div");w.className="welcome";w.id="welcome";w.innerHTML='<div class="orb" style="background-image:url(/logo.png)"></div><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div>';chat.append(w);setStatus("对话已清空",true)}}};
-if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION1.1.9\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 控制台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
+if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION 1.2.0\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 控制台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
 (function(){
   const openApp=()=>openModal("appearanceModal");
   if($("openAppearance")) $("openAppearance").onclick=openApp;
@@ -2488,7 +2581,7 @@ async function generateImage(){
 $("generateImageBtn").onclick=$("mobileGenerateImage").onclick=openImageGenerator;
 $("newChat").onclick=$("clearChat").onclick=()=>{if(busy){if(aborter)aborter.abort()}history=[];for(const u of generatedImageUrls)URL.revokeObjectURL(u);generatedImageUrls.clear();$("chat").innerHTML='<div class="welcome" id="welcome"><div class="orb" style="background-image:url(/logo.png)"></div><h2>新对话已开启</h2><p>继续把你的想法交给ASTRION。</p></div>';setBusy(false);setStatus("等待发送消息")};
 $("exportChat").onclick=()=>{const text=[...$("chat").querySelectorAll(".msg")].map(m=>(m.querySelector(".role")?.textContent||"")+"\n"+(m.children[1]?.textContent||"")).join("\n\n");const blob=new Blob([text],{type:"text/plain;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="ASTRION聊天记录.txt";a.click();URL.revokeObjectURL(a.href)};
-document.querySelectorAll(".suggestions button").forEach(b=>b.onclick=()=>{$("prompt").value=b.textContent;$("sendBtn").disabled=false;send()});
+// 建议按钮由 #nx-suggestions-fix 统一处理（capture 委托），此处不再重复绑定，避免双重触发 send
 $("bgFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;if(bgObjectUrl)URL.revokeObjectURL(bgObjectUrl);bgObjectUrl=URL.createObjectURL(f);if(f.type.startsWith("video/")){setBgVideo(bgObjectUrl)}else{setBgImage(bgObjectUrl)}};
 function setBgImage(url){$("bgVideo").pause();$("bgVideo").style.display="none";$("backdrop").style.background=`center/cover no-repeat fixed url("${url}")`;}
 function setBgVideo(url){$("backdrop").style.background="#090d18";$("bgVideo").src=url;$("bgVideo").style.display="block";$("bgVideo").play().catch(()=>{});}
@@ -2600,20 +2693,19 @@ async function enterApp(){
 }
 // === 旧登录事件绑定已移除，由页面底部独立登录脚本负责 ===
 // enterBtn / showRegisterBtn / registerBtn 等由 window.__nxLogin / __nxRegister 处理
-function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();$("adminModal").classList.add("show")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");$("adminSupportModal").classList.add("show");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};
+function openAdminPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminSupportModal").classList.remove("show");refreshNotices("adminNoticeList",true);refreshUsers();openModal("adminModal")}function openAdminSupportPanel(){if(currentRole!=="admin"){switchLoginAccount(true);return}$("adminModal").classList.remove("show");openModal("adminSupportModal");refreshSupportTickets()}$("adminButton").onclick=$("adminDrawerButton").onclick=openAdminPanel;$("adminSupportButton").onclick=openAdminSupportPanel;$("humanSupportBtn").onclick=()=>{if(currentRole==="admin"){openAdminSupportPanel();return}openModal("humanSupportModal");refreshMySupport()};
 function openApiConfigPanel(){
   const sm=$("settingsModal");
   if(!sm){alert("接口面板不可用");return;}
-  sm.style.display="flex";
+  closeMobileDrawer();
   sm.classList.add("show");
-  sm.style.pointerEvents="auto";
   if(typeof switchSettingsPane==="function")try{switchSettingsPane("api");}catch(_){}
   if(typeof renderApiList==="function")try{renderApiList();}catch(_){}
   if(typeof loadApis==="function")try{loadApis();}catch(_){}
 }
 
 if($("apiConfigSideBtn"))$("apiConfigSideBtn").onclick=()=>openApiConfigPanel();
-$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return alert("当前账号无权配置接口");openApiConfigPanel();const sm=$("settingsModal");if(!sm)return alert("设置面板缺失");sm.style.display="flex";sm.classList.add("show");sm.style.pointerEvents="auto";const tab=$("apiSettingsTab");if(tab){document.querySelectorAll(".settings-nav button").forEach(b=>b.classList.remove("active"));tab.classList.add("active");if(typeof switchSettingsPane==="function")switchSettingsPane("api");else{document.querySelectorAll("[data-settings-pane]").forEach(p=>p.classList.add("hidden"));const pane=document.querySelector('[data-settings-pane="api"]')||document.querySelector("#apiList")?.closest(".settings-pane");if(pane)pane.classList.remove("hidden");}}};;
+$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return alert("当前账号无权配置接口");openApiConfigPanel();const tab=$("apiSettingsTab");if(tab){document.querySelectorAll(".settings-nav button").forEach(b=>b.classList.remove("active"));tab.classList.add("active");if(typeof switchSettingsPane==="function")switchSettingsPane("api");else{document.querySelectorAll("[data-settings-pane]").forEach(p=>p.classList.add("hidden"));const pane=document.querySelector('[data-settings-pane="api"]')||document.querySelector("#apiList")?.closest(".settings-pane");if(pane)pane.classList.remove("hidden");}}};
 document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dataset.extraClose).classList.remove("show"));
 $("refreshUsers").onclick=refreshUsers;
 $("publishNotice").onclick=async()=>{const title=$("noticeTitle").value.trim(),content=$("noticeContent").value.trim();if(!title||!content){alert("请填写公告标题和内容");return}
@@ -2677,7 +2769,7 @@ document.getElementById('nxSwitch').onclick=()=>{m.classList.remove('show');swit
 </script>
 <script>
 (function(){
-document.addEventListener('click',e=>{const c=e.target.closest&&e.target.closest('[data-close],[data-extra-close]');if(!c)return;const id=c.dataset.close||c.dataset.extraClose,el=id&&document.getElementById(id);if(el)el.classList.remove('show')},true);
+document.addEventListener('click',e=>{const c=e.target.closest&&e.target.closest('[data-close],[data-extra-close]');if(!c)return;const id=c.dataset.close||c.dataset.extraClose,el=id&&document.getElementById(id);if(el)(window.closeLayer||(t=>t.classList.remove('show')))(el)},true);
 })();
 </script>
 <script>
@@ -3044,7 +3136,7 @@ try{
         if(typeof window.openApiConfigPanel === "function") window.openApiConfigPanel();
         else {
           var sm = $("settingsModal");
-          if(sm){ sm.style.display="flex"; sm.classList.add("show"); }
+          if(sm) sm.classList.add("show");
         }
         setTimeout(closeDrawer, 80);
         return;
@@ -3088,7 +3180,7 @@ try{
         return;
       }
       if(id === "versionInfoBtn"){
-        alert("ASTRION1.1.9\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
+        alert("ASTRION 1.2.0\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
         setTimeout(closeDrawer, 80);
         return;
       }
@@ -3224,7 +3316,8 @@ try{
 `;
     // insert home at top of messages area parent
     const parent=host.parentElement||document.body;
-    parent.insertBefore(wrap.firstElementChild, host);
+    const first=wrap.firstElementChild;
+    if(first) parent.insertBefore(first, host); // 模板为空时不要插入 null（旧模板残留，会抛 TypeError）
     bind();showHome();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);
@@ -3256,7 +3349,7 @@ try{
        <label>API Endpoint<input data-k="url" value="${esc(a.url||'')}" placeholder="https://服务商/v1/chat/completions" ${ro}></label>
        <label>模型<input data-k="model" value="${esc(a.model||'')}" placeholder="模型名称" ${ro}></label>
        <label class="nx-api-key-label">${fixed?'Groq Key（服务端环境变量）':'服务端 API Key'} <span>${fixed?(a.keySet?'环境变量已配置':'未检测到 GROQ_API_KEY'):(a.keySet?'已配置 · 留空保留':'提交后保存在服务器')}</span><input type="password" data-k="key" autocomplete="new-password" placeholder="${fixed?'由服务端环境变量配置':a.keySet?'输入新 Key 以替换':'粘贴服务商 Key'}" ${fixed?'disabled':''}></label></div>
-       <div class="nx-api-row-foot"><small>${fixed?'首槽固定为智谱 GLM-4.7-Flash':'此槽保存后对全站用户共享'}</small><button type="button" class="nx-api-clear-key" ${fixed?'hidden':''}>清除已保存 Key</button></div>`;
+       <div class="nx-api-row-foot"><small>${fixed?'首槽固定为 Groq openai/gpt-oss-120b':'此槽保存后对全站用户共享'}</small><button type="button" class="nx-api-clear-key" ${fixed?'hidden':''}>清除已保存 Key</button></div>`;
       row._api=a;row.querySelector('[data-k="enabled"]').addEventListener('change',e=>{a.enabled=e.target.checked});
       row.querySelectorAll('input[data-k]').forEach(input=>input.addEventListener('input',()=>{const k=input.dataset.k;if(k==='key'){a.key=input.value;a.clearKey=false}else if(k!=='enabled')a[k]=input.value}));
       row.querySelector('.nx-api-clear-key').addEventListener('click',()=>{a.key='';a.clearKey=true;row.querySelector('[data-k="key"]').value='';row.querySelector('.nx-api-key-label span').textContent='已标记清除（部署环境变量需在服务器管理）'});
@@ -3362,7 +3455,7 @@ try{
       <button type="button" class="as-row" id="asSwitchRow"><span class="as-ico c-gray">⇄</span><span class="as-lab">切换账号</span><span class="as-right">›</span></button>
       <button type="button" class="as-row danger" id="asLogoutRow"><span class="as-ico c-red">→</span><span class="as-lab">退出登录</span><span class="as-right">›</span></button>
     </div>
-    <div class="as-ver">Version: 1.1.9 · ASTRION</div>
+    <div class="as-ver">Version: 1.2.0 · ASTRION</div>
   </div>
 </div>
 
@@ -3556,12 +3649,10 @@ try{
   function $(id){return document.getElementById(id)}
   function forceShow(id){
     const el=$(id); if(!el) return false;
+    // 只用 class 控制显示；绝不写内联样式，否则关闭按钮(remove('show'))无法关掉弹窗
+    document.body.classList.remove('mobile-drawer-open');
+    document.getElementById('mobileDrawerBackdrop')?.classList.remove('show');
     el.classList.add('show');
-    el.style.display='flex';
-    el.style.zIndex='100060';
-    el.style.opacity='1';
-    el.style.visibility='visible';
-    el.style.pointerEvents='auto';
     return true;
   }
   window.openAdminPanel=function(){
