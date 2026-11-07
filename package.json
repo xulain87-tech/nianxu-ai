@@ -1,10 +1,11 @@
 {
   "name": "astrion",
-  "version": "1.0",
+  "version": "1.1.7",
   "private": true,
   "description": "ASTRION admin backend",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "node tests/smoke.js"
   },
   "engines": {
     "node": ">=18"

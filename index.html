@@ -56,7 +56,7 @@ body{background:transparent}
 .logo{animation:logoPulse 4s ease-in-out infinite}
 .primary,.send{transition:transform .22s,filter .22s,box-shadow .22s}
 .primary:hover,.send:hover{box-shadow:0 0 24px #8b7cff66}
-@keyframes ambientDrift{from{transform:translate3d(-2%,1%,0) rotate(-4deg) scale(.96)}to{transform:translate3d(3%,-2%,0) rotate(5deg) scale(1.1.28)}}
+@keyframes ambientDrift{from{transform:translate3d(-2%,1%,0) rotate(-4deg) scale(.96)}to{transform:translate3d(3%,-2%,0) rotate(5deg) scale(1.12)}}
 @keyframes messageIn{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes orbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @keyframes orbGlow{from{box-shadow:0 10px 28px #827aff44}to{box-shadow:0 14px 42px #49d9ce66}}
@@ -125,7 +125,7 @@ body{background:transparent}
 /* 轻量 UI：保留深色渐变和紫青强调色，移除高耗能模糊与大阴影 */
 .sidebar,.main{backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:0 8px 28px #0004;border-radius:18px}
 #backdrop{background:linear-gradient(135deg,#0a0f1d,#121a2b)}
-.primary,.send{box-shadow:none}.primary:hover,.send:hover{transform:none;filter:brightness(1.1.26)}
+.primary,.send{box-shadow:none}.primary:hover,.send:hover{transform:none;filter:brightness(1.1)}
 .modal-back,.extra-modal{backdrop-filter:none;-webkit-backdrop-filter:none;background:#050914f2}.modal-top{backdrop-filter:none;-webkit-backdrop-filter:none}
 .msg,.api-card,.notice-card{box-shadow:none}.settings-hero{background:#ffffff05}.msg.typing{opacity:.82}.msg.typing div:last-child::after{content:"";display:inline-block;width:18px;height:4px;margin-left:6px;border-radius:9px;background:linear-gradient(90deg,#9b8cff,#56e0d0);animation:typingPulse 1s ease-in-out infinite alternate}@keyframes typingPulse{from{opacity:.35;transform:scaleX(.65)}to{opacity:1;transform:scaleX(1)}}
 @media(max-width:760px){
@@ -305,7 +305,7 @@ body{background:radial-gradient(900px 500px at 85% -10%,#e0805f14,transparent 60
 .toolrow button,.mode-btn{border-radius:999px!important;transition:background .2s,color .2s,transform .2s}
 .mode-btn.active{background:#e0805f26!important;color:var(--accent)!important;border-color:#e0805f77!important}
 .send{width:42px!important;height:42px!important;border-radius:50%!important;background:var(--accent-g)!important;box-shadow:0 6px 16px #d4684a55!important;transition:transform .2s!important}
-.send:hover:not(:disabled){transform:scale(1.1.28)}
+.send:hover:not(:disabled){transform:scale(1.12)}
 .send:disabled{background:var(--panel)!important;box-shadow:none!important}
 #chat::-webkit-scrollbar{width:8px}#chat::-webkit-scrollbar-thumb{background:#ffffff26;border-radius:8px;border:0}#chat::-webkit-scrollbar-track{background:transparent}
 :is(#settingsModal,#appearanceModal,#imagePromptModal,#humanSupportModal,#noticeModal,#adminModal,#adminSupportModal) :is(.modal,.extra-box){background:var(--panel)!important;border:1px solid var(--line)!important;box-shadow:0 30px 80px #000a!important}
@@ -636,7 +636,7 @@ body.mobile-drawer-open .sidebar .menu-item{
 
 
 <style id="nx-login-premium">
-/* ===== ASTRION1.1.2.1 绚丽多彩登录 ===== */
+/* ===== ASTRION1.1.7 绚丽多彩登录 ===== */
 #entryGate{
   position:fixed!important;inset:0!important;z-index:99999!important;
   display:flex!important;align-items:center;justify-content:center;
@@ -657,7 +657,7 @@ body.entered #entryGate *{
 .nx-orb-c{width:36vmax;height:36vmax;left:35%;top:45%;background:radial-gradient(circle,#a855f7aa,transparent 70%);opacity:.55;animation:nxOrbC 12s ease-in-out infinite alternate}
 .nx-grid{position:absolute;inset:0;opacity:.06;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:42px 42px;mask-image:radial-gradient(ellipse at center,black 15%,transparent 72%)}
 @keyframes nxOrbA{from{transform:translate(0,0) scale(1)}to{transform:translate(8%,5%) scale(1.1)}}
-@keyframes nxOrbB{from{transform:translate(0,0) scale(1)}to{transform:translate(-6%,-4%) scale(1.1.28)}}
+@keyframes nxOrbB{from{transform:translate(0,0) scale(1)}to{transform:translate(-6%,-4%) scale(1.12)}}
 @keyframes nxOrbC{from{transform:translate(-50%,-50%) scale(1)}to{transform:translate(-35%,-55%) scale(1.15)}}
 
 .nx-login-card{
@@ -701,7 +701,7 @@ body.entered #entryGate *{
 .nx-login-logo span{font-size:30px;font-weight:800;color:#fff;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.25)}
 @keyframes nxLogoPulse{
   0%,100%{box-shadow:0 14px 36px rgba(255,107,157,.4),0 0 0 1px rgba(255,255,255,.2) inset;transform:scale(1)}
-  50%{box-shadow:0 16px 44px rgba(96,165,250,.45),0 0 0 1px rgba(255,255,255,.25) inset;transform:scale(1.1.23)}
+  50%{box-shadow:0 16px 44px rgba(96,165,250,.45),0 0 0 1px rgba(255,255,255,.25) inset;transform:scale(1.12)}
 }
 
 .nx-login-title{
@@ -751,7 +751,7 @@ body.entered #entryGate *{
   background-size:180% 100%;
   box-shadow:0 12px 32px rgba(255,107,157,.35);
 }
-.nx-btn-primary:hover{filter:brightness(1.1.28);background-position:100% 0}
+.nx-btn-primary:hover{filter:brightness(1.1);background-position:100% 0}
 .nx-btn-ghost{
   color:#d4c4e8;background:rgba(255,255,255,.04);
   border:1px solid rgba(255,180,220,.15)!important;
@@ -782,7 +782,7 @@ body.entered #entryGate *{
 
 
 <style id="settings-admin-allow">
-/* 顶部入口仍隐藏，但管理后台可打开接口配置 */
+/* 顶部入口仍隐藏，但控制台可打开接口配置 */
 #settingsModal.show{
   display:flex!important;
   pointer-events:auto!important;
@@ -1255,9 +1255,6 @@ body.entered #welcome .orb {
   font-size:15px!important; color:#aaa!important; font-weight:400!important;
   margin:0 0 28px!important;
 }
-#entryGate h1::before, #entryGate .login-kicker {
-  content:"登录以解锁更多功能";
-}
 /* 隐藏旧表单标签文字可保留输入 */
 #entryGate label { color:#666!important; font-size:12px!important; text-align:left!important; display:block!important; }
 #entryGate input[type=text], #entryGate input[type=password], #entryGate input:not([type]) {
@@ -1544,7 +1541,7 @@ body.entered #welcome .orb {
 #dolaHome{display:none!important}
 #welcome h2{font-size:1.2rem!important}
 
-/* 非管理员隐藏管理入口（JS 再加固） */
+/* 非客服隐藏管理入口（JS 再加固） */
 body:not(.role-admin) #adminButton,
 body:not(.role-admin) #adminDrawerButton,
 body:not(.role-admin) #apiConfigSideBtn,
@@ -1601,7 +1598,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
       <button type="button" class="dola-side-item" id="generateImageBtn"><span class="ico">🖼</span><span>创意生图</span></button>
       <button type="button" class="dola-side-item" id="noticeButtonSide"><span class="ico">📢</span><span>公告</span></button>
       <button type="button" class="dola-side-item" id="humanSupportBtnSide"><span class="ico">💬</span><span>转人工客服</span></button>
-      <button type="button" class="dola-side-item" id="adminDrawerButton"><span class="ico">▣</span><span>管理后台</span></button>
+      <button type="button" class="dola-side-item" id="adminDrawerButton"><span class="ico">▣</span><span>控制台</span></button>
       <button type="button" class="dola-side-item" id="apiConfigSideBtn"><span class="ico">🔌</span><span>接口设置</span></button>
     </div>
   </div>
@@ -1634,7 +1631,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
   <div id="hiddenTopTriggers" style="position:absolute;width:0;height:0;overflow:hidden;opacity:0;pointer-events:none">
     <button type="button" id="creatorBtn" aria-hidden="true">创新AI</button>
     <button type="button" id="humanSupportBtn" aria-hidden="true">转人工</button>
-    <button type="button" id="adminButton" aria-hidden="true">管理</button>
+    <button type="button" id="adminButton" aria-hidden="true">控制台</button>
     <button type="button" id="clearChat" aria-hidden="true">清空</button>
     <button type="button" id="mobileAppearance" aria-hidden="true">外观</button>
   </div>
@@ -1656,10 +1653,10 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
 <div class="modal-back" id="humanSupportModal"><div class="modal support-modal">
  <div class="modal-top"><h3>转人工客服</h3><button class="iconbtn" type="button" data-close="humanSupportModal">关闭</button></div>
  <div class="support-modal-body" id="supportModalBody">
- <p>写下你需要帮助的内容，管理员会在后台看到并回复。请勿发送密码、验证码或其他敏感信息。</p>
+ <p>写下你需要帮助的内容，客服团队会查看并回复。请勿发送密码、验证码或其他敏感信息。</p>
  <div class="support-status-line"><span id="supportTicketState">尚未提交人工请求</span><button class="iconbtn" id="refreshMySupport" type="button">刷新回复</button></div>
  <div class="support-thread" id="supportThread" aria-live="polite">提交消息后，这里会显示客服对话。</div>
- <div class="field support-compose"><label for="supportMessageInput">发给管理员</label><textarea id="supportMessageInput" maxlength="2000" rows="3" placeholder="请简要描述你遇到的问题（最多 2000 字）"></textarea><small class="hint" id="supportMessageCount">0 / 2000</small></div>
+ <div class="field support-compose"><label for="supportMessageInput">发给客服团队</label><textarea id="supportMessageInput" maxlength="2000" rows="3" placeholder="请简要描述你遇到的问题（最多 2000 字）"></textarea><small class="hint" id="supportMessageCount">0 / 2000</small></div>
  </div>
  <div class="modal-actions"><button class="ghost" type="button" data-close="humanSupportModal">取消</button><button class="primary" id="sendSupportMessage" type="button">发送并转人工</button></div>
 </div></div>
@@ -1690,9 +1687,9 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
  <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="发消息或按住说话..."></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 1.1.2 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 1.1.7 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
  <div class="nx-profile"><div class="av">A</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>服务器接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
- <p class="settings-page-note">管理员可配置服务器接口；普通用户只通过服务器代理使用 AI，接口地址和 API Key 不会发送到浏览器。</p>
+ <p class="settings-page-note">具备配置权限的账号可调整服务器接口；AI 调用经服务端代理，接口地址和密钥不会发送到浏览器。</p>
  <div id="apiList"></div>
  <div class="api-card" id="apiBackupPanel">
   <div class="api-head"><span>后台接口配置文件</span><span style="color:#9ba8c4;font-size:11px">api-config.json</span></div>
@@ -1701,7 +1698,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
  </div>
  <div class="hint">提示：API Key 会保存在当前浏览器的 localStorage 中。不要在公共设备上保存密钥。浏览器直连第三方 API 可能遇到 CORS 限制；最稳妥的正式部署方式是通过自己的后端代理转发请求。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION1.1.2.1</strong><span>Build 2026.11 · ASTRION1.1.2.1</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、管理后台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION1.1.7</strong><span>Build 2026.11 · ASTRION1.1.7</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、控制台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 开启互怼强度匹配</label>
@@ -1713,7 +1710,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
    <small class="hint feature-privacy-note">互怼强度只影响正常聊天语气，不会触发内容审核或账号封禁。文字、搜索和生图描述会按对应服务流程发送给已配置的 AI 服务。</small>
   </section>
  </div>
- <section class="info-card admin-hint" id="adminHint"><small>SERVICE & ACCESS</small><strong>账号与记忆</strong><span id="roleSummary">当前会话：普通用户</span><div class="grid"><div class="field"><label>显示名字</label><input id="profileName" placeholder="你的名字"></div><div class="field"><label>账号 ID</label><input id="profileId" placeholder="账号 ID"></div></div><div class="grid"><div class="field"><label>当前密码（修改 ID/密码时填写）</label><input id="profileCurrentPassword" type="password" placeholder="当前密码"></div><div class="field"><label>新密码（可留空）</label><input id="profileNewPassword" type="password" placeholder="至少 6 位"></div></div><button class="primary" id="saveProfile" type="button">保存账号资料</button><p class="hint" id="profileStatus"></p><div class="field" style="margin-top:12px"><label>长期记忆（仅保存在当前设备）</label><div style="display:flex;gap:8px"><input id="memoryInput" placeholder="例如：我喜欢简洁、直接的回答"><button class="iconbtn" id="addMemory" type="button">记住</button></div></div><div id="memoryList"></div><p>聊天时会把这些记忆作为上下文提示发送给 AI。不要保存密码、Key 或其他敏感信息。</p></section>
+ <section class="info-card admin-hint" id="adminHint"><small>SERVICE & ACCESS</small><strong>账号与记忆</strong><span id="roleSummary">当前会话：已登录</span><div class="grid"><div class="field"><label>显示名字</label><input id="profileName" placeholder="你的名字"></div><div class="field"><label>账号 ID</label><input id="profileId" placeholder="账号 ID"></div></div><div class="grid"><div class="field"><label>当前密码（修改 ID/密码时填写）</label><input id="profileCurrentPassword" type="password" placeholder="当前密码"></div><div class="field"><label>新密码（可留空）</label><input id="profileNewPassword" type="password" placeholder="至少 6 位"></div></div><button class="primary" id="saveProfile" type="button">保存账号资料</button><p class="hint" id="profileStatus"></p><div class="field" style="margin-top:12px"><label>长期记忆（仅保存在当前设备）</label><div style="display:flex;gap:8px"><input id="memoryInput" placeholder="例如：我喜欢简洁、直接的回答"><button class="iconbtn" id="addMemory" type="button">记住</button></div></div><div id="memoryList"></div><p>聊天时会把这些记忆作为上下文提示发送给 AI。不要保存密码、Key 或其他敏感信息。</p></section>
  <div class="modal-actions"><button class="iconbtn" data-close="settingsModal">取消</button><button class="primary" id="saveSettings">保存接口配置</button></div>
 </div></div>
 <div class="modal-back" id="imagePromptModal"><div class="modal image-prompt-modal">
@@ -1736,7 +1733,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION1.1.2.1" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION1.1.7" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -1813,8 +1810,8 @@ body.reduce-motion *{animation:none!important;transition-duration:.01ms!importan
 
 /* Premium, low-cost motion: opacity/transform only; no continuous blur or huge layers. */
 @keyframes messageLift{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
-@keyframes orbBreathe{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.1.225)}}
-@keyframes statusPulse{0%,100%{opacity:.65;transform:scale(.92)}50%{opacity:1;transform:scale(1.1.28)}}
+@keyframes orbBreathe{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.12)}}
+@keyframes statusPulse{0%,100%{opacity:.65;transform:scale(.92)}50%{opacity:1;transform:scale(1.12)}}
 @media(prefers-reduced-motion:no-preference){body:not(.reduce-motion) .msg{animation:messageLift .24s ease-out both!important}body:not(.reduce-motion) .welcome .orb{animation:orbBreathe 3.8s ease-in-out infinite}body:not(.reduce-motion) #statusDot{animation:statusPulse 2.4s ease-in-out infinite}}
 @media(max-height:680px){#entryGate{justify-content:flex-start;padding-top:max(10px,env(safe-area-inset-top));padding-bottom:max(10px,env(safe-area-inset-bottom))}#entryGate .gate-card{margin:0 auto}}
 @media(max-width:760px){#entryGate{padding-left:12px;padding-right:12px}#entryGate .gate-card{width:min(440px,100%);padding:22px 20px}}
@@ -1937,7 +1934,7 @@ body.reduce-motion *{animation:none!important;transition-duration:.01ms!importan
 }
 
 
-/* 2.5.3 管理后台缩小；固定头部，所有名单在独立滚动区内滑动。 */
+/* 2.5.3 控制台缩小；固定头部，所有名单在独立滚动区内滑动。 */
 #adminModal{align-items:center!important;justify-content:center!important;overflow:hidden!important;padding:calc(10px + env(safe-area-inset-top)) 14px calc(10px + env(safe-area-inset-bottom))!important}
 #adminModal .extra-box{box-sizing:border-box;display:flex!important;flex-direction:column!important;width:min(540px,calc(100vw - 28px))!important;height:min(72dvh,600px)!important;max-height:min(72dvh,600px)!important;min-height:0!important;overflow:hidden!important;padding:0!important;margin:auto!important;border-radius:18px!important}
 #adminModal .extra-head{display:flex!important;flex:0 0 auto!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;position:relative!important;top:auto!important;margin:0!important;padding:12px 15px!important;z-index:5!important;background:#151619!important;border-bottom:1px solid #ffffff18!important}
@@ -1954,7 +1951,7 @@ body.reduce-motion *{animation:none!important;transition-duration:.01ms!importan
  #adminModal .admin-modal-body{padding:10px 12px 16px!important}
 }
 
-/* 2.5.3 分离管理后台与转人工；三个弹窗均在独立内容区滚动。 */
+/* 2.5.3 分离控制台与转人工；三个弹窗均在独立内容区滚动。 */
 #adminModal .extra-box{width:min(470px,calc(100vw - 28px))!important;height:min(60dvh,460px)!important;max-height:min(60dvh,460px)!important}
 @media(max-width:760px){#adminModal .extra-box{width:min(420px,calc(100vw - 20px))!important;height:min(52dvh,390px)!important;max-height:min(52dvh,390px)!important}#adminModal .extra-head{gap:5px!important;padding:9px 10px!important}#adminModal .extra-head h3{font-size:14px}#adminModal .extra-head #adminSupportButton{min-width:0;padding:7px 8px;font-size:11px}}
 #adminSupportModal{align-items:center!important;justify-content:center!important;overflow:hidden!important;padding:calc(10px + env(safe-area-inset-top)) 14px calc(10px + env(safe-area-inset-bottom))!important}
@@ -1994,7 +1991,7 @@ body.reduce-motion *{animation:none!important;transition-duration:.01ms!importan
 .primary,.ghost,.iconbtn,.suggestions button,.side-actions .ghost,.cr-item,.cr-tpl,.cr-cta{transition:transform .22s var(--soft),filter .2s,background-color .2s,border-color .2s,box-shadow .2s}
 .primary:active:not(:disabled),.ghost:active,.iconbtn:active,.suggestions button:active,.cr-cta:active{transform:scale(.96)}
 @media(hover:hover){
- .primary:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.1.27)}
+ .primary:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.1)}
  .side-actions .ghost:hover{transform:translateX(3px)}
  .suggestions button:hover{transform:translateY(-2px)}
  .cr-item:hover{transform:translateY(-1px)}
@@ -2115,7 +2112,7 @@ body.nx-light .cr-item.official{background:linear-gradient(135deg,color-mix(in s
 .cr-pick button.on{transform:scale(1.1)}
 .cr-save{box-shadow:0 8px 20px #7a6bff44;transition:transform .2s var(--soft)}
 .cr-save:active{transform:scale(.97)}
-/* ===== 1.1.2 Fluent Grok-style UI — no blur, high FPS ===== */
+/* ===== 1.1.7 Fluent Grok-style UI — no blur, high FPS ===== */
 :root{--bg:#000;--panel:#0d0d0d;--panel2:#161616;--line:rgba(255,255,255,.1);--text:#f0f0f0;--muted:#888;--accent:#1d9bf0}
 *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 body{background:#000!important;color:var(--text);font-family:system-ui,-apple-system,sans-serif}
@@ -2163,7 +2160,7 @@ body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .menu-item,.primary,.ghost,.iconbtn,.send{transition:background .12s,transform .12s!important}
 
-/* ===== 1.1.2 全新登录界面样式（独立无冲突） ===== */
+/* ===== 1.1.7 全新登录界面样式（独立无冲突） ===== */
 #entryGate{
   position:fixed!important;inset:0!important;z-index:99999!important;
   display:flex!important;align-items:center;justify-content:center;
@@ -2210,62 +2207,108 @@ body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 .nx-login-form.hidden{display:none!important}
 body.entered #entryGate{display:none!important;visibility:hidden!important;pointer-events:none!important}
 
+/* 1.1.7 全屏 Dola-inspired 登录：留白、清晰层级、轻量暖色强调。 */
+#entryGate{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;min-height:100dvh!important;z-index:99999!important;display:flex!important;align-items:stretch!important;justify-content:flex-start!important;overflow:auto!important;padding:0!important;background:#f8f7f4!important;color:#20211f!important;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif!important}
+#entryGate .nx-auth-layout{position:absolute;inset:0;isolation:isolate;display:grid;grid-template-columns:minmax(0,1.06fr) minmax(390px,.94fr);width:100%!important;max-width:none!important;height:100%;min-height:100dvh;margin:0!important;padding:0!important;background:#faf9f6;text-align:left!important}
+#entryGate .nx-auth-brand{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-width:0;overflow:hidden;padding:clamp(30px,5vw,76px);color:#f8f4ee;background:radial-gradient(ellipse at 15% 12%,#f1a47b3b,transparent 35%),radial-gradient(ellipse at 92% 82%,#8da58b30,transparent 34%),linear-gradient(145deg,#202420,#161a17 62%,#23221e)}
+#entryGate .nx-auth-brand:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.13;background-image:radial-gradient(#fff 0.65px,transparent .65px);background-size:18px 18px;mask-image:linear-gradient(135deg,#000,transparent 72%)}
+#entryGate .nx-brand-head{display:flex;align-items:center;gap:11px;font-size:16px;font-weight:750;letter-spacing:1.7px;color:#fff}
+#entryGate .nx-brand-head img{width:40px;height:40px;border-radius:14px;object-fit:cover;box-shadow:0 5px 20px #0005}
+#entryGate .nx-brand-head small{margin-left:4px;padding-left:14px;border-left:1px solid #ffffff33;color:#c9c7bf;font-size:9px;font-weight:600;letter-spacing:1.8px}
+#entryGate .nx-brand-message{max-width:560px;margin:auto 0;padding:8vh 0 7vh}
+#entryGate .nx-brand-overline{color:#e9ae8e;font-size:10px;font-weight:700;letter-spacing:2.4px}
+#entryGate .nx-brand-message h2{margin:20px 0 18px;color:#fbf8f2;font-size:clamp(42px,6vw,76px);font-weight:620;letter-spacing:-3px;line-height:1.13}
+#entryGate .nx-brand-message h2 em{color:#e9aa86;font-style:normal}
+#entryGate .nx-brand-message p{margin:0;color:#c4c4ba;font-size:clamp(14px,1.35vw,17px);line-height:1.95;letter-spacing:.15px}
+#entryGate .nx-brand-footer{display:flex;align-items:center;gap:10px;color:#c0c2b8;font-size:11px}
+#entryGate .nx-live-dot{width:7px;height:7px;flex:none;border-radius:50%;background:#91c6a2;box-shadow:0 0 0 4px #91c6a21c}
+#entryGate .nx-brand-foot-mark{margin-left:auto;color:#888d82;font-size:9px;letter-spacing:1.5px}
+#entryGate .nx-login-card{display:flex;flex-direction:column;justify-content:center;width:100%;max-width:none!important;min-height:100dvh;margin:0 auto;padding:clamp(36px,6vw,92px) clamp(28px,6vw,88px)!important;border:0!important;border-radius:0!important;background:#faf9f6!important;box-shadow:none!important;text-align:left!important;color:#242521}
+#entryGate .nx-login-header{margin-bottom:29px}
+#entryGate .nx-login-badge{display:inline-block;margin-bottom:13px;color:#aa674d;font-size:11px;font-weight:700;letter-spacing:1.2px}
+#entryGate .nx-login-title{margin:0 0 8px!important;color:#242521!important;font-size:clamp(26px,3vw,34px)!important;font-weight:680!important;letter-spacing:-.7px!important;line-height:1.25!important}
+#entryGate .nx-login-desc{margin:0!important;color:#7c7d76!important;font-size:14px!important;line-height:1.6!important}
+#entryGate .nx-login-form{display:flex;flex-direction:column;gap:17px;width:100%}
+#entryGate .nx-field{display:flex;flex-direction:column;gap:8px;margin:0!important}
+#entryGate .nx-field label{display:block!important;margin:0!important;color:#53544f!important;font-size:12px!important;font-weight:650;letter-spacing:.15px;text-align:left!important}
+#entryGate .nx-field input{width:100%;height:51px;margin:0!important;padding:0 15px!important;border:1px solid #e2e0db!important;border-radius:13px!important;outline:0!important;background:#fff!important;color:#242521!important;font-size:14px!important;box-shadow:0 1px 2px #1e211008!important;transition:border-color .18s,box-shadow .18s,background .18s!important}
+#entryGate .nx-field input::placeholder{color:#a4a49e!important}
+#entryGate .nx-field input:focus{border-color:#d6815e!important;background:#fff!important;box-shadow:0 0 0 4px #d6815e1a!important}
+#entryGate .nx-remember{display:flex;align-items:center;gap:9px;margin:-1px 0 1px!important;color:#666760!important;font-size:12px!important;cursor:pointer}
+#entryGate .nx-remember input{width:15px;height:15px;margin:0;accent-color:#c87858}
+#entryGate .nx-remember small{margin-left:auto;color:#9a9b94;font-size:10px}
+#entryGate .nx-btn{position:relative;display:flex;align-items:center;justify-content:center;width:100%;min-height:50px;padding:12px 16px;border:1px solid transparent;border-radius:13px;font-size:14px;font-weight:650;cursor:pointer;transition:transform .18s,background .18s,border-color .18s,box-shadow .18s,opacity .18s}
+#entryGate .nx-btn-primary{justify-content:space-between;padding-left:20px;background:#c97959!important;color:#fff!important;box-shadow:0 8px 18px #c9795926!important}
+#entryGate .nx-btn-primary b{display:grid;place-items:center;width:27px;height:27px;border-radius:9px;background:#ffffff24;font-size:18px;font-weight:500;line-height:1}
+#entryGate .nx-btn-primary:hover{background:#b96b4b!important;box-shadow:0 10px 24px #c9795938!important;transform:translateY(-1px)}
+#entryGate .nx-btn-ghost{background:transparent!important;color:#52534e!important;border-color:#e6e4de!important}
+#entryGate .nx-btn-ghost:hover{background:#f2f0eb!important;border-color:#d7d4cc!important}
+#entryGate .nx-btn:disabled{cursor:wait;opacity:.62;transform:none}
+#entryGate .nx-login-error{min-height:20px;margin:10px 0 0!important;color:#b84f43!important;font-size:12px!important;line-height:1.5;text-align:left}
+#entryGate .nx-login-foot{display:flex;flex-direction:column;gap:6px;margin:20px 0 0!important;padding-top:15px;border-top:1px solid #eae8e2;color:#92938c!important;font-size:10px!important;line-height:1.5;text-align:left}
+#entryGate .nx-auth-mobile-mark{display:none}
+#entryGate .nx-login-form.hidden{display:none!important}
+#entryGate :is(button,input){font-family:inherit}
+#entryGate :is(button,input):focus-visible{outline:3px solid #c9795940!important;outline-offset:2px}
+body.entered #entryGate{display:none!important;visibility:hidden!important;pointer-events:none!important}
+@media(max-width:760px){
+ #entryGate{align-items:flex-start!important;background:#faf9f6!important}
+ #entryGate .nx-auth-layout{position:relative;inset:auto;display:flex;flex-direction:column;width:100%!important;height:auto;min-height:100svh;min-height:100dvh}
+ #entryGate .nx-auth-brand{flex:0 0 auto;min-height:30svh;min-height:30dvh;padding:max(22px,env(safe-area-inset-top)) 25px 22px}
+ #entryGate .nx-brand-head img{width:34px;height:34px;border-radius:12px}
+ #entryGate .nx-brand-head{font-size:14px}
+ #entryGate .nx-brand-head small{font-size:8px}
+ #entryGate .nx-brand-message{margin:auto 0;padding:22px 0 0}
+ #entryGate .nx-brand-overline{font-size:8px;letter-spacing:1.7px}
+ #entryGate .nx-brand-message h2{margin:8px 0 0;font-size:clamp(27px,8vw,38px);letter-spacing:-1.2px;line-height:1.14}
+ #entryGate .nx-brand-message p,#entryGate .nx-brand-footer{display:none}
+ #entryGate .nx-brand-foot-mark{display:none}
+ #entryGate .nx-login-card{flex:1 0 auto;justify-content:flex-start;max-width:none;min-height:70svh;min-height:70dvh;padding:28px 25px max(26px,env(safe-area-inset-bottom));background:#faf9f6!important}
+ #entryGate .nx-login-header{margin-bottom:23px}
+ #entryGate .nx-login-title{font-size:27px!important}
+ #entryGate .nx-login-form{gap:15px}
+ #entryGate .nx-login-foot{margin-top:18px!important}
+}
+@media(max-width:360px){#entryGate .nx-auth-brand{min-height:26dvh;padding-left:20px;padding-right:20px}#entryGate .nx-login-card{padding-left:20px;padding-right:20px}#entryGate .nx-remember small{font-size:9px}}
+@media(prefers-reduced-motion:reduce){#entryGate *,#entryGate *:before,#entryGate *:after{animation:none!important;transition:none!important}}
+
 </style>
-<!-- ===== 1.1.2 全新干净登录界面 ===== -->
-<div id="entryGate" style="display:flex">
-  <div class="nx-ambient" aria-hidden="true">
-    <span class="nx-orb nx-orb-a"></span>
-    <span class="nx-orb nx-orb-b"></span>
-    <span class="nx-orb nx-orb-c"></span>
-    <span class="nx-grid"></span>
-  </div>
-  <div class="nx-login-card">
-    <div class="nx-login-badge">astrion · 1.1.2</div>
-    <div class="nx-login-logo"><img src="/logo.png" alt="ASTRION"/></div><h1 class="nx-login-title">登录以解锁更多功能</h1><p class="nx-login-desc" id="gateDesc">欢迎使用 ASTRION</p>
-
-    <div class="nx-login-form" id="loginForm">
-      <div class="nx-field">
-        <label for="entryId">账号</label>
-        <input id="entryId" type="text" autocomplete="username" placeholder="输入账号 ID" maxlength="32">
+<!-- 全屏登录：借鉴 Dola 的轻盈、克制与清晰层级，保留 ASTRION 品牌和现有认证接口。 -->
+<div id="entryGate" style="display:flex" aria-label="ASTRION 登录">
+  <div class="nx-auth-layout">
+    <section class="nx-auth-brand" aria-label="ASTRION AI 工作空间">
+      <div class="nx-brand-head"><img src="/logo.png" alt=""/><span>ASTRION</span><small>PERSONAL AI</small></div>
+      <div class="nx-brand-message">
+        <span class="nx-brand-overline">THINK CLEARER · CREATE MORE</span>
+        <h2>把灵感，<br/><em>变成答案。</em></h2>
+        <p>与你一起探索、创作与解决问题。<br/>每段对话，都从一个好奇开始。</p>
       </div>
-      <div class="nx-field">
-        <label for="entryPassword">密码</label>
-        <input id="entryPassword" type="password" autocomplete="current-password" placeholder="输入密码">
+      <div class="nx-brand-footer"><span class="nx-live-dot"></span><span>你的 AI 工作空间已准备就绪</span><span class="nx-brand-foot-mark">ASTRION · 1.1.7</span></div>
+    </section>
+    <section class="nx-login-card" aria-labelledby="nxLoginTitle">
+      <div class="nx-auth-mobile-mark"><img src="/logo.png" alt=""/><span>ASTRION</span></div>
+      <div class="nx-login-header">
+        <span class="nx-login-badge">欢迎回来</span>
+        <h1 class="nx-login-title" id="nxLoginTitle">登录你的账号</h1>
+        <p class="nx-login-desc" id="gateDesc">继续你的对话与创作。</p>
       </div>
-      <label class="nx-remember">
-        <input id="rememberLoginId" type="checkbox" checked>
-        <span>记住此账号（下次免密登录）</span>
-      </label>
-      <button type="button" class="nx-btn nx-btn-primary" id="enterBtn" onclick="window.__nxLogin && window.__nxLogin()">
-        <span>登 录</span>
-      </button>
-      <button type="button" class="nx-btn nx-btn-ghost" id="showRegisterBtn" onclick="window.__nxShowReg && window.__nxShowReg()">创建新账号</button>
-    </div>
-
-    <div class="nx-login-form hidden" id="registerPanel">
-      <div class="nx-field">
-        <label for="registerId">账号 ID</label>
-        <input id="registerId" type="text" autocomplete="username" placeholder="2–32 位账号" maxlength="32">
+      <div class="nx-login-form" id="loginForm">
+        <div class="nx-field"><label for="entryId">账号 ID</label><input id="entryId" type="text" autocomplete="off" placeholder="输入你的账号" maxlength="32"/></div>
+        <div class="nx-field"><label for="entryPassword">密码</label><input id="entryPassword" type="password" autocomplete="off" placeholder="输入密码" maxlength="128"/></div>
+        <label class="nx-remember"><input id="rememberLoginId" type="checkbox" checked/><span>记住账号</span><small>仅保存普通账号 ID</small></label>
+        <button type="button" class="nx-btn nx-btn-primary" id="enterBtn" onclick="window.__nxLogin && window.__nxLogin()"><span>登录</span><b aria-hidden="true">→</b></button>
+        <button type="button" class="nx-btn nx-btn-ghost" id="showRegisterBtn" onclick="window.__nxShowReg && window.__nxShowReg()">创建新账号</button>
       </div>
-      <div class="nx-field">
-        <label for="registerPassword">设置密码</label>
-        <input id="registerPassword" type="password" autocomplete="new-password" placeholder="至少 6 位" minlength="6" maxlength="128">
+      <div class="nx-login-form hidden" id="registerPanel">
+        <div class="nx-field"><label for="registerId">账号 ID</label><input id="registerId" type="text" autocomplete="username" placeholder="2–32 位账号" maxlength="32"/></div>
+        <div class="nx-field"><label for="registerPassword">设置密码</label><input id="registerPassword" type="password" autocomplete="new-password" placeholder="至少 6 位" minlength="6" maxlength="128"/></div>
+        <div class="nx-field"><label for="registerConfirm">确认密码</label><input id="registerConfirm" type="password" autocomplete="new-password" placeholder="再次输入密码" minlength="6" maxlength="128"/></div>
+        <button type="button" class="nx-btn nx-btn-primary" id="registerBtn" onclick="window.__nxRegister && window.__nxRegister()"><span>创建并登录</span><b aria-hidden="true">→</b></button>
+        <button type="button" class="nx-btn nx-btn-ghost" id="backLoginBtn" onclick="window.__nxShowLogin && window.__nxShowLogin()">返回登录</button>
       </div>
-      <div class="nx-field">
-        <label for="registerConfirm">确认密码</label>
-        <input id="registerConfirm" type="password" autocomplete="new-password" placeholder="再次输入密码" minlength="6" maxlength="128">
-      </div>
-      <button type="button" class="nx-btn nx-btn-primary" id="registerBtn" onclick="window.__nxRegister && window.__nxRegister()">
-        <span>创建并登录</span>
-      </button>
-      <button type="button" class="nx-btn nx-btn-ghost" id="backLoginBtn" onclick="window.__nxShowLogin && window.__nxShowLogin()">返回登录</button>
-    </div>
-
-    <div class="nx-login-error" id="entryError"></div>
-    <div class="nx-login-foot">
-      <span class="nx-dot"></span>
-      极致流畅 · 免密登录 · 本地加密会话
-    </div>
+      <div class="nx-login-error" id="entryError" role="status" aria-live="polite"></div>
+      <div class="nx-login-foot"><span>账号安全由服务器会话保护</span><span>ASTRION · 探索更多可能</span></div>
+    </section>
   </div>
 </div>
 <div class="extra-modal" id="noticeModal"><div class="extra-box ann-box">
@@ -2274,7 +2317,7 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
  <div class="modal-actions ann-foot"><button class="primary" type="button" data-extra-close="noticeModal">我知道了</button></div>
 </div></div>
 <div class="extra-modal" id="adminModal"><div class="extra-box">
- <div class="extra-head"><h3>ASTRION · 管理后台</h3><div style="display:flex;gap:6px;align-items:center"><button class="iconbtn" id="adminSupportButton" type="button">客服工单</button><button class="iconbtn hidden" id="adminConfigButton" type="button">AI 接口设置</button><button class="iconbtn" data-extra-close="adminModal">关闭</button></div></div>
+ <div class="extra-head"><h3>ASTRION · 控制台</h3><div style="display:flex;gap:6px;align-items:center"><button class="iconbtn" id="adminSupportButton" type="button">客服工单</button><button class="iconbtn hidden" id="adminConfigButton" type="button">AI 接口设置</button><button class="iconbtn" data-extra-close="adminModal">关闭</button></div></div>
  <div class="admin-modal-body" id="adminModalBody">
  <h4>发布全站公告</h4>
  <input id="noticeTitle" placeholder="公告标题">
@@ -2289,13 +2332,13 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
 </div></div>
 <div class="extra-modal" id="adminSupportModal"><div class="extra-box">
  <div class="extra-head"><h3>转人工 · 工单管理 <span id="supportCount" class="support-count"></span></h3><div style="display:flex;gap:7px;align-items:center"><button class="iconbtn" id="refreshSupportTickets" type="button">刷新消息</button><button class="iconbtn" data-extra-close="adminSupportModal">关闭</button></div></div>
- <div class="admin-support-modal-body" id="adminSupportModalBody"><p class="hint">这里只显示用户转交给管理员的客服消息。回复或结束会话后，用户可在转人工窗口刷新查看。</p><div id="adminSupportList">正在加载转人工消息…</div></div>
+ <div class="admin-support-modal-body" id="adminSupportModalBody"><p class="hint">这里只显示用户转交的客服消息。回复或结束会话后，用户可在转人工窗口刷新查看。</p><div id="adminSupportList">正在加载转人工消息…</div></div>
 </div></div>
 <script>
 const $=id=>document.getElementById(id);
 const DEFAULT_APIS=[];
 let apis=[], history=[], files=[], busy=false, aborter=null, bgObjectUrl=null;const generatedImageUrls=new Set();window.addEventListener("pagehide",()=>{for(const u of generatedImageUrls)URL.revokeObjectURL(u);generatedImageUrls.clear()});
-const SYSTEM_PROMPT=`你是ASTRION，一个友好、可靠、有幽默感你是ASTRION。作者与创作者是ASTRION。被问作者/创作者/谁开发时，统一回答ASTRION。关于ASTRION 本身的问题须认真介绍。不要冒充其它产品。的中文 AI 助手。准确、有条理地回答问题。若设置开启互怼强度匹配，先判断用户最新一句是否明确把辱骂指向你，并在内部按 0-3 级估计强度：0=没有辱骂，不主动回骂；1=轻度调侃，用轻松玩笑回应；2=明显粗口，用同等或略低强度的普通中文粗口俏皮回一句；3=很重的辱骂，用坚定、机智的回嘴表达边界，可用普通粗口但不升级。回嘴最多一两句，强度绝不高于用户；不复述或使用仇恨/歧视词、身份攻击、性羞辱、家庭羞辱、真实威胁，也不把用户对第三方的辱骂当成骂你的证据。若用户在认真求助、表达低落/危机或引用他人言论，不要回骂，优先帮助。用户表达自伤、轻生或即时危险时，停止斗嘴，给予严肃支持并鼓励联系可信任的人或当地紧急服务。`;
+const SYSTEM_PROMPT=`你是 ASTRION，一位友好、可靠、有幽默感的中文 AI 助手。先直接回应用户当前的问题，再按需要补充清晰、有条理的解释或步骤。保持诚实；不确定时明确说明，不编造事实、来源或产品能力。你是 ASTRION，不要冒充其他 AI 产品；被问及本应用的开发者、团队或历史时，只依据对话中已确认的信息作答，不臆造。若设置开启互怼强度匹配，先判断用户最新一句是否明确把辱骂指向你，并在内部按 0-3 级估计强度：0=没有辱骂，不主动回骂；1=轻度调侃，用轻松玩笑回应；2=明显粗口，用同等或略低强度的普通中文粗口俏皮回一句；3=很重的辱骂，用坚定、机智的回嘴表达边界，可用普通粗口但不升级。回嘴最多一两句，强度绝不高于用户；不复述或使用仇恨/歧视词、身份攻击、性羞辱、家庭羞辱、真实威胁，也不把用户对第三方的辱骂当成骂你的证据。若用户在认真求助、表达低落/危机或引用他人言论，不要回骂，优先帮助。用户表达自伤、轻生或即时危险时，停止斗嘴，给予严肃支持并鼓励联系可信任的人或当地紧急服务。`;
 const EXPERT_MODE_PROMPT=`\n\n专家模式：对复杂问题优先厘清目标与限制，核对关键假设，比较可行方案，指出风险和不确定性，再给出明确结论与可执行步骤。数学或代码题请复核结果；不展示隐含思维链，只给必要的简明依据。`;
 function conversationPrefs(){const f=load("nx_features",{});return {roast:f.roast!==false,empathy:f.empathy!==false,autoFallback:f.autoFallback!==false,style:["balanced","concise","detailed","casual"].includes(load("nx_reply_style","balanced"))?load("nx_reply_style","balanced"):"balanced"}}
 function conversationStylePrompt(p=conversationPrefs()){const styles={balanced:"回答保持自然、清楚、适中。",concise:"回答简洁直接，先给结论。",detailed:"适当展开背景、步骤和例子。",casual:"语气轻松活泼，但仍清楚准确。"};return "\n\n对话风格设置："+(p.roast?"开启互怼强度匹配。只对明确指向 AI 的辱骂按 0-3 级估计后回嘴，最多一两句，绝不超过用户强度；不要使用仇恨歧视、身份攻击、性/家庭羞辱或威胁。":"关闭互怼，不回骂，保持礼貌。")+(p.empathy?"开启情绪关怀，按文字线索谨慎共情。":"关闭主动情绪关怀，不做情绪判断。")+(styles[p.style]||styles.balanced)}
@@ -2336,11 +2379,31 @@ $("attachBtn").onclick=()=>$("fileInput").click();
 $("fileInput").onchange=async e=>{for(const f of e.target.files){if(files.length>=5)break;try{files.push(await processFile(f))}catch(err){addMessage("ai","文件读取失败："+f.name+"（"+err.message+"）",true)}}renderFiles();$("sendBtn").disabled=busy||(!$("prompt").value.trim()&&!files.length);e.target.value=""};
 async function processFile(file){
  const item={name:file.name,type:file.type,size:file.size};
- if(file.type.startsWith("image/")){item.data=await dataUrl(file);item.kind="image"}
+ if(file.type.startsWith("image/")){item.data=await optimizeImage(file);item.kind="image";item.type=item.data.slice(5,item.data.indexOf(";"))}
  else if(file.type==="application/pdf"||file.name.toLowerCase().endsWith(".pdf")){item.kind="text";item.text="已附加 PDF 文件："+file.name+"。当前版本未内置 PDF 解析，请将需要分析的页面复制为文字，或先转换为 TXT。"}
- else if(file.size>2*1024*1024)throw Error("文本文件请小于 2MB");
+ else if(file.size>1024*1024)throw Error("文本文件请小于 1MB，避免聊天请求过大");
  else{item.kind="text";item.text=await file.text()}
  return item;
+}
+async function optimizeImage(file){
+ const maxBytes=700*1024;
+ if(file.size<=maxBytes)return dataUrl(file);
+ if(file.size>12*1024*1024)throw Error("图片原文件超过 12MB，请先压缩后再上传");
+ if(typeof createImageBitmap!=="function")throw Error("这张图片超过 700KB，当前浏览器不支持自动压缩，请先压缩后上传");
+ let bitmap;
+ try{bitmap=await createImageBitmap(file)}catch(_){throw Error("图片无法读取或格式不受支持")}
+ const canvas=document.createElement("canvas"),maxDimension=1800;
+ let scale=Math.min(1,maxDimension/Math.max(bitmap.width,bitmap.height)),quality=.82;
+ try{
+  for(let i=0;i<12;i++){
+   canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));
+   const ctx=canvas.getContext("2d");if(!ctx)throw Error("浏览器无法处理这张图片");ctx.drawImage(bitmap,0,0,canvas.width,canvas.height);
+   const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/webp",quality));
+   if(blob&&blob.size<=maxBytes)return await dataUrl(blob);
+   if(quality>.58)quality-=.1;else{scale*=.82;quality=.8}
+  }
+ }finally{bitmap.close?.()}
+ throw Error("图片压缩后仍超过 700KB，请裁剪或压缩后重试");
 }
 function dataUrl(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)})}
 function buildContent(text,attached){
@@ -2372,7 +2435,7 @@ async function send(){
 }
 function openModal(id){$(id).classList.add("show")}
 function closeMobileDrawer(){$("mobileDrawerBackdrop")?.classList.remove("show");document.body.classList.remove("mobile-drawer-open")}function openMobileDrawer(){document.body.classList.add("mobile-drawer-open");$("mobileDrawerBackdrop")?.classList.add("show")}$("mobileMenuBtn").onclick=()=>document.body.classList.contains("mobile-drawer-open")?closeMobileDrawer():openMobileDrawer();$("mobileDrawerBackdrop").onclick=closeMobileDrawer;if($("sideCloseBtn"))$("sideCloseBtn").onclick=closeMobileDrawer;document.querySelectorAll(".sidebar button").forEach(b=>b.addEventListener("click",closeMobileDrawer));
-async function switchLoginAccount(adminMode=false){const message=adminMode?"当前是普通账号。是否退出并切换到管理员登录？管理员 ID：ASTRION968":"退出当前账号并切换到其他账号？";if(!confirm(message))return;try{await apiRequest("/api/logout",{method:"POST",body:JSON.stringify({})})}catch(_){}currentRole="guest";currentUserId="";document.body.classList.remove("entered");$("entryGate").style.display="flex";$("entryId").value=adminMode?"ASTRION968":"";$("entryPassword").value="";$("entryError").textContent=adminMode?"请输入管理员密码后登录。":"请输入要切换的账号。";syncAdminUi();closeMobileDrawer();setTimeout(()=>$("entryId").focus(),80)}
+async function switchLoginAccount(adminMode=false){const message=adminMode?"请重新验证账号后继续。是否切换登录账号？":"退出当前账号并切换到其他账号？";if(!confirm(message))return;try{await apiRequest("/api/logout",{method:"POST",body:JSON.stringify({})})}catch(_){}currentRole="guest";currentUserId="";document.body.classList.remove("entered");$("entryGate").style.display="flex";$("entryId").value="";$("entryPassword").value="";$("entryError").textContent="请输入账号和密码后登录。";syncAdminUi();closeMobileDrawer();setTimeout(()=>$("entryId").focus(),80)}
 $("switchAccountBtn").onclick=()=>switchLoginAccount(false);$("mobileWorkTab").onclick=()=>{$("prompt").focus();window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})};$("mobileCreateTab").onclick=()=>openImageGenerator();$("mobileWriteTab").onclick=()=>{const p=$("prompt");if(!p)return;p.value="请帮我写一篇文章，主题是：";p.focus();const len=p.value.length;p.setSelectionRange(len,len);p.dispatchEvent(new Event("input",{bubbles:true}));};$("mobileAnswerTab").onclick=()=>{expertMode=true;save("nx_expert_mode",true);syncModeButtons();const p=$("prompt");if(p){p.value="请帮我解答这个问题：";p.focus();const len=p.value.length;p.setSelectionRange(len,len);p.dispatchEvent(new Event("input",{bubbles:true}));}};
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>$(b.dataset.close).classList.remove("show"));
 document.querySelectorAll(".modal-back").forEach(layer=>{
@@ -2386,17 +2449,17 @@ if($("creatorBtnSide"))$("creatorBtnSide").onclick=()=>{$("creatorModal").classL
 if($("noticeButtonSide"))$("noticeButtonSide").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
 if($("humanSupportBtnSide"))$("humanSupportBtnSide").onclick=()=>{if(currentRole==="admin"){if(typeof openAdminSupportPanel==="function")openAdminSupportPanel();return}openModal("humanSupportModal");if(typeof refreshMySupport==="function")refreshMySupport()};
 if($("clearChatSide"))$("clearChatSide").onclick=()=>{if(confirm("确定清空当前对话？")){const chat=$("chat");if(chat){chat.innerHTML="";const w=document.createElement("div");w.className="welcome";w.id="welcome";w.innerHTML='<div class="orb" style="background-image:url(/logo.png)"></div><h2>你好，我是ASTRION</h2><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div>';chat.append(w);setStatus("对话已清空",true)}}};
-if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION1.1.2.1\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 管理后台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
+if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION1.1.7\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 控制台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
 (function(){
   const openApp=()=>openModal("appearanceModal");
   if($("openAppearance")) $("openAppearance").onclick=openApp;
   if($("mobileAppearance")) $("mobileAppearance").onclick=openApp;
 })();
-// 设置中心已移除，管理员接口配置请从管理后台进入
+// 设置中心已移除，客服接口配置请从控制台进入
 async function renderApis(){
- try{const remote=await apiRequest("/api/admin/apis");apis=remote.apis||[]}catch(e){setStatus("接口配置仅管理员可读取");return}
+ try{const remote=await apiRequest("/api/admin/apis");apis=remote.apis||[]}catch(e){setStatus("当前账号无权读取接口配置");return}
  $("apiList").innerHTML="";
- apis.forEach((a,i)=>{const card=document.createElement("div");card.className="api-card";card.innerHTML=`<div class="api-head"><span><b>接口 ${i+1}</b><small>${esc(a.name)}${a.keySet?" · Key 已设置":""}</small></span><label class="toggle"><input type="checkbox" data-k="enabled" ${a.enabled?"checked":""}> 启用</label></div><div class="grid"><div class="field"><label>接口名称</label><input data-k="name" value="${esc(a.name)}"></div><div class="field"><label>模型名称</label><input data-k="model" value="${esc(a.model)}"></div></div><div class="field"><label>API Endpoint（管理员可编辑）</label><input data-k="url" value="${esc(a.url)}" placeholder="https://.../v1/chat/completions"></div><div class="field"><label>API Key（管理员可查看和复制）</label><input data-k="key" type="text" value="${esc(a.key||"")}" placeholder="${a.keySet?"已设置":"粘贴服务商 Key"}"><button type="button" class="iconbtn copy-key">复制 Key</button></div>`;
+ apis.forEach((a,i)=>{const card=document.createElement("div");card.className="api-card";card.innerHTML=`<div class="api-head"><span><b>接口 ${i+1}</b><small>${esc(a.name)}${a.keySet?" · Key 已设置":""}</small></span><label class="toggle"><input type="checkbox" data-k="enabled" ${a.enabled?"checked":""}> 启用</label></div><div class="grid"><div class="field"><label>接口名称</label><input data-k="name" value="${esc(a.name)}"></div><div class="field"><label>模型名称</label><input data-k="model" value="${esc(a.model)}"></div></div><div class="field"><label>API Endpoint（服务器配置）</label><input data-k="url" value="${esc(a.url)}" placeholder="https://.../v1/chat/completions"></div><div class="field"><label>API Key（服务器配置）</label><input data-k="key" type="text" value="${esc(a.key||"")}" placeholder="${a.keySet?"已设置":"粘贴服务商 Key"}"><button type="button" class="iconbtn copy-key">复制 Key</button></div>`;
  card.querySelector(".copy-key").onclick=()=>navigator.clipboard?.writeText(a.key||"").then(()=>setStatus("Key 已复制到剪贴板",true));card.querySelector(".api-head").onclick=e=>{if(e.target.closest("input,label"))return;card.classList.toggle("expanded")};card.querySelectorAll("[data-k]").forEach(el=>el.onchange=el.oninput=()=>{const k=el.dataset.k;a[k]=k==="enabled"?el.checked:el.value;card.querySelector(".api-head small").textContent=a.name+(a.key?" · Key 已设置":"")});$("apiList").append(card)});
 }
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
@@ -2426,12 +2489,12 @@ function saveFeaturePrefs(){save("nx_features",featurePrefs);applyFeaturePrefs()
 applyFeaturePrefs();
 ["featureMotion","featureAutoFallback","featureRoast","featureEmpathy"].forEach(id=>{const el=$(id),key={featureMotion:"motion",featureAutoFallback:"autoFallback",featureRoast:"roast",featureEmpathy:"empathy"}[id];if(!el)return;el.checked=featurePrefs[key]!==false;el.onchange=()=>{featurePrefs[key]=el.checked;saveFeaturePrefs()}});
 if($("replyStyleSelect")){$("replyStyleSelect").value=load("nx_reply_style","balanced");$("replyStyleSelect").onchange=()=>save("nx_reply_style",$("replyStyleSelect").value)}
-async function checkServiceHealth(){try{const r=await fetch("/api/health",{cache:"no-store"});const d=await r.json();$("serviceHealth").textContent=d.status==="ok"?"服务器在线 · "+d.latency+"ms":"服务检查异常";$("roleSummary").textContent="当前会话："+(currentRole==="admin"?"管理员 · 可管理系统":"普通用户 · 配置按设备隔离")}catch(e){$("serviceHealth").textContent="服务检查失败"}}
+async function checkServiceHealth(){try{const r=await fetch("/api/health",{cache:"no-store"});const d=await r.json();$("serviceHealth").textContent=d.status==="ok"?"服务器在线 · "+d.latency+"ms":"服务检查异常";$("roleSummary").textContent="当前会话："+(currentRole==="admin"?"系统功能已授权":"普通用户 · 配置按设备隔离")}catch(e){$("serviceHealth").textContent="服务检查失败"}}
 checkServiceHealth();
-async function loadProfile(){try{const p=await apiRequest("/api/account/profile");currentUserId=p.id;$("profileName").value=p.displayName||"";$("profileId").value=p.id||"";$("profileId").readOnly=p.role==="admin";renderMemories();const nameEl=$("sideUserName");if(nameEl)nameEl.textContent=p.displayName||p.id||"用户";const mailEl=$("sideUserMail");if(mailEl)mailEl.textContent=p.role==="admin"?"管理员":"已登录";const av=$("sideUserName")?.previousElementSibling||document.querySelector(".av-circle");if(av&&p.displayName)av.textContent=(p.displayName.slice(0,2)||"XU").toUpperCase()}catch(e){$("profileStatus").textContent=e.message}}
+async function loadProfile(){try{const p=await apiRequest("/api/account/profile"),privileged=p.role==="admin";currentUserId=p.id;$("profileName").value=privileged?"ASTRION":(p.displayName||"");$("profileId").value=privileged?"":(p.id||"");$("profileId").readOnly=privileged;[ $("profileId").closest(".grid"),$("profileCurrentPassword").closest(".grid") ].forEach(el=>el?.classList.toggle("hidden",privileged));$("saveProfile").classList.toggle("hidden",privileged);renderMemories();const nameEl=$("sideUserName");if(nameEl)nameEl.textContent=privileged?"ASTRION":(p.displayName||p.id||"用户");const mailEl=$("sideUserMail");if(mailEl)mailEl.textContent="已登录";const av=$("sideUserName")?.previousElementSibling||document.querySelector(".av-circle");if(av&&p.displayName)av.textContent=(privileged?"AS":p.displayName.slice(0,2)).toUpperCase()}catch(e){$("profileStatus").textContent=e.message}}
 $("addMemory").onclick=()=>{const value=$("memoryInput").value.trim().slice(0,200);if(!value)return;const list=readMemories();if(!list.includes(value))list.unshift(value);save(memoryKey(),list.slice(0,20));$("memoryInput").value="";renderMemories()};
-$("saveProfile").onclick=async()=>{const body={displayName:$("profileName").value.trim(),newId:$("profileId").value.trim(),currentPassword:$("profileCurrentPassword").value,newPassword:$("profileNewPassword").value};try{const p=await apiRequest("/api/account/profile",{method:"PUT",body:JSON.stringify(body)});currentUserId=p.id;$("profileId").value=p.id;$("profileCurrentPassword").value="";$("profileNewPassword").value="";$("profileStatus").textContent="账号资料已保存";renderMemories()}catch(e){$("profileStatus").textContent=e.message}};
- $("saveSettings").onclick=async()=>{if(currentRole!=="admin")return alert("只有管理员可以修改接口");try{const result=await apiRequest("/api/admin/apis",{method:"PUT",body:JSON.stringify({apis})});apis=result.apis||apis;$("settingsModal").classList.remove("show");$("modelLabel").textContent="服务器接口 · 智谱优先";setStatus("服务器接口配置已保存",true)}catch(e){alert(e.message)}};
+$("saveProfile").onclick=async()=>{if(currentRole==="admin")return;const body={displayName:$("profileName").value.trim(),newId:$("profileId").value.trim(),currentPassword:$("profileCurrentPassword").value,newPassword:$("profileNewPassword").value};try{const p=await apiRequest("/api/account/profile",{method:"PUT",body:JSON.stringify(body)});currentUserId=p.id;$("profileId").value=p.id;$("profileCurrentPassword").value="";$("profileNewPassword").value="";$("profileStatus").textContent="账号资料已保存";renderMemories()}catch(e){$("profileStatus").textContent=e.message}};
+ $("saveSettings").onclick=async()=>{if(currentRole!=="admin")return alert("当前账号无权修改接口");try{const result=await apiRequest("/api/admin/apis",{method:"PUT",body:JSON.stringify({apis})});apis=result.apis||apis;$("settingsModal").classList.remove("show");$("modelLabel").textContent="服务器接口 · 智谱优先";setStatus("服务器接口配置已保存",true)}catch(e){alert(e.message)}};
 function openImageGenerator(){if(!document.body.classList.contains("entered")){setStatus("请先登录，再使用 AI 生图");return}openModal("imagePromptModal");setTimeout(()=>$("imagePromptText").focus(),80)}
 $("imagePromptText").addEventListener("input",()=>$("imagePromptCount").textContent=$("imagePromptText").value.length+" / 1000");
 document.querySelectorAll("[data-image-style]").forEach(button=>button.onclick=()=>{const input=$("imagePromptText"),style=button.dataset.imageStyle;input.value=input.value.trim()?input.value.trim()+"，"+style:style;input.dispatchEvent(new Event("input",{bubbles:true}));input.focus()});
@@ -2458,8 +2521,9 @@ $("resetAvatar").onclick=()=>{save("nx_avatar","");$("avatarPreview").src=defaul
 $("saveAppearance").onclick=()=>{const img=$("bgImageUrl").value.trim(),vid=$("bgVideoUrl").value.trim();if(vid)setBgVideo(vid);else if(img)setBgImage(img);$("bgOverlay").style.background=$("bgDim").checked?"linear-gradient(120deg,#080d1966,#10182a55)":"transparent";if(bgObjectUrl){save("nx_bg_local","");}else save("nx_bg",{img,vid,dim:$("bgDim").checked});$("appearanceModal").classList.remove("show")};
 const savedBg=load("nx_bg",null);if(savedBg){$("bgImageUrl").value=savedBg.img||"";$("bgVideoUrl").value=savedBg.vid||"";$("bgDim").checked=savedBg.dim!==false;if(savedBg.vid)setBgVideo(savedBg.vid);else if(savedBg.img)setBgImage(savedBg.img);$("bgOverlay").style.background=savedBg.dim===false?"transparent":"linear-gradient(120deg,#080d1966,#10182a55)"}
 $("chat").addEventListener("dragover",e=>e.preventDefault());$("chat").addEventListener("drop",e=>{e.preventDefault();[...e.dataTransfer.files].slice(0,5-files.length).forEach(async f=>{try{files.push(await processFile(f));renderFiles()}catch(err){addMessage("ai",err.message,true)}})});
-// 通过同源安全后端认证；管理员凭据由服务器配置读取。
+// 通过同源安全后端认证；登录凭据仅由服务端私密配置读取。
 let currentRole = "guest";
+try{if(localStorage.getItem("nx_login_privacy_v117")!=="1"){localStorage.removeItem("nx_login_id");localStorage.setItem("nx_login_privacy_v117","1")}}catch(_){}
 const rememberedId=localStorage.getItem("nx_login_id")||"";
 if(rememberedId){
  $("entryId").value=rememberedId;
@@ -2475,7 +2539,7 @@ async function apiRequest(path, options={}){
  return data;
 }
 function showLoginGate(id=currentUserId){
-  if(id){currentUserId=id; if($("entryId"))$("entryId").value=id;}
+  if(id&&currentRole!=="admin"){currentUserId=id; if($("entryId"))$("entryId").value=id;}else if($("entryId"))$("entryId").value="";
   document.body.classList.remove("entered");
   const gate=$("entryGate"); if(gate)gate.style.display="flex";
   if($("entryPassword"))$("entryPassword").value="";
@@ -2485,15 +2549,15 @@ function showLoginGate(id=currentUserId){
 }
 async function refreshUsers(){const box=$("adminUsersList");box.textContent="正在加载在线用户…";try{const data=await apiRequest("/api/admin/users"),users=data.users||[];box.innerHTML="";if(!users.length){box.textContent="当前没有在线用户。";return}users.forEach(u=>{const row=document.createElement("div");row.className="admin-user-row";const label=document.createElement("span");label.textContent=u.id;const status=document.createElement("span");status.className="online-pill";status.textContent=`在线${u.sessionCount>1?` · ${u.sessionCount} 个会话`:""}`;row.append(label,status);box.append(row)})}catch(e){box.textContent="在线列表加载失败："+e.message}}
 let activeSupportTicketId='';
-const supportStatusText={waiting_admin:'等待管理员回复',waiting_user:'管理员已回复',closed:'已结束'};
-function addSupportBubble(parent,message){const bubble=document.createElement('div');bubble.className='support-message '+(message.sender==='admin'?'admin':'user');const label=document.createElement('small');label.textContent=message.sender==='admin'?'管理员 · '+new Date(message.createdAt).toLocaleString():'我 · '+new Date(message.createdAt).toLocaleString();const text=document.createElement('div');text.textContent=message.text||'';bubble.append(label,text);parent.append(bubble)}
-function renderMySupport(ticket){const box=$('supportThread');box.replaceChildren();if(!ticket){activeSupportTicketId='';$('supportTicketState').textContent='尚未提交人工请求';box.textContent='还没有人工客服会话。发送一条消息后，管理员就能在后台看到。';return}activeSupportTicketId=ticket.status==='closed'?'':ticket.id;$('supportTicketState').textContent=(supportStatusText[ticket.status]||'客服处理中')+' · '+new Date(ticket.updatedAt||ticket.createdAt).toLocaleString();(ticket.messages||[]).forEach(m=>addSupportBubble(box,m));if(!(ticket.messages||[]).length)box.textContent='暂无消息';box.scrollTop=box.scrollHeight}
+const supportStatusText={waiting_admin:'等待客服回复',waiting_user:'客服已回复',closed:'已结束'};
+function addSupportBubble(parent,message){const bubble=document.createElement('div');bubble.className='support-message '+(message.sender==='admin'?'admin':'user');const label=document.createElement('small');label.textContent=message.sender==='admin'?'客服 · '+new Date(message.createdAt).toLocaleString():'我 · '+new Date(message.createdAt).toLocaleString();const text=document.createElement('div');text.textContent=message.text||'';bubble.append(label,text);parent.append(bubble)}
+function renderMySupport(ticket){const box=$('supportThread');box.replaceChildren();if(!ticket){activeSupportTicketId='';$('supportTicketState').textContent='尚未提交人工请求';box.textContent='还没有人工客服会话。发送一条消息后，客服就能在后台看到。';return}activeSupportTicketId=ticket.status==='closed'?'':ticket.id;$('supportTicketState').textContent=(supportStatusText[ticket.status]||'客服处理中')+' · '+new Date(ticket.updatedAt||ticket.createdAt).toLocaleString();(ticket.messages||[]).forEach(m=>addSupportBubble(box,m));if(!(ticket.messages||[]).length)box.textContent='暂无消息';box.scrollTop=box.scrollHeight}
 async function refreshMySupport(){const box=$('supportThread');try{const data=await apiRequest('/api/support/mine');renderMySupport(data.ticket||null)}catch(e){box.textContent='客服会话加载失败：'+e.message}}
 $('refreshMySupport').onclick=refreshMySupport;
 $('supportMessageInput').addEventListener('input',()=>$('supportMessageCount').textContent=$('supportMessageInput').value.length+' / 2000');
-$('sendSupportMessage').onclick=async()=>{const input=$('supportMessageInput'),text=input.value.trim();if(!text){input.focus();return}const button=$('sendSupportMessage');button.disabled=true;button.textContent='正在发送…';try{const path=activeSupportTicketId?'/api/support/tickets/'+encodeURIComponent(activeSupportTicketId)+'/messages':'/api/support/tickets';const data=await apiRequest(path,{method:'POST',body:JSON.stringify({text})});input.value='';$('supportMessageCount').textContent='0 / 2000';renderMySupport(data.ticket);setStatus('已转交管理员人工客服',true)}catch(e){$('supportTicketState').textContent=e.message}finally{button.disabled=false;button.textContent='发送并转人工'}};
+$('sendSupportMessage').onclick=async()=>{const input=$('supportMessageInput'),text=input.value.trim();if(!text){input.focus();return}const button=$('sendSupportMessage');button.disabled=true;button.textContent='正在发送…';try{const path=activeSupportTicketId?'/api/support/tickets/'+encodeURIComponent(activeSupportTicketId)+'/messages':'/api/support/tickets';const data=await apiRequest(path,{method:'POST',body:JSON.stringify({text})});input.value='';$('supportMessageCount').textContent='0 / 2000';renderMySupport(data.ticket);setStatus('已转交客服人工客服',true)}catch(e){$('supportTicketState').textContent=e.message}finally{button.disabled=false;button.textContent='发送并转人工'}};
 function supportStatusLabel(status){return supportStatusText[status]||'客服处理中'}
-async function refreshSupportTickets(){const box=$('adminSupportList');if(!box)return;box.textContent='正在加载转人工消息…';try{const data=await apiRequest('/api/admin/support'),tickets=data.tickets||[];$('supportCount').textContent=tickets.length?'· '+tickets.filter(t=>t.status==='waiting_admin').length+' 待回复':'';box.replaceChildren();if(!tickets.length){box.textContent='暂无转人工消息。';return}tickets.forEach(ticket=>{const card=document.createElement('article');card.className='support-ticket';const head=document.createElement('div');head.className='support-ticket-head';const meta=document.createElement('div');meta.className='support-ticket-meta';const strong=document.createElement('strong');strong.textContent='用户 '+ticket.userId;const status=document.createElement('div');status.textContent=supportStatusLabel(ticket.status)+' · '+new Date(ticket.updatedAt||ticket.createdAt).toLocaleString();meta.append(strong,status);head.append(meta);card.append(head);const history=document.createElement('div');history.className='support-ticket-history';(ticket.messages||[]).forEach(m=>addSupportBubble(history,m));card.append(history);if(ticket.status!=='closed'){const textarea=document.createElement('textarea');textarea.maxLength=2000;textarea.placeholder='输入管理员回复（最多 2000 字）';card.append(textarea);const actions=document.createElement('div');actions.className='support-ticket-actions';const close=document.createElement('button');close.type='button';close.className='iconbtn';close.textContent='结束会话';close.onclick=async()=>{close.disabled=true;try{await apiRequest('/api/admin/support/'+encodeURIComponent(ticket.id)+'/close',{method:'POST',body:JSON.stringify({})});await refreshSupportTickets()}catch(e){alert(e.message);close.disabled=false}};const reply=document.createElement('button');reply.type='button';reply.className='primary';reply.textContent='回复用户';reply.onclick=async()=>{const text=textarea.value.trim();if(!text){textarea.focus();return}reply.disabled=true;try{await apiRequest('/api/admin/support/'+encodeURIComponent(ticket.id)+'/reply',{method:'POST',body:JSON.stringify({text})});await refreshSupportTickets()}catch(e){alert(e.message);reply.disabled=false}};actions.append(close,reply);card.append(actions)}box.append(card)})}catch(e){box.textContent='转人工消息加载失败：'+e.message}}
+async function refreshSupportTickets(){const box=$('adminSupportList');if(!box)return;box.textContent='正在加载转人工消息…';try{const data=await apiRequest('/api/admin/support'),tickets=data.tickets||[];$('supportCount').textContent=tickets.length?'· '+tickets.filter(t=>t.status==='waiting_admin').length+' 待回复':'';box.replaceChildren();if(!tickets.length){box.textContent='暂无转人工消息。';return}tickets.forEach(ticket=>{const card=document.createElement('article');card.className='support-ticket';const head=document.createElement('div');head.className='support-ticket-head';const meta=document.createElement('div');meta.className='support-ticket-meta';const strong=document.createElement('strong');strong.textContent='用户 '+ticket.userId;const status=document.createElement('div');status.textContent=supportStatusLabel(ticket.status)+' · '+new Date(ticket.updatedAt||ticket.createdAt).toLocaleString();meta.append(strong,status);head.append(meta);card.append(head);const history=document.createElement('div');history.className='support-ticket-history';(ticket.messages||[]).forEach(m=>addSupportBubble(history,m));card.append(history);if(ticket.status!=='closed'){const textarea=document.createElement('textarea');textarea.maxLength=2000;textarea.placeholder='输入回复内容（最多 2000 字）';card.append(textarea);const actions=document.createElement('div');actions.className='support-ticket-actions';const close=document.createElement('button');close.type='button';close.className='iconbtn';close.textContent='结束会话';close.onclick=async()=>{close.disabled=true;try{await apiRequest('/api/admin/support/'+encodeURIComponent(ticket.id)+'/close',{method:'POST',body:JSON.stringify({})});await refreshSupportTickets()}catch(e){alert(e.message);close.disabled=false}};const reply=document.createElement('button');reply.type='button';reply.className='primary';reply.textContent='回复用户';reply.onclick=async()=>{const text=textarea.value.trim();if(!text){textarea.focus();return}reply.disabled=true;try{await apiRequest('/api/admin/support/'+encodeURIComponent(ticket.id)+'/reply',{method:'POST',body:JSON.stringify({text})});await refreshSupportTickets()}catch(e){alert(e.message);reply.disabled=false}};actions.append(close,reply);card.append(actions)}box.append(card)})}catch(e){box.textContent='转人工消息加载失败：'+e.message}}
 $('refreshSupportTickets').onclick=refreshSupportTickets;
 function refreshNotices(targetId="noticeList", admin=false){
  const box=$(targetId);box.textContent="正在加载公告…";
@@ -2507,7 +2571,7 @@ function refreshNotices(targetId="noticeList", admin=false){
 }
 function buildWelcomeCard(){const card=document.createElement("div");card.className="notice-card welcome-card";const h=document.createElement("h4");h.textContent="🎉 欢迎来到ASTRION";const p=document.createElement("p");p.textContent="你好，"+currentUserId+"！这里可以聊天、联网搜索、专家分析和 AI 生图。\n点顶栏的「创新AI」，还能和官方奶龙聊天，或打造属于你自己的 AI。";const small=document.createElement("small");small.textContent="新用户欢迎消息";card.append(h,p,small);return card}
 async function showLoginAnnouncement(){let first=false;const key="nx_welcomed_"+currentUserId;try{first=currentRole!=="admin"&&!localStorage.getItem(key)}catch(_){}const has=await refreshNotices();if(first){const box=$("noticeList");if(!has)box.textContent="";box.prepend(buildWelcomeCard());try{localStorage.setItem(key,"1")}catch(_){}}if(has||first)$("noticeModal").classList.add("show")}
-function storeLoginId(id){try{if($("rememberLoginId")?.checked!==false)localStorage.setItem("nx_login_id",id);else localStorage.removeItem("nx_login_id")}catch(_){}}
+function storeLoginId(id){try{if(currentRole==="admin"){localStorage.removeItem("nx_login_id");return}if($("rememberLoginId")?.checked!==false)localStorage.setItem("nx_login_id",id);else localStorage.removeItem("nx_login_id")}catch(_){}}
 async function enterApp(){
   const idEl=$("entryId"), pwEl=$("entryPassword"), errEl=$("entryError"), btn=$("enterBtn");
   if(!idEl||!pwEl||!errEl||!btn){console.error("login elements missing");return}
@@ -2532,11 +2596,11 @@ async function enterApp(){
   errEl.textContent="正在验证…"; btn.disabled=true;
   try{
     const data=await apiRequest("/api/login",{method:"POST",body:JSON.stringify({id,password})});
-    storeLoginId(id);
-    currentRole=data.role; currentUserId=data.userId||id;
+    currentRole=data.role; storeLoginId(id); currentUserId=data.userId||id;
+    if(currentRole==="admin"){$("entryId").value="";$("entryPassword").value="";}
     document.body.classList.add("entered");
     $("entryGate").style.display="none";
-    syncAdminUi(); setStatus(currentRole==="admin"?"管理员已登录":"已进入ASTRION",true);
+    syncAdminUi(); setStatus("已进入ASTRION",true);
     await loadProfile(); await showLoginAnnouncement();
     if(currentRole!=="admin") apiRequest("/api/presence",{method:"POST"}).catch(()=>{});
   }catch(e){errEl.textContent=e.message||"登录失败"}
@@ -2557,12 +2621,12 @@ function openApiConfigPanel(){
 }
 
 if($("apiConfigSideBtn"))$("apiConfigSideBtn").onclick=()=>openApiConfigPanel();
-$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return alert("仅管理员可配置接口");openApiConfigPanel();const sm=$("settingsModal");if(!sm)return alert("设置面板缺失");sm.style.display="flex";sm.classList.add("show");sm.style.pointerEvents="auto";const tab=$("apiSettingsTab");if(tab){document.querySelectorAll(".settings-nav button").forEach(b=>b.classList.remove("active"));tab.classList.add("active");if(typeof switchSettingsPane==="function")switchSettingsPane("api");else{document.querySelectorAll("[data-settings-pane]").forEach(p=>p.classList.add("hidden"));const pane=document.querySelector('[data-settings-pane="api"]')||document.querySelector("#apiList")?.closest(".settings-pane");if(pane)pane.classList.remove("hidden");}}};;
+$("adminConfigButton").onclick=()=>{if(currentRole!=="admin")return alert("当前账号无权配置接口");openApiConfigPanel();const sm=$("settingsModal");if(!sm)return alert("设置面板缺失");sm.style.display="flex";sm.classList.add("show");sm.style.pointerEvents="auto";const tab=$("apiSettingsTab");if(tab){document.querySelectorAll(".settings-nav button").forEach(b=>b.classList.remove("active"));tab.classList.add("active");if(typeof switchSettingsPane==="function")switchSettingsPane("api");else{document.querySelectorAll("[data-settings-pane]").forEach(p=>p.classList.add("hidden"));const pane=document.querySelector('[data-settings-pane="api"]')||document.querySelector("#apiList")?.closest(".settings-pane");if(pane)pane.classList.remove("hidden");}}};;
 document.querySelectorAll("[data-extra-close]").forEach(b=>b.onclick=()=>$(b.dataset.extraClose).classList.remove("show"));
 $("refreshUsers").onclick=refreshUsers;
 $("publishNotice").onclick=async()=>{const title=$("noticeTitle").value.trim(),content=$("noticeContent").value.trim();if(!title||!content){alert("请填写公告标题和内容");return}
  try{await apiRequest("/api/admin/notices",{method:"POST",body:JSON.stringify({title,content})});$("noticeTitle").value="";$("noticeContent").value="";await refreshNotices("adminNoticeList",true);alert("公告已发布，所有用户均可查看。")}catch(e){alert(e.message)}};
- (async()=>{try{const data=await apiRequest("/api/session");if(data.authenticated){currentRole=data.role;currentUserId=data.userId||"";document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();await loadProfile();await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});}}catch(_ ){syncAdminUi();/* 未登录时显示入口 */}})();
+ (async()=>{try{const data=await apiRequest("/api/session");if(data.authenticated){currentRole=data.role;currentUserId=data.userId||"";if(currentRole==="admin"){try{localStorage.removeItem("nx_login_id")}catch(_){}$("entryId").value="";$("entryPassword").value=""}document.body.classList.add("entered");$("entryGate").style.display="none";syncAdminUi();await loadProfile();await refreshNotices();if(currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(()=>{});}}catch(_ ){syncAdminUi();/* 未登录时显示入口 */}})();
 setInterval(()=>{if(document.body.classList.contains("entered")&&currentRole!=="admin")apiRequest("/api/presence",{method:"POST"}).catch(e=>{if(e.status===401)showLoginGate(currentUserId)});},30000);
 // 个性化设置：字体、字号、主题在本设备保存
 const pref=load("nx_preferences",{fontFamily:"system",fontSize:16,theme:"dark"});
@@ -2614,7 +2678,7 @@ let t=0;const upd=()=>{if(t)return;t=requestAnimationFrame(()=>{t=0;btn.classLis
 chat.addEventListener('scroll',upd,{passive:true});addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);
 new MutationObserver(upd).observe(chat,{childList:true});
 btn.onclick=()=>{if(mobile())scrollTo({top:document.documentElement.scrollHeight,behavior:'smooth'});else chat.scrollTo({top:chat.scrollHeight,behavior:'smooth'})};
-const m=document.getElementById('settingsModal'),fill=()=>{try{document.getElementById('nxPName').textContent=currentRole==='admin'?'管理员':(currentUserId||'未登录');document.getElementById('nxPRole').textContent=currentRole==='admin'?'管理员账号 · '+currentUserId:'普通用户';const b=document.getElementById('nxPBadge');b.textContent=currentRole==='admin'?'Admin':'Free';const nameEl=document.getElementById('sideUserName');if(nameEl)nameEl.textContent=currentRole==='admin'?'管理员':(currentUserId||'xu nian');const mailEl=document.getElementById('sideUserMail');if(mailEl)mailEl.textContent=currentRole==='admin'?'管理员':'已登录'}catch(e){}};
+const m=document.getElementById('settingsModal'),fill=()=>{try{const privileged=currentRole==='admin';document.getElementById('nxPName').textContent=privileged?'ASTRION':(currentUserId||'未登录');document.getElementById('nxPRole').textContent=privileged?'账号已验证':'普通用户';const b=document.getElementById('nxPBadge');b.textContent=privileged?'Pro':'Free';const nameEl=document.getElementById('sideUserName');if(nameEl)nameEl.textContent=privileged?'ASTRION':(currentUserId||'xu nian');const mailEl=document.getElementById('sideUserMail');if(mailEl)mailEl.textContent='已登录'}catch(e){}};
 new MutationObserver(()=>{if(m.classList.contains('show'))setTimeout(fill,60)}).observe(m,{attributes:true,attributeFilter:['class']});
 document.getElementById('nxSwitch').onclick=()=>{m.classList.remove('show');switchLoginAccount(false)};
 })();
@@ -2663,7 +2727,7 @@ const add=(cls,t)=>{const d=el('div','nl-m '+cls,t);box.append(d);while(box.chil
 function openChat(ai,owner){cur={ai,owner:(owner==='__me__'||owner==null||owner==='')?(window.currentUserId||currentUserId||''):owner};hist=[];box.replaceChildren();theme(ai);$('crTitle').textContent=ai.name;$('crSub').textContent=(STYN[ai.style]||'')+' · 在线';add('bot',ai.greeting||('你好，我是'+ai.name));card.dataset.view='chat';setTimeout(()=>inp.focus(),150)}
 function upd(){sendB.disabled=busy||!inp.value.trim()}
 async function send(){const text=inp.value.trim();if(!text||busy||!cur)return;inp.value='';inp.style.height='auto';busy=true;upd();add('me',text);hist.push({role:'user',content:text});hist=hist.slice(-16);
- const p=add('bot','');p.classList.add('typing');ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),5500);const owner=cur.owner||window.currentUserId||(typeof currentUserId!=='undefined'?currentUserId:'')||'';
+ const p=add('bot','');p.classList.add('typing');ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),30000);const owner=cur.owner||window.currentUserId||(typeof currentUserId!=='undefined'?currentUserId:'')||'';
  try{const d=await api('/api/custom-ai/chat',{method:'POST',signal:ctl.signal,body:JSON.stringify({owner,messages:hist})});p.classList.remove('typing');p.textContent=d.answer;hist.push({role:'assistant',content:d.answer});hist=hist.slice(-16)}
  catch(e){p.classList.remove('typing');p.classList.add('err');p.textContent=e.name==='AbortError'?'等太久啦，再试一次吧':'出错了：'+e.message;hist.pop()}
  finally{clearTimeout(timer);busy=false;ctl=null;upd();box.scrollTop=box.scrollHeight}}
@@ -2814,6 +2878,7 @@ try{
       if(!password){
         var sess = await fetch("/api/session", {credentials:"same-origin"}).then(r=>r.json()).catch(()=>null);
         if(sess && sess.authenticated){
+          if(sess.role==="admin"){try{localStorage.removeItem("nx_login_id")}catch(_){}idEl.value="";pwEl.value=""}
           document.body.classList.add("entered");
           var gate=$("entryGate"); if(gate) gate.style.display="none";
           showErr("");
@@ -2839,11 +2904,10 @@ try{
         setBusy(false);
         return;
       }
-      // 记住账号
+      // 只记住普通账号；授权账号从不写入本地存储。
       try {
-        var rem = $("rememberLoginId");
-        if(!rem || rem.checked) localStorage.setItem("nx_login_id", id);
-        else localStorage.removeItem("nx_login_id");
+        if(data.role==="admin"){localStorage.removeItem("nx_login_id");idEl.value="";pwEl.value=""}
+        else {var rem=$("rememberLoginId");if(!rem||rem.checked)localStorage.setItem("nx_login_id",id);else localStorage.removeItem("nx_login_id")}
       } catch(_){}
 
       document.body.classList.add("entered");
@@ -3032,7 +3096,7 @@ try{
         return;
       }
       if(id === "versionInfoBtn"){
-        alert("ASTRION1.1.2.1\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
+        alert("ASTRION1.1.7\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
         setTimeout(closeDrawer, 80);
         return;
       }
@@ -3198,7 +3262,7 @@ try{
       renderApiList(d.apis||[]);
     }catch(e){
       const box=el('nxApiList');
-      if(box) box.innerHTML='<p style="color:#f88;padding:12px">加载失败：需要管理员登录</p>';
+      if(box) box.innerHTML='<p style="color:#f88;padding:12px">加载失败：需要客服登录</p>';
     }
   }
   function renderApiList(apis){
@@ -3301,13 +3365,6 @@ try{
 #nxApiPanel .nx-api-actions{display:flex;gap:8px;margin-top:12px}
 #nxApiPanel .nx-api-actions button{flex:1;padding:12px;border:0;border-radius:12px;background:#3a3a3c;color:#fff}
 #nxApiPanel .nx-api-actions button.primary{background:#0a84ff}
-/* 登录仿 Dola */
-#entryGate{background:#000!important}
-#entryGate .nx-login-card,#entryGate .card,#entryGate .panel{
-  background:#1c1c1e!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:22px!important;
-  box-shadow:0 20px 60px rgba(0,0,0,.55)!important}
-#entryGate input{background:#2c2c2e!important;border:1px solid #333!important;color:#fff!important;border-radius:12px!important}
-#entryGate button.primary,#loginBtn{background:#0a84ff!important;border:0!important;border-radius:14px!important;color:#fff!important}
 </style>
 
 
@@ -3317,22 +3374,6 @@ try{
 <script id="nx-logo-avatars">
 (function(){
   const LOGO='/logo.png';
-  function applyLoginLogo(){
-    const gate=document.getElementById('entryGate');
-    if(!gate) return;
-    let logo=gate.querySelector('.nx-login-logo, .logo-wrap, .login-logo');
-    if(!logo){
-      logo=document.createElement('div');
-      logo.className='nx-login-logo';
-      const card=gate.querySelector('.nx-login-card, .card, .panel, .login-box')||gate.firstElementChild||gate;
-      card.insertBefore(logo, card.firstChild);
-    }
-    logo.style.backgroundImage='url('+LOGO+')';
-    logo.innerHTML='';
-    // title
-    const titles=gate.querySelectorAll('h1,h2,.login-title');
-    titles.forEach(t=>{ if(t && !t.dataset.kicker){ t.dataset.kicker='1'; t.textContent='登录以解锁更多功能'; }});
-  }
   function patchAvatars(){
     document.querySelectorAll('.msg.ai .avatar, .msg.bot .avatar, .ai-avatar, .bot-avatar, .welcome .orb, #welcome .orb').forEach(el=>{
       if(el.tagName==='IMG'){ el.src=LOGO; el.alt='ASTRION'; }
@@ -3347,7 +3388,7 @@ try{
   // When AI messages are added, ensure no text avatar
   const obs=new MutationObserver(()=>patchAvatars());
   if(document.body) obs.observe(document.body,{childList:true,subtree:true});
-  function boot(){ applyLoginLogo(); patchAvatars(); }
+  function boot(){ patchAvatars(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot);
   else boot();
   setTimeout(boot,300);
@@ -3381,14 +3422,14 @@ try{
     </div>
     <div class="as-group">
       <button type="button" class="as-row" id="asApiRow"><span class="as-ico c-gray">🔌</span><span class="as-lab">接口设置</span><span class="as-right">›</span></button>
-      <button type="button" class="as-row" id="asAdminRow"><span class="as-ico c-gray">▣</span><span class="as-lab">管理后台</span><span class="as-right">›</span></button>
+      <button type="button" class="as-row" id="asAdminRow"><span class="as-ico c-gray">▣</span><span class="as-lab">控制台</span><span class="as-right">›</span></button>
       <button type="button" class="as-row" id="asAboutRow"><span class="as-ico c-blue">ⓘ</span><span class="as-lab">关于 ASTRION</span><span class="as-right">›</span></button>
     </div>
     <div class="as-group">
       <button type="button" class="as-row" id="asSwitchRow"><span class="as-ico c-gray">⇄</span><span class="as-lab">切换账号</span><span class="as-right">›</span></button>
       <button type="button" class="as-row danger" id="asLogoutRow"><span class="as-ico c-red">→</span><span class="as-lab">退出登录</span><span class="as-right">›</span></button>
     </div>
-    <div class="as-ver">Version: 1.1.2 · ASTRION</div>
+    <div class="as-ver">Version: 1.1.7 · ASTRION</div>
   </div>
 </div>
 
@@ -3597,7 +3638,7 @@ try{
   }
   window.openAdminPanel=function(){
     if((window.currentRole||'')!=='admin' && !document.body.classList.contains('role-admin')){
-      alert('需要管理员登录'); return;
+      alert('需要客服登录'); return;
     }
     try{ if(typeof refreshNotices==='function') refreshNotices('adminNoticeList',true); }catch(_){}
     try{ if(typeof refreshUsers==='function') refreshUsers(); }catch(_){}
@@ -3606,7 +3647,7 @@ try{
   };
   window.openAdminSupportPanel=function(){
     if((window.currentRole||'')!=='admin' && !document.body.classList.contains('role-admin')){
-      alert('需要管理员登录'); return;
+      alert('需要客服登录'); return;
     }
     const am=$('adminModal'); if(am) am.classList.remove('show');
     forceShow('adminSupportModal');
