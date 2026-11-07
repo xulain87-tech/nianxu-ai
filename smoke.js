@@ -93,7 +93,7 @@ async function waitForHealth(baseUrl, child) {
         NODE_ENV: 'test',
         ADMIN_ID: 'smokeadmin',
         ADMIN_PASSWORD: adminPassword,
-        ZHIPU_API_KEY: '',
+        NVIDIA_API_KEY: '',
         ZAI_API_KEY: '',
         TRUST_PROXY_HOPS: '0'
       },
@@ -104,7 +104,7 @@ async function waitForHealth(baseUrl, child) {
     const baseUrl = `http://127.0.0.1:${appPort}`;
     const health = await waitForHealth(baseUrl, app);
     assert.equal(health.status, 'ok');
-    assert.equal(health.version, '1.1.8');
+    assert.equal(health.version, '1.9.1');
 
     const unauthorized = await fetch(`${baseUrl}/api/ai/chat`, {
       method: 'POST', headers: { 'content-type': 'application/json' },
@@ -133,8 +133,8 @@ async function waitForHealth(baseUrl, child) {
     assert.equal(apiResponse.status, 200);
     let apiData = await apiResponse.json();
     assert.equal(apiData.apis.length, 5, 'server should expose exactly five shared slots');
-    assert.equal(apiData.apis[0].model, 'glm-4.6v-flash', 'first slot should be GLM-4.6V-Flash');
-    assert.equal(apiData.apis[0].url, 'https://open.bigmodel.cn/api/paas/v4/chat/completions');
+    assert.equal(apiData.apis[0].model, 'z-ai/glm-5.3-flash', 'default first slot should be NVIDIA GLM-5.3-Flash');
+    assert.equal(apiData.apis[0].url, 'https://integrate.api.nvidia.com/v1/chat/completions');
     assert.ok(apiData.apis.every(slot => !Object.hasOwn(slot, 'key')), 'API keys must never be returned');
 
     const invalid = await fetch(`${baseUrl}/api/ai/chat`, {
@@ -173,7 +173,7 @@ async function waitForHealth(baseUrl, child) {
     apiResponse = await getApis();
     apiData = await apiResponse.json();
     assert.equal(apiData.apis.length, 5);
-    assert.equal(apiData.apis[0].model, 'glm-4.6v-flash', 'admin cannot overwrite the fixed first slot');
+    assert.equal(apiData.apis[0].model, 'ignored', 'admin should be able to edit the first slot');
     assert.equal(apiData.apis[4].keySet, true, 'server reports key presence only');
     assert.doesNotMatch(JSON.stringify(apiData), new RegExp(fakeSecret));
 

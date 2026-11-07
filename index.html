@@ -636,7 +636,7 @@ body.mobile-drawer-open .sidebar .menu-item{
 
 
 <style id="nx-login-premium">
-/* ===== ASTRION1.1.8 绚丽多彩登录 ===== */
+/* ===== ASTRION1.9.1 绚丽多彩登录 ===== */
 #entryGate{
   position:fixed!important;inset:0!important;z-index:99999!important;
   display:flex!important;align-items:center;justify-content:center;
@@ -1687,7 +1687,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
  <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="发消息或按住说话..."></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 1.1.8 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 1.9.1 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>接口、外观、功能和系统信息集中在这里。改动默认只保存在当前设备，不会暴露密钥。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
  <div class="nx-profile"><div class="av">A</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>全站共享接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
  <p class="settings-page-note">具备配置权限的账号可调整服务器接口；AI 调用经服务端代理，接口地址和密钥不会发送到浏览器。</p>
  <div id="apiList"></div>
@@ -1698,7 +1698,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
  </div>
  <div class="hint">提示：接口和密钥由服务端代理管理；密钥不会回传到浏览器。智谱密钥请放入部署平台的私密环境变量。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION1.1.8</strong><span>Build 2026.11 · ASTRION1.1.8</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、控制台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION1.9.1</strong><span>Build 2026.11 · ASTRION1.9.1</span><p>本次更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、控制台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 开启互怼强度匹配</label>
@@ -1733,7 +1733,7 @@ body > .welcome-dup, .fixed-welcome{display:none!important}
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION1.1.8" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION1.9.1" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -2112,7 +2112,7 @@ body.nx-light .cr-item.official{background:linear-gradient(135deg,color-mix(in s
 .cr-pick button.on{transform:scale(1.1)}
 .cr-save{box-shadow:0 8px 20px #7a6bff44;transition:transform .2s var(--soft)}
 .cr-save:active{transform:scale(.97)}
-/* ===== 1.1.8 Fluent Grok-style UI — no blur, high FPS ===== */
+/* ===== 1.9.1 Fluent Grok-style UI — no blur, high FPS ===== */
 :root{--bg:#000;--panel:#0d0d0d;--panel2:#161616;--line:rgba(255,255,255,.1);--text:#f0f0f0;--muted:#888;--accent:#1d9bf0}
 *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 body{background:#000!important;color:var(--text);font-family:system-ui,-apple-system,sans-serif}
@@ -2160,7 +2160,7 @@ body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .menu-item,.primary,.ghost,.iconbtn,.send{transition:background .12s,transform .12s!important}
 
-/* ===== 1.1.8 全新登录界面样式（独立无冲突） ===== */
+/* ===== 1.9.1 全新登录界面样式（独立无冲突） ===== */
 #entryGate{
   position:fixed!important;inset:0!important;z-index:99999!important;
   display:flex!important;align-items:center;justify-content:center;
@@ -2207,7 +2207,7 @@ body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 .nx-login-form.hidden{display:none!important}
 body.entered #entryGate{display:none!important;visibility:hidden!important;pointer-events:none!important}
 
-/* 1.1.8 全屏 Dola-inspired 登录：留白、清晰层级、轻量暖色强调。 */
+/* 1.9.1 全屏 Dola-inspired 登录：留白、清晰层级、轻量暖色强调。 */
 #entryGate{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;min-height:100dvh!important;z-index:99999!important;display:flex!important;align-items:stretch!important;justify-content:flex-start!important;overflow:auto!important;padding:0!important;background:#f8f7f4!important;color:#20211f!important;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif!important}
 #entryGate .nx-auth-layout{position:absolute;inset:0;isolation:isolate;display:grid;grid-template-columns:minmax(0,1.06fr) minmax(390px,.94fr);width:100%!important;max-width:none!important;height:100%;min-height:100dvh;margin:0!important;padding:0!important;background:#faf9f6;text-align:left!important}
 #entryGate .nx-auth-brand{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-width:0;overflow:hidden;padding:clamp(30px,5vw,76px);color:#f8f4ee;background:radial-gradient(ellipse at 15% 12%,#f1a47b3b,transparent 35%),radial-gradient(ellipse at 92% 82%,#8da58b30,transparent 34%),linear-gradient(145deg,#202420,#161a17 62%,#23221e)}
@@ -2283,7 +2283,7 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
         <h2>把灵感，<br/><em>变成答案。</em></h2>
         <p>与你一起探索、创作与解决问题。<br/>每段对话，都从一个好奇开始。</p>
       </div>
-      <div class="nx-brand-footer"><span class="nx-live-dot"></span><span>你的 AI 工作空间已准备就绪</span><span class="nx-brand-foot-mark">ASTRION · 1.1.8</span></div>
+      <div class="nx-brand-footer"><span class="nx-live-dot"></span><span>你的 AI 工作空间已准备就绪</span><span class="nx-brand-foot-mark">ASTRION · 1.9.1</span></div>
     </section>
     <section class="nx-login-card" aria-labelledby="nxLoginTitle">
       <div class="nx-auth-mobile-mark"><img src="/logo.png" alt=""/><span>ASTRION</span></div>
@@ -2426,7 +2426,7 @@ async function send(){
  const pending=addMessage("ai",useSearch?"正在搜索网页并整理答案……":"输入中……");pending.parentElement.classList.add("typing");
  const prefs=conversationPrefs(),userContent=buildContent(text,attached);
  const apiHistory=[...history.slice(useExpert?-20:-12),{role:"user",content:userContent}];
- let answer=null,lastError=null,used=useSearch?"联网搜索":"服务器接口",searchResults=[];const controller=new AbortController();aborter=controller;const timer=setTimeout(()=>controller.abort(),useSearch?55000:useExpert?30000:20000);
+ let answer=null,lastError=null,used=useSearch?"联网搜索":"服务器接口",searchResults=[];const controller=new AbortController();aborter=controller;const timer=setTimeout(()=>controller.abort(),useSearch?45000:useExpert?18000:10000);
  setStatus(useSearch?"正在联网搜索并整理来源…":useExpert?"专家模式思考中…":"正在连接 AI…");
  try{const result=useSearch?await callServerSearch(text,useExpert,controller.signal,prefs):await callServerChat(apiHistory,controller.signal,useExpert,prefs);answer=result.answer;used=result.used||used;searchResults=result.results||[]}catch(e){lastError=e}finally{clearTimeout(timer);aborter=null}
  if(answer){pending.parentElement.classList.remove("typing");pending.textContent=answer;const copyButton=pending.parentElement.querySelector(".msg-tools button");if(copyButton)copyButton.onclick=()=>navigator.clipboard?.writeText(answer);addSearchSources(pending,searchResults);history.push({role:"user",content:userContent},{role:"assistant",content:answer});if(history.length>20)history=history.slice(-20);setStatus("已连接："+used,true);$("modelLabel").textContent=(useSearch?"联网搜索 · ":useExpert?"专家模式 · ":"服务器接口 · ")+used;}
@@ -2449,7 +2449,7 @@ if($("creatorBtnSide"))$("creatorBtnSide").onclick=()=>{$("creatorModal").classL
 if($("noticeButtonSide"))$("noticeButtonSide").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
 if($("humanSupportBtnSide"))$("humanSupportBtnSide").onclick=()=>{if(currentRole==="admin"){if(typeof openAdminSupportPanel==="function")openAdminSupportPanel();return}openModal("humanSupportModal");if(typeof refreshMySupport==="function")refreshMySupport()};
 if($("clearChatSide"))$("clearChatSide").onclick=()=>{if(confirm("确定清空当前对话？")){const chat=$("chat");if(chat){chat.innerHTML="";const w=document.createElement("div");w.className="welcome";w.id="welcome";w.innerHTML='<div class="orb" style="background-image:url(/logo.png)"></div><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div>';chat.append(w);setStatus("对话已清空",true)}}};
-if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION1.1.8\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 控制台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
+if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION1.9.1\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 控制台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
 (function(){
   const openApp=()=>openModal("appearanceModal");
   if($("openAppearance")) $("openAppearance").onclick=openApp;
@@ -2493,7 +2493,7 @@ checkServiceHealth();
 async function loadProfile(){try{const p=await apiRequest("/api/account/profile"),privileged=p.role==="admin";currentUserId=p.id;$("profileName").value=privileged?"ASTRION":(p.displayName||"");$("profileId").value=privileged?"":(p.id||"");$("profileId").readOnly=privileged;[ $("profileId").closest(".grid"),$("profileCurrentPassword").closest(".grid") ].forEach(el=>el?.classList.toggle("hidden",privileged));$("saveProfile").classList.toggle("hidden",privileged);renderMemories();const nameEl=$("sideUserName");if(nameEl)nameEl.textContent=privileged?"ASTRION":(p.displayName||p.id||"用户");const mailEl=$("sideUserMail");if(mailEl)mailEl.textContent="已登录";const av=$("sideUserName")?.previousElementSibling||document.querySelector(".av-circle");if(av&&p.displayName)av.textContent=(privileged?"AS":p.displayName.slice(0,2)).toUpperCase()}catch(e){$("profileStatus").textContent=e.message}}
 $("addMemory").onclick=()=>{const value=$("memoryInput").value.trim().slice(0,200);if(!value)return;const list=readMemories();if(!list.includes(value))list.unshift(value);save(memoryKey(),list.slice(0,20));$("memoryInput").value="";renderMemories()};
 $("saveProfile").onclick=async()=>{if(currentRole==="admin")return;const body={displayName:$("profileName").value.trim(),newId:$("profileId").value.trim(),currentPassword:$("profileCurrentPassword").value,newPassword:$("profileNewPassword").value};try{const p=await apiRequest("/api/account/profile",{method:"PUT",body:JSON.stringify(body)});currentUserId=p.id;$("profileId").value=p.id;$("profileCurrentPassword").value="";$("profileNewPassword").value="";$("profileStatus").textContent="账号资料已保存";renderMemories()}catch(e){$("profileStatus").textContent=e.message}};
- $("saveSettings").onclick=async()=>{if(currentRole!=="admin")return alert("当前账号无权修改接口");try{const result=await apiRequest("/api/admin/apis",{method:"PUT",body:JSON.stringify({apis})});apis=result.apis||apis;$("settingsModal").classList.remove("show");$("modelLabel").textContent="服务器接口 · 智谱优先";setStatus("全站共享接口配置已保存",true)}catch(e){alert(e.message)}};
+ $("saveSettings").onclick=async()=>{if(currentRole!=="admin")return alert("当前账号无权修改接口");try{const result=await apiRequest("/api/admin/apis",{method:"PUT",body:JSON.stringify({apis})});apis=result.apis||apis;$("settingsModal").classList.remove("show");$("modelLabel").textContent="服务器接口 · 管理员共享";setStatus("全站共享接口配置已保存",true)}catch(e){alert(e.message)}};
 function openImageGenerator(){if(!document.body.classList.contains("entered")){setStatus("请先登录，再使用 AI 生图");return}openModal("imagePromptModal");setTimeout(()=>$("imagePromptText").focus(),80)}
 $("imagePromptText").addEventListener("input",()=>$("imagePromptCount").textContent=$("imagePromptText").value.length+" / 1000");
 document.querySelectorAll("[data-image-style]").forEach(button=>button.onclick=()=>{const input=$("imagePromptText"),style=button.dataset.imageStyle;input.value=input.value.trim()?input.value.trim()+"，"+style:style;input.dispatchEvent(new Event("input",{bubbles:true}));input.focus()});
@@ -2741,7 +2741,7 @@ const add=(cls,t)=>{const d=el('div','nl-m '+cls,t);box.append(d);while(box.chil
 function openChat(ai,owner){cur={ai,owner:(owner==='__me__'||owner==null||owner==='')?(window.currentUserId||currentUserId||''):owner};hist=[];box.replaceChildren();theme(ai);$('crTitle').textContent=ai.name;$('crSub').textContent=(STYN[ai.style]||'')+' · 在线';add('bot',ai.greeting||('你好，我是'+ai.name));card.dataset.view='chat';setTimeout(()=>inp.focus(),150)}
 function upd(){sendB.disabled=busy||!inp.value.trim()}
 async function send(){const text=inp.value.trim();if(!text||busy||!cur)return;inp.value='';inp.style.height='auto';busy=true;upd();add('me',text);hist.push({role:'user',content:text});hist=hist.slice(-16);
- const p=add('bot','');p.classList.add('typing');ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),30000);const owner=cur.owner||window.currentUserId||(typeof currentUserId!=='undefined'?currentUserId:'')||'';
+ const p=add('bot','');p.classList.add('typing');ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),10000);const owner=cur.owner||window.currentUserId||(typeof currentUserId!=='undefined'?currentUserId:'')||'';
  try{const d=await api('/api/custom-ai/chat',{method:'POST',signal:ctl.signal,body:JSON.stringify({owner,messages:hist})});p.classList.remove('typing');p.textContent=d.answer;hist.push({role:'assistant',content:d.answer});hist=hist.slice(-16)}
  catch(e){p.classList.remove('typing');p.classList.add('err');p.textContent=e.name==='AbortError'?'等太久啦，再试一次吧':'出错了：'+e.message;hist.pop()}
  finally{clearTimeout(timer);busy=false;ctl=null;upd();box.scrollTop=box.scrollHeight}}
@@ -3110,7 +3110,7 @@ try{
         return;
       }
       if(id === "versionInfoBtn"){
-        alert("ASTRION1.1.8\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
+        alert("ASTRION1.9.1\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
         setTimeout(closeDrawer, 80);
         return;
       }
@@ -3271,14 +3271,14 @@ try{
   function renderApiList(apis){
     const box=el('nxApiList');if(!box)return;box.replaceChildren();
     (apis||[]).slice(0,5).forEach((a,i)=>{
-      const fixed=i===0,row=document.createElement('section');row.className='nx-api-row'+(fixed?' is-primary':'');
+      const fixed=false,row=document.createElement('section');row.className='nx-api-row'+(i===0?' is-primary':'');
       const checked=fixed||a.enabled===true,ro=fixed?'readonly':'',disabled=fixed?'disabled':'';
       row.innerHTML=`<div class="nx-api-head"><div><span class="nx-api-index">${fixed?'PRIMARY':'FALLBACK '+i}</span><b>${esc(a.name||('接口 '+(i+1)))}</b></div><label class="nx-api-enable"><input type="checkbox" data-k="enabled" ${checked?'checked':''} ${disabled}> 启用</label></div>
        <div class="nx-api-fields"><label>接口名称<input data-k="name" value="${esc(a.name||('接口 '+(i+1)))}" ${ro}></label>
        <label>API Endpoint<input data-k="url" value="${esc(a.url||'')}" placeholder="https://服务商/v1/chat/completions" ${ro}></label>
        <label>模型<input data-k="model" value="${esc(a.model||'')}" placeholder="模型名称" ${ro}></label>
        <label class="nx-api-key-label">服务端 API Key <span>${a.keySet?'已配置 · 留空保留':'只保存于服务器'}</span><input type="password" data-k="key" autocomplete="new-password" placeholder="${a.keySet?'输入新 Key 以替换':'粘贴服务商 Key'}"></label></div>
-       <div class="nx-api-row-foot"><small>${fixed?'首槽固定为智谱 GLM-4.6V-Flash':'此槽保存后对全站用户共享'}</small><button type="button" class="nx-api-clear-key">清除已保存 Key</button></div>`;
+       <div class="nx-api-row-foot"><small>${i===0?'管理员可修改首槽 · NVIDIA 默认':'管理员可修改并对全站共享'}</small><button type="button" class="nx-api-clear-key">清除已保存 Key</button></div>`;
       row._api=a;row.querySelector('[data-k="enabled"]').addEventListener('change',e=>{a.enabled=e.target.checked});
       row.querySelectorAll('input[data-k]').forEach(input=>input.addEventListener('input',()=>{const k=input.dataset.k;if(k==='key'){a.key=input.value;a.clearKey=false}else if(k!=='enabled')a[k]=input.value}));
       row.querySelector('.nx-api-clear-key').addEventListener('click',()=>{a.key='';a.clearKey=true;row.querySelector('[data-k="key"]').value='';row.querySelector('.nx-api-key-label span').textContent='已标记清除（部署环境变量需在服务器管理）'});
@@ -3286,7 +3286,7 @@ try{
     });
     while(box.children.length<5){const i=box.children.length,slot={name:'接口 '+(i+1),url:'',model:'',enabled:false,keySet:false};renderApiList([...(apis||[]),slot]);return}
   }
-  function collectApis(){return [...document.querySelectorAll('#nxApiList .nx-api-row')].slice(0,5).map((row,i)=>{const v=k=>row.querySelector(`[data-k="${k}"]`);return {name:v('name')?.value||'',url:v('url')?.value||'',model:v('model')?.value||'',enabled:i===0||Boolean(v('enabled')?.checked),key:v('key')?.value||'',clearKey:row._api?.clearKey===true}})}
+  function collectApis(){return [...document.querySelectorAll('#nxApiList .nx-api-row')].slice(0,5).map(row=>{const v=k=>row.querySelector(`[data-k="${k}"]`);return {name:v('name')?.value||'',url:v('url')?.value||'',model:v('model')?.value||'',enabled:Boolean(v('enabled')?.checked),key:v('key')?.value||'',clearKey:row._api?.clearKey===true}})}
   async function saveApis(){
     const button=el('nxApiSave');button.disabled=true;button.textContent='保存中…';
     try{const r=await fetch('/api/admin/apis',{method:'PUT',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({apis:collectApis()})});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'保存失败');await loadApis();button.textContent='已保存并全站生效';setTimeout(()=>{if(button)button.textContent='保存配置'},1800)}
@@ -3294,7 +3294,7 @@ try{
   }
   function openApiConfigPanel(){
     if(window.currentRole!=='admin'&&!document.body.classList.contains('role-admin')){alert('当前账号无权配置接口');return}
-    let panel=el('nxApiPanel');if(!panel){panel=document.createElement('div');panel.id='nxApiPanel';panel.innerHTML=`<button class="nx-api-mask" data-close aria-label="关闭"></button><section class="nx-api-sheet" role="dialog" aria-modal="true" aria-label="全站共享接口设置"><header class="nx-api-top"><div><small>ASTRION · SERVICE ROUTING</small><b>接口与模型</b><span>五槽共享 · 首槽智谱 · 服务端保密</span></div><button type="button" data-close aria-label="关闭">×</button></header><div class="nx-api-hint">第 1 槽固定为智谱 GLM-4.6V-Flash。管理员可配置其余 4 个备选服务；所有用户共用这些设置。密钥只保存在服务器，不会回传给浏览器。</div><div id="nxApiList"></div><footer class="nx-api-actions"><button type="button" data-close>取消</button><button type="button" id="nxApiSave" class="primary">保存配置</button></footer></section>`;document.body.append(panel);panel.addEventListener('click',e=>{if(e.target.matches('[data-close],.nx-api-mask'))panel.classList.remove('show')});el('nxApiSave').addEventListener('click',saveApis)}
+    let panel=el('nxApiPanel');if(!panel){panel=document.createElement('div');panel.id='nxApiPanel';panel.innerHTML=`<button class="nx-api-mask" data-close aria-label="关闭"></button><section class="nx-api-sheet" role="dialog" aria-modal="true" aria-label="全站共享接口设置"><header class="nx-api-top"><div><small>ASTRION · SERVICE ROUTING</small><b>接口与模型</b><span>五槽共享 · 管理员可编辑 · 服务端保密</span></div><button type="button" data-close aria-label="关闭">×</button></header><div class="nx-api-hint">默认第 1 槽为 NVIDIA GLM-5.3-Flash，管理员可编辑全部 5 个槽位；所有用户共用这些设置。密钥只保存在服务器，不会回传给浏览器。</div><div id="nxApiList"></div><footer class="nx-api-actions"><button type="button" data-close>取消</button><button type="button" id="nxApiSave" class="primary">保存配置</button></footer></section>`;document.body.append(panel);panel.addEventListener('click',e=>{if(e.target.matches('[data-close],.nx-api-mask'))panel.classList.remove('show')});el('nxApiSave').addEventListener('click',saveApis)}
     panel.classList.add('show');loadApis();
   }
   window.openApiConfigPanel=openApiConfigPanel;window.loadApis=loadApis;window.renderApiList=renderApiList;
@@ -3384,7 +3384,7 @@ try{
       <button type="button" class="as-row" id="asSwitchRow"><span class="as-ico c-gray">⇄</span><span class="as-lab">切换账号</span><span class="as-right">›</span></button>
       <button type="button" class="as-row danger" id="asLogoutRow"><span class="as-ico c-red">→</span><span class="as-lab">退出登录</span><span class="as-right">›</span></button>
     </div>
-    <div class="as-ver">Version: 1.1.8 · ASTRION</div>
+    <div class="as-ver">Version: 1.9.1 · ASTRION</div>
   </div>
 </div>
 
@@ -3734,32 +3734,150 @@ body.entered .composer .composer-foot{display:flex!important;justify-content:spa
 #appearanceModal.show{display:flex!important;z-index:100020!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}#appearanceModal .modal{width:min(620px,100%)!important;max-height:86dvh!important;overflow:auto!important}#appearanceModal #fontSize{accent-color:#ad96ff;touch-action:pan-x!important}#appearanceModal #fontSizeLabel{display:inline-block;min-width:45px;color:#cbbcff}
 @media(max-width:760px){body.entered .composer-wrap{bottom:calc(60px + env(safe-area-inset-bottom))!important;padding:8px 10px 9px!important;background:linear-gradient(0deg,#08090d 72%,#08090de8 88%,transparent)!important}.composer-wrap .composer{border-radius:20px!important}.composer .input-row{grid-template-columns:minmax(0,1fr) 42px!important;grid-template-rows:auto auto!important;gap:6px 8px!important}.composer .toolrow{grid-column:1/-1!important;grid-row:1!important;overflow-x:auto!important;scrollbar-width:none!important;padding-bottom:2px}.composer #prompt{grid-column:1!important;grid-row:2!important}.composer #sendBtn{grid-column:2!important;grid-row:2!important}.composer .composer-foot{display:none!important}#chat{padding-bottom:calc(250px + env(safe-area-inset-bottom))!important}.ann-box{width:100%!important;max-height:calc(100dvh - 22px - env(safe-area-inset-top))!important;border-radius:24px!important}.ann-header{padding:19px 18px 14px}.ann-brand h3{font-size:19px}#noticeList{max-height:calc(100dvh - 190px);padding:10px 14px}.ann-foot{padding:12px 16px calc(14px + env(safe-area-inset-bottom))}.announcement-composer{padding:14px}.announcement-compose-head{align-items:flex-start}#nxApiPanel{padding:0}#nxApiPanel .nx-api-sheet{width:100%;max-height:92dvh;border-radius:24px 24px 0 0;padding:18px 14px calc(16px + env(safe-area-inset-bottom))}#nxApiPanel .nx-api-fields{grid-template-columns:1fr}#nxApiPanel .nx-api-key-label{grid-column:auto}}
 </style>
-<style id="nx-dola-chat-surface">
-/* Dola-style mobile workspace: clean black canvas, soft cards, tools separated from input. */
-body.entered{background:#050608!important}
-body.entered .main{background:#050608!important;border-color:#171a21!important;box-shadow:none!important}
-body.entered .topbar{background:#050608!important;border-bottom:1px solid #1b1e25!important}
-body.entered .composer{background:linear-gradient(145deg,#15171d,#0e1015)!important;border:1px solid #30343d!important;border-radius:24px!important;box-shadow:0 12px 36px #0009!important}
-body.entered .composer .toolrow button{background:#191c23!important;border:1px solid #30343d!important;color:#aeb5c5!important}
-body.entered .composer .toolrow button:hover,body.entered .composer .toolrow button[aria-pressed="true"]{background:#272c38!important;border-color:#6377a8!important;color:#fff!important}
-body.entered .msg.ai{background:linear-gradient(145deg,#171a20,#101216)!important;border-color:#252a33!important;border-radius:24px!important}
-body.entered .msg.user{background:linear-gradient(145deg,#344454,#263746)!important;border-color:#536f86!important;border-radius:24px 24px 7px 24px!important}
-body.entered #modelLabel{display:none!important}
+<style id="nx-assistant-thread-ui">
+/* assistant-ui inspired Thread / Message / Composer / ActionBar. Login is untouched. */
+body.entered{--thread-bg:#0b0e13;--thread-panel:#121720;--thread-panel-2:#171e29;--thread-line:#2a3542;--thread-text:#edf2f7;--thread-muted:#8490a1;--thread-purple:#8d82ff;--thread-cyan:#59d7ca;background:var(--thread-bg)!important}
+body.entered .app{grid-template-columns:272px minmax(0,1fr)!important;max-width:1440px!important;gap:14px!important;padding:14px!important}
+body.entered .sidebar,body.entered .main{background:var(--thread-bg)!important;border:1px solid #202a35!important;border-radius:22px!important;box-shadow:0 20px 70px #0008!important}
+body.entered .sidebar{padding:16px!important;gap:14px!important}
+body.entered .sidebar .brand{padding:4px 4px 14px;border-bottom:1px solid #202a35}
+body.entered .sidebar .side-label{font-size:10px!important;letter-spacing:1.6px!important;color:#6f7b8c!important}
+body.entered .sidebar .dola-side-item,body.entered .sidebar .ghost{min-height:40px!important;border-radius:11px!important;background:transparent!important;border:1px solid transparent!important;color:#aeb8c8!important}
+body.entered .sidebar .dola-side-item:hover,body.entered .sidebar .ghost:hover{background:#171e29!important;border-color:#303d4c!important;color:#fff!important}
+body.entered .main{overflow:hidden!important;isolation:isolate}
+body.entered .topbar{height:64px!important;min-height:64px!important;padding:0 22px!important;background:#0f141b!important;border-bottom:1px solid #202a35!important}
+body.entered .top-title{font-size:15px!important;letter-spacing:.8px!important;color:#f0f3f8!important}
+body.entered .top-logo{width:27px!important;height:27px!important;border-radius:8px!important}
+body.entered .top-title:before{width:7px!important;height:7px!important;margin-right:8px!important;background:var(--thread-cyan)!important;box-shadow:0 0 12px var(--thread-cyan)!important}
+body.entered .top-actions .iconbtn{width:36px!important;height:36px!important;padding:0!important;border-radius:10px!important;background:#171e29!important;border-color:#2b3744!important}
+body.entered #chat{padding:30px 24px 176px!important;gap:14px!important;background:var(--thread-bg)!important;scrollbar-color:#344253 #0b0e13!important}
+body.entered #chat:before{content:'THREAD';display:block;width:min(760px,100%);margin:0 auto 10px;color:#697589;font-size:10px;letter-spacing:2px;font-weight:700}
+body.entered .welcome{width:min(760px,100%)!important;margin:auto!important;padding:38px 20px!important}
+body.entered .welcome .orb{width:72px!important;height:72px!important;border-radius:22px!important;margin-bottom:20px!important;background-size:cover!important;border:1px solid #9d92ff55!important;box-shadow:0 12px 38px #6f65ff33!important}
+body.entered .welcome p{color:#919dae!important;font-size:14px!important;line-height:1.75!important}
+body.entered .suggestions{gap:8px!important;margin-top:22px!important}
+body.entered .suggestions button{padding:9px 12px!important;border-radius:10px!important;background:#111820!important;border:1px solid #2a3442!important;color:#adb8c8!important}
+body.entered .suggestions button:hover{background:#1b2431!important;border-color:#64739a!important;color:#fff!important}
+body.entered .msg{width:min(760px,100%)!important;max-width:100%!important;padding:14px 16px!important;border:1px solid var(--thread-line)!important;border-radius:16px!important;background:var(--thread-panel)!important;box-shadow:0 8px 24px #0002!important;font-size:14px!important;line-height:1.75!important}
+body.entered .msg.user{margin-left:auto!important;background:#1a2632!important;border-color:#344b60!important;border-radius:16px 16px 5px 16px!important}
+body.entered .msg.ai{margin-right:auto!important;background:var(--thread-panel)!important;border-color:#2b3541!important;border-radius:5px 16px 16px 16px!important}
+body.entered .msg .role{display:flex!important;align-items:center!important;gap:8px!important;margin-bottom:8px!important;color:#8e9bad!important;font-size:11px!important;font-weight:700!important;letter-spacing:.5px!important}
+body.entered .msg.ai .role{color:#a89dff!important}.msg.user .role{color:#88ced1!important}
+body.entered .message-text{color:var(--thread-text)!important;overflow-wrap:anywhere!important}
+body.entered .msg-tools{display:flex!important;gap:6px!important;margin-top:11px!important;padding-top:8px!important;border-top:1px solid #242e39!important}
+body.entered .msg-tools button{padding:5px 8px!important;border-radius:8px!important;background:transparent!important;color:#8390a2!important;font-size:11px!important}
+body.entered .msg-tools button:hover{background:#232d3a!important;color:#fff!important}
+body.entered .composer-wrap{padding:12px 22px calc(14px + env(safe-area-inset-bottom))!important;background:linear-gradient(0deg,#0b0e13 68%,#0b0e13e8 86%,transparent)!important}
+body.entered .composer-wrap .composer{width:min(820px,100%)!important;padding:10px!important;border-radius:17px!important;background:var(--thread-panel-2)!important;border:1px solid #354151!important;box-shadow:0 16px 42px #0008!important}
+body.entered .composer .input-row{gap:8px!important}.composer .toolrow{gap:5px!important}
+body.entered .composer .toolrow button{width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;border-radius:9px!important;background:#202934!important;border:1px solid #303c4a!important;color:#aeb9ca!important}
+body.entered .composer .toolrow button:hover,body.entered .composer .toolrow button[aria-pressed="true"]{background:#303d4f!important;border-color:#6d7da3!important;color:#fff!important}
+body.entered .composer #prompt{min-height:42px!important;padding:9px 5px!important;font-size:14px!important;color:#f2f5fa!important}.composer #prompt::placeholder{color:#7d899b!important}
+body.entered .composer #sendBtn{width:40px!important;height:40px!important;border-radius:11px!important;background:linear-gradient(135deg,var(--thread-purple),var(--thread-cyan))!important;color:#091014!important;box-shadow:none!important}
+body.entered .composer #sendBtn:not(:disabled):hover{filter:brightness(1.1)!important;transform:translateY(-1px)!important}
+body.entered .composer-foot{padding:6px 3px 0!important;color:#778396!important;font-size:10px!important}.attachments{width:min(820px,100%)!important;margin:0 auto 7px!important}
+body.entered .file-chip{padding:6px 9px!important;border-radius:9px!important;background:#1b2430!important;border-color:#344151!important}
+body.entered .mobile-workbar{background:#11161e!important;border:1px solid #2a3440!important;box-shadow:0 -8px 28px #0008!important;border-radius:16px 16px 0 0!important}
+body.entered .mobile-workbar button{color:#8995a6!important}.mobile-workbar button:active{background:#222d3b!important;color:#fff!important}
+@media(max-width:760px){
+ body.entered .app{display:flex!important;min-height:100dvh!important;padding:0!important}.entered .sidebar{display:none!important}.entered .main{min-height:100dvh!important;border-radius:0!important;border-left:0!important;border-right:0!important}
+ body.entered .topbar{height:56px!important;min-height:56px!important;padding:0 12px!important;position:sticky!important;top:0!important;z-index:30!important}.entered .mobile-menu-btn{display:inline-flex!important;width:34px!important;height:34px!important;padding:0!important;align-items:center!important;justify-content:center!important;background:#171d26!important}
+ body.entered #chat{min-height:calc(100dvh - 56px)!important;padding:22px 10px 238px!important;gap:11px!important}.entered #chat:before{font-size:9px!important;margin-bottom:4px!important}
+ body.entered .welcome{padding:35px 8px!important}.entered .suggestions{display:grid!important;grid-template-columns:1fr 1fr!important;width:100%!important}.entered .suggestions button{min-height:40px!important;padding:8px 6px!important;font-size:11px!important}
+ body.entered .msg{width:calc(100% - 4px)!important;padding:12px 13px!important;font-size:13px!important;border-radius:14px!important}.entered .composer-wrap{bottom:58px!important;padding:7px 8px!important}.entered .composer-wrap .composer{border-radius:16px!important;padding:8px!important}
+ body.entered .composer .input-row{grid-template-columns:minmax(0,1fr) 40px!important;grid-template-rows:auto auto!important;gap:6px 7px!important}.entered .composer .toolrow{grid-column:1/-1!important;grid-row:1!important;overflow-x:auto!important;padding-bottom:1px!important}.entered .composer #prompt{grid-column:1!important;grid-row:2!important;min-height:40px!important;font-size:13px!important}.entered .composer #sendBtn{grid-column:2!important;grid-row:2!important;width:40px!important;height:40px!important}.entered .composer-foot{display:none!important}
+ body.entered .mobile-workbar{position:fixed!important;left:0!important;right:0!important;bottom:0!important;z-index:90!important;height:58px!important;padding-bottom:env(safe-area-inset-bottom)!important}
+}
+</style>
+<style id="nx-v191-surface-system">
+/* Unified shadcn/ui + assistant-ui inspired surfaces. Auth screen is excluded. */
+body.entered{--v191-bg:#0a0d12;--v191-panel:#111720;--v191-panel2:#171e29;--v191-line:#2a3543;--v191-text:#edf2f8;--v191-muted:#8b97a9;--v191-purple:#9184ff;--v191-cyan:#5bd8ca}
+body.entered .as-settings{background:#05070bcc!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important}
+body.entered .as-settings-panel{width:min(520px,calc(100vw - 28px))!important;height:min(820px,calc(100dvh - 28px))!important;margin:auto!important;padding:0!important;overflow:auto!important;border:1px solid #303b4b!important;border-radius:24px!important;background:linear-gradient(160deg,#141b25,#0d1219)!important;box-shadow:0 30px 100px #000b!important;color:var(--v191-text)!important}
+body.entered .as-settings-top{position:sticky!important;top:0!important;z-index:2!important;padding:16px 18px!important;background:#141b25ee!important;border-bottom:1px solid #25303d!important;backdrop-filter:blur(14px)!important}
+body.entered .as-back,body.entered .as-more{width:36px!important;height:36px!important;border:1px solid #334052!important;border-radius:10px!important;background:#1b2430!important;color:#dbe2ed!important}
+body.entered .as-profile{padding:28px 24px 24px!important;text-align:left!important;border-bottom:1px solid #25303d!important}
+body.entered .as-avatar{width:64px!important;height:64px!important;margin:0 0 14px!important;border-radius:18px!important;border:1px solid #6f7ca2!important;box-shadow:0 12px 28px #746cff35!important}
+body.entered .as-name{font-size:22px!important;font-weight:750!important}.as-id{color:var(--v191-muted)!important;font-size:12px!important}
+body.entered .as-manage{margin-top:14px!important;border:1px solid #3b4960!important;border-radius:10px!important;padding:8px 12px!important;background:#1c2735!important;color:#d4ddea!important}
+body.entered .as-group{margin:14px 18px!important;padding:6px!important;border:1px solid #293442!important;border-radius:16px!important;background:#101721!important}
+body.entered .as-row{min-height:48px!important;border-radius:11px!important;color:#c6d0df!important;background:transparent!important}.as-row:hover{background:#202b3a!important;color:#fff!important}
+body.entered .as-ico{width:31px!important;height:31px!important;display:grid!important;place-items:center!important;border-radius:9px!important;background:#202b3a!important}.as-row .as-right{color:#8390a2!important}
+body.entered .as-row.danger{color:#ff9d9d!important}.as-row.danger .as-ico{background:#552e38!important;color:#ffb2b2!important}
+body.entered .as-ver{padding:4px 24px 20px!important;color:#69768a!important;font-size:10px!important;letter-spacing:.6px!important}
+body.entered .modal-back,body.entered .extra-modal{background:#05070bcc!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important}
+body.entered .modal,body.entered .extra-box{width:min(900px,calc(100vw - 28px))!important;max-height:min(880px,calc(100dvh - 28px))!important;overflow:auto!important;border:1px solid #303b4b!important;border-radius:24px!important;background:linear-gradient(160deg,#141b25,#0e131b)!important;box-shadow:0 30px 100px #000b!important;color:var(--v191-text)!important}
+body.entered .modal-top,body.entered .extra-head{position:sticky!important;top:0!important;z-index:3!important;min-height:64px!important;padding:14px 18px!important;background:#141b25ee!important;border-bottom:1px solid #293442!important;backdrop-filter:blur(14px)!important}
+body.entered .modal-top h3,body.entered .extra-head h3{font-size:16px!important;letter-spacing:.2px!important}body.entered .modal-top button,body.entered .extra-head .iconbtn{border:1px solid #354255!important;border-radius:10px!important;background:#1d2734!important;color:#dbe3ee!important}
+body.entered .modal-body,body.entered .admin-modal-body,body.entered .admin-support-modal-body{padding:20px!important}
+body.entered .field input,body.entered .field textarea,body.entered input,body.entered textarea,body.entered select{border:1px solid #344153!important;border-radius:11px!important;background:#0d131b!important;color:#f2f5fa!important;outline:none!important}
+body.entered input:focus,body.entered textarea:focus,body.entered select:focus{border-color:#8177e8!important;box-shadow:0 0 0 3px #8177e822!important}
+body.entered .modal-actions{position:sticky!important;bottom:0!important;padding:14px 20px!important;background:#111720ee!important;border-top:1px solid #293442!important;backdrop-filter:blur(14px)!important}
+body.entered .primary{border:0!important;border-radius:11px!important;background:linear-gradient(135deg,var(--v191-purple),var(--v191-cyan))!important;color:#091016!important;font-weight:750!important}.ghost,body.entered .iconbtn{border-radius:11px!important}
+body.entered .ann-box{width:min(720px,calc(100vw - 28px))!important;border:1px solid #303b4b!important;border-radius:24px!important;background:linear-gradient(160deg,#151d29,#0d131b)!important;box-shadow:0 30px 100px #000b!important}
+body.entered .ann-header{padding:20px 22px!important;background:#151d29!important;border-bottom:1px solid #2a3542!important}.ann-mark{border-radius:12px!important;background:linear-gradient(135deg,var(--v191-purple),var(--v191-cyan))!important}.ann-brand small{color:#a9a0ff!important}.ann-brand h3{font-size:20px!important}.ann-brand p{color:#8c98a9!important}
+body.entered #noticeList,body.entered #adminNoticeList{padding:14px 20px!important}.ann-box .notice-card,body.entered #adminNoticeList .notice-card{border:1px solid #2c3846!important;border-radius:15px!important;background:#111923!important}.ann-box .notice-card:hover{border-color:#65739a!important;background:#172231!important}
+body.entered .ann-foot{padding:14px 20px!important;background:#111720!important;border-top:1px solid #293442!important}.ann-dismiss{border:1px solid #354255!important;background:#1d2734!important}
+body.entered .announcement-composer{border:1px solid #303d4c!important;border-radius:17px!important;background:#111923!important}.announcement-composer>input,.announcement-composer>textarea{background:#0b1118!important}.announce-badge{border-color:#6f65ca!important;background:#252044!important;color:#c8c0ff!important}
+body.entered .admin-section{border:1px solid #2b3745!important;border-radius:17px!important;padding:16px!important;background:#111923!important}.admin-section-head{border-bottom:1px solid #273341!important;padding-bottom:12px!important}.admin-section h4,.announcement-composer h4{color:#f0f3f8!important}.admin-section .hint,.admin-modal-body>.hint{color:#8b97a9!important}
+body.entered #adminUsersList,body.entered #adminNoticeList,body.entered #adminSupportList{display:grid!important;gap:10px!important}.admin-user-card,.admin-ticket-card,.support-ticket,.admin-notice-card{border:1px solid #2b3745!important;border-radius:14px!important;background:#111923!important;padding:13px!important}
+body.entered .nl-card{width:min(760px,calc(100vw - 28px))!important;max-height:min(860px,calc(100dvh - 28px))!important;border:1px solid #303d4b!important;border-radius:24px!important;background:linear-gradient(160deg,#151d28,#0e141b)!important;box-shadow:0 30px 100px #000b!important}.nl-head{position:sticky!important;top:0!important;z-index:2!important;background:#151d28ee!important;border-bottom:1px solid #293442!important;backdrop-filter:blur(14px)!important}.cr-scroll{padding:18px!important}.cr-view h4{color:#9eabbd!important;font-size:11px!important;letter-spacing:1.4px!important;text-transform:uppercase!important}.cr-item,.cr-cta{border:1px solid #2d3948!important;border-radius:15px!important;background:#111923!important}.cr-item:hover,.cr-cta:hover{border-color:#6977a0!important;background:#1a2634!important}.cr-card input,.cr-card textarea{background:#0b1118!important}
+body.entered #adminModal .extra-box,body.entered #adminSupportModal .extra-box{width:min(1080px,calc(100vw - 28px))!important}.admin-modal-body,.admin-support-modal-body{min-height:220px!important}
+@media(max-width:760px){body.entered .as-settings-panel,body.entered .modal,body.entered .extra-box,body.entered .ann-box,body.entered .nl-card{width:calc(100vw - 16px)!important;max-height:calc(100dvh - 16px)!important;border-radius:20px!important}.entered .as-settings-panel{height:calc(100dvh - 16px)!important}.entered .modal-body,.entered .admin-modal-body,.entered .admin-support-modal-body{padding:14px!important}.entered .extra-head{align-items:flex-start!important;gap:8px!important}.entered .extra-head>div{flex-wrap:wrap!important;justify-content:flex-end!important}.entered .announcement-composer{padding:14px!important}.entered #noticeList,.entered #adminNoticeList{padding:10px 12px!important}.entered .ann-foot{padding:12px 14px!important}.entered .nl-head{padding:12px!important}}
 </style>
 <script id="nx-remove-legacy-greeting">
 (function(){
   const bad=/^你好，?我是\s*ASTRION你好，?我是\s*ASTRION$/;
   function clean(root){
     if(!root||!root.querySelectorAll)return;
+    if(root.nodeType===3&&bad.test((root.textContent||'').replace(/\s+/g,'').trim())){root.remove();return;}
     root.querySelectorAll('*').forEach(function(el){
       if(el.id==='entryGate'||el.closest('#entryGate'))return;
       const text=(el.textContent||'').replace(/\s+/g,'').trim();
       if(el.children.length===0&&bad.test(text))el.remove();
     });
+    root.childNodes&&Array.from(root.childNodes).forEach(function(n){
+      if(n.nodeType===3&&bad.test((n.textContent||'').replace(/\s+/g,'').trim()))n.remove();
+    });
   }
   function boot(){clean(document);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
-  new MutationObserver(function(records){records.forEach(function(r){r.addedNodes.forEach(function(n){if(n.nodeType===1)clean(n);});});}).observe(document.documentElement,{childList:true,subtree:true});
+  new MutationObserver(function(records){records.forEach(function(r){r.addedNodes.forEach(function(n){if(n.nodeType===1||n.nodeType===3)clean(n);});});}).observe(document.documentElement,{childList:true,subtree:true});
+})();
+</script>
+<script id="nx-admin-logout-capture">
+(function(){
+  document.addEventListener('click',function(e){
+    const button=e.target&&e.target.closest&&e.target.closest('#adminLogoutButton,#adminSupportLogoutButton');
+    if(!button)return;
+    e.preventDefault();e.stopImmediatePropagation();
+    if(typeof window.logout==='function')window.logout();
+  },true);
+})();
+</script>
+<script id="nx-v191-action-guard">
+(function(){
+  function hide(el){if(!el)return;el.classList.remove('show');el.setAttribute('aria-hidden','true');}
+  document.addEventListener('click',function(e){
+    const close=e.target&&e.target.closest&&e.target.closest('[data-close],[data-extra-close],#asSettingsClose');
+    if(close){
+      const id=close.dataset.close||close.dataset.extraClose;
+      if(id)hide(document.getElementById(id));
+      if(close.id==='asSettingsClose')hide(document.getElementById('astrionSettings'));
+      return;
+    }
+    const layer=e.target;
+    if(layer&&layer.classList&&(layer.classList.contains('modal-back')||layer.classList.contains('extra-modal'))&&e.target===layer)hide(layer);
+  },true);
+  document.addEventListener('click',function(e){
+    const target=e.target&&e.target.closest&&e.target.closest('#asSwitchRow,#switchAccountBtn');
+    if(target){e.preventDefault();e.stopImmediatePropagation();hide(document.getElementById('astrionSettings'));window.switchLoginAccount?.(false);return;}
+    const logout=e.target&&e.target.closest&&e.target.closest('#asLogoutRow,#adminLogoutButton,#adminSupportLogoutButton');
+    if(logout){e.preventDefault();e.stopImmediatePropagation();hide(document.getElementById('astrionSettings'));window.logout?.();}
+  },true);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape')document.querySelectorAll('.modal-back.show,.extra-modal.show,#astrionSettings.show,#nxApiPanel.show,.modal-back[aria-hidden="false"]').forEach(hide);
+  });
 })();
 </script>
 </body></html>

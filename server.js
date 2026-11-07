@@ -30,15 +30,15 @@ const AI_CONFIG_FILE = path.join(DATA_DIR, 'ai-config.json');
 const ACCOUNTS_FILE = path.join(DATA_DIR, 'accounts.json');
 const SUPPORT_FILE = path.join(DATA_DIR, 'support.json');
 const PRESENCE_TTL = 90 * 1000;
-const APP_VERSION = '1.1.8';
+const APP_VERSION = '1.9.1';
 fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
 if (!fs.existsSync(ACCOUNTS_FILE)) fs.writeFileSync(ACCOUNTS_FILE, '{}');
 if (!fs.existsSync(SUPPORT_FILE)) fs.writeFileSync(SUPPORT_FILE, '[]');
-const AI_CONFIG_VERSION = 2;
-const ZHIPU_API_URL = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
+const AI_CONFIG_VERSION = 3;
+const NVIDIA_API_URL = 'https://integrate.api.nvidia.com/v1/chat/completions';
 const DEFAULT_AI_APIS = [
- {name:'智谱 AI · GLM-4.6V-Flash',url:ZHIPU_API_URL,model:'glm-4.6v-flash',enabled:true,key:''},
+ {name:'NVIDIA · GLM-5.3-Flash',url:NVIDIA_API_URL,model:'z-ai/glm-5.3-flash',enabled:true,key:''},
  {name:'接口 2',url:'',model:'',enabled:false,key:''},
  {name:'接口 3',url:'',model:'',enabled:false,key:''},
  {name:'接口 4',url:'',model:'',enabled:false,key:''},
@@ -98,10 +98,8 @@ function normalizeAiApis(input, previous=[]) {
  return DEFAULT_AI_APIS.map((base,i)=>{
   const item=source[i]&&typeof source[i]==='object'?source[i]:{};
   const prior=old[i]&&typeof old[i]==='object'?old[i]:{};
-  // 首槽密钥属于部署凭据，永不从管理员表单或数据文件读取，避免被备份/导出带出。
-  const key=i===0?'':(item.clearKey===true?'':String(item.key||prior.key||'').trim().slice(0,1000));
-  if(i===0)return {...base,enabled:true,key:''};
-  return {name:String(item.name||base.name).trim().slice(0,120)||base.name,url:String(item.url||'').trim().slice(0,500),model:String(item.model||'').trim().slice(0,160),enabled:item.enabled===true,key};
+  const key=item.clearKey===true?'':String(item.key||prior.key||'').trim().slice(0,1000);
+  return {name:String(item.name||base.name).trim().slice(0,120)||base.name,url:String(item.url||base.url).trim().slice(0,500),model:String(item.model||base.model).trim().slice(0,160),enabled:item.enabled===true||(!source[i]&&base.enabled),key};
  });
 }
 function readAiApis(){
@@ -112,14 +110,13 @@ function readAiApis(){
   return normalized;
  }
  const legacy=Array.isArray(parsed)?parsed:(Array.isArray(parsed?.apis)?parsed.apis:[]);
- const oldZhipu=legacy.find(a=>/bigmodel\.cn|zhipu/i.test(String(a?.url||'')+' '+String(a?.name||'')));
- const seed=DEFAULT_AI_APIS.map((a,i)=>i===0?{...a,key:String(oldZhipu?.key||'').trim()}: {...a});
+  const seed=DEFAULT_AI_APIS.map((a,i)=>i===0?{...a}:({...a,...(legacy[i]||{})}));
  const migrated=normalizeAiApis(seed);
  fs.writeFileSync(AI_CONFIG_FILE,JSON.stringify({version:AI_CONFIG_VERSION,apis:migrated},null,2));
  return migrated;
 }
 function writeAiApis(value){const next=normalizeAiApis(value,readAiApis());fs.writeFileSync(AI_CONFIG_FILE,JSON.stringify({version:AI_CONFIG_VERSION,apis:next},null,2));return next}
-function apiKeyFor(api){if(isZhipuApi(api))return String(process.env.ZHIPU_API_KEY||process.env.ZAI_API_KEY||'').trim();return String(api?.key||'').trim()}
+function apiKeyFor(api){if(/integrate\.api\.nvidia\.com|nvidia/i.test(String(api?.url||'')+' '+String(api?.name||'')))return String(process.env.NVIDIA_API_KEY||api?.key||'').trim();return String(api?.key||'').trim()}
 function needsApiKey(api){const u=String(api&&api.url||'');return /bigmodel\.cn|deepseek\.com|openai\.com|anthropic|googleapis|groq\.com/i.test(u)}
 function publicAiApis(){return readAiApis().map(a=>({name:a.name,url:a.url,model:a.model,enabled:a.enabled,keySet:Boolean(apiKeyFor(a))}))}
 readAiApis(); // 初始化或迁移服务端的五槽配置
@@ -141,9 +138,9 @@ async function proxyAiChat(messages,temperature=.7,autoFallback=true){
 
  const controllers=candidates.map(()=>new AbortController());
  async function callOne(api,controller){
-  const headers={'Content-Type':'application/json','Accept':'application/json','User-Agent':'ASTRION/1.1.8'};
+  const headers={'Content-Type':'application/json','Accept':'application/json','User-Agent':'ASTRION/1.9.1'};
   const apiKey=apiKeyFor(api);if(apiKey)headers.Authorization='Bearer '+apiKey;
-  const response=await fetch(api.url,{method:'POST',headers,body:JSON.stringify({model:api.model,messages,temperature,max_tokens:720}),signal:controller.signal});
+  const response=await fetch(api.url,{method:'POST',headers,body:JSON.stringify({model:api.model,messages,temperature,max_tokens:480}),signal:controller.signal});
   const raw=await response.text();
   let data;try{data=JSON.parse(raw)}catch{data={text:raw}}
   if(!response.ok){const detail=String(data?.error?.message||data?.message||'').trim().slice(0,180);throw new Error(`${api.name||'AI接口'} HTTP ${response.status}${detail?': '+detail:''}`)}
@@ -151,7 +148,7 @@ async function proxyAiChat(messages,temperature=.7,autoFallback=true){
  }
  return await new Promise((resolve,reject)=>{
   let pending=candidates.length,lastError=null,settled=false;
-  const timers=controllers.map(controller=>setTimeout(()=>controller.abort(),11000));
+  const timers=controllers.map(controller=>setTimeout(()=>controller.abort(),8000));
   const finish=(fn,value)=>{if(settled)return;settled=true;timers.forEach(clearTimeout);fn(value)};
   candidates.forEach((api,index)=>{
    callOne(api,controllers[index]).then(result=>{

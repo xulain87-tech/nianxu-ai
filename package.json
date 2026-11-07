@@ -1,6 +1,6 @@
 {
   "name": "astrion",
-  "version": "1.1.8",
+  "version": "1.9.1",
   "private": true,
   "description": "ASTRION AI chat application",
   "scripts": {
