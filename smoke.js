@@ -78,7 +78,7 @@ async function waitForHealth(baseUrl, child) {
     const adminPassword = `smoke-${Date.now()}-password`;
     const missingSecrets = spawnSync(process.execPath, ['server.js'], {
       cwd: project, encoding: 'utf8', timeout: 3000,
-      env: { ...process.env, PORT: '0', DATA_DIR: dataDir, ADMIN_ID: '', ADMIN_PASSWORD: '' }
+      env: { ...process.env, PORT: '0', DATA_DIR: dataDir, NODE_ENV: 'test', ADMIN_ID: '', ADMIN_PASSWORD: '' }
     });
     assert.equal(missingSecrets.status, 1, 'server should refuse to start without private login secrets');
     assert.match(missingSecrets.stderr, /Private login secrets are missing/);
@@ -133,7 +133,7 @@ async function waitForHealth(baseUrl, child) {
     assert.equal(apiResponse.status, 200);
     let apiData = await apiResponse.json();
     assert.equal(apiData.apis.length, 5, 'server should expose exactly five shared slots');
-    assert.equal(apiData.apis[0].model, 'glm-4.7-flash', 'first slot should be GLM-4.7-Flash');
+    assert.equal(apiData.apis[0].model, 'glm-4.6v-flash', 'first slot should be GLM-4.6V-Flash');
     assert.equal(apiData.apis[0].url, 'https://open.bigmodel.cn/api/paas/v4/chat/completions');
     assert.ok(apiData.apis.every(slot => !Object.hasOwn(slot, 'key')), 'API keys must never be returned');
 
@@ -173,7 +173,7 @@ async function waitForHealth(baseUrl, child) {
     apiResponse = await getApis();
     apiData = await apiResponse.json();
     assert.equal(apiData.apis.length, 5);
-    assert.equal(apiData.apis[0].model, 'glm-4.7-flash', 'admin cannot overwrite the fixed first slot');
+    assert.equal(apiData.apis[0].model, 'glm-4.6v-flash', 'admin cannot overwrite the fixed first slot');
     assert.equal(apiData.apis[4].keySet, true, 'server reports key presence only');
     assert.doesNotMatch(JSON.stringify(apiData), new RegExp(fakeSecret));
 

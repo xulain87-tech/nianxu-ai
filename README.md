@@ -12,7 +12,7 @@ ASTRION 是一个 Node.js 单体聊天 Web 应用，包含账号登录、AI 聊�
 
 ## AI 接口
 
-- 聊天接口固定为 5 个服务端槽位。第 1 槽固定为智谱 GLM-4.7-Flash，地址为 `https://open.bigmodel.cn/api/paas/v4/chat/completions`，密钥通过 `ZHIPU_API_KEY` 提供。
+- 聊天接口固定为 5 个服务端槽位。第 1 槽固定为智谱 GLM-4.6V-Flash，地址为 `https://open.bigmodel.cn/api/paas/v4/chat/completions`，密钥通过 `ZHIPU_API_KEY` 提供。
 - 管理员可在「控制台 → AI 接口设置」中配置其余 4 个兼容接口；配置为**全站共享**，所有登录用户共用。未配置的备选槽位默认关闭。
 - API Key 只保存在服务端，不会由配置读取接口返回，也不会写入浏览器 Local Storage。保存时留空表示保留现有密钥；可使用清除按钮清除服务端保存的密钥。第 1 槽的部署环境变量需在主机的密钥管理界面单独更新。
 - AI 聊天服务端会过滤客户端提交的 `system` 角色消息，并由服务端生成系统提示，避免浏览器端伪造系统级指令。用户创建的角色设定与记忆作为不可信参考文本处理。

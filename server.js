@@ -6,6 +6,16 @@ const crypto = require('crypto');
 const dns = require('node:dns').promises;
 const net = require('node:net');
 const ROOT = __dirname;
+// 可选的本机私密配置；生产环境优先使用平台注入的环境变量。
+const localEnv = path.join(ROOT, '.env.local');
+if (process.env.NODE_ENV !== 'test' && fs.existsSync(localEnv)) {
+  try {
+    for (const line of fs.readFileSync(localEnv, 'utf8').split(/\r?\n/)) {
+      const m = line.match(/^\s*([A-Z][A-Z0-9_]*)\s*=\s*(.*)\s*$/);
+      if (m && !process.env[m[1]]) process.env[m[1]] = m[2].replace(/^['"]|['"]$/g, '');
+    }
+  } catch (_) {}
+}
 const PORT = Number(process.env.PORT || 3000);
 const ADMIN_ID = String(process.env.ADMIN_ID || '').trim();
 const ADMIN_PASSWORD = String(process.env.ADMIN_PASSWORD || '');
@@ -28,7 +38,7 @@ if (!fs.existsSync(SUPPORT_FILE)) fs.writeFileSync(SUPPORT_FILE, '[]');
 const AI_CONFIG_VERSION = 2;
 const ZHIPU_API_URL = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
 const DEFAULT_AI_APIS = [
- {name:'智谱 AI · GLM-4.7-Flash',url:ZHIPU_API_URL,model:'glm-4.7-flash',enabled:true,key:''},
+ {name:'智谱 AI · GLM-4.6V-Flash',url:ZHIPU_API_URL,model:'glm-4.6v-flash',enabled:true,key:''},
  {name:'接口 2',url:'',model:'',enabled:false,key:''},
  {name:'接口 3',url:'',model:'',enabled:false,key:''},
  {name:'接口 4',url:'',model:'',enabled:false,key:''},
@@ -133,7 +143,7 @@ async function proxyAiChat(messages,temperature=.7,autoFallback=true){
  async function callOne(api,controller){
   const headers={'Content-Type':'application/json','Accept':'application/json','User-Agent':'ASTRION/1.1.8'};
   const apiKey=apiKeyFor(api);if(apiKey)headers.Authorization='Bearer '+apiKey;
-  const response=await fetch(api.url,{method:'POST',headers,body:JSON.stringify({model:api.model,messages,temperature,max_tokens:1200}),signal:controller.signal});
+  const response=await fetch(api.url,{method:'POST',headers,body:JSON.stringify({model:api.model,messages,temperature,max_tokens:720}),signal:controller.signal});
   const raw=await response.text();
   let data;try{data=JSON.parse(raw)}catch{data={text:raw}}
   if(!response.ok){const detail=String(data?.error?.message||data?.message||'').trim().slice(0,180);throw new Error(`${api.name||'AI接口'} HTTP ${response.status}${detail?': '+detail:''}`)}
@@ -141,7 +151,7 @@ async function proxyAiChat(messages,temperature=.7,autoFallback=true){
  }
  return await new Promise((resolve,reject)=>{
   let pending=candidates.length,lastError=null,settled=false;
-  const timers=controllers.map(controller=>setTimeout(()=>controller.abort(),15000));
+  const timers=controllers.map(controller=>setTimeout(()=>controller.abort(),11000));
   const finish=(fn,value)=>{if(settled)return;settled=true;timers.forEach(clearTimeout);fn(value)};
   candidates.forEach((api,index)=>{
    callOne(api,controllers[index]).then(result=>{

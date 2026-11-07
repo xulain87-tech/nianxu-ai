@@ -2530,7 +2530,7 @@ if(rememberedId){
  const gd=$("gateDesc");if(gd)gd.textContent="欢迎回来，"+rememberedId+"。点击「登录」即可免密恢复会话";
  $("entryPassword").placeholder="密码（会话有效时可留空）";
 }
-function syncAdminUi(){const admin=currentRole==="admin";$("adminButton").classList.remove("hidden");$("adminDrawerButton").classList.remove("hidden");$("adminConfigButton").classList.toggle("hidden",!admin);$("apiSettingsTab").classList.toggle("hidden",!admin);$("apiList").classList.toggle("hidden",!admin);$("apiBackupPanel").classList.toggle("hidden",!admin);$("saveSettings").classList.toggle("hidden",!admin)}
+function syncAdminUi(){const admin=currentRole==="admin";['adminButton','adminDrawerButton','adminConfigButton','apiSettingsTab','apiList','apiBackupPanel','saveSettings','apiConfigSideBtn','asApiRow','asAdminRow'].forEach(id=>{const el=$(id);if(el)el.classList.toggle('hidden',!admin)});}
 async function apiRequest(path, options={}){
  const response=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json",...(options.headers||{})},...options});
  const data=await response.json().catch(()=>({error:"服务器返回了无效响应"}));
@@ -3278,7 +3278,7 @@ try{
        <label>API Endpoint<input data-k="url" value="${esc(a.url||'')}" placeholder="https://服务商/v1/chat/completions" ${ro}></label>
        <label>模型<input data-k="model" value="${esc(a.model||'')}" placeholder="模型名称" ${ro}></label>
        <label class="nx-api-key-label">服务端 API Key <span>${a.keySet?'已配置 · 留空保留':'只保存于服务器'}</span><input type="password" data-k="key" autocomplete="new-password" placeholder="${a.keySet?'输入新 Key 以替换':'粘贴服务商 Key'}"></label></div>
-       <div class="nx-api-row-foot"><small>${fixed?'首槽固定为智谱 GLM-4.7-Flash':'此槽保存后对全站用户共享'}</small><button type="button" class="nx-api-clear-key">清除已保存 Key</button></div>`;
+       <div class="nx-api-row-foot"><small>${fixed?'首槽固定为智谱 GLM-4.6V-Flash':'此槽保存后对全站用户共享'}</small><button type="button" class="nx-api-clear-key">清除已保存 Key</button></div>`;
       row._api=a;row.querySelector('[data-k="enabled"]').addEventListener('change',e=>{a.enabled=e.target.checked});
       row.querySelectorAll('input[data-k]').forEach(input=>input.addEventListener('input',()=>{const k=input.dataset.k;if(k==='key'){a.key=input.value;a.clearKey=false}else if(k!=='enabled')a[k]=input.value}));
       row.querySelector('.nx-api-clear-key').addEventListener('click',()=>{a.key='';a.clearKey=true;row.querySelector('[data-k="key"]').value='';row.querySelector('.nx-api-key-label span').textContent='已标记清除（部署环境变量需在服务器管理）'});
@@ -3294,7 +3294,7 @@ try{
   }
   function openApiConfigPanel(){
     if(window.currentRole!=='admin'&&!document.body.classList.contains('role-admin')){alert('当前账号无权配置接口');return}
-    let panel=el('nxApiPanel');if(!panel){panel=document.createElement('div');panel.id='nxApiPanel';panel.innerHTML=`<button class="nx-api-mask" data-close aria-label="关闭"></button><section class="nx-api-sheet" role="dialog" aria-modal="true" aria-label="全站共享接口设置"><header class="nx-api-top"><div><small>ASTRION · SERVICE ROUTING</small><b>接口与模型</b><span>五槽共享 · 首槽智谱 · 服务端保密</span></div><button type="button" data-close aria-label="关闭">×</button></header><div class="nx-api-hint">第 1 槽固定为智谱 GLM-4.7-Flash。管理员可配置其余 4 个备选服务；所有用户共用这些设置。密钥只保存在服务器，不会回传给浏览器。</div><div id="nxApiList"></div><footer class="nx-api-actions"><button type="button" data-close>取消</button><button type="button" id="nxApiSave" class="primary">保存配置</button></footer></section>`;document.body.append(panel);panel.addEventListener('click',e=>{if(e.target.matches('[data-close],.nx-api-mask'))panel.classList.remove('show')});el('nxApiSave').addEventListener('click',saveApis)}
+    let panel=el('nxApiPanel');if(!panel){panel=document.createElement('div');panel.id='nxApiPanel';panel.innerHTML=`<button class="nx-api-mask" data-close aria-label="关闭"></button><section class="nx-api-sheet" role="dialog" aria-modal="true" aria-label="全站共享接口设置"><header class="nx-api-top"><div><small>ASTRION · SERVICE ROUTING</small><b>接口与模型</b><span>五槽共享 · 首槽智谱 · 服务端保密</span></div><button type="button" data-close aria-label="关闭">×</button></header><div class="nx-api-hint">第 1 槽固定为智谱 GLM-4.6V-Flash。管理员可配置其余 4 个备选服务；所有用户共用这些设置。密钥只保存在服务器，不会回传给浏览器。</div><div id="nxApiList"></div><footer class="nx-api-actions"><button type="button" data-close>取消</button><button type="button" id="nxApiSave" class="primary">保存配置</button></footer></section>`;document.body.append(panel);panel.addEventListener('click',e=>{if(e.target.matches('[data-close],.nx-api-mask'))panel.classList.remove('show')});el('nxApiSave').addEventListener('click',saveApis)}
     panel.classList.add('show');loadApis();
   }
   window.openApiConfigPanel=openApiConfigPanel;window.loadApis=loadApis;window.renderApiList=renderApiList;
@@ -3734,4 +3734,32 @@ body.entered .composer .composer-foot{display:flex!important;justify-content:spa
 #appearanceModal.show{display:flex!important;z-index:100020!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}#appearanceModal .modal{width:min(620px,100%)!important;max-height:86dvh!important;overflow:auto!important}#appearanceModal #fontSize{accent-color:#ad96ff;touch-action:pan-x!important}#appearanceModal #fontSizeLabel{display:inline-block;min-width:45px;color:#cbbcff}
 @media(max-width:760px){body.entered .composer-wrap{bottom:calc(60px + env(safe-area-inset-bottom))!important;padding:8px 10px 9px!important;background:linear-gradient(0deg,#08090d 72%,#08090de8 88%,transparent)!important}.composer-wrap .composer{border-radius:20px!important}.composer .input-row{grid-template-columns:minmax(0,1fr) 42px!important;grid-template-rows:auto auto!important;gap:6px 8px!important}.composer .toolrow{grid-column:1/-1!important;grid-row:1!important;overflow-x:auto!important;scrollbar-width:none!important;padding-bottom:2px}.composer #prompt{grid-column:1!important;grid-row:2!important}.composer #sendBtn{grid-column:2!important;grid-row:2!important}.composer .composer-foot{display:none!important}#chat{padding-bottom:calc(250px + env(safe-area-inset-bottom))!important}.ann-box{width:100%!important;max-height:calc(100dvh - 22px - env(safe-area-inset-top))!important;border-radius:24px!important}.ann-header{padding:19px 18px 14px}.ann-brand h3{font-size:19px}#noticeList{max-height:calc(100dvh - 190px);padding:10px 14px}.ann-foot{padding:12px 16px calc(14px + env(safe-area-inset-bottom))}.announcement-composer{padding:14px}.announcement-compose-head{align-items:flex-start}#nxApiPanel{padding:0}#nxApiPanel .nx-api-sheet{width:100%;max-height:92dvh;border-radius:24px 24px 0 0;padding:18px 14px calc(16px + env(safe-area-inset-bottom))}#nxApiPanel .nx-api-fields{grid-template-columns:1fr}#nxApiPanel .nx-api-key-label{grid-column:auto}}
 </style>
+<style id="nx-dola-chat-surface">
+/* Dola-style mobile workspace: clean black canvas, soft cards, tools separated from input. */
+body.entered{background:#050608!important}
+body.entered .main{background:#050608!important;border-color:#171a21!important;box-shadow:none!important}
+body.entered .topbar{background:#050608!important;border-bottom:1px solid #1b1e25!important}
+body.entered .composer{background:linear-gradient(145deg,#15171d,#0e1015)!important;border:1px solid #30343d!important;border-radius:24px!important;box-shadow:0 12px 36px #0009!important}
+body.entered .composer .toolrow button{background:#191c23!important;border:1px solid #30343d!important;color:#aeb5c5!important}
+body.entered .composer .toolrow button:hover,body.entered .composer .toolrow button[aria-pressed="true"]{background:#272c38!important;border-color:#6377a8!important;color:#fff!important}
+body.entered .msg.ai{background:linear-gradient(145deg,#171a20,#101216)!important;border-color:#252a33!important;border-radius:24px!important}
+body.entered .msg.user{background:linear-gradient(145deg,#344454,#263746)!important;border-color:#536f86!important;border-radius:24px 24px 7px 24px!important}
+body.entered #modelLabel{display:none!important}
+</style>
+<script id="nx-remove-legacy-greeting">
+(function(){
+  const bad=/^你好，?我是\s*ASTRION你好，?我是\s*ASTRION$/;
+  function clean(root){
+    if(!root||!root.querySelectorAll)return;
+    root.querySelectorAll('*').forEach(function(el){
+      if(el.id==='entryGate'||el.closest('#entryGate'))return;
+      const text=(el.textContent||'').replace(/\s+/g,'').trim();
+      if(el.children.length===0&&bad.test(text))el.remove();
+    });
+  }
+  function boot(){clean(document);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+  new MutationObserver(function(records){records.forEach(function(r){r.addedNodes.forEach(function(n){if(n.nodeType===1)clean(n);});});}).observe(document.documentElement,{childList:true,subtree:true});
+})();
+</script>
 </body></html>
