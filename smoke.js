@@ -112,7 +112,7 @@ async function waitForHealth(baseUrl, child) {
     const baseUrl = `http://127.0.0.1:${appPort}`;
     const health = await waitForHealth(baseUrl, app);
     assert.equal(health.status, 'ok');
-    assert.equal(health.version, '1.1.9');
+    assert.equal(health.version, '1.3.2');
 
     const unauthorized = await fetch(`${baseUrl}/api/ai/chat`, {
       method: 'POST', headers: { 'content-type': 'application/json' },
