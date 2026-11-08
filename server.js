@@ -20,7 +20,7 @@ const AI_CONFIG_FILE = path.join(DATA_DIR, 'ai-config.json');
 const ACCOUNTS_FILE = path.join(DATA_DIR, 'accounts.json');
 const SUPPORT_FILE = path.join(DATA_DIR, 'support.json');
 const PRESENCE_TTL = 90 * 1000;
-const APP_VERSION = '1.3.5';
+const APP_VERSION = '1.3.6';
 fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
 if (!fs.existsSync(ACCOUNTS_FILE)) fs.writeFileSync(ACCOUNTS_FILE, '{}');
@@ -34,9 +34,10 @@ const PRIMARY_URL = envPrimaryUrl || (envPrimaryKey ? GROQ_API_URL : 'https://te
 const PRIMARY_MODEL = String(process.env.PRIMARY_API_MODEL||'').trim() || (envPrimaryKey ? 'openai/gpt-oss-120b' : 'openai-fast');
 const DEFAULT_AI_APIS = [
  {name:envPrimaryKey?'Groq · GPT-OSS-120B':'Pollinations · 免费主接口',url:PRIMARY_URL,model:PRIMARY_MODEL,enabled:true,key:'',primary:true},
- {name:'接口 2',url:'',model:'',enabled:false,key:''},
- {name:'接口 3',url:'',model:'',enabled:false,key:''},
- {name:'接口 4',url:'',model:'',enabled:false,key:''},
+ // fix(1.3.6): 备用槽预填 3 个免 Key 接口（新部署开箱即多路竞速；已有配置文件不受影响）
+ {name:'Pollinations · OpenAI 大池（免Key）',url:'https://text.pollinations.ai/openai',model:'openai',enabled:true,key:''},
+ {name:'AirForce · GPT-OSS-20B（免Key）',url:'https://api.airforce/v1/chat/completions',model:'gpt-oss-20b',enabled:true,key:''},
+ {name:'Pollinations · Mistral（免Key）',url:'https://text.pollinations.ai/openai',model:'mistral',enabled:true,key:''},
  {name:'接口 5',url:'',model:'',enabled:false,key:''}
 ];
 function cleanId(v){return String(v||'').trim().slice(0,100)}
@@ -179,7 +180,7 @@ function aiAnswer(data){
  if(reason==='length')throw new Error('上游模型输出长度不足，已自动尝试其他接口');
  throw new Error(data?.error?.message||'上游接口返回空内容或不兼容的响应格式');
 }
-async function proxyAiChat(messages,temperature=.7,autoFallback=true,preferred='',timeoutMs=15000){
+async function proxyAiChat(messages,temperature=.7,autoFallback=true,preferred='',timeoutMs=25000){
  if(preferred){const pool=readAiApis().filter(a=>a.enabled&&String(a.name)===String(preferred).slice(0,120));preferred=pool[0]?.name||''}
  preferred=String(preferred||'').slice(0,120);
  const configured=readAiApis().filter(a=>a.enabled&&a.url&&a.model&&(!needsApiKey(a)||apiKeyFor(a)));

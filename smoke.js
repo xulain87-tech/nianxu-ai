@@ -76,7 +76,11 @@ async function waitForHealth(baseUrl, child) {
     assert.match(html, /id="apiBackupPanel" hidden/, 'retired import/export editor must stay hidden');
     assert.match(html, /id="apiList" hidden/, 'retired API editor must stay hidden');
     assert.match(html, /主接口可任意修改（地址\/模型\/Key）/, 'primary slot must stay admin-editable (1.3.3)');
-    assert.match(html, /#apiList,#apiBackupPanel,#saveSettings/);
+    // 1.3.6: 历史“杀层”已移除 —— 设置弹窗恢复可用，接口面板恢复由 JS hidden 属性管理
+    assert.doesNotMatch(html, /#settingsModal\{display:none!important/, 'settings modal must not be force-hidden (1.3.6 fix)');
+    assert.doesNotMatch(html, /#apiList,#apiBackupPanel,#saveSettings\{display:none!important/, 'legacy kill layer must stay removed (1.3.6 fix)');
+    assert.match(html, /fix\(1\.3\.6\): nxSettingsPanel 移出 adminSupportModal[\s\S]{0,160}?id="nxSettingsPanel"/, 'settings center must live at top level, not inside hidden adminModal (1.3.6 fix)');
+    assert.doesNotMatch(html, /\{'&':'&','<':'<','>':'>','"':'"'/, 'escHtml must escape entities, not pass them through (1.3.6 XSS fix)');
     const upstreamPort = await listen(upstream);
     const appPortServer = http.createServer();
     const appPort = await listen(appPortServer);
@@ -112,7 +116,7 @@ async function waitForHealth(baseUrl, child) {
     const baseUrl = `http://127.0.0.1:${appPort}`;
     const health = await waitForHealth(baseUrl, app);
     assert.equal(health.status, 'ok');
-    assert.equal(health.version, '1.3.5');
+    assert.equal(health.version, '1.3.6');
 
     const unauthorized = await fetch(`${baseUrl}/api/ai/chat`, {
       method: 'POST', headers: { 'content-type': 'application/json' },

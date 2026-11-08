@@ -1,4 +1,5 @@
-const CACHE='astrion-shell-v1.2.1';
+// fix(1.3.6): 升级缓存名，强制所有客户端丢弃旧版页面（旧缓存会继续报旧错误）
+const CACHE='astrion-shell-v1.3.6';
 const SHELL=['/','/index.html','/manifest.webmanifest','/icon.svg','/logo.png'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));

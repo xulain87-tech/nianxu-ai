@@ -571,12 +571,7 @@ body.nx-light .cr-item{background:#f3efe0}
 .cr-err{min-height:16px;margin:0;font-size:12px;color:#ffb4a2}
 </style>
 
-<style id="hide-settings-gear">
-#mobileSettings, #openSettings, button[title="设置中心"], .top-actions #mobileSettings {
-  display: none !important;
-}
-/* settings modal only via sidebar api */
-</style>
+<!-- fix(1.3.6): 移除历史杀层 hide-settings-gear，恢复设置功能 -->
 
 
 <style id="sidebar-click-fix">
@@ -793,35 +788,7 @@ body.entered #entryGate *{
 </style>
 
 
-<style id="kill-settings-feature">
-/* 全面删除设置功能入口 */
-#mobileSettings,
-#openSettings,
-button[title="设置中心"],
-.top-actions #mobileSettings,
-.settings-nav button[data-pane="appearance"],
-.settings-nav button[data-pane="version"],
-.settings-nav button[data-pane="features"],
-.settings-nav button[data-pane="access"],
-#settingsModal .settings-hero,
-#settingsModal .nx-profile,
-#settingsModal .nx-done,
-#settingsModal .nx-switch,
-#settingsModal .settings-page-note,
-#settingsModal .nx-back{
-  display: none !important;
-}
-/* 接口设置面板（由侧栏打开） */
-#settingsModal.show{
-  display: flex !important;
-  pointer-events: auto !important;
-  z-index: 200010 !important;
-}
-#settingsModal .modal-top h3{ font-size: 0 !important; }
-#settingsModal .modal-top h3::after{ content: "接口设置"; font-size: 16px; }
-#settingsModal .settings-kicker{ display:none !important; }
-#settingsModal .settings-nav{ display:none !important; }
-</style>
+<!-- fix(1.3.6): 移除历史杀层 kill-settings-feature，恢复设置功能 -->
 
 
 <style id="nx-ui-pro-2">
@@ -903,9 +870,7 @@ button[title="设置中心"],
 *::-webkit-scrollbar-thumb{background:#ffffff22;border-radius:8px}
 </style>
 
-<style id="nx-kill-settings-final">
-#mobileSettings,.top-actions #mobileSettings,#openSettings,button[title="设置中心"]{display:none!important;visibility:hidden!important;pointer-events:none!important;width:0!important;height:0!important;opacity:0!important;overflow:hidden!important}
-</style>
+<!-- fix(1.3.6): 移除历史杀层 nx-kill-settings-final，恢复设置功能 -->
 
 <style id="nx-dola-3">
 :root{
@@ -1910,6 +1875,7 @@ textarea.nx-input{width:100%;min-height:74px;resize:vertical;font:inherit}
       <button type="button" class="dola-side-item" id="generateImageBtn"><span class="ico">🖼</span><span>创意生图</span></button>
       <button type="button" class="dola-side-item" id="noticeButtonSide"><span class="ico">📢</span><span>公告</span></button>
       <button type="button" class="dola-side-item" id="humanSupportBtnSide"><span class="ico">💬</span><span>转人工客服</span></button>
+      <button type="button" class="dola-side-item" id="exportChat"><span class="ico">⤓</span><span>导出对话</span></button>
       <button type="button" class="dola-side-item" id="adminDrawerButton"><span class="ico">▣</span><span>控制台</span></button>
       <button type="button" class="dola-side-item" id="apiConfigSideBtn"><span class="ico">🔌</span><span>接口设置</span></button>
     </div>
@@ -1999,7 +1965,7 @@ textarea.nx-input{width:100%;min-height:74px;resize:vertical;font:inherit}
  <div class="cr-view" id="crChat"><div class="nl-msgs" id="crMsgs"></div><div class="nl-input"><textarea id="crInput" rows="1" maxlength="800" placeholder="发消息或按住说话..."></textarea><button id="crSend" type="button" aria-label="发送">➤</button></div></div>
 </div></div>
 <div class="modal-back" id="settingsModal"><div class="modal">
- <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 1.2.1 Pro</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>外观偏好保存在本机；接口配置由服务器保存并供全站共享。读取配置不会返回 Key。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
+ <div class="modal-top"><button class="iconbtn nx-back" type="button" aria-label="返回">‹</button><div><h3>设置</h3><span class="settings-kicker">ASTRION Control · 1.3.6</span></div><button class="iconbtn" type="button" data-close="settingsModal" aria-label="关闭设置">✕</button></div><div class="settings-hero"><div><b>把ASTRION调成你的工作方式</b><span>外观偏好保存在本机；接口配置由服务器保存并供全站共享。读取配置不会返回 Key。</span></div><div class="health-pill"><i></i><span id="serviceHealth">服务状态检测中</span></div></div>
  <div class="nx-profile"><div class="av">A</div><div class="pi"><b id="nxPName">未登录</b><small id="nxPRole">普通用户</small></div><span class="badge" id="nxPBadge">Free</span></div><div class="settings-nav"><button class="active admin-only" id="apiSettingsTab" data-pane="api"><i>⚙</i><span><b>接口与模型</b><small>全站共享接口配置</small></span></button><button data-pane="appearance"><i>◐</i><span><b>外观体验</b><small>背景、头像、主题</small></span></button><button data-pane="version"><i>ⓘ</i><span><b>版本信息</b><small>当前版本与更新</small></span></button><button data-pane="features"><i>✦</i><span><b>功能开关</b><small>对话风格与性能</small></span></button><button data-pane="access"><i>◇</i><span><b>账号与记忆</b><small>资料、密码、记忆</small></span></button></div><button class="nx-done" type="button" data-close="settingsModal">完成</button><button class="nx-switch" id="nxSwitch" type="button"><i>⇄</i><span>切换账号</span></button>
  <p class="settings-page-note">具备配置权限的账号可调整服务器接口；AI 调用经服务端代理，配置读取不会回传 Key。</p>
  <div id="apiList" hidden></div>
@@ -2010,7 +1976,7 @@ textarea.nx-input{width:100%;min-height:74px;resize:vertical;font:inherit}
  </div>
  <div class="hint">提示：Groq 主槽只读取服务端环境变量；备用槽密钥由授权账号提交后保存在服务器，不会通过读取接口返回。</div>
  <div class="settings-info-grid">
-  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION 1.2.1</strong><span>Build 2026.11 · ASTRION 1.2.1</span><p>本次更新：新增 3 个免 Key 接口预置与一键填入；主槽名称解锁；聊天界面全面重设计（Aurora 玻璃拟态）；延续 1.2.0 全部修复。历史更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、控制台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
+  <section class="info-card" id="versionPanel"><small>VERSION</small><strong>ASTRION 1.3.6</strong><span>Build 2026.11 · ASTRION 1.3.6</span><p>本次更新：新增 3 个免 Key 接口预置与一键填入；主槽名称解锁；聊天界面全面重设计（Aurora 玻璃拟态）；延续 1.2.0 全部修复。历史更新：UI 全面对齐 Grok 风格深色极简列表；创新AI、公告、控制台统一纳入侧栏；登录与设置界面重新设计；流畅度优化与动效精简。</p></section>
   <section class="info-card" id="featurePanel"><small>PERSONAL STYLE</small><strong>对话与性能</strong><span>按你的习惯调整回复方式，设置只保存在当前设备。</span>
    <div class="settings-feature-controls">
     <label class="toggle feature-toggle"><input type="checkbox" id="featureRoast" checked> 允许轻松幽默回应</label>
@@ -2045,7 +2011,7 @@ textarea.nx-input{width:100%;min-height:74px;resize:vertical;font:inherit}
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION 1.2.1" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION 1.3.6" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -2460,7 +2426,7 @@ body{background:#000!important;color:var(--text);font-family:system-ui,-apple-sy
 #entryGate .gate-card{background:#111!important;border:1px solid #222!important;border-radius:18px!important;box-shadow:0 16px 48px #000a!important;backdrop-filter:none!important}
 #entryGate .logo{background:linear-gradient(135deg,#1d9bf0,#8b5cf6)!important;box-shadow:none!important}
 #entryGate .gate-actions .primary{background:#1d9bf0!important;box-shadow:none!important}
-#settingsModal{display:none!important} /* 彻底移除设置界面 */
+/* fix(1.3.6): 恢复设置弹窗（原强制隐藏行已移除） */
 body.nx-light{--bg:#f5f5f5;--panel:#fff;--text:#111;--muted:#666}
 @media (max-width:860px){
  .app{grid-template-columns:1fr}
@@ -2595,7 +2561,7 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
         <h2>把灵感，<br/><em>变成答案。</em></h2>
         <p>与你一起探索、创作与解决问题。<br/>每段对话，都从一个好奇开始。</p>
       </div>
-      <div class="nx-brand-footer"><span class="nx-live-dot"></span><span>你的 AI 工作空间已准备就绪</span><span class="nx-brand-foot-mark">ASTRION · 1.2.1</span></div>
+      <div class="nx-brand-footer"><span class="nx-live-dot"></span><span>你的 AI 工作空间已准备就绪</span><span class="nx-brand-foot-mark">ASTRION · 1.3.6</span></div>
     </section>
     <section class="nx-login-card" aria-labelledby="nxLoginTitle">
       <div class="nx-auth-mobile-mark"><img src="/logo.png" alt=""/><span>ASTRION</span></div>
@@ -2676,8 +2642,12 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
   </div>
  </div>
 </div>
+</div></div><!-- fix(1.3.6): adminModal 此前未闭合，吞掉了 adminSupportModal / nxSettingsPanel / astrionSettings 三个面板 -->
 <div class="extra-modal" id="adminSupportModal"><div class="extra-box">
  <div class="extra-head"><h3>转人工 · 工单管理 <span id="supportCount" class="support-count"></span></h3><div style="display:flex;gap:7px;align-items:center"><button class="iconbtn" id="refreshSupportTickets" type="button">刷新消息</button><button class="iconbtn" data-extra-close="adminSupportModal">关闭</button></div></div>
+ <div class="admin-support-modal-body" id="adminSupportModalBody"><p class="hint">这里只显示用户转交的客服消息。回复或结束会话后，用户可在转人工窗口刷新查看。</p><div id="adminSupportList">正在加载转人工消息…</div></div>
+</div></div>
+<!-- fix(1.3.6): nxSettingsPanel 移出 adminSupportModal，成为顶层元素，否则父级隐藏时设置中心永远不可见 -->
 <div class="extra-modal" id="nxSettingsPanel"><div class="extra-box" style="padding:0;overflow:hidden">
  <div class="nx-set-shell">
   <nav class="nx-set-nav" id="nxSetNav">
@@ -2693,8 +2663,6 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
   </nav>
   <div class="nx-set-main" id="nxSetMain"></div>
  </div>
-</div></div>
- <div class="admin-support-modal-body" id="adminSupportModalBody"><p class="hint">这里只显示用户转交的客服消息。回复或结束会话后，用户可在转人工窗口刷新查看。</p><div id="adminSupportList">正在加载转人工消息…</div></div>
 </div></div>
 <script>
 const __NUL=new Proxy(function(){},{
@@ -2831,7 +2799,7 @@ if($("creatorBtnSide"))$("creatorBtnSide").onclick=()=>{$("creatorModal").classL
 if($("noticeButtonSide"))$("noticeButtonSide").onclick=()=>{refreshNotices();$("noticeModal").classList.add("show")};
 if($("humanSupportBtnSide"))$("humanSupportBtnSide").onclick=()=>{if(currentRole==="admin"){if(typeof openAdminSupportPanel==="function")openAdminSupportPanel();return}openModal("humanSupportModal");if(typeof refreshMySupport==="function")refreshMySupport()};
 if($("clearChatSide"))$("clearChatSide").onclick=()=>{if(confirm("确定清空当前对话？")){const chat=$("chat");if(chat){chat.innerHTML="";const w=document.createElement("div");w.className="welcome";w.id="welcome";w.innerHTML='<div class="orb" style="background-image:url(/logo.png)"></div><p>把灵感、问题或文件交给我，一起把想法变成答案。</p><div class="suggestions"><button>帮我制定一个学习计划</button><button>解释一个复杂概念</button><button>帮我写一段创意文案</button></div>';chat.append(w);setStatus("对话已清空",true)}}};
-if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION 1.2.1\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 控制台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
+if($("versionInfoBtn"))$("versionInfoBtn").onclick=()=>{alert("ASTRION 1.3.6\n\n· 侧栏统一所有功能\n· 登录一次后免密进入\n· 极致流畅无模糊界面\n· 创新AI / 公告 / 控制台 / 生图 全部就绪\n\nBuild 2026.11 · Fluent Grok UI")};
 (function(){
   const openApp=()=>openModal("appearanceModal");
   if($("openAppearance")) $("openAppearance").onclick=openApp;
@@ -2869,7 +2837,8 @@ async function generateImage(){
 }
 $("generateImageBtn").onclick=$("mobileGenerateImage").onclick=openImageGenerator;
 $("newChat").onclick=$("clearChat").onclick=()=>{if(busy){if(aborter)aborter.abort()}history=[];for(const u of generatedImageUrls)URL.revokeObjectURL(u);generatedImageUrls.clear();$("chat").innerHTML='<div class="welcome" id="welcome"><div class="orb" style="background-image:url(/logo.png)"></div><h2>新对话已开启</h2><p>继续把你的想法交给ASTRION。</p></div>';setBusy(false);setStatus("等待发送消息")};
-$("exportChat").onclick=()=>{const text=[...$("chat").querySelectorAll(".msg")].map(m=>(m.querySelector(".role")?.textContent||"")+"\n"+(m.children[1]?.textContent||"")).join("\n\n");const blob=new Blob([text],{type:"text/plain;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="ASTRION聊天记录.txt";a.click();URL.revokeObjectURL(a.href)};
+window.nxExportChat=()=>{const text=[...$("chat").querySelectorAll(".msg")].map(m=>(m.querySelector(".role")?.textContent||"")+"\n"+(m.children[1]?.textContent||"")).join("\n\n");const blob=new Blob([text||"（暂无对话）"],{type:"text/plain;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="ASTRION聊天记录.txt";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
+$("exportChat").onclick=()=>window.nxExportChat();
 // 建议按钮由 #nx-suggestions-fix 统一处理（capture 委托），此处不再重复绑定，避免双重触发 send
 $("bgFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;if(bgObjectUrl)URL.revokeObjectURL(bgObjectUrl);bgObjectUrl=URL.createObjectURL(f);if(f.type.startsWith("video/")){setBgVideo(bgObjectUrl)}else{setBgImage(bgObjectUrl)}};
 function setBgImage(url){$("bgVideo").pause();$("bgVideo").style.display="none";$("backdrop").style.background=`center/cover no-repeat fixed url("${url}")`;}
@@ -3402,6 +3371,25 @@ try{
       var id = btn.id || "";
       // 关闭按钮
       if(id === "sideCloseBtn"){ closeDrawer(); return; }
+      // fix(1.3.6): 设置入口此前被 capture 拦截吞掉（stopPropagation 阻止了目标 onclick），设置永远打不开
+      if(id === "openSettingsBtn" || id === "openSettingsBtn2"){
+        if(typeof window.nxOpenSettings === "function") window.nxOpenSettings();
+        else if(typeof window.openAstrionSettings === "function") window.openAstrionSettings();
+        else {
+          var sp1 = $("nxSettingsPanel");
+          if(sp1) sp1.classList.add("show");
+        }
+        setTimeout(closeDrawer, 80);
+        return;
+      }
+      // fix(1.3.6): 「回到 ASTRION」品牌按钮同样被吞
+      if(id === "sideHomeBtn"){
+        closeDrawer();
+        if(typeof window.scrollTo === "function"){
+          try{ if(matchMedia("(max-width:760px)").matches) window.scrollTo({top:0,behavior:"smooth"}); else { var c=$("chat"); if(c) c.scrollTo({top:0,behavior:"smooth"}); } }catch(_){}
+        }
+        return;
+      }
       // 各功能
       if(id === "newChat"){
         if(typeof window.clearChatNow === "function") window.clearChatNow();
@@ -3462,11 +3450,15 @@ try{
         return;
       }
       if(id === "exportChat"){
+        /* fix(1.3.6): 优先走主脚本的 TXT 下载导出（按钮此前不存在，只有剪贴板兜底） */
         try{
-          var nodes = document.querySelectorAll("#chat .msg");
-          var text = Array.from(nodes).map(function(m){ return m.innerText; }).join("\\n\\n");
-          if(navigator.clipboard && text) navigator.clipboard.writeText(text);
-          alert(text ? "对话已复制到剪贴板" : "暂无对话可导出");
+          if(window.nxExportChat){ window.nxExportChat(); }
+          else {
+            var nodes = document.querySelectorAll("#chat .msg");
+            var text = Array.from(nodes).map(function(m){ return m.innerText; }).join("\n\n");
+            var blob = new Blob([text||"（暂无对话）"],{type:"text/plain;charset=utf-8"});
+            var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="ASTRION聊天记录.txt";a.click();setTimeout(function(){URL.revokeObjectURL(a.href)},1500);
+          }
         }catch(err){ alert("导出失败"); }
         setTimeout(closeDrawer, 80);
         return;
@@ -3480,7 +3472,7 @@ try{
         return;
       }
       if(id === "versionInfoBtn"){
-        alert("ASTRION 1.2.0\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
+        alert("ASTRION 1.3.6\\n\\n· 侧栏统一所有功能\\n· 免密登录\\n· 极致流畅");
         setTimeout(closeDrawer, 80);
         return;
       }
@@ -3676,10 +3668,11 @@ const el=id=>document.getElementById(id)||__NUL;
     while(box.children.length<5){const i=box.children.length,slot={name:'接口 '+(i+1),url:'',model:'',enabled:false,keySet:false};renderApiList([...(apis||[]),slot]);return}
   }
   // 免 Key 接口一键预置（2026-11 实测可用，无需任何 API Key）
+  /* fix(1.3.6): 与服务端 DEFAULT_AI_APIS 预填保持一致，避免与主槽模型重复浪费竞速槽位 */
   const FREE_PRESETS=[
-    {name:'Pollinations · GPT-OSS-20B（免Key）',url:'https://text.pollinations.ai/openai',model:'openai-fast'},
-    {name:'AirForce · GPT-OSS-20B（免Key·限速1条/秒）',url:'https://api.airforce/v1/chat/completions',model:'gpt-oss-20b'},
-    {name:'Pollinations · OpenAI 大池（免Key·高峰拥挤）',url:'https://text.pollinations.ai/openai',model:'openai'}
+    {name:'Pollinations · OpenAI 大池（免Key）',url:'https://text.pollinations.ai/openai',model:'openai'},
+    {name:'AirForce · GPT-OSS-20B（免Key）',url:'https://api.airforce/v1/chat/completions',model:'gpt-oss-20b'},
+    {name:'Pollinations · Mistral（免Key）',url:'https://text.pollinations.ai/openai',model:'mistral'}
   ];
   function applyFreePresets(){
     const rows=[...document.querySelectorAll('#nxApiList .nx-api-row')];
@@ -3791,7 +3784,7 @@ const el=id=>document.getElementById(id)||__NUL;
       <button type="button" class="as-row" id="asSwitchRow"><span class="as-ico c-gray">⇄</span><span class="as-lab">切换账号</span><span class="as-right">›</span></button>
       <button type="button" class="as-row danger" id="asLogoutRow"><span class="as-ico c-red">→</span><span class="as-lab">退出登录</span><span class="as-right">›</span></button>
     </div>
-    <div class="as-ver">Version: 1.2.1 · ASTRION</div>
+    <div class="as-ver">Version: 1.3.6 · ASTRION</div>
   </div>
 </div>
 
@@ -4139,9 +4132,9 @@ body.entered .composer .composer-foot{display:flex!important;justify-content:spa
 #appearanceModal.show{display:flex!important;z-index:100020!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}#appearanceModal .modal{width:min(620px,100%)!important;max-height:86dvh!important;overflow:auto!important}#appearanceModal #fontSize{accent-color:#ad96ff;touch-action:pan-x!important}#appearanceModal #fontSizeLabel{display:inline-block;min-width:45px;color:#cbbcff}
 @media(max-width:760px){body.entered .composer-wrap{bottom:calc(60px + env(safe-area-inset-bottom))!important;padding:8px 10px 9px!important;background:linear-gradient(0deg,#08090d 72%,#08090de8 88%,transparent)!important}.composer-wrap .composer{border-radius:20px!important}.composer .input-row{grid-template-columns:minmax(0,1fr) 42px!important;grid-template-rows:auto auto!important;gap:6px 8px!important}.composer .toolrow{grid-column:1/-1!important;grid-row:1!important;overflow-x:auto!important;scrollbar-width:none!important;padding-bottom:2px}.composer #prompt{grid-column:1!important;grid-row:2!important}.composer #sendBtn{grid-column:2!important;grid-row:2!important}.composer .composer-foot{display:none!important}#chat{padding-bottom:calc(250px + env(safe-area-inset-bottom))!important}.ann-box{width:100%!important;max-height:calc(100dvh - 22px - env(safe-area-inset-top))!important;border-radius:24px!important}.ann-header{padding:19px 18px 14px}.ann-brand h3{font-size:19px}#noticeList{max-height:calc(100dvh - 190px);padding:10px 14px}.ann-foot{padding:12px 16px calc(14px + env(safe-area-inset-bottom))}.announcement-composer{padding:14px}.announcement-compose-head{align-items:flex-start}#nxApiPanel{padding:0}#nxApiPanel .nx-api-sheet{width:100%;max-height:92dvh;border-radius:24px 24px 0 0;padding:18px 14px calc(16px + env(safe-area-inset-bottom))}#nxApiPanel .nx-api-fields{grid-template-columns:1fr}#nxApiPanel .nx-api-key-label{grid-column:auto}}
 </style>
-</body></html>
+<!-- fix(1.3.6): 删除文件中部非法的提前 </body></html>，统一由文件末尾闭合 -->
 
-<style id="nx-api-legacy-cleanup">#apiList,#apiBackupPanel,#saveSettings{display:none!important}</style>
+<!-- fix(1.3.6): 移除 nx-api-legacy-cleanup 杀层，接口配置恢复由 JS hidden 属性管理 -->
 
 <script id="nx-130-core">
 /* ===== ASTRION 1.3.0 核心增强：设置中心 / 管理后台 / Markdown / 模型下拉 / 语音 ===== */
@@ -4174,7 +4167,7 @@ window.addEventListener('error',e=>{if(e&&e.message&&!/ResizeObserver/.test(e.me
 window.addEventListener('unhandledrejection',e=>{const m=e&&e.reason&&e.reason.message;if(m&&!/AbortError|fetch/.test(m))toast('请求异常：'+String(m).slice(0,80),'err')});
 
 /* ---------- Markdown 安全渲染 ---------- */
-function escHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&','<':'<','>':'>','"':'"',"'":'&#39;'}[c]))}
+function escHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))} /* fix(1.3.6): 修复转义映射（原映射不转义任何字符，可注入 HTML —— XSS 漏洞） */
 function mdRender(src){
  if(!src)return '';
  const blocks=[];let text=String(src);
@@ -4290,7 +4283,9 @@ const SET_PANELS={
    row('头像','展示与更换（仅本机显示）',`<img class="nx-av" src="${av||'/logo.png'}" id="nxAvPreview" alt=""/><input type="file" id="nxAfFile" accept="image/*" hidden/><button class="nx-btn" id="nxAfPick">更换</button>${av?'<button class="nx-btn danger" id="nxAfClear">移除</button>':''}`),
    row('昵称','显示在侧栏与个人资料',`<input class="nx-input" id="nxNick" value="${escHtml(store.get('nx_nick',''))}" placeholder="你的昵称"/>`),
    row('用户 ID','注册账号，不可修改',`<input class="nx-input" value="${escHtml(window.currentUserId||'')}" readonly style="opacity:.7"/>`),
-   row('个人简介','保存在本机',`<input class="nx-input" id="nxBio" value="${escHtml(bio)}" placeholder="介绍一下自己"/>`)
+   row('个人简介','保存在本机',`<input class="nx-input" id="nxBio" value="${escHtml(bio)}" placeholder="介绍一下自己"/>`),
+   /* fix(1.3.6): 新设置中心此前没有切换账号/退出登录入口（旧入口被覆盖丢失） */
+   row('账号操作','切换账号或退出当前登录',`<button class="nx-btn" id="nxSwitchAcc" type="button">切换账号</button><button class="nx-btn danger" id="nxLogout" type="button">退出登录</button>`)
   ],[{label:'保存资料',cls:'primary',act:()=>{
     store.set('nx_nick',$('nxNick').value.trim().slice(0,40));store.set('nx_bio',$('nxBio').value.trim().slice(0,200));
     const n=$('sideUserName');if(n&&$('nxNick').value.trim())n.textContent=$('nxNick').value.trim();
@@ -4318,7 +4313,7 @@ const SET_PANELS={
     store.set('nx_reply_style',$('nxStyleSel').value);store.set('nx_mem_on',$('nxMemOn').classList.contains('on'));
     store.set('nx_welcome_msg',$('nxWelcome').value.trim().slice(0,120));
     const rs=$('replyStyleSelect');if(rs)rs.value=$('nxStyleSel').value;
-    toast('个性化设置已保存','ok')}}],{nxGoMem:()=>{const p=$('astrionSettings');if(window.openAstrionSettingsLegacy){window.openAstrionSettingsLegacy()}closeSet();const m=$('appearanceModal');if(m){/* 记忆管理在旧设置里 */}toast('已打开旧版设置中的记忆管理')}})},
+    toast('个性化设置已保存','ok')}}],{nxGoMem:()=>{closeSet();const m=document.getElementById("settingsModal");if(m){m.classList.add("show");setTimeout(()=>{const t=document.getElementById("memoryInput");if(t)t.scrollIntoView({behavior:"smooth",block:"center"});if(t)t.focus({preventScroll:true});},180)}toast("记忆管理在「设置 · 账号与记忆」面板内")}})},
  model(){return sec('模型设置',[
    row('默认模型','发送消息时优先使用的接口',`<select class="nx-select" id="nxDefModel"><option value="">自动（竞速最快）</option></select>`),
    row('深度思考默认','开启后新消息使用专家模式',toggle('nxExpertDef',store.get('nx_expert_mode',false))),
@@ -4355,14 +4350,14 @@ const SET_PANELS={
    row('时区','自动检测（只读）',`<input class="nx-input" value="${escHtml(tz)}" readonly style="opacity:.7;max-width:230px"/>`)
   ],[{label:'保存',cls:'primary',act:()=>{store.set('nx_lang',$('nxLang').value);store.set('nx_time_format',$('nxTimeFmt').value);toast('语言与地区已保存（刷新后完全生效）','ok')}}])},
  about(){return sec('关于 ASTRION AI',[
-   row('网站版本','ASTRION AI',`<span class="nx-model-badge">v1.3.5</span>`),
+   row('网站版本','ASTRION AI',`<span class="nx-model-badge">v1.3.6</span>`),
    row('更新日志','1.3.0 重大更新',`<small style="color:#a89fc0;max-width:320px;text-align:right">3 个免 Key 接口 · 主接口免费化 · ChatGPT 风格侧栏 · 设置中心 · 管理后台 8 模块 · Markdown 排版 · 语音输入</small>`),
    row('官方公告','查看最新公告',`<button class="nx-btn" id="nxGoNotice">打开公告中心</button>`),
    row('联系我们','通过转人工客服与我们联系',`<button class="nx-btn" id="nxContact">打开客服</button>`)
   ],null,{nxGoNotice:()=>{closeSet();const nb=$('noticeButton');nb&&nb.click()},
    nxContact:()=>{closeSet();const hb=$('humanSupportBtn');hb&&hb.click()}})}
 };
-function escHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&','<':'<','>':'>','"':'"',"'":'&#39;'}[c]))}
+function escHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))} /* fix(1.3.6): 修复转义映射（原映射不转义任何字符，可注入 HTML —— XSS 漏洞） */
 function row(t,d,ctrl){return `<div class="nx-set-row"><div class="t"><b>${t}</b><small>${d}</small></div><div class="ctrl">${ctrl}</div></div>`}
 function toggle(id,on){return `<span class="nx-toggle${on?' on':''}" id="${id}" role="switch" aria-checked="${on?'true':'false'}"></span>`}
 function sec(title,rows,btns,selects){return `<div class="nx-set-head"><b>${title}</b>${btns?`<button class="nx-btn primary" id="nxSecSave">${btns[0].label}</button>`:''}</div><div class="nx-set-sec">${rows.join('')}</div>`}
@@ -4424,6 +4419,8 @@ window.addEventListener('DOMContentLoaded',()=>{
   if(e.target.id==='nxAfPick')$('nxAfFile')?.click();
   if(e.target.id==='nxAfClear'){store.del('nx_avatar');toast('头像已移除，刷新生效','ok');showPane('profile')}
   if(e.target.id==='nxGoMem'){showPane('persona')}
+  if(e.target.id==='nxSwitchAcc'){closeSet();window.switchLoginAccount&&window.switchLoginAccount(false)}
+  if(e.target.id==='nxLogout'){closeSet();window.logout&&window.logout()}
   if(e.target.id==='nxViewLog'||e.target.id==='nxDelLog'||e.target.id==='nxResetRead'||e.target.id==='nxGoNotice'||e.target.id==='nxContact'){/* 交由各 handler */}
  });
  /* 头像选择 */
@@ -4547,5 +4544,285 @@ window.addEventListener('DOMContentLoaded',()=>{
 });
 })();
 </script>
+
+<style id="astrion-final-136">
+/* =====================================================================
+   ASTRION 1.3.6 · 主聊天界面重设计 —— 与登录页同一设计语言
+   米白纸感 #faf9f6 · 深绿品牌 #202420 → #161a17 · 珊瑚强调 #c97959
+   本层位于全部历史样式之后，统一收敛此前 28 层互相覆盖的视觉补丁。
+   ===================================================================== */
+:root{
+  --ui-bg:#faf9f6;--ui-bg2:#f3f1ec;--ui-card:#ffffff;
+  --ui-ink:#242521;--ui-ink2:#53544f;--ui-mut:#7c7d76;
+  --ui-line:#e2e0db;--ui-line2:#d7d4cc;
+  --ui-accent:#c97959;--ui-accent2:#d6815e;--ui-accent-h:#b96b4b;
+  --ui-brand:#202420;--ui-brand2:#161a17;--ui-green:#91c6a2;
+  --ui-shadow:0 10px 30px rgba(35,32,26,.08);--ui-shadow-lg:0 24px 70px rgba(35,32,26,.16);
+}
+html,body{background:var(--ui-bg)!important;color:var(--ui-ink)!important;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI","PingFang SC","Noto Sans SC",sans-serif!important}
+body.nx-light,html:has(body.nx-light){background:var(--ui-bg)!important;color:var(--ui-ink)!important}
+#backdrop{background:var(--ui-bg)!important;display:none!important}
+/* —— 主布局 —— */
+.app{background:transparent!important;gap:0!important}
+.main{background:var(--ui-bg)!important;border:0!important;box-shadow:none!important;color:var(--ui-ink)!important}
+body.nx-light .main{background:var(--ui-bg)!important;color:var(--ui-ink)!important}
+/* —— 侧栏：登录页左栏同款深绿品牌渐变 —— */
+.sidebar{background:radial-gradient(ellipse at 15% 12%,rgba(241,164,123,.23),transparent 35%),radial-gradient(ellipse at 92% 82%,rgba(141,165,139,.19),transparent 34%),linear-gradient(145deg,#202420,#161a17 62%,#23221e)!important;border-right:0!important;color:#f8f4ee!important;box-shadow:none!important}
+body.nx-light .sidebar{background:radial-gradient(ellipse at 15% 12%,rgba(241,164,123,.23),transparent 35%),linear-gradient(145deg,#202420,#161a17 62%,#23221e)!important}
+.dola-search{background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.09)!important;color:#c9c7bf!important;border-radius:12px!important}
+.dola-search input{color:#f8f4ee!important}
+.dola-search input::placeholder{color:#9a9b90!important}
+.dola-icon-btn{background:rgba(255,255,255,.08)!important;color:#f8f4ee!important;border:1px solid rgba(255,255,255,.08)!important}
+.dola-icon-btn:hover{background:rgba(255,255,255,.14)!important}
+.dola-side-brand{color:#fff!important;font-weight:750!important;letter-spacing:1.7px!important}
+.dola-side-brand img{border-radius:12px!important;box-shadow:0 5px 20px rgba(0,0,0,.32)!important}
+.dola-side-item{color:#e6e4dc!important;font-size:14px!important;border-radius:12px!important}
+.dola-side-item .ico{opacity:.95}
+.dola-side-item:hover,.dola-side-item:active{background:rgba(255,255,255,.08)!important;color:#fff!important}
+.dola-side-item::before{background:linear-gradient(180deg,#e9ae8e,#c97959)!important}
+.dola-back-pill{background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.1)!important;color:#f8f4ee!important}
+.dola-user{color:#f8f4ee!important}
+.dola-user-meta b{color:#fff!important}.dola-user-meta small{color:#b9bab0!important}
+.dola-user-bar{border-top:1px solid rgba(255,255,255,.1)!important}
+/* 桌面端侧栏不得被抽屉位移规则藏掉（修复 sidebar-click-fix 的无条件 translateX(-105%)） */
+@media(min-width:861px){.sidebar{transform:none!important;position:relative!important;z-index:5!important}}
+/* —— 顶栏 —— */
+.topbar{background:rgba(250,249,246,.92)!important;border-bottom:1px solid var(--ui-line)!important;color:var(--ui-ink)!important;backdrop-filter:none!important}
+body.nx-light .topbar{background:rgba(250,249,246,.92)!important;border-bottom:1px solid var(--ui-line)!important}
+.top-title{color:var(--ui-ink)!important;font-weight:750!important;letter-spacing:.15px!important}
+.top-title:before{background:linear-gradient(135deg,#c97959,#e9ae8e)!important;box-shadow:0 0 10px rgba(201,121,89,.4)!important}
+.top-logo{border-radius:9px!important;box-shadow:0 4px 14px rgba(201,121,89,.28)!important}
+.top-sub{color:var(--ui-mut)!important}
+#modelSwitchBtn{background:var(--ui-card)!important;border:1px solid var(--ui-line)!important;color:var(--ui-ink)!important;border-radius:12px!important}
+#modelSwitchBtn:hover{border-color:var(--ui-accent)!important;color:var(--ui-ink)!important}
+#modelSwitchBtn .caret{color:var(--ui-mut)!important}
+#nxModelMenu{background:var(--ui-card)!important;border:1px solid var(--ui-line)!important;border-radius:16px!important;box-shadow:var(--ui-shadow-lg)!important}
+.nx-model-item{color:var(--ui-ink)!important}
+.nx-model-item:hover{background:var(--ui-bg2)!important;color:var(--ui-ink)!important}
+.nx-model-item.on{background:linear-gradient(105deg,rgba(201,121,89,.14),rgba(214,129,94,.1))!important;color:var(--ui-ink)!important}
+.nx-model-item small{color:var(--ui-mut)!important}
+.nx-model-badge{background:linear-gradient(90deg,rgba(201,121,89,.16),rgba(214,129,94,.14))!important;color:#a05a3d!important}
+@media(min-width:861px){.top-actions .iconbtn{display:inline-flex!important}}
+/* —— 聊天区 —— */
+#chat{background:transparent!important;color:var(--ui-ink)!important}
+.welcome h2{color:var(--ui-ink)!important;background:none!important;-webkit-background-clip:initial!important;background-clip:initial!important;-webkit-text-fill-color:initial!important}
+.welcome p{color:var(--ui-mut)!important}
+.welcome .orb{border-radius:24px!important;background:linear-gradient(135deg,#d6815e,#b96b4b)!important;box-shadow:0 12px 36px rgba(201,121,89,.35),0 0 0 5px #fff inset!important;animation:none!important}
+.suggestions button{background:var(--ui-card)!important;border:1px solid var(--ui-line)!important;color:var(--ui-ink2)!important;border-radius:999px!important;box-shadow:var(--ui-shadow)!important;transition:transform .18s,border-color .18s,color .18s!important}
+.suggestions button:hover{border-color:var(--ui-accent)!important;color:var(--ui-accent-h)!important;transform:translateY(-2px)!important}
+.suggestions button:active{transform:scale(.97)!important}
+/* 气泡：AI = 白卡纸感；用户 = 珊瑚渐变（登录按钮同款） */
+.msg{background:var(--ui-card)!important;border:1px solid var(--ui-line)!important;color:var(--ui-ink)!important;box-shadow:var(--ui-shadow)!important}
+.msg .role{color:var(--ui-mut)!important}
+.msg.ai{background:var(--ui-card)!important;border-color:var(--ui-line)!important}
+.msg.user{background:linear-gradient(125deg,#c97959,#b96b4b)!important;border:0!important;color:#fff!important;box-shadow:0 8px 22px rgba(201,121,89,.3)!important}
+.msg.user .role{color:rgba(255,255,255,.85)!important}
+.msg.error{background:#fdf3f0!important;border-color:#e5b8aa!important;color:#a04434!important}
+.msg.error .role{color:#b96b4b!important}
+.msg img{border-radius:14px!important;box-shadow:var(--ui-shadow)!important}
+.msg-tools button{background:var(--ui-bg2)!important;border:1px solid var(--ui-line)!important;color:var(--ui-mut)!important;border-radius:999px!important}
+.msg-tools button:hover{border-color:var(--ui-accent)!important;color:var(--ui-accent-h)!important}
+.search-sources{background:var(--ui-bg2)!important;border:1px solid var(--ui-line)!important;border-radius:14px!important}
+.search-sources b{color:var(--ui-accent-h)!important}
+.search-sources a{color:#a05a3d!important}
+.search-sources small{color:var(--ui-mut)!important}
+/* Markdown 排版（浅色） */
+.message-text.md h1,.message-text.md h2,.message-text.md h3{color:var(--ui-ink)!important}
+.message-text.md code{background:var(--ui-bg2)!important;border:1px solid var(--ui-line)!important;color:#a05a3d!important}
+.message-text.md a{color:#a05a3d!important}
+.message-text.md blockquote{border-left-color:var(--ui-accent2)!important;background:var(--ui-bg2)!important;color:var(--ui-ink2)!important}
+.message-text.md th{background:var(--ui-bg2)!important}
+.message-text.md th,.message-text.md td{border-color:var(--ui-line)!important;color:var(--ui-ink)!important}
+.nx-codeblock{background:#f6f4ef!important;border-color:var(--ui-line)!important}
+.nx-codeblock pre{color:#3b3a34!important}
+.nx-codeblock .nx-code-head{background:var(--ui-bg2)!important;color:var(--ui-mut)!important}
+.nx-codeblock .nx-code-copy{color:#a05a3d!important}
+.nx-codeblock .nx-code-copy:hover{background:rgba(201,121,89,.12)!important;color:#7d4527!important}
+.msg.typing .message-text::after{color:var(--ui-accent)!important}
+/* —— 输入区 —— */
+.composer-wrap{background:linear-gradient(0deg,var(--ui-bg) 70%,rgba(250,249,246,.9) 86%,transparent)!important;border-top:0!important}
+body.entered .composer-wrap{background:linear-gradient(0deg,var(--ui-bg) 70%,rgba(250,249,246,.9) 86%,transparent)!important}
+.composer{background:var(--ui-card)!important;border:1px solid var(--ui-line)!important;border-radius:22px!important;box-shadow:var(--ui-shadow)!important;transition:border-color .18s,box-shadow .18s!important}
+.composer:focus-within{border-color:var(--ui-accent)!important;box-shadow:var(--ui-shadow),0 0 0 4px rgba(214,129,94,.12)!important}
+#prompt{color:var(--ui-ink)!important}
+#prompt::placeholder{color:#a4a49e!important}
+.toolrow button{color:var(--ui-ink2)!important;border-radius:11px!important}
+.toolrow button:hover{background:var(--ui-bg2)!important;color:var(--ui-accent-h)!important}
+.mode-btn{background:var(--ui-card)!important;border:1px solid var(--ui-line)!important;color:var(--ui-mut)!important}
+.mode-btn.active,.mode-btn[aria-pressed="true"]{background:linear-gradient(135deg,rgba(201,121,89,.14),rgba(214,129,94,.1))!important;border-color:rgba(201,121,89,.5)!important;color:var(--ui-accent-h)!important}
+#sendBtn{background:linear-gradient(135deg,#d6815e,#b96b4b)!important;color:#fff!important;font-weight:800!important;border-radius:14px!important;box-shadow:0 8px 18px rgba(201,121,89,.28)!important;animation:none!important}
+#sendBtn:hover{filter:brightness(1.06)!important}
+#sendBtn:disabled{opacity:.38!important;cursor:not-allowed!important}
+.composer-foot{color:var(--ui-mut)!important}
+.file-chip{background:var(--ui-bg2)!important;border:1px solid var(--ui-line)!important;color:var(--ui-ink2)!important}
+.file-chip button{color:#b3543c!important}
+/* —— 手机底栏 —— */
+.mobile-workbar{background:rgba(255,255,255,.96)!important;border:1px solid var(--ui-line)!important;box-shadow:0 12px 38px rgba(35,32,26,.14)!important}
+.mobile-workbar button{color:var(--ui-mut)!important}
+.mobile-workbar button:active{background:var(--ui-bg2)!important}
+.work-purple{background:#f3e6ff!important;color:#7d4bb5!important}
+.work-orange{background:#fbeadb!important;color:#a05a3d!important}
+.work-green{background:#e2efe6!important;color:#2f6a45!important}
+.work-blue{background:#e2ecfa!important;color:#2c5a94!important}
+.mobile-drawer-backdrop,#mobileDrawerBackdrop{background:rgba(35,32,26,.42)!important}
+/* —— 浮动件 —— */
+#toBottom{background:var(--ui-card)!important;border:1px solid var(--ui-line)!important;color:var(--ui-ink)!important;box-shadow:var(--ui-shadow-lg)!important}
+#nxProg{background:linear-gradient(90deg,#c97959,#e9ae8e,#c97959)!important}
+/* —— 启动屏 / Toast —— */
+#nx-splash{background:var(--ui-bg)!important}
+#nx-splash .nx-sp-logo{background:linear-gradient(135deg,#d6815e,#b96b4b)!important;box-shadow:0 14px 44px rgba(201,121,89,.35)!important}
+#nx-splash .nx-sp-t{background:none!important;-webkit-background-clip:initial!important;background-clip:initial!important;color:var(--ui-ink)!important;-webkit-text-fill-color:initial!important}
+#nx-splash .nx-sp-bar{background:var(--ui-line)!important}
+#nx-splash .nx-sp-bar i{background:linear-gradient(90deg,#d6815e,#c97959)!important}
+#nxToastBox .nx-toast{background:rgba(32,36,32,.95)!important;border:1px solid rgba(255,255,255,.12)!important;color:#f8f4ee!important}
+#nxToastBox .nx-toast.ok{border-color:rgba(145,198,162,.5)!important}
+#nxToastBox .nx-toast.err{border-color:rgba(224,120,120,.55)!important}
+/* =====================================================================
+   弹窗体系统一为登录页纸感（白卡 + 细边 + 珊瑚主按钮）
+   ===================================================================== */
+.modal-back,.extra-modal,#nxApiPanel .nx-api-mask{background:rgba(35,32,26,.45)!important}
+.modal,.extra-box,#nxApiPanel .nx-api-sheet,.as-settings-panel,.nl-card,.cr-card{background:var(--ui-card)!important;border:1px solid var(--ui-line)!important;box-shadow:var(--ui-shadow-lg)!important;color:var(--ui-ink)!important}
+.modal h3,.extra-head h3,.ann-header h3,.modal-top h3,.nx-api-top b{color:var(--ui-ink)!important}
+.modal p,.hint,.nx-api-hint,.ann-header p,.extra-head small,.ad-hint{color:var(--ui-mut)!important}
+.modal-top,.extra-head,.ann-header,.nx-api-top{background:var(--ui-card)!important;border-bottom:1px solid var(--ui-line)!important}
+.modal-actions,.ann-foot,.nx-api-actions{background:var(--ui-card)!important;border-top:1px solid var(--ui-line)!important}
+.modal-top .settings-kicker,.extra-head small{color:var(--ui-mut)!important}
+/* 主按钮：登录页「登录」同款珊瑚 */
+.primary,.ann-foot .primary,#nxApiPanel .nx-api-actions button.primary,#publishNotice,.nx-btn.primary,.cr-save,.nx-done{background:linear-gradient(135deg,#d6815e,#b96b4b)!important;color:#fff!important;border:0!important;font-weight:650!important;box-shadow:0 8px 18px rgba(201,121,89,.26)!important}
+.primary:hover{filter:brightness(1.06)!important;transform:translateY(-1px)}
+/* 次级按钮：白卡细边 */
+.iconbtn,.ghost,.nx-api-actions button:not(.primary),[data-close],[data-extra-close],.nx-btn,.cr-av-btn{background:var(--ui-card)!important;border:1px solid var(--ui-line)!important;color:var(--ui-ink2)!important}
+.iconbtn:hover,.ghost:hover,[data-close]:hover,[data-extra-close]:hover,.nx-btn:hover{background:var(--ui-bg2)!important;color:var(--ui-ink)!important;border-color:var(--ui-line2)!important}
+/* 输入控件：白底细边，focus 珊瑚光圈 */
+.field input,.field select,.modal input:not([type=checkbox]):not([type=range]),.modal textarea,.modal select,
+.extra-box input:not([type=checkbox]),.extra-box textarea,.extra-box select,
+#nxApiPanel input[data-k],.nx-api-fields input,.as-settings-panel input,.as-settings-panel textarea,
+.nx-input,.nx-select,.announcement-composer input,.announcement-composer textarea,.image-prompt-modal textarea,.support-compose textarea{
+  background:#fff!important;border:1px solid var(--ui-line)!important;color:var(--ui-ink)!important;border-radius:12px!important;box-shadow:0 1px 2px rgba(30,33,16,.05)!important}
+.field input:focus,.field select:focus,.modal input:focus,.modal textarea:focus,.modal select:focus,
+.extra-box input:focus,.extra-box textarea:focus,#nxApiPanel input:focus,.nx-api-fields input:focus,
+.nx-input:focus,.nx-select:focus,.image-prompt-modal textarea:focus,.support-compose textarea:focus{
+  border-color:var(--ui-accent2)!important;box-shadow:0 0 0 4px rgba(214,129,94,.13)!important;outline:none!important}
+.field label,.nx-api-fields label,.announcement-composer label{color:var(--ui-ink2)!important}
+#nxApiPanel input::placeholder,.nx-input::placeholder,.modal input::placeholder,.modal textarea::placeholder{color:#a4a49e!important}
+input[type="checkbox"],input[type="range"]{accent-color:#c97959!important}
+/* 通用小件 */
+.settings-hero{background:linear-gradient(115deg,rgba(201,121,89,.08),rgba(214,129,94,.05))!important;border:1px solid rgba(201,121,89,.2)!important}
+.settings-hero b{color:var(--ui-ink)!important}
+.health-pill{background:rgba(145,198,162,.14)!important;border:1px solid rgba(145,198,162,.4)!important;color:#2f6a45!important}
+.info-card,.api-card,.admin-section,.announcement-composer,.nx-set-sec,.cr-tpl{background:var(--ui-bg2)!important;border:1px solid var(--ui-line)!important;color:var(--ui-ink)!important}
+.info-card strong{color:var(--ui-ink)!important}
+.section-kicker{color:#a05a3d!important}
+.settings-nav button{color:var(--ui-ink2)!important;border-color:transparent!important}
+.settings-nav button.active,.settings-nav button:hover{background:var(--ui-bg2)!important;border-color:rgba(201,121,89,.4)!important;color:var(--ui-accent-h)!important}
+.notice-card{background:var(--ui-bg2)!important;border:1px solid var(--ui-line)!important}
+.notice-card h4{color:var(--ui-ink)!important}.notice-card p{color:var(--ui-ink2)!important}.notice-card small{color:var(--ui-mut)!important}
+.ann-mark{background:linear-gradient(135deg,#d6815e,#c97959)!important;box-shadow:0 10px 26px rgba(201,121,89,.35)!important}
+.ann-dismiss{color:var(--ui-ink2)!important;background:var(--ui-bg2)!important;border:1px solid var(--ui-line)!important}
+.notice-empty{color:var(--ui-mut)!important}.notice-empty h4{color:var(--ui-ink)!important}
+.notice-empty-icon{background:var(--ui-bg2)!important;color:#a05a3d!important}
+.notice-empty-action{border-color:rgba(201,121,89,.4)!important;background:rgba(201,121,89,.08)!important;color:#a05a3d!important}
+.ann-tag{background:linear-gradient(135deg,#d6815e,#c97959)!important;color:#fff!important}
+/* nxSettingsPanel 设置中心 */
+.nx-set-shell{background:var(--ui-card)!important;border-color:var(--ui-line)!important}
+.nx-set-nav{background:var(--ui-bg2)!important;border-right-color:var(--ui-line)!important}
+.nx-set-nav .nx-nav-title{color:var(--ui-mut)!important}
+.nx-set-nav button{color:var(--ui-ink2)!important}
+.nx-set-nav button:hover{background:rgba(201,121,89,.08)!important;color:var(--ui-ink)!important}
+.nx-set-nav button.on{background:linear-gradient(105deg,rgba(201,121,89,.14),rgba(214,129,94,.1))!important;color:var(--ui-accent-h)!important;box-shadow:inset 0 0 0 1px rgba(201,121,89,.3)!important}
+.nx-set-main{background:var(--ui-card)!important}
+.nx-set-head b{color:var(--ui-ink)!important}
+.nx-set-row{border-bottom-color:rgba(226,224,219,.7)!important}
+.nx-set-row .t b{color:var(--ui-ink)!important}
+.nx-set-row .t small{color:var(--ui-mut)!important}
+.nx-toggle{background:#e6e3dc!important;border-color:var(--ui-line)!important}
+.nx-toggle::after{background:#fff!important;box-shadow:0 2px 8px rgba(35,32,26,.25)!important}
+.nx-toggle.on{background:linear-gradient(105deg,#d6815e,#c97959)!important;border-color:transparent!important}
+.nx-toggle.on::after{left:22px!important}
+.nx-select,.nx-input{background:#fff!important;border-color:var(--ui-line)!important;color:var(--ui-ink)!important}
+.nx-select:focus,.nx-input:focus{border-color:var(--ui-accent2)!important}
+.nx-av{border-color:rgba(201,121,89,.4)!important}
+.nx-sw.on{border-color:var(--ui-accent)!important}
+.nx-btn{background:var(--ui-card)!important;border-color:var(--ui-line)!important;color:var(--ui-ink2)!important}
+.nx-btn:hover{background:var(--ui-bg2)!important}
+.nx-btn.primary{color:#fff!important}
+.nx-btn.danger{border-color:rgba(224,120,120,.4)!important;color:#b3543c!important}
+/* 管理后台 */
+.ad-shell{background:var(--ui-card)!important}
+.ad-nav{background:var(--ui-bg2)!important;border-right-color:var(--ui-line)!important}
+.ad-nav button{color:var(--ui-ink2)!important}
+.ad-nav button:hover{background:rgba(201,121,89,.08)!important;color:var(--ui-ink)!important}
+.ad-nav button.on{background:linear-gradient(105deg,rgba(201,121,89,.14),rgba(214,129,94,.1))!important;color:var(--ui-accent-h)!important;box-shadow:inset 0 0 0 1px rgba(201,121,89,.3)!important}
+.ad-main{background:var(--ui-card)!important}
+.ad-card{background:var(--ui-bg2)!important;border-color:var(--ui-line)!important}
+.ad-card b{background:none!important;-webkit-background-clip:initial!important;background-clip:initial!important;color:var(--ui-ink)!important;-webkit-text-fill-color:initial!important}
+.ad-card small{color:var(--ui-mut)!important}
+.ad-table th,.ad-table td{color:var(--ui-ink2)!important;border-bottom-color:rgba(226,224,219,.7)!important}
+.ad-table th{color:var(--ui-mut)!important}
+.ad-table tr:hover td{background:var(--ui-bg2)!important}
+.ad-actions button{background:var(--ui-card)!important;border-color:var(--ui-line)!important;color:var(--ui-ink2)!important}
+.ad-actions button:hover{background:var(--ui-bg2)!important}
+.ad-bar i{background:linear-gradient(180deg,#d6815e,#c97959)!important;box-shadow:none!important}
+.ad-bar small{color:var(--ui-mut)!important}
+.nx-model-badge{color:#a05a3d!important}
+/* nxApiPanel 接口面板 */
+#nxApiPanel .nx-api-row{background:var(--ui-bg2)!important;border:1px solid var(--ui-line)!important}
+#nxApiPanel .nx-api-row.is-primary{border-color:rgba(201,121,89,.45)!important;background:linear-gradient(130deg,rgba(214,129,94,.1),rgba(201,121,89,.05))!important}
+#nxApiPanel .nx-api-index{background:rgba(201,121,89,.14)!important;color:#a05a3d!important}
+#nxApiPanel .nx-api-enable{color:var(--ui-ink2)!important}
+#nxApiPanel .nx-api-top button{background:var(--ui-bg2)!important;border-color:var(--ui-line)!important;color:var(--ui-ink)!important}
+#nxApiPanel .nx-api-clear-key{color:#b3543c!important}
+#nxApiPanel .nx-api-row-foot small{color:var(--ui-mut)!important}
+.nx-free-btn{background:linear-gradient(135deg,#e9ae8e,#d6815e)!important;color:#fff!important;font-weight:650!important}
+.nx-api-error{color:#b3543c!important}
+/* astrionSettings（快捷设置面板） */
+#astrionSettings{background:rgba(35,32,26,.45)!important}
+#astrionSettings .as-settings-panel{background:var(--ui-card)!important;border-radius:20px!important}
+.as-row{color:var(--ui-ink)!important;border-bottom-color:rgba(226,224,219,.7)!important}
+.as-row .as-lab{color:var(--ui-ink)!important}
+.as-row.danger .as-lab{color:#b3543c!important}
+.as-name{color:var(--ui-ink)!important}.as-id{color:var(--ui-mut)!important}
+.as-ico{background:var(--ui-bg2)!important}
+/* 客服会话 */
+.support-thread{background:var(--ui-bg2)!important;border-color:var(--ui-line)!important}
+.support-message{background:var(--ui-card)!important;border-color:var(--ui-line)!important;color:var(--ui-ink)!important}
+.support-message.user{background:rgba(201,121,89,.1)!important;border-color:rgba(201,121,89,.3)!important}
+.support-message.admin{background:rgba(145,198,162,.12)!important;border-color:rgba(145,198,162,.4)!important}
+.support-message small{color:var(--ui-mut)!important}
+.support-status-line{color:var(--ui-ink2)!important}
+.support-ticket{background:var(--ui-bg2)!important;border-color:var(--ui-line)!important}
+.support-ticket-meta{color:var(--ui-mut)!important}.support-ticket-meta strong{color:var(--ui-ink)!important}
+.support-ticket-history{background:var(--ui-card)!important}
+.support-count{background:rgba(201,121,89,.14)!important;color:#a05a3d!important}
+.online-pill{color:#2f6a45!important}
+/* 创新AI 卡片 */
+.nl-card,.cr-card{color:var(--ui-ink)!important}
+.nl-head,.cr-view h4{color:var(--ui-ink)!important}
+.nl-av{background:var(--ui-bg2)!important;color:var(--ui-accent-h)!important}
+.cr-item{background:var(--ui-bg2)!important;border-color:var(--ui-line)!important}
+.cr-item .t b{color:var(--ui-ink)!important}
+.cr-item small{color:var(--ui-mut)!important}
+.cr-item .go{background:var(--ui-card)!important;border:1px solid var(--ui-line)!important;color:var(--ui-accent-h)!important}
+.cr-item .e{background:var(--ui-card)!important}
+.cr-cta{background:var(--ui-card)!important;border:1.5px dashed rgba(201,121,89,.5)!important;color:var(--ui-accent-h)!important}
+.cr-cta small{color:var(--ui-mut)!important}
+.cr-tag{background:#c97959!important;color:#fff!important}
+.nl-msgs{background:var(--ui-card)!important}
+.nl-m{background:var(--ui-bg2)!important;color:var(--ui-ink)!important}
+.nl-m.me{background:linear-gradient(125deg,#c97959,#b96b4b)!important;color:#fff!important}
+.nl-input textarea{background:#fff!important;border-color:var(--ui-line)!important;color:var(--ui-ink)!important}
+.nl-input #crSend,.nl-input button{background:linear-gradient(135deg,#d6815e,#b96b4b)!important;color:#fff!important;border:0!important}
+.cr-err{color:#b3543c!important}.cr-err.ok{color:#2f6a45!important}
+.cr-err,.cr-empty{color:var(--ui-mut)!important}
+/* 侧栏（右键浮出菜单等）通用深墨字 */
+.side-label{color:var(--ui-mut)!important}
+/* 外观弹窗滑杆 */
+#fontSize,#nxFont,#nxTemp{accent-color:#c97959!important}
+#fontSizeLabel,#nxFont+span{color:var(--ui-ink2)!important}
+/* 滚动条统一 */
+::-webkit-scrollbar-thumb{background:rgba(35,32,26,.18)!important}
+::-webkit-scrollbar-thumb:hover{background:rgba(35,32,26,.3)!important}
+body.nx-light ::-webkit-scrollbar-thumb{background:rgba(35,32,26,.18)!important}
+</style>
 
 </body></html>
