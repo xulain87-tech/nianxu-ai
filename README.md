@@ -7,6 +7,8 @@ ASTRION 是一个 Node.js 单体聊天 Web 应用：账号登录、AI 聊天（�
 
 - 要求 Node.js 18+；`npm install` 后 `npm start`。
 - 必须在服务端私密环境变量配置 `ADMIN_ID`、`ADMIN_PASSWORD`（登录与管理员识别）。
+- 手机/本地快速启动：直接运行 `bash start.sh`（已内置管理员账号，文件权限 600，请勿外传；
+  换密码时编辑 start.sh 里两行 export 即可）。服务器部署请用环境变量方式，勿把密码提交进仓库。
 - `GROQ_API_KEY` 可选：配置后主槽自动切回 Groq `openai/gpt-oss-120b`；
   未配置时主槽默认免 Key 的 Pollinations 免费接口。
 - `ZHIPU_API_KEY` 可选（AI 生图）。其余见 `.env.example`。
