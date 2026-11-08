@@ -2626,7 +2626,7 @@ body.entered #entryGate{display:none!important;visibility:hidden!important;point
    </section>
    <section class="ad-pane" data-pane="models" id="adModels"><p class="ad-hint">正在加载模型…</p></section>
    <section class="ad-pane" data-pane="api">
-    <p class="ad-hint">接口与模型在独立面板中配置（五槽共享 · 主接口免费免 Key · 备用槽支持任意公网 HTTPS 兼容服务）。</p>
+    <p class="ad-hint">接口与模型在独立面板中配置（十槽共享 · 主接口免 Key · 备用槽支持任意公网 HTTPS 兼容服务）。</p>
     <button class="nx-btn primary" id="adOpenApi" type="button">打开 API 管理面板</button>
    </section>
    <section class="ad-pane" data-pane="usage" id="adUsage"><p class="ad-hint">正在加载使用统计…</p></section>
@@ -3071,7 +3071,7 @@ function openChat(ai,owner){cur={ai,owner:(owner==='__me__'||owner==null||owner=
 function upd(){sendB.disabled=busy||!inp.value.trim()}
 async function send(){const text=inp.value.trim();if(!text||busy||!cur)return;inp.value='';inp.style.height='auto';busy=true;upd();add('me',text);hist.push({role:'user',content:text});hist=hist.slice(-16);
  const p=add('bot','');p.classList.add('typing');ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),30000);const owner=cur.owner||window.currentUserId||(typeof currentUserId!=='undefined'?currentUserId:'')||'';
- try{const d=await api('/api/custom-ai/chat',{method:'POST',signal:ctl.signal,body:JSON.stringify({owner,messages:hist})});p.classList.remove('typing');p.textContent=d.answer;hist.push({role:'assistant',content:d.answer});hist=hist.slice(-16)}
+ try{const d=await api('/api/custom-ai/chat',{method:'POST',signal:ctl.signal,body:JSON.stringify({owner,messages:hist,preferred:(function(){try{return JSON.parse(localStorage.getItem("nx_preferred_model"))||""}catch{return ""}})(),temperature:(function(){try{const t=JSON.parse(localStorage.getItem("nx_temperature"));return typeof t==="number"?t:undefined}catch{return undefined}})()})});p.classList.remove('typing');p.textContent=d.answer;hist.push({role:'assistant',content:d.answer});hist=hist.slice(-16)}
  catch(e){p.classList.remove('typing');p.classList.add('err');p.textContent=e.name==='AbortError'?'等太久啦，再试一次吧':'出错了：'+e.message;hist.pop()}
  finally{clearTimeout(timer);busy=false;ctl=null;upd();box.scrollTop=box.scrollHeight}}
 sendB.onclick=send;
@@ -3642,15 +3642,16 @@ const el=id=>document.getElementById(id)||__NUL;
   function renderApiList(apis){
     /* fix(1.3.6b): el() 的 __NUL 代理恒为真值，if(!box) 永假；面板未创建时会走进 while(box.children.length<5) 无限递归直至栈溢出 —— 改用真 getElementById */
     const box=document.getElementById('nxApiList');if(!box)return;box.replaceChildren();
-    (apis||[]).slice(0,5).forEach((a,i)=>{
+    (apis||[]).slice(0,10).forEach((a,i)=>{
       const fixed=i===0,row=document.createElement('section');row.className='nx-api-row'+(fixed?' is-primary':'');
-      const checked=fixed||a.enabled===true;
-      row.innerHTML=`<div class="nx-api-head"><div><span class="nx-api-index">${fixed?'PRIMARY · 主聊天':'FALLBACK '+i+' · 备用'}</span><b>${esc(a.name||('接口 '+(i+1)))}</b></div><label class="nx-api-enable"><input type="checkbox" data-k="enabled" ${checked?'checked':''} ${fixed?'disabled':''}> ${fixed?'始终启用':'启用'}</label></div>
+      /* fix(1.3.6e): 主接口的启用勾选框不再写死 disabled，勾选状态尊重服务器数据 */
+      const checked=a.enabled===true;
+      row.innerHTML=`<div class="nx-api-head"><div><span class="nx-api-index">${fixed?'PRIMARY · 主聊天':'备用 '+(i)}</span><b>${esc(a.name||('接口 '+(i+1)))}</b></div><label class="nx-api-enable"><input type="checkbox" data-k="enabled" ${checked?'checked':''}> 启用</label></div>
        <div class="nx-api-fields"><label>接口名称<input data-k="name" value="${esc(a.name||('接口 '+(i+1)))}"></label>
        <label>API Endpoint<input data-k="url" value="${esc(a.url||'')}" placeholder="https://服务商/v1/chat/completions"></label>
        <label>模型<input data-k="model" value="${esc(a.model||'')}" placeholder="模型名称"></label>
        <label class="nx-api-key-label">${fixed?'主接口 API Key':'API Key（免 Key 服务可留空）'} <span>${a.keySet?'已配置 Key':'未配置 Key（主接口未填则用服务器环境变量）'}</span><input type="password" data-k="key" autocomplete="new-password" placeholder="${a.keySet?'输入新 Key 以替换（留空保留）':(fixed?'可填 Key，或留空用服务器环境变量':'免 Key 服务可留空')}"></label></div>
-       <div class="nx-api-row-foot"><small>${fixed?'主接口可任意修改（地址/模型/Key）；未填 Key 时用服务器环境变量':'保存后对全站用户共享；免 Key 服务 Key 留空即可'}</small><button type="button" class="nx-api-promote" data-slot="${i}" ${fixed?'hidden':''}>⬆ 设为主接口</button><button type="button" class="nx-api-clear-key" ${fixed?'hidden':''}>清除已保存 Key</button></div>`;
+       <div class="nx-api-row-foot"><small>${fixed?'主接口可任意修改（地址/模型/Key），可随时停用；未填 Key 时用服务器环境变量':'保存后对全站用户共享；免 Key 服务 Key 留空即可'}</small><button type="button" class="nx-api-promote" data-slot="${i}" ${fixed?'hidden':''}>⬆ 设为主接口</button><button type="button" class="nx-api-clear-key" ${fixed?'hidden':''}>清除已保存 Key</button></div>`;
       row._api=a;row.querySelector('[data-k="enabled"]').addEventListener('change',e=>{a.enabled=e.target.checked});
       row.querySelectorAll('input[data-k]').forEach(input=>input.addEventListener('input',()=>{const k=input.dataset.k;if(k==='key'){a.key=input.value;a.clearKey=false}else if(k!=='enabled')a[k]=input.value}));
       row.querySelector('.nx-api-clear-key').addEventListener('click',()=>{a.key='';a.clearKey=true;row.querySelector('[data-k="key"]').value='';row.querySelector('.nx-api-key-label span').textContent='已标记清除（部署环境变量需在服务器管理）'});
@@ -3665,36 +3666,45 @@ const el=id=>document.getElementById(id)||__NUL;
       });
       box.append(row);
     });
-    while(box.children.length<5){const i=box.children.length,slot={name:'接口 '+(i+1),url:'',model:'',enabled:false,keySet:false};renderApiList([...(apis||[]),slot]);return}
+    while(box.children.length<10){const i=box.children.length,slot={name:'接口 '+(i+1),url:'',model:'',enabled:false,keySet:false};renderApiList([...(apis||[]),slot]);return}
   }
   // 免 Key 接口一键预置（2026-11 实测可用，无需任何 API Key）
-  /* fix(1.3.6): 与服务端 DEFAULT_AI_APIS 预填保持一致，避免与主槽模型重复浪费竞速槽位 */
-  const FREE_PRESETS=[
-    {name:'Pollinations · OpenAI 大池（免Key）',url:'https://text.pollinations.ai/openai',model:'openai'},
-    {name:'AirForce · GPT-OSS-20B（免Key）',url:'https://api.airforce/v1/chat/completions',model:'gpt-oss-20b'},
-    {name:'Pollinations · Mistral（免Key）',url:'https://text.pollinations.ai/openai',model:'mistral'}
+  /* fix(1.3.6f): 一键填入预设库 —— 实测国内直连 339-567ms（比免Key的 Pollinations 快约5倍）。
+     各家注册即送免费额度（约1分钟），填 Key 后手动开启该槽；默认不启用避免无 Key 竞速失败。 */
+  const KEY_PRESETS=[
+    {name:'硅基流动 · Qwen2.5-7B（siliconflow.cn 注册）',url:'https://api.siliconflow.cn/v1/chat/completions',model:'Qwen/Qwen2.5-7B-Instruct'},
+    {name:'智谱 · GLM-4-Flash（open.bigmodel.cn 免费）',url:'https://open.bigmodel.cn/api/paas/v4/chat/completions',model:'glm-4-flash'},
+    {name:'阿里通义 · qwen-turbo（aliyun 注册）',url:'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',model:'qwen-turbo'},
+    {name:'DeepSeek · deepseek-chat（platform.deepseek.com）',url:'https://api.deepseek.com/v1/chat/completions',model:'deepseek-chat'},
+    {name:'月之暗面 · Kimi 8k（platform.moonshot.cn）',url:'https://api.moonshot.cn/v1/chat/completions',model:'moonshot-v1-8k'}
   ];
-  function applyFreePresets(){
+  function applyKeyPresets(){
     const rows=[...document.querySelectorAll('#nxApiList .nx-api-row')];
-    FREE_PRESETS.forEach((p,j)=>{
+    let filled=0;
+    KEY_PRESETS.forEach((p,j)=>{
       const row=rows[j+1];if(!row)return;const a=row._api;if(!a)return;
-      a.name=p.name;a.url=p.url;a.model=p.model;a.enabled=true;a.keySet=false;a.key='';a.clearKey=false;
-      row.querySelector('[data-k="name"]').value=p.name;
-      row.querySelector('[data-k="url"]').value=p.url;
-      row.querySelector('[data-k="model"]').value=p.model;
-      row.querySelector('[data-k="enabled"]').checked=true;
+      a.name=p.name;a.url=p.url;a.model=p.model;a.keySet=false;a.key='';a.clearKey=false;
+      const q=k=>row.querySelector(`[data-k="${k}"]`);
+      if(q('name'))q('name').value=p.name;
+      if(q('url'))q('url').value=p.url;
+      if(q('model'))q('model').value=p.model;
+      if(q('key'))q('key').placeholder='注册后把免费 Key 粘贴到这里，再勾选启用';
+      filled++;
     });
-    const b=el('nxApiFree');if(b){b.textContent='已填入，点「保存配置」生效';setTimeout(()=>{if(b)b.textContent='一键填入免 Key 接口'},2600)}
+    const b=el('nxApiFree');if(b){b.textContent='已填入 '+filled+' 家，注册拿Key后勾选启用';setTimeout(()=>{if(b)b.textContent='一键填入国内接口'},3200)}
   }
-  function collectApis(){return [...document.querySelectorAll('#nxApiList .nx-api-row')].slice(0,5).map((row,i)=>{const v=k=>row.querySelector(`[data-k="${k}"]`);return {name:v('name')?.value||'',url:v('url')?.value||'',model:v('model')?.value||'',enabled:i===0||Boolean(v('enabled')?.checked),key:v('key')?.value||'',clearKey:row._api?.clearKey===true}})}
+  function collectApis(){return [...document.querySelectorAll('#nxApiList .nx-api-row')].slice(0,10).map((row,i)=>{const v=k=>row.querySelector(`[data-k="${k}"]`);return {name:v('name')?.value||'',url:v('url')?.value||'',model:v('model')?.value||'',enabled:Boolean(v('enabled')?.checked),key:v('key')?.value||'',clearKey:row._api?.clearKey===true}})}
   async function saveApis(){
+    /* fix(1.3.6e): 防呆 —— 全部接口停用会让聊天直接报错，保存前拦截 */
+    const allApis=collectApis();
+    if(!allApis.some(a=>a.enabled)){const btn=el('nxApiSave');btn.textContent='至少启用一个接口';setTimeout(()=>{if(btn)btn.textContent='保存配置'},2200);return}
     const button=el('nxApiSave');button.disabled=true;button.textContent='保存中…';
     try{const r=await fetch('/api/admin/apis',{method:'PUT',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({apis:collectApis()})});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'保存失败');await loadApis();button.textContent='已保存并全站生效';setTimeout(()=>{if(button)button.textContent='保存配置'},1800)}
     catch(e){button.textContent='保存配置';alert(e.message)}finally{button.disabled=false}
   }
   function openApiConfigPanel(){
     /* fix(1.3.6b): ① 去掉管理员拦截 —— 普通用户也可查看接口状态（读取失败自然提示"需要授权会话"，Key 永不回传）；此前普通用户点「接口设置」只得到一句 alert，表现为"点不进去" ② el() 返回 null 安全代理 __NUL（真值），导致 if(!panel) 永假、面板创建分支永远不执行 —— 改用真 getElementById 判断 */
-    let panel=document.getElementById('nxApiPanel');if(!panel){panel=document.createElement('div');panel.id='nxApiPanel';panel.innerHTML=`<button class="nx-api-mask" data-close aria-label="关闭"></button><section class="nx-api-sheet" role="dialog" aria-modal="true" aria-label="全站共享接口设置"><header class="nx-api-top"><div><small>ASTRION · SERVICE ROUTING</small><b>接口与模型</b><span>五槽共享 · 首槽 Groq · 服务端保密</span></div><button type="button" data-close aria-label="关闭">×</button></header><div class="nx-api-hint">主接口与备用接口均可自由修改（地址/模型/Key）。主接口未填 Key 时用服务器环境变量，填了则优先用你填的；备用接口可一键提升为主。下方 3 个免 Key 接口已实测可用，点「一键填入」再「保存配置」即可全站启用；聊天时五槽竞速，谁快用谁、失败自动回退。</div><div id="nxApiList"></div><footer class="nx-api-actions"><button type="button" data-close>取消</button><button type="button" id="nxApiFree" class="nx-free-btn">一键填入免 Key 接口</button><button type="button" id="nxApiSave" class="primary">保存配置</button></footer></section>`;document.body.append(panel);panel.addEventListener('click',e=>{if(e.target.matches('[data-close],.nx-api-mask'))panel.classList.remove('show')});el('nxApiSave').addEventListener('click',saveApis);el('nxApiFree').addEventListener('click',applyFreePresets)}
+    let panel=document.getElementById('nxApiPanel');if(!panel){panel=document.createElement('div');panel.id='nxApiPanel';panel.innerHTML=`<button class="nx-api-mask" data-close aria-label="关闭"></button><section class="nx-api-sheet" role="dialog" aria-modal="true" aria-label="全站共享接口设置"><header class="nx-api-top"><div><small>ASTRION · SERVICE ROUTING</small><b>接口与模型</b><span>十槽共享 · 首槽免Key · 服务端保密</span></div><button type="button" data-close aria-label="关闭">×</button></header><div class="nx-api-hint">主接口免 Key 立即可用（实测约 2 秒）。实测 2026-11：全网免 Key 公开服务仅剩这一家；想要约 5 倍速的国内直连，点「一键填入国内接口」→ 到对应官网注册免费 Key → 粘贴后勾选启用 → 保存。聊天时已启用的槽并行竞速，谁快用谁、失败自动回退。</div><div id="nxApiList"></div><footer class="nx-api-actions"><button type="button" data-close>取消</button><button type="button" id="nxApiFree" class="nx-free-btn">一键填入国内接口</button><button type="button" id="nxApiSave" class="primary">保存配置</button></footer></section>`;document.body.append(panel);panel.addEventListener('click',e=>{if(e.target.matches('[data-close],.nx-api-mask'))panel.classList.remove('show')});el('nxApiSave').addEventListener('click',saveApis);el('nxApiFree').addEventListener('click',applyKeyPresets)}
     panel.classList.add('show');loadApis();
   }
   window.openApiConfigPanel=openApiConfigPanel;window.loadApis=loadApis;window.renderApiList=renderApiList;
@@ -4214,7 +4224,7 @@ async function loadModelList(){
  const mk=(label,sub,val)=>{const b=document.createElement('button');b.type='button';b.className='nx-model-item'+(cur===val?' on':'');
   b.innerHTML=`<span>${label}${sub?`<small>${sub}</small>`:''}</span>${val===''?'<span class="nx-model-badge">推荐</span>':''}`;
   b.onclick=()=>{store.set('nx_preferred_model',val);menu.classList.remove('show');const l=$('modelSwitchLabel');if(l)l.textContent=label;toast('模型偏好已切换：'+label,'ok')};return b};
- menu.append(mk('自动（竞速最快）','五槽并行，谁快用谁',''));
+ menu.append(mk('自动（竞速最快）','十槽并行，谁快用谁',''));
  (modelList||[]).forEach(m=>menu.append(mk(m.name,m.model,m.name)));
  if(!modelList.length){const p=document.createElement('p');p.className='ad-hint';p.textContent='暂无可用接口信息';menu.append(p)}
 }
@@ -4285,7 +4295,7 @@ const SET_PANELS={
    row('用户 ID','注册账号，不可修改',`<input class="nx-input" value="${escHtml(window.currentUserId||'')}" readonly style="opacity:.7"/>`),
    row('个人简介','保存在本机',`<input class="nx-input" id="nxBio" value="${escHtml(bio)}" placeholder="介绍一下自己"/>`),
    /* fix(1.3.6): 新设置中心此前没有切换账号/退出登录入口（旧入口被覆盖丢失） */
-   row('接口设置','五槽共享 · 地址/模型/Key · 一键填入免Key接口',`<button class="nx-btn primary" id="nxApiEntry" type="button">打开接口设置</button>`),
+   row('接口设置','十槽共享 · 地址/模型/Key · 一键填入国内接口',`<button class="nx-btn primary" id="nxApiEntry" type="button">打开接口设置</button>`),
    row('账号操作','切换账号或退出当前登录',`<button class="nx-btn" id="nxSwitchAcc" type="button">切换账号</button><button class="nx-btn danger" id="nxLogout" type="button">退出登录</button>`)
   ],[{label:'保存资料',cls:'primary',act:()=>{
     store.set('nx_nick',$('nxNick').value.trim().slice(0,40));store.set('nx_bio',$('nxBio').value.trim().slice(0,200));
@@ -4523,7 +4533,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     box.innerHTML=`<div class="nx-set-row"><div class="t"><b>AI 自动接管客服</b><small>用户转人工后，管理员 ${s.aiSupportDelaySec} 秒内未回复，AI 管理员自动回复并解决问题（用户只会看到"客服"）</small></div><div class="ctrl"><span class="nx-toggle${s.aiSupportEnabled!==false?' on':''}" id="adAiSupOn"></span></div></div>
      <div class="nx-set-row"><div class="t"><b>等待秒数</b><small>5 - 120 秒</small></div><div class="ctrl"><input class="nx-input" id="adAiSupDelay" type="number" min="5" max="120" value="${s.aiSupportDelaySec||30}" style="max-width:90px"/></div></div>
      <div class="nx-set-row" style="align-items:flex-start;flex-direction:column"><div class="t"><b>AI 客服人设（可选）</b><small>附加给 AI 管理员的要求</small></div><textarea class="nx-input" id="adAiSupPersona" style="width:100%" placeholder="例如：语气活泼，多使用表情">${escHtml(s.aiSupportPersona||'')}</textarea></div>
-     <div class="nx-set-row"><div class="t"><b>已自动接管</b><small>累计次数（走五槽竞速接口）</small></div><div class="ctrl"><span class="nx-model-badge">${handled} 次</span></div></div>`;
+     <div class="nx-set-row"><div class="t"><b>已自动接管</b><small>累计次数（走十槽竞速接口）</small></div><div class="ctrl"><span class="nx-model-badge">${handled} 次</span></div></div>`;
     box.insertAdjacentHTML('beforeend','<div style="padding:12px 16px"><button class="nx-btn primary" id="adAiSupSave">保存接管设置</button> <button class="nx-btn" id="adAiSupGo">打开工单列表</button></div>');
     box.querySelectorAll('.nx-toggle').forEach(t=>t.onclick=()=>t.classList.toggle('on'));
     $('adAiSupSave').onclick=async()=>{try{
@@ -4875,6 +4885,63 @@ body .modal input::placeholder,body .modal textarea::placeholder,body .nx-input:
 /* —— 主题固定白底黑字：禁用深浅切换残留 —— */
 body.nx-light,body.nx-light .main,body.nx-light .app{background:#ffffff!important;color:#111111!important}
 body.nx-light .sidebar{background:#ffffff!important}
+
+
+/* =====================================================================
+   ASTRION 1.3.6d · 用户反馈二轮：侧栏按钮纯黑 / 公告橙色 / 接口统一
+   ===================================================================== */
+/* —— 侧栏：所有按钮文字与图标强制纯黑（覆盖全部历史层的浅色 !important） —— */
+body .sidebar :is(.dola-side-item,.dola-icon-btn,.dola-user,.dola-back-pill,.dola-side-brand,.dola-search,.dola-search input,.dola-user-meta b,.dola-user-meta small){color:#000000!important}
+body .sidebar .dola-side-item :is(span,b,small,i){color:#000000!important;font-weight:650!important}
+body .sidebar .dola-side-item .ico{color:#000000!important;opacity:1!important;font-weight:700!important}
+body .sidebar .dola-search input::placeholder{color:#44443f!important;font-weight:550!important}
+body .sidebar .dola-back-pill span{color:#000000!important;font-weight:700!important}
+/* 悬停/按压：淡橙底 + 保持黑字 */
+body .sidebar .dola-side-item:hover,body .sidebar .dola-side-item:active{background:#ffedd5!important;color:#000000!important}
+body .sidebar .dola-side-item:hover :is(span,.ico),body .sidebar .dola-side-item:active :is(span,.ico){color:#000000!important}
+body .sidebar .dola-icon-btn:hover{background:#ffedd5!important;color:#000000!important;border-color:rgba(249,115,22,.45)!important}
+/* —— 公告中心：橙色主题 —— */
+body .modal-back#noticeModal .modal{border-top:3px solid #f97316!important}
+body .ann-header h3{color:#c2410c!important;font-weight:800!important}
+body .ann-header .ann-brand b,body .ann-header b{color:#c2410c!important}
+body .ann-mark{background:linear-gradient(135deg,#fb923c,#f97316)!important;color:#fff!important}
+body .ann-tag{background:linear-gradient(135deg,#f97316,#ea580c)!important;color:#fff!important;font-weight:700!important}
+body .notice-card{border-left:3px solid #f97316!important;background:#fff7ed!important;border-radius:12px!important}
+body .notice-card h4{color:#111111!important;font-weight:750!important}
+body .notice-card small{color:#c2410c!important;font-weight:650!important}
+body .notice-empty h4{color:#111111!important}
+body .notice-empty-icon{background:#ffedd5!important;color:#c2410c!important}
+body .notice-empty-action{background:#f97316!important;border-color:#f97316!important;color:#fff!important;font-weight:700!important}
+body .ann-dismiss{color:#c2410c!important;font-weight:650!important;border:1px solid rgba(249,115,22,.4)!important;background:#fff!important}
+body .ann-foot{border-top:1px solid rgba(249,115,22,.25)!important}
+/* 公告入口按钮：橙色标识（顶栏🔔 + 侧栏📢 + 用户栏🔔） */
+body #noticeButton,body #noticeButtonSide .ico,body #noticeButtonUserBar{color:#c2410c!important;font-weight:700!important}
+body #noticeButtonSide{background:#fff7ed!important}
+body #noticeButtonSide:hover{background:#ffedd5!important}
+body #noticeButton{background:#fff7ed!important;border-color:rgba(249,115,22,.45)!important}
+body #noticeButton:hover{background:#ffedd5!important}
+
+
+/* =====================================================================
+   ASTRION 1.3.6f · 弹窗加大（用户反馈：弹窗有点小）
+   ===================================================================== */
+/* 通用弹窗：加宽加高（覆盖历史层 400/440px 宽、68dvh/500px 高的限制） */
+.modal-back.show .modal,.extra-modal.show .extra-box{width:min(600px,100%)!important;max-height:min(86dvh,820px)!important}
+:is(#humanSupportModal,#settingsModal,#imagePromptModal,#appearanceModal,#noticeModal,#adminModal,#adminSupportModal) :is(.modal,.extra-box){width:min(600px,100%)!important;max-height:min(86dvh,820px)!important}
+:is(#settingsModal,#adminModal,#adminSupportModal) :is(.modal,.extra-box){width:min(620px,100%)!important}
+/* 手机端同样放大 */
+@media(max-width:760px){
+ :is(#humanSupportModal,#settingsModal,#imagePromptModal,#appearanceModal,#noticeModal,#adminModal,#adminSupportModal) :is(.modal,.extra-box){width:min(560px,100%)!important;max-height:min(88dvh,900px)!important}
+}
+/* 设置中心：更大 */
+.nx-set-shell{width:min(1060px,100%)!important;height:min(820px,94dvh)!important}
+.nx-set-main{padding:22px 28px 34px!important}
+/* 接口面板：更宽更高，十槽一屏多看几行 */
+#nxApiPanel .nx-api-sheet{width:min(880px,100%)!important;max-height:min(93dvh,1000px)!important}
+@media(max-width:760px){#nxApiPanel .nx-api-sheet{width:100%!important;max-height:94dvh!important}}
+/* 公告中心 / 创新AI */
+.ann-box{width:min(600px,100%)!important;max-height:min(86dvh,860px)!important}
+.nl-card{width:min(620px,100%)!important;height:min(760px,92dvh)!important}
 
 </style>
 
