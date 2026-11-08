@@ -20,7 +20,7 @@ const AI_CONFIG_FILE = path.join(DATA_DIR, 'ai-config.json');
 const ACCOUNTS_FILE = path.join(DATA_DIR, 'accounts.json');
 const SUPPORT_FILE = path.join(DATA_DIR, 'support.json');
 const PRESENCE_TTL = 90 * 1000;
-const APP_VERSION = '1.3.2';
+const APP_VERSION = '1.3.3';
 fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
 if (!fs.existsSync(ACCOUNTS_FILE)) fs.writeFileSync(ACCOUNTS_FILE, '{}');
@@ -144,7 +144,11 @@ function normalizeAiApis(input, previous=[]) {
   const item=source[i]&&typeof source[i]==='object'?source[i]:{};
   const prior=old[i]&&typeof old[i]==='object'?old[i]:{};
   const key=item.clearKey===true?'':String(item.key||prior.key||'').trim().slice(0,1000);
-  if(i===0)return {...base,name:(String(item.name||'').trim().slice(0,120)||base.name),enabled:true,key:'',primary:true};
+  if(i===0){
+   const url=String(item.url!==undefined?item.url:'').trim().slice(0,500)||base.url;
+   const model=String(item.model!==undefined?item.model:'').trim().slice(0,160)||base.model;
+   return {...base,name:(String(item.name||'').trim().slice(0,120)||base.name),url,model,enabled:true,key,primary:true};
+  }
   return {name:String(item.name||base.name).trim().slice(0,120)||base.name,url:String(item.url||'').trim().slice(0,500),model:String(item.model||'').trim().slice(0,160),enabled:item.enabled===true,key};
  });
 }
@@ -163,7 +167,7 @@ function readAiApis(){
 }
 function persistAiApis(value){fs.writeFileSync(AI_CONFIG_FILE,JSON.stringify(value,null,2),{mode:0o600});try{fs.chmodSync(AI_CONFIG_FILE,0o600)}catch{}}
 function writeAiApis(value){const next=normalizeAiApis(value,readAiApis());persistAiApis({version:AI_CONFIG_VERSION,apis:next});return next}
-function apiKeyFor(api){if(api?.primary===true)return envPrimaryKey||String(api?.key||'').trim();return String(api?.key||'').trim()}
+function apiKeyFor(api){if(api?.primary===true)return String(api?.key||'').trim()||envPrimaryKey;return String(api?.key||'').trim()}
 function needsApiKey(api){const u=String(api&&api.url||'');return /bigmodel\.cn|deepseek\.com|openai\.com|anthropic|googleapis|groq\.com/i.test(u)}
 function publicAiApis(){return readAiApis().map(a=>({name:a.name,url:a.url,model:a.model,enabled:a.enabled,keySet:Boolean(apiKeyFor(a))}))}
 readAiApis(); // 初始化或迁移服务端的五槽配置
@@ -289,7 +293,7 @@ const server=http.createServer(async(req,res)=>{
   if(req.method==='GET'&&url.pathname==='/api/admin/apis'){if(!requireAdmin(req,res))return;send(res,200,{apis:publicAiApis()});return;}
   if(req.method==='PUT'&&url.pathname==='/api/admin/apis'){
    if(!requireAdmin(req,res))return;const d=await body(req);if(!Array.isArray(d.apis)||d.apis.length!==5){send(res,400,{error:'接口配置必须正好包含 5 个槽位'});return;}
-   for(const api of d.apis.slice(1)){const endpoint=String(api?.url||'').trim();if(endpoint)await validatePublicApiUrl(endpoint)}
+   for(const api of d.apis){const endpoint=String(api?.url||'').trim();if(endpoint)await validatePublicApiUrl(endpoint)}
    writeAiApis(d.apis);send(res,200,{ok:true,apis:publicAiApis()});return;
   }
   if(req.method==='POST'&&url.pathname==='/api/ai/chat'){

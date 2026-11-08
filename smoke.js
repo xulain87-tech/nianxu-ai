@@ -75,7 +75,7 @@ async function waitForHealth(baseUrl, child) {
     assert.doesNotMatch(html, /<\/style>你好，我是 ASTRION<style/);
     assert.match(html, /id="apiBackupPanel" hidden/, 'retired import/export editor must stay hidden');
     assert.match(html, /id="apiList" hidden/, 'retired API editor must stay hidden');
-    assert.match(html, /Groq Key（服务端环境变量）/, 'primary key must be configured only on the server');
+    assert.match(html, /主接口可任意修改（地址\/模型\/Key）/, 'primary slot must stay admin-editable (1.3.3)');
     assert.match(html, /#apiList,#apiBackupPanel,#saveSettings/);
     const upstreamPort = await listen(upstream);
     const appPortServer = http.createServer();
@@ -112,7 +112,7 @@ async function waitForHealth(baseUrl, child) {
     const baseUrl = `http://127.0.0.1:${appPort}`;
     const health = await waitForHealth(baseUrl, app);
     assert.equal(health.status, 'ok');
-    assert.equal(health.version, '1.3.2');
+    assert.equal(health.version, '1.3.3');
 
     const unauthorized = await fetch(`${baseUrl}/api/ai/chat`, {
       method: 'POST', headers: { 'content-type': 'application/json' },
@@ -167,8 +167,9 @@ async function waitForHealth(baseUrl, child) {
     });
     const slot = (name, url = '', model = '', enabled = false, key = '') => ({ name, url, model, enabled, key });
     const configure = async (providers, secret = '') => {
+      const sentinelUrl = process.env.ASTRION_TEST_GROQ_API_URL || `http://127.0.0.1:${upstreamPort}/primary`;
       const apis = [
-        slot('ignored first-slot input', 'https://invalid.example/chat', 'ignored', false, 'client-primary-key-sentinel'),
+        slot('primary-slot', sentinelUrl, 'openai/gpt-oss-120b', false, ''),
         providers[0] || slot('接口 2'),
         providers[1] || slot('接口 3'),
         providers[2] || slot('接口 4'),
@@ -184,7 +185,7 @@ async function waitForHealth(baseUrl, child) {
     apiResponse = await getApis();
     apiData = await apiResponse.json();
     assert.equal(apiData.apis.length, 5);
-    assert.equal(apiData.apis[0].model, 'openai/gpt-oss-120b', 'admin cannot overwrite the fixed first slot');
+    assert.equal(apiData.apis[0].model, 'openai/gpt-oss-120b', 'admin can overwrite the primary slot (1.3.3)');
     assert.equal(apiData.apis[4].keySet, true, 'server reports key presence only');
     assert.doesNotMatch(JSON.stringify(apiData), new RegExp(fakeSecret));
     const storedConfig=JSON.parse(await fs.readFile(path.join(dataDir,'ai-config.json'),'utf8'));
