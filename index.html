@@ -2011,7 +2011,7 @@ textarea.nx-input{width:100%;min-height:74px;resize:vertical;font:inherit}
   <div class="field"><label>聊天字体</label><select id="fontFamily"><option value="system">系统默认</option><option value="sans">无衬线</option><option value="serif">衬线</option><option value="mono">等宽字体</option></select></div>
   <div class="field"><label>字体大小 <span id="fontSizeLabel">16px</span></label><input id="fontSize" type="range" min="13" max="22" value="16"></div>
  </div>
- <div class="grid"><div class="field"><label>主题</label><select id="themeMode"><option value="dark">深色</option><option value="light">浅色</option><option value="system">跟随系统</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION 1.3.6" readonly></div></div>
+ <div class="grid"><div class="field"><label>主题（已固定白底黑字）</label><select id="themeMode" disabled><option value="white">白底黑字 · 护眼可读</option></select></div><div class="field"><label>界面版本</label><input value="ASTRION 1.3.6" readonly></div></div>
  <label class="toggle"><input type="checkbox" id="bgDim" checked> 启用深色遮罩，保持文字清晰</label>
  <div class="modal-actions"><button class="iconbtn" data-close="appearanceModal">关闭</button><button class="primary" id="saveAppearance">应用背景</button></div>
 </div></div>
@@ -2978,8 +2978,7 @@ function applyPreferences(v){
  const family={system:'system-ui,-apple-system,"Segoe UI",sans-serif',sans:'Arial,"Noto Sans",sans-serif',serif:'Georgia,"Noto Serif",serif',mono:'ui-monospace,SFMono-Regular,Consolas,monospace'};
  document.documentElement.style.setProperty('--chat-font',family[v.fontFamily]||family.system);
  document.documentElement.style.setProperty('--chat-size',(Number(v.fontSize)||16)+'px');
- document.body.classList.toggle('nx-light',v.theme==='light');
- if(v.theme==='system')document.body.classList.toggle('nx-light',matchMedia('(prefers-color-scheme: light)').matches);
+ /* fix(1.3.6c): 界面已固定白底黑字（用户要求所有文字强制可读），主题切换不再改变配色 */
 }
 const prefStyle=document.createElement('style');prefStyle.textContent='.msg,.welcome,.composer textarea{font-family:var(--chat-font,system-ui)!important;font-size:var(--chat-size,16px)!important}.nx-light{--text:#182033;--muted:#5c6680;--panel:#f4f6fc;--line:#d5dced;background:#f4f6fc;color:#182033}.nx-light .app,.nx-light .main,.nx-light .sidebar{background:#f4f6fce8;color:#182033}.nx-light .topbar,.nx-light .composer{background:#ffffffd9}.nx-light .iconbtn,.nx-light .ghost{color:#182033;background:#e8ecf6}';document.head.appendChild(prefStyle);
 applyPreferences(pref);
@@ -4295,7 +4294,7 @@ const SET_PANELS={
  appearance(){const theme=store.get('nx_theme','dark');const acc=store.get('nx_accent','');
   const swatches=[['','#ff6b9d'],['#22d3a5','#22d3a5'],['#5b8dff','#5b8dff'],['#f59e0b','#f59e0b'],['#e05fd0','#e05fd0']];
   return sec('外观设置',[
-   row('主题模式','浅色 / 深色 / 跟随系统',`<select class="nx-select" id="nxTheme"><option value="dark"${theme==='dark'?' selected':''}>深色</option><option value="light"${theme==='light'?' selected':''}>浅色</option><option value="system"${theme==='system'?' selected':''}>跟随系统</option></select>`),
+   row('主题模式','白底黑字 · 全站固定（字体大小仍可调）',`<select class="nx-select" id="nxThemeFixed" disabled><option>白底黑字</option></select>`),
    row('主题颜色','界面强调色',`<div class="nx-swatches">${swatches.map(([v,c])=>`<span class="nx-sw${acc===v?' on':''}" data-v="${v}" style="background:${c}"></span>`).join('')}</div>`),
    row('字体大小','13 - 18px',`<input type="range" id="nxFont" min="13" max="18" step="1" value="${store.get('nx_font',15)}"/>`),
    row('聊天密度','消息间距',`<select class="nx-select" id="nxDensity"><option value="cozy"${store.get('nx_density','cozy')==='cozy'?' selected':''}>舒适</option><option value="compact"${store.get('nx_density','cozy')==='compact'?' selected':''}>紧凑</option></select>`),
@@ -4387,12 +4386,10 @@ window.__wire_notif={nxNfNotice:t=>store.set('nx_nf_notice',t),nxNfPopup:t=>stor
 window.__wire_persona={nxMemOn:t=>store.set('nx_mem_on',t)};
 
 /* 应用外观 */
-function applyTheme(v){store.set('nx_theme',v);const b=document.body;
- b.classList.toggle('nx-light',v==='light');b.classList.toggle('nx-auto-theme',v==='system');
- if(v==='system'&&matchMedia('(prefers-color-scheme: light)').matches)b.classList.add('nx-light');}
+function applyTheme(v){store.set('nx_theme',v); /* fix(1.3.6c): 界面固定白底黑字，主题切换不再改变配色 */}
 function applyFont(){document.documentElement.style.fontSize=store.get('nx_font',15)+'px'}
 function applyDensity(){document.body.classList.toggle('nx-compact',store.get('nx_density','cozy')==='compact')}
-function applyAccent(v){const r=document.documentElement;if(v){r.style.setProperty('--accent',v);r.style.setProperty('--nx1',v)}else{r.style.removeProperty('--accent');r.style.removeProperty('--nx1')}}
+function applyAccent(v){store.set('nx_accent',v); /* fix(1.3.6c): 强调色固定为品牌橙，避免个性化颜色破坏可读性 */}
 /* 浅色模式基础（覆盖背景与文字） */
 (function(){const st=document.createElement('style');st.textContent=
  `body.nx-light{--bg:#f3f0f8;--panel:rgba(255,255,255,.86);--panel2:rgba(255,255,255,.92);--text:#1d1830;--muted:#6f6885;--line:rgba(80,60,120,.16)}
@@ -4827,6 +4824,58 @@ input[type="checkbox"],input[type="range"]{accent-color:#f97316!important}
 ::-webkit-scrollbar-thumb{background:rgba(35,32,26,.18)!important}
 ::-webkit-scrollbar-thumb:hover{background:rgba(35,32,26,.3)!important}
 body.nx-light ::-webkit-scrollbar-thumb{background:rgba(35,32,26,.18)!important}
+
+/* =====================================================================
+   ASTRION 1.3.6c · 可读性铁律：所有文字强制黑色可读（用户实测反馈）
+   1) 釜底抽薪：旧变量 --text/--muted 原为浅色(#eef2ff)，全站 23 处引用
+      —— 在 :root 直接重定义为黑字白底，所有引用处自动变黑。
+   2) 高特异性直写：AI 回复正文 / 输入框 / 标签 / 欢迎区强制黑色。
+   ===================================================================== */
+:root{
+  --text:#111111;--muted:#55554f;
+  --bg:#ffffff;--panel:#ffffff;--panel2:#faf9f7;
+  --line:#e8e5df;--accent:#f97316;--accent2:#fb923c;
+}
+/* —— AI 回复正文：黑色 —— */
+body #chat .msg .message-text{color:#111111!important;font-weight:480}
+body #chat .msg .message-text :is(p,h1,h2,h3,h4,li,td,th,blockquote,b,strong,i,em,u,small){color:#111111!important}
+body #chat .msg .message-text blockquote{color:#3a3a37!important}
+body #chat .msg .message-text a{color:#c2410c!important;font-weight:600}
+body #chat .msg .message-text code{color:#9a3412!important}
+body #chat .msg .message-text .nx-codeblock pre{color:#26251f!important}
+/* —— 消息头部标签 / 工具 —— */
+body #chat .msg .role{color:#44443f!important;font-weight:650!important}
+body #chat .msg .msg-tools button{color:#44443f!important}
+body #chat .msg.user .role{color:rgba(255,255,255,.95)!important}
+body #chat .msg.user .message-text,body #chat .msg.user .message-text :is(p,b,strong){color:#ffffff!important}
+/* —— 输入区 —— */
+body .composer #prompt{color:#111111!important;font-weight:550!important}
+body .composer #prompt::placeholder{color:#55554f!important;font-weight:500!important}
+body .composer .composer-foot{color:#55554f!important}
+body .composer .toolrow button{color:#33332f!important}
+/* —— 顶栏 / 欢迎区 / 侧栏 —— */
+body .topbar .top-title,body .top-title{color:#111111!important;font-weight:800!important}
+body .topbar .top-sub{color:#44443f!important;font-weight:600!important}
+body .welcome h2{color:#111111!important;font-weight:800!important}
+body .welcome p{color:#44443f!important;font-weight:550!important}
+body .sidebar .dola-side-item{color:#1a1a18!important;font-weight:600!important}
+body .sidebar .dola-user-meta b{color:#111111!important;font-weight:750!important}
+body .sidebar .dola-user-meta small,body .sidebar .dola-search input::placeholder{color:#55554f!important}
+/* —— 弹窗与设置中心文字 —— */
+body .modal,body .modal p,body .extra-box,body .nx-set-shell{color:#111111!important}
+body .hint,body .nx-api-hint,body .ad-hint{color:#44443f!important;font-weight:500!important}
+body .settings-hero span,body .info-card span,body .info-card p{color:#44443f!important}
+body .info-card strong{color:#111111!important}
+body .nx-set-row .t b{color:#111111!important;font-weight:650!important}
+body .nx-set-row .t small{color:#55554f!important}
+body .field label,body .nx-api-fields label,body .announcement-composer label{color:#222220!important;font-weight:600!important}
+body .modal input:not([type=checkbox]):not([type=range]),body .modal textarea,body .extra-box input:not([type=checkbox]),body .extra-box textarea,
+body .nx-input,body .nx-select,body .as-settings-panel input{color:#111111!important;font-weight:550!important}
+body .modal input::placeholder,body .modal textarea::placeholder,body .nx-input::placeholder{color:#55554f!important}
+/* —— 主题固定白底黑字：禁用深浅切换残留 —— */
+body.nx-light,body.nx-light .main,body.nx-light .app{background:#ffffff!important;color:#111111!important}
+body.nx-light .sidebar{background:#ffffff!important}
+
 </style>
 
 </body></html>
