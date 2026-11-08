@@ -1,0 +1,11 @@
+{
+  "name": "astrion",
+  "short_name": "ASTRION",
+  "description": "ASTRION 智能对话应用",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#10182a",
+  "theme_color": "#10182a",
+  "icons": [{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
